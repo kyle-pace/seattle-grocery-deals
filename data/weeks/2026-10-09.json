@@ -107,10 +107,10 @@
       ]
     }
   ],
-  "deals": [
+  "items": [
     {
       "store": "lams",
-      "item": "Atlantic salmon steak",
+      "item": "Atlantic salmon steak, fresh",
       "item_key": "salmon-atlantic",
       "category": "seafood",
       "price": 7.49,
@@ -122,13 +122,399 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Fresh Atlantic salmon steaks back at $7.49 a pound.",
-      "valid_through": "2026-10-15",
-      "notes": "Fillet is $7.99/lb. While supplies last."
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic salmon fillet, fresh",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Pork spareribs",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Chicken jumbo wing",
+      "item_key": "chicken-wings",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Crab, missing claw, live",
+      "item_key": "crab",
+      "category": "seafood",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Persimmon",
+      "item_key": "persimmons",
+      "category": "produce",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Bok choy, Shanghai",
+      "item_key": "bok-choy",
+      "category": "produce",
+      "price": 2.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Mushroom, king oyster",
+      "item_key": "mushrooms",
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Stewing chicken",
+      "item_key": "chicken-stewing",
+      "category": "meat",
+      "price": 2.09,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.09,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Catfish, fresh",
+      "item_key": "catfish",
+      "category": "seafood",
+      "price": 4.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Whole cuttlefish, cleaned",
+      "item_key": "cuttlefish",
+      "category": "seafood",
+      "price": 6.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Pork belly, rib-on",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Pork feet",
+      "item_key": "pork-feet",
+      "category": "meat",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Beef brisket",
+      "item_key": "beef-brisket",
+      "category": "meat",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Goat meat with skin",
+      "item_key": "goat",
+      "category": "meat",
+      "price": 6.89,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "White shrimp, frozen, 31-35 count, 1.5 lb",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1.5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "White shrimp, frozen, 16-20 count, 4 lb",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 26.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 6.75,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "King weakfish, frozen, 2 lb",
+      "item_key": "weakfish",
+      "category": "seafood",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Nappa cabbage",
+      "item_key": "cabbage-napa",
+      "category": "produce",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Onion, yellow boiler",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 0.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Carrot, jumbo",
+      "item_key": "carrots",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Papaya, Mexico yellow",
+      "item_key": "papaya",
+      "category": "produce",
+      "price": 1.39,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.39,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
     },
     {
       "store": "uwajimaya",
@@ -148,17 +534,106 @@
       },
       "regular_price": 22.99,
       "percent_off": 43,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "$10 off a 15 lb bag, under 90 cents a pound for Japanese rice.",
-      "valid_through": "2026-10-13",
+      "valid_through": null,
+      "notes": "",
+      "highlight": {
+        "reason": "$10 off a 15 lb bag, under 90 cents a pound for Japanese rice."
+      }
+    },
+    {
+      "store": "uwajimaya",
+      "item": "House Foods tofu, family size",
+      "item_key": "tofu",
+      "category": "other",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.49,
+        "per": "each"
+      },
+      "regular_price": 3.29,
+      "percent_off": 24,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Nappa cabbage",
+      "item_key": "cabbage-napa",
+      "category": "produce",
+      "price": 0.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Printed as save up to 40 cents/lb."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kabocha squash",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 0.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Printed as save up to $1.20/lb."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Heritage Berkshire Kurobuta thin-sliced pork loin",
+      "item_key": "pork-loin-sliced",
+      "category": "meat",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.99,
+        "per": "lb"
+      },
+      "regular_price": 14.99,
+      "percent_off": 13,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Atlantic salmon fillet",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
       "notes": ""
     },
     {
       "store": "central-coop",
-      "item": "Organic Bosc Pears",
+      "item": "Organic Bosc pears",
       "item_key": "pears",
       "category": "produce",
       "price": 2.49,
@@ -170,17 +645,67 @@
       },
       "regular_price": 3.49,
       "percent_off": 29,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "A dollar a pound off organic pears.",
-      "valid_through": "2026-10-13",
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Cosmic Crisp apples",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": 3.49,
+      "percent_off": 14,
+      "member_price": false,
+      "valid_through": null,
       "notes": ""
     },
     {
       "store": "red-apple",
-      "item": "Idaho Russet Potatoes, 5 lb bag",
+      "item": "Fuji apples, local",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 1.28,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.28,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Organic Bartlett pears, local",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Idaho russet potatoes, 5 lb bag",
       "item_key": "potatoes-russet",
       "category": "produce",
       "price": 1.98,
@@ -196,17 +721,26 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "potatoes",
-        "price": 0.989,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
       "member_price": false,
-      "reason": "A 5 lb bag for under $2, about 40 cents a pound.",
-      "valid_through": "2026-10-13",
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Pork belly",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-12",
       "notes": ""
     },
     {
@@ -227,22 +761,13 @@
       },
       "regular_price": 12.99,
       "percent_off": 15,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "rice-white",
-        "price": 1.118,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
       "member_price": false,
-      "reason": "About 73 cents a pound, the cheapest rice we have listed so far.",
-      "valid_through": "2026-10-15",
+      "valid_through": null,
       "notes": ""
     },
     {
       "store": "tnt",
-      "item": "Frozen Calamari Squid, 2.2 lb",
+      "item": "Frozen calamari squid, 2.2 lb",
       "item_key": "squid",
       "category": "seafood",
       "price": 7.96,
@@ -258,13 +783,75 @@
       },
       "regular_price": 11.99,
       "percent_off": 34,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "A third off frozen squid, about $3.62 a pound.",
-      "valid_through": "2026-10-15",
+      "valid_through": null,
       "notes": ""
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Face Rock Creamery \"In Your Face\" Spicy 3 Pepper Cheddar, 6 oz",
+      "item_key": "cheese-other",
+      "category": "dairy-eggs",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 18.64,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Tillamook medium cheddar or pepper jack slices, 8 oz",
+      "item_key": "cheese-other",
+      "category": "dairy-eggs",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": 4.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Tony's organic coffee, 12 oz",
+      "item_key": "coffee",
+      "category": "snacks-drinks",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 17.32,
+        "per": "lb"
+      },
+      "regular_price": 17.99,
+      "percent_off": 28,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
     }
   ]
 }

@@ -1,11 +1,11 @@
-// Turns an "All Items YYYY-MM-DD.md" note into drafts/YYYY-MM-DD.draft.json:
-// flyer entries ready to copy, and every readable item as a candidate with
-// parsed prices, a suggested item_key, and whether it meets the criteria.
-// Choosing deals and writing reasons stays a judgment step (see UPDATING.md).
+// Turns an "All Items YYYY-MM-DD.md" note into drafts/YYYY-MM-DD.json, a week
+// file with every readable item, plus drafts/YYYY-MM-DD.report.json listing
+// what to check by hand. Review it, add highlight reasons, then move it to
+// data/weeks/ (see UPDATING.md).
 // Usage: node scripts/draft-week.mjs "/path/to/All Items 2026-10-23.md"
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, basename } from "node:path";
-import { ROOT, loadConfig, loadWeeks, priorListings, lowestPrior, computeUnitPrice, round2, percentOff, judge, isFriday } from "./lib.mjs";
+import { ROOT, loadConfig, loadWeeks, priorListings, peerPrices, analyze, computeUnitPrice, round2, percentOff, priceText, isFriday } from "./lib.mjs";
 
 const cfg = loadConfig();
 const notePath = process.argv[2];
@@ -20,7 +20,6 @@ if (!week || !isFriday(week)) {
   process.exit(1);
 }
 const YEAR = Number(week.slice(0, 4));
-const prior = priorListings(loadWeeks().map((w) => w.data), week);
 
 // ---------- helpers ----------
 
@@ -160,7 +159,9 @@ for (const line of section("Flyers").split("\n")) {
     valid_from: dates[0] ?? null,
     valid_through: dates[1] ?? null,
     links: links(line),
-    note: "",
+    note: status === "partial" || status === "stale"
+      ? line.replace(/\[([^\]]*)\]\([^)]*\)/g, "").replace(/https:\/\/\S+/g, "").replace(/^\s*[-*]\s+/, "").replace(/\s+/g, " ").trim().slice(0, 300)
+      : "",
     source_line: line.trim(),
   });
 }
@@ -175,8 +176,11 @@ const C = {
   store: col("store"), item: col("item"), price: col("sale"), unit: col("unit"),
   regular: col("regular"), through: col("valid"), category: col("categ"), notes: col("note"),
 };
-const candidates = [];
+const CATS = cfg.criteria.categories;
+const items = [];
+const review = [];
 const skipped = [];
+const readStores = new Set(flyers.filter((f) => f.status === "full" || f.status === "partial").map((f) => f.store));
 for (const r of rows.slice(1)) {
   if (/^\|?\s*:?-{2,}/.test(r.trim().replace(/^\|/, ""))) continue;
   const c = cells(r);
@@ -192,68 +196,60 @@ for (const r of rows.slice(1)) {
     skipped.push({ reason: !store ? "unknown store" : "could not parse price or unit", ...raw });
     continue;
   }
-  const d = { store, item: raw.item, ...parsed };
+  if (!readStores.has(store)) {
+    skipped.push({ reason: "store's flyer is not marked full or partial", ...raw });
+    continue;
+  }
+  const key = suggestKey(raw.item);
+  const d = { store, item: raw.item.slice(0, 120), item_key: key };
+  const noteCat = raw.category.toLowerCase().trim();
+  d.category = CATS.includes(noteCat) ? noteCat : (key ? cfg.items[key].category : "other");
+  Object.assign(d, { price: parsed.price, quantity: parsed.quantity, unit: parsed.unit });
+  if (parsed.pack) d.pack = parsed.pack;
   // Eggs compare per dozen, so express counted cartons in dozens.
-  if (suggestKey(raw.item) === "eggs" && d.pack?.unit === "ct" && d.pack.size % 6 === 0) d.pack = { size: d.pack.size / 12, unit: "dozen" };
+  if (key === "eggs" && d.pack?.unit === "ct" && d.pack.size % 6 === 0) d.pack = { size: d.pack.size / 12, unit: "dozen" };
   const up = computeUnitPrice(d);
   d.unit_price = up ? { value: round2(up.value), per: up.per } : null;
-  const regular = raw.regular && !/^(-|n\/a|none|)$/i.test(raw.regular) ? num(raw.regular) : null;
-  d.regular_price = regular && regular > d.price ? round2(regular) : null;
-  d.percent_off = d.regular_price ? percentOff(d.price, d.regular_price) : null;
-  const pctPrinted = raw.regular.match(/(\d+)\s*%/);
-  if (!d.percent_off && pctPrinted) d.percent_off = Number(pctPrinted[1]);
-  d.valid_through = findDates(raw.through)[0] ?? null;
-  d.category_in_note = raw.category;
-  d.notes_in_note = raw.notes;
-  d.item_key_suggested = suggestKey(raw.item);
 
-  // Check both ways it could qualify, using the suggested key.
-  const item = cfg.items[d.item_key_suggested];
-  const checks = {};
-  if (item) {
-    const base = { ...d, item_key: d.item_key_suggested, category: item.category };
-    if (d.percent_off != null && cfg.storeById[store].prints_regular_prices) {
-      checks.printed = judge({ ...base, reference: "printed" }, cfg);
-    }
-    if (item.benchmark && d.unit_price) {
-      const b = cfg.benchmarks[item.benchmark];
-      checks.us_average = judge({ ...base, reference: "us-average", us_average: { benchmark: item.benchmark, price: b.price, per: b.per, period: b.period } }, cfg);
-    }
-    if (d.unit_price) {
-      const low = lowestPrior(base, prior);
-      if (low) {
-        checks.site_history = judge({ ...base, reference: "site-history" }, cfg, prior);
-        d.site_history_suggested = { price: low.price, per: low.per, week: low.week, store: low.store };
-      }
-    }
-  }
-  d.checks = checks;
-  d.meets_criteria = Object.values(checks).some((j) => j.ok);
-  // Produce, meat and seafood with nothing to compare against can still go in on judgment.
-  d.judgment_candidate = !d.meets_criteria && cfg.criteria.no_reference.allowed &&
-    cfg.criteria.no_reference.categories.includes(item?.category ?? raw.category.toLowerCase());
-  d.strength = Math.max(0, ...Object.values(checks).filter((j) => j.ok).map((j) => j.strength));
-  candidates.push(d);
+  const prints = cfg.storeById[store].prints_regular_prices;
+  const regular = raw.regular && !/^(-|n\/a|none|)$/i.test(raw.regular) && !/up to/i.test(raw.regular) ? num(raw.regular) : null;
+  const pctPrinted = raw.regular.match(/(\d+)\s*%/);
+  d.regular_price = prints && regular && regular > d.price && !pctPrinted ? round2(regular) : null;
+  d.percent_off = d.regular_price ? percentOff(d.price, d.regular_price) : prints && pctPrinted && !/up to/i.test(raw.regular) ? Number(pctPrinted[1]) : null;
+  if (!prints && raw.regular.trim() && !/^(-|n\/a|none)$/i.test(raw.regular)) review.push(`${store} "${raw.item}": regular price "${raw.regular}" dropped because config says this store prints none`);
+  d.member_price = /member|card|loyalty|app only|app-only|prime/i.test(raw.notes);
+  d.valid_through = findDates(raw.through)[0] ?? null;
+  const notes = [raw.notes, /up to/i.test(raw.regular) ? `Printed as ${raw.regular.trim()}.` : ""].filter(Boolean).join(" ").trim();
+  d.notes = notes.slice(0, 200);
+  if (!key) review.push(`${store} "${raw.item}": no item_key suggested`);
+  else if (cfg.items[key].category !== d.category) review.push(`${store} "${raw.item}": key ${key} is ${cfg.items[key].category}, note says ${d.category}; check the key`);
+  items.push(d);
 }
-candidates.sort((a, b) => b.meets_criteria - a.meets_criteria || b.strength - a.strength);
+
+// ---------- rank, to help pick highlights ----------
+
+const allWeeks = loadWeeks().map((w) => w.data);
+const prior = priorListings(allWeeks, week);
+const peers = peerPrices(items);
+const ranked = items.map((i) => ({ i, a: analyze(i, { cfg, prior, peers }) })).sort((x, y) => y.a.score - x.a.score);
 
 // ---------- write ----------
 
+const out = join(ROOT, "drafts", `${week}.json`);
 mkdirSync(join(ROOT, "drafts"), { recursive: true });
-const out = join(ROOT, "drafts", `${week}.draft.json`);
-writeFileSync(out, JSON.stringify({ week, source: basename(notePath), flyers, candidates, skipped }, null, 2) + "\n");
+const weekFile = { week, flyers: flyers.filter((f) => f.store).map(({ source_line, ...f }) => (f.note ? f : (delete f.note, f))), items };
+writeFileSync(out, JSON.stringify(weekFile, null, 2) + "\n");
+writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, review, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
 
-const meets = candidates.filter((c) => c.meets_criteria);
-console.log(`Week ${week}: ${flyers.length} flyer lines, ${candidates.length} readable items, ${skipped.length} skipped.`);
-console.log(`${meets.length} items meet the criteria (by suggested key). Review all candidates; keys are only suggestions.\n`);
-for (const c of meets) {
-  const how = Object.entries(c.checks).filter(([, j]) => j.ok).map(([k, j]) => `${k}: ${j.why}`).join("; ");
-  console.log(`  ${c.store.padEnd(15)} ${c.item.slice(0, 44).padEnd(44)} ${String(c.price).padStart(6)} ${c.unit.padEnd(5)} ${c.item_key_suggested}  (${how})`);
+const tiers = { standout: 0, good: 0, sale: 0 };
+for (const r of ranked) tiers[r.a.tier]++;
+console.log(`Week ${week}: ${weekFile.flyers.length} flyers, ${items.length} items (${tiers.standout} standouts, ${tiers.good} good), ${skipped.length} skipped.\n`);
+console.log("Top 15 by score (candidates for a highlight reason):");
+for (const { i, a } of ranked.slice(0, 15)) {
+  console.log(`  ${a.tier.padEnd(8)} ${i.store.padEnd(14)} ${i.item.slice(0, 42).padEnd(42)} ${priceText(i).padEnd(18)} ${a.tags.map((t) => t.text).join(", ")}`);
 }
-const judged = candidates.filter((c) => c.judgment_candidate).length;
-if (judged) console.log(`\n${judged} produce, meat or seafood items did not meet a test but could go in on judgment (reference "none"). Look through them for clearly good prices.`);
-const unkeyed = candidates.filter((c) => !c.item_key_suggested).length;
-if (unkeyed) console.log(`\n${unkeyed} items had no suggested key. Check them by hand, and add keys to config/items.json if needed.`);
+if (review.length) console.log(`\nCheck by hand (${review.length}):\n${review.map((r) => "  " + r).join("\n")}`);
+if (skipped.length) console.log(`\nSkipped (${skipped.length}): ${Object.entries(skipped.reduce((m, s) => ((m[s.reason] = (m[s.reason] ?? 0) + 1), m), {})).map(([k, v]) => `${v} ${k}`).join(", ")}`);
 const unmatched = flyers.filter((f) => f.unmatched_line);
 if (unmatched.length) console.log(`\nFlyer lines with no known store:\n${unmatched.map((f) => "  " + f.unmatched_line).join("\n")}`);
-console.log(`\nWrote ${out}`);
+console.log(`\nWrote ${out}\nDetails in drafts/${week}.report.json. Validate with: node scripts/validate.mjs ${out}`);

@@ -102,93 +102,112 @@ export function percentOff(price, regular) {
   return Math.round((1 - price / regular) * 100);
 }
 
-// ---------- deal judgment ----------
+// ---------- item analysis ----------
 
-export function isStaple(deal, cfg) {
-  return Boolean(cfg.items[deal.item_key]?.staple);
+export function isStaple(item, cfg) {
+  return Boolean(item.item_key && cfg.items[item.item_key]?.staple);
 }
 
-export function isPriority(deal, cfg) {
-  return cfg.criteria.priority_categories.includes(deal.category);
+export function isPriority(item, cfg) {
+  return cfg.criteria.priority_categories.includes(item.category);
 }
 
-export function printedThreshold(deal, cfg) {
-  const p = cfg.criteria.printed_discount;
-  if (isPriority(deal, cfg)) return p.min_percent_off_priority;
-  if (isStaple(deal, cfg)) return p.min_percent_off_staple;
-  return p.min_percent_off_other;
+// The item's US average benchmark, or null when it has none or is not comparable.
+export function usAverage(item, cfg) {
+  const key = item.item_key && cfg.items[item.item_key];
+  if (!key?.benchmark || !item.unit_price) return null;
+  if (cfg.criteria.us_average_staples_only && !key.staple) return null;
+  const b = cfg.benchmarks[key.benchmark];
+  const v = convertPer(item.unit_price.value, item.unit_price.per, b.per);
+  return v == null ? null : { ...b, key: key.benchmark, ratio: v / b.price };
 }
 
-// Ratio of the deal's unit price to its US average, or null.
-export function usAverageRatio(deal) {
-  if (!deal.unit_price || !deal.us_average) return null;
-  const v = convertPer(deal.unit_price.value, deal.unit_price.per, deal.us_average.per);
-  return v == null ? null : v / deal.us_average.price;
-}
-
-// Every deal from weeks before `week`, as { week, deal }.
+// Every item from weeks before `week`, as { week, item }.
 export function priorListings(weeks, week) {
-  return weeks.filter((w) => w.week < week).flatMap((w) => w.deals.map((d) => ({ week: w.week, deal: d })));
+  return weeks.filter((w) => w.week < week).flatMap((w) => w.items.map((i) => ({ week: w.week, item: i })));
 }
 
-// The lowest earlier listing of the same item_key, in the deal's unit:
-// { price, per, week, store, count } or null when there is none.
-export function lowestPrior(deal, prior) {
-  if (!deal.unit_price) return null;
+// The lowest earlier listing of the same item_key, in this item's unit:
+// { price, per, week, store, count } or null.
+export function lowestPrior(item, prior) {
+  if (!item.item_key || !item.unit_price) return null;
   let best = null;
   let count = 0;
-  for (const { week, deal: o } of prior) {
-    if (o.item_key !== deal.item_key || !o.unit_price) continue;
-    const v = convertPer(o.unit_price.value, o.unit_price.per, deal.unit_price.per);
+  for (const { week, item: o } of prior) {
+    if (o.item_key !== item.item_key || !o.unit_price) continue;
+    const v = convertPer(o.unit_price.value, o.unit_price.per, item.unit_price.per);
     if (v == null) continue;
     count++;
-    if (!best || v < best.price || (v === best.price && week > best.week)) {
-      best = { price: round2(v), per: deal.unit_price.per, week, store: o.store };
-    }
+    if (!best || v < best.price || (v === best.price && week > best.week)) best = { price: round2(v), per: item.unit_price.per, week, store: o.store };
   }
   return best && { ...best, count };
 }
 
-// Returns { ok, basis, strength, why } for the deal's stated reference.
-// prior is priorListings(...) for the deal's week; needed for site-history.
-export function judge(deal, cfg, prior = []) {
-  if (deal.reference === "printed") {
-    const pct = deal.percent_off;
-    const need = printedThreshold(deal, cfg);
-    if (pct == null) return { ok: false, why: "reference is printed but percent_off is null" };
-    return { ok: pct >= need, basis: "printed", strength: pct / 100, why: `${pct}% off, needs ${need}%` };
+// Lowest unit price per store for each item_key this week: Map key -> [{ store, value, per }].
+export function peerPrices(items) {
+  const m = new Map();
+  for (const i of items) {
+    if (!i.item_key || !i.unit_price) continue;
+    const list = m.get(i.item_key) ?? [];
+    const v = list.length ? convertPer(i.unit_price.value, i.unit_price.per, list[0].per) : i.unit_price.value;
+    if (v == null) continue;
+    const mine = list.find((x) => x.store === i.store);
+    if (mine) mine.value = Math.min(mine.value, v);
+    else list.push({ store: i.store, value: v, per: list.length ? list[0].per : i.unit_price.per });
+    m.set(i.item_key, list);
   }
-  if (deal.reference === "us-average") {
-    const ratio = usAverageRatio(deal);
-    const max = cfg.criteria.us_average.max_ratio;
-    if (ratio == null) return { ok: false, why: "unit price is not comparable to its US average" };
-    if (cfg.criteria.us_average.staples_only && !isStaple(deal, cfg)) {
-      return { ok: false, why: `${deal.item_key} is not a staple, so it cannot qualify on US average` };
-    }
-    return { ok: ratio <= max, basis: "us-average", strength: 1 - ratio, why: `${Math.round(ratio * 100)}% of US average, needs ${Math.round(max * 100)}% or less` };
-  }
-  if (deal.reference === "site-history") {
-    const sh = cfg.criteria.site_history;
-    const low = lowestPrior(deal, prior);
-    if (sh.staples_only && !isStaple(deal, cfg)) return { ok: false, why: `${deal.item_key} is not a staple, so it cannot qualify on site history` };
-    if (!low || low.count < sh.min_prior_listings) return { ok: false, why: "no earlier listing of this item to compare against" };
-    const v = deal.unit_price.value;
-    return {
-      ok: v < low.price,
-      basis: "site-history",
-      low,
-      strength: cfg.criteria.ranking.site_history_base + (1 - v / low.price),
-      why: `${v} vs lowest earlier listing ${low.price}, needs to be lower`,
-    };
-  }
-  const nr = cfg.criteria.no_reference;
-  const ok = nr.allowed && nr.categories.includes(deal.category);
-  return { ok, basis: "none", strength: cfg.criteria.ranking.no_reference_strength, why: ok ? "no reference, picked on judgment" : `no-reference deals are only allowed in ${nr.categories.join(", ")}` };
+  return m;
 }
 
-export function score(deal, cfg, prior = []) {
-  const j = judge(deal, cfg, prior);
-  return (j.strength || 0) + (isPriority(deal, cfg) ? cfg.criteria.ranking.priority_category_bonus : 0);
+// Tier, score and tags for one item.
+// ctx: { cfg, prior: priorListings(...), peers: peerPrices(week.items) }
+export function analyze(item, { cfg, prior, peers }) {
+  const c = cfg.criteria;
+  const priority = isPriority(item, cfg) || isStaple(item, cfg);
+  const pct = item.percent_off;
+  const us = usAverage(item, cfg);
+  const low = lowestPrior(item, prior);
+  const lowOk = low && low.count >= c.badges.lowest_listed_min_prior_listings;
+  const v = item.unit_price?.value;
+  const below = lowOk && v < low.price;
+  const matches = lowOk && v === low.price;
+
+  let cheapest = null;
+  const list = item.item_key && item.unit_price ? peers.get(item.item_key) : null;
+  if (list && list.length >= 2) {
+    const mine = convertPer(v, item.unit_price.per, list[0].per);
+    if (mine != null && list.every((x) => x.store === item.store || mine <= x.value)) cheapest = list.length;
+  }
+
+  const tags = [];
+  if (pct != null) tags.push({ kind: "pct", text: `${pct}% off` });
+  if (us && us.ratio <= c.good.max_us_average_ratio) tags.push({ kind: "us", text: `About ${Math.round((1 - us.ratio) * 100)}% under US avg.` });
+  if (below || matches) tags.push({ kind: "low", text: "Lowest we've listed" });
+  if (cheapest) tags.push({ kind: "cheap", text: `Cheapest of ${cheapest} stores` });
+  if (item.member_price) tags.push({ kind: "member", text: "Member price" });
+
+  const standout = Boolean(
+    item.highlight ||
+    (pct != null && pct >= (priority ? c.standout.min_percent_off_priority : c.standout.min_percent_off_other)) ||
+    (us && us.ratio <= c.standout.max_us_average_ratio) ||
+    (c.standout.below_lowest_listed && below),
+  );
+  const good = !standout && Boolean(
+    (pct != null && pct >= c.good.min_percent_off) ||
+    (us && us.ratio <= c.good.max_us_average_ratio) ||
+    (c.good.cheapest_across_stores && cheapest) ||
+    (c.good.matches_lowest_listed && matches),
+  );
+
+  const r = c.ranking;
+  const strength = Math.max(
+    pct != null ? pct / 100 : 0,
+    us ? 1 - us.ratio : 0,
+    below ? r.below_lowest_listed + (1 - v / low.price) : 0,
+    cheapest ? r.cheapest_across_stores : 0,
+  ) + (item.highlight ? r.highlight_bonus : 0) + (isPriority(item, cfg) ? r.priority_category_bonus : 0);
+
+  return { tier: standout ? "standout" : good ? "good" : "sale", score: strength, tags, us, low: lowOk ? low : null, cheapest };
 }
 
 // ---------- formatting ----------
@@ -219,8 +238,8 @@ export function unitPriceText(up) {
 }
 
 // Whether showing the unit price adds information beyond the price line.
-export function unitPriceIsExtra(deal) {
-  return deal.unit_price && !(deal.quantity === 1 && (deal.unit === "lb" || deal.unit === "each"));
+export function unitPriceIsExtra(item) {
+  return item.unit_price && !(item.quantity === 1 && (item.unit === "lb" || item.unit === "each"));
 }
 
 export function esc(s) {

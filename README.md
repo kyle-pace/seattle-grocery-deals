@@ -1,20 +1,21 @@
-# Seattle Grocery Deals
+# Flyer Friday
 
-A static site that lists the good sales from Seattle-area grocery flyers each week, with a short reason for each, plus links to every store's flyer. A new week is added every Friday.
+A static site that shows what's on sale in Seattle-area grocery flyers each week: every readable sale item, the standouts, where to shop, and the same item compared across stores, plus links to every store's flyer. A new week is added every Friday.
 
 Live site: https://kyle-pace.github.io/seattle-grocery-deals/
 
 ## How it works
 
 - `config/stores.json`: the stores, their flyer links and how to read them.
-- `config/criteria.json`: the thresholds for what counts as a good deal.
+- `config/criteria.json`: how items are highlighted and ranked.
 - `config/items.json`: normalized item keys, so prices can be compared across weeks and stores.
 - `config/benchmarks.json`: US average prices from the Bureau of Labor Statistics.
 - `data/weeks/YYYY-MM-DD.json`: one file per week, named by that Friday's date.
 - `schema/week.schema.json`: the JSON Schema for a week file.
-- `scripts/validate.mjs`: schema plus cross checks (unit prices, percent off, criteria, no em dashes).
-- `scripts/draft-week.mjs`: parses a weekly All Items note into a draft.
-- `scripts/build.mjs`: renders the site into `dist/`.
+- `scripts/validate.mjs`: schema plus cross checks (unit prices, percent off, printed prices only, no em dashes).
+- `scripts/draft-week.mjs`: turns a weekly All Items note into a draft week file.
+- `scripts/build.mjs`: ranks items and renders the site into `dist/`.
+- `site/assets/`: styles, the filter script, the logo, and the Bricolage Grotesque font (SIL Open Font License, see `fonts/OFL.txt`).
 - `.github/workflows/pages.yml`: validates, builds and deploys to GitHub Pages on every push to `main`.
 
 ## Commands

@@ -92,10 +92,140 @@
           "url": "https://www.hmart.com/weekly-ads"
         }
       ],
-      "note": "Meat and produce specials ran Friday to Monday only (Sep 25 to Sep 28)."
+      "note": "Meat and produce specials ran Friday to Monday only (Sep 25 to 28)."
     }
   ],
-  "deals": [
+  "items": [
+    {
+      "store": "lams",
+      "item": "Pork shoulder (butt), boneless",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Chicken wing midjoint",
+      "item_key": "chicken-wings",
+      "category": "meat",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Catfish, sliced fresh",
+      "item_key": "catfish",
+      "category": "seafood",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Galunggong",
+      "item_key": "galunggong",
+      "category": "seafood",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Fresh oysters, jarred, 10 oz",
+      "item_key": "oysters",
+      "category": "seafood",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.58,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Muqua (fuzzy melon)",
+      "item_key": "fuzzy-melon",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Yu choy-sum",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
     {
       "store": "lams",
       "item": "Chicken breast, boneless",
@@ -110,18 +240,117 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "chicken-breast-boneless",
-        "price": 4.203,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
       "member_price": false,
-      "reason": "Boneless breast under $3/lb, well below the national average.",
-      "valid_through": "2026-10-01",
-      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last."
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Beef round eye",
+      "item_key": "beef-round",
+      "category": "meat",
+      "price": 7.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "White shrimp, 16/20 count",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 9.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 9.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Pork hock",
+      "item_key": "pork-hock",
+      "category": "meat",
+      "price": 3.09,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.09,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Yellow onion",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 0.59,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.59,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Pummelo",
+      "item_key": "pomelo",
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Lemongrass, bunch",
+      "item_key": "lemongrass",
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.69,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
     },
     {
       "store": "uwajimaya",
@@ -141,12 +370,8 @@
       },
       "regular_price": 38.99,
       "percent_off": 31,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "$12 off a 15 lb bag of premium Japanese short-grain rice.",
-      "valid_through": "2026-09-29",
+      "valid_through": null,
       "notes": ""
     },
     {
@@ -163,13 +388,48 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Flanken short ribs under $9 a pound, against $12.99 for kalbi short ribs elsewhere this week.",
       "valid_through": "2026-09-28",
-      "notes": "Meat special ran Friday to Monday only."
+      "notes": "",
+      "highlight": {
+        "reason": "Flanken short ribs under $9 a pound, against $12.99 for kalbi at PCC this week."
+      }
+    },
+    {
+      "store": "hmart",
+      "item": "Pork belly, sliced",
+      "item_key": "pork-belly-sliced",
+      "category": "meat",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-09-28",
+      "notes": ""
+    },
+    {
+      "store": "pcc",
+      "item": "Kalbi short ribs",
+      "item_key": "beef-short-ribs",
+      "category": "meat",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
     },
     {
       "store": "smith-brothers",
@@ -189,12 +449,8 @@
       },
       "regular_price": null,
       "percent_off": 25,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "A quarter off bacon, delivered.",
-      "valid_through": "2026-10-02",
+      "valid_through": null,
       "notes": "Home delivery add-on."
     },
     {
@@ -215,12 +471,30 @@
       },
       "regular_price": null,
       "percent_off": 25,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "About 60 cents a pound, delivered.",
-      "valid_through": "2026-10-02",
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Organic yellow onions, 3 lb",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": null,
       "notes": "Home delivery add-on."
     }
   ]

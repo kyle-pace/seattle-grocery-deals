@@ -8,19 +8,10 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import {
   ROOT, WEEKS_DIR, readJson, loadConfig, weekFiles, isFriday, addDays,
-  computeUnitPrice, round2, percentOff, judge, priorListings, lowestPrior,
+  computeUnitPrice, round2, percentOff,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
-// Earlier weeks, for site-history checks. Unparseable files are reported by checkWeek.
-const repoWeeks = weekFiles().flatMap((f) => {
-  try {
-    const w = readJson(join(WEEKS_DIR, f));
-    return w && typeof w.week === "string" && Array.isArray(w.deals) ? [w] : [];
-  } catch {
-    return [];
-  }
-});
 const errors = [];
 const warnings = [];
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
@@ -102,26 +93,24 @@ function checkWeek(path) {
     if (s.active && s.tracked_since <= week.week && !flyerByStore[s.id]) warn(name, `active store ${s.id} has no flyer entry (shown as not checked)`);
   }
 
-  // Deals
-  const seenDeal = new Set();
-  for (const [i, d] of week.deals.entries()) {
-    const w = `${name} deals[${i}] ${d.store} "${d.item}"`;
+  // Items
+  const seen = new Set();
+  for (const [i, d] of week.items.entries()) {
+    const w = `${name} items[${i}] ${d.store} "${d.item}"`;
     const store = cfg.storeById[d.store];
-    const item = cfg.items[d.item_key];
     if (!store) { err(w, "store not in config/stores.json"); continue; }
-    if (!item) { err(w, `item_key ${d.item_key} not in config/items.json`); continue; }
-    if (item.category !== d.category) err(w, `category ${d.category} does not match items.json (${item.category})`);
+    if (d.item_key != null && !cfg.items[d.item_key]) err(w, `item_key ${d.item_key} not in config/items.json (add it, or use null)`);
 
     const flyer = flyerByStore[d.store];
     if (!flyer) err(w, "no flyer entry for this store");
-    else if (!["full", "partial"].includes(flyer.status)) err(w, `flyer status is ${flyer.status}; deals need a full or partial read`);
-    else if (flyer.valid_through && d.valid_through > flyer.valid_through) err(w, "valid_through is after the flyer's valid_through");
+    else if (!["full", "partial"].includes(flyer.status)) err(w, `flyer status is ${flyer.status}; items need a full or partial read`);
+    else if (flyer.valid_through && d.valid_through && d.valid_through > flyer.valid_through) err(w, "valid_through is after the flyer's valid_through");
 
-    if (d.valid_through < addDays(week.week, -7) || d.valid_through > addDays(week.week, 21)) err(w, "valid_through is not near this week");
+    if (d.valid_through && (d.valid_through < addDays(week.week, -7) || d.valid_through > addDays(week.week, 21))) err(w, "valid_through is not near this week");
 
-    const dupKey = `${d.store}|${d.item}|${d.price}|${d.unit}`;
-    if (seenDeal.has(dupKey)) err(w, "duplicate deal");
-    seenDeal.add(dupKey);
+    const dupKey = `${d.store}|${d.item}|${d.price}|${d.quantity}|${d.unit}`;
+    if (seen.has(dupKey)) err(w, "duplicate item");
+    seen.add(dupKey);
 
     // Unit price
     const expected = computeUnitPrice(d);
@@ -131,43 +120,18 @@ function checkWeek(path) {
       else if (Math.abs(d.unit_price.value - round2(expected.value)) > 0.011) err(w, `unit_price should be ${round2(expected.value)}`);
     }
 
-    // Regular price and percent off
+    // Regular price and percent off: only what the store printed.
     if (d.regular_price != null) {
       if (d.regular_price <= d.price) err(w, "regular_price must be higher than price");
       const pct = percentOff(d.price, d.regular_price);
       if (d.percent_off == null) err(w, `percent_off should be ${pct}`);
       else if (Math.abs(d.percent_off - pct) > 1) err(w, `percent_off should be ${pct}`);
     }
-    if (d.regular_price != null || d.percent_off != null) {
-      if (!store.prints_regular_prices) err(w, `${store.id} does not print regular prices (config), so regular_price and percent_off must be null`);
+    if ((d.regular_price != null || d.percent_off != null) && !store.prints_regular_prices) {
+      err(w, `${store.id} does not print regular prices (config), so regular_price and percent_off must be null`);
     }
 
-    // Reference
-    if (d.reference === "printed" && d.percent_off == null) err(w, "printed reference needs regular_price or percent_off");
-    if (d.reference === "us-average") {
-      if (!d.us_average) err(w, "us-average reference needs us_average");
-      else {
-        const b = cfg.benchmarks[d.us_average.benchmark];
-        if (!b) err(w, `unknown benchmark ${d.us_average.benchmark}`);
-        else if (item.benchmark !== d.us_average.benchmark) err(w, `benchmark for ${d.item_key} is ${item.benchmark ?? "none"} in items.json`);
-        else if (b.per !== d.us_average.per) err(w, "us_average.per does not match benchmarks.json");
-      }
-    } else if (d.us_average) err(w, "us_average must be null unless reference is us-average");
-
-    const prior = priorListings(repoWeeks, week.week);
-    if (d.reference === "site-history") {
-      const low = lowestPrior(d, prior);
-      if (!d.site_history) err(w, "site-history reference needs site_history");
-      else if (low && (Math.abs(d.site_history.price - low.price) > 0.011 || d.site_history.week !== low.week || d.site_history.store !== low.store || d.site_history.per !== low.per)) {
-        err(w, `site_history should be ${JSON.stringify({ price: low.price, per: low.per, week: low.week, store: low.store })}`);
-      }
-    } else if (d.site_history) err(w, "site_history must be null unless reference is site-history");
-
-    const j = judge(d, cfg, prior);
-    if (!j.ok) err(w, `does not meet the criteria (${j.why})`);
-
-    if (d.reason.length > cfg.criteria.reason_max_length) err(w, "reason is too long");
-    if (d.member_price && !/member|card|app|loyalty|prime/i.test(d.notes + d.reason)) warn(w, "member_price is true; say which program in notes");
+    if (d.member_price && !/member|card|app|loyalty|prime/i.test(d.notes)) warn(w, "member_price is true; say which program in notes");
   }
 }
 
@@ -175,7 +139,7 @@ function checkWeek(path) {
 
 function scanText(dir) {
   for (const entry of readdirSync(dir)) {
-    if ([".git", "node_modules", "dist", "drafts"].includes(entry)) continue;
+    if ([".git", "node_modules", "dist", "drafts", "fonts"].includes(entry)) continue;
     const p = join(dir, entry);
     if (statSync(p).isDirectory()) scanText(p);
     else if (/\.(md|json|mjs|js|css|html|yml|txt)$/.test(entry)) {

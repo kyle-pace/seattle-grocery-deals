@@ -92,10 +92,342 @@
           "url": "https://www.hmart.com/weekly-ads"
         }
       ],
-      "note": "Meat and produce specials ran Friday to Monday only (Oct 2 to Oct 5)."
+      "note": "Meat and produce specials ran Friday to Monday only (Oct 2 to 5)."
     }
   ],
-  "deals": [
+  "items": [
+    {
+      "store": "lams",
+      "item": "Stewing chicken",
+      "item_key": "chicken-stewing",
+      "category": "meat",
+      "price": 2.09,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.09,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Catfish, fresh",
+      "item_key": "catfish",
+      "category": "seafood",
+      "price": 4.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Whole cuttlefish, cleaned",
+      "item_key": "cuttlefish",
+      "category": "seafood",
+      "price": 6.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Beef shank, boneless",
+      "item_key": "beef-shank",
+      "category": "meat",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Live oysters, large, 2 dozen",
+      "item_key": "oysters",
+      "category": "seafood",
+      "price": 18.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "dozen"
+      },
+      "unit_price": {
+        "value": 9.49,
+        "per": "dozen"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Taro, big",
+      "item_key": "taro",
+      "category": "produce",
+      "price": 1.19,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Tung ho (chrysanthemum greens)",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Thai young coconut",
+      "item_key": "coconut",
+      "category": "produce",
+      "price": 5,
+      "quantity": 2,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.5,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Also $19.99 per case."
+    },
+    {
+      "store": "lams",
+      "item": "Pork leg ham, boneless",
+      "item_key": "pork-leg",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Pork shank, boneless",
+      "item_key": "pork-hock",
+      "category": "meat",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Beef thin ribs",
+      "item_key": "beef-short-ribs",
+      "category": "meat",
+      "price": 11.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 11.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "hmart",
+      "item": "Pork butt, chunk",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Pork butt, CT sliced",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 5.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Pork spare rib roll",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Pork stew meat",
+      "item_key": "pork-stew",
+      "category": "meat",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Pork belly BBQ",
+      "item_key": "pork-belly-sliced",
+      "category": "meat",
+      "price": 6.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Beef brisket point",
+      "item_key": "beef-brisket",
+      "category": "meat",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Abalone, 3 count",
+      "item_key": "abalone",
+      "category": "seafood",
+      "price": 11.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-10-05",
+      "notes": ""
+    },
     {
       "store": "uwajimaya",
       "item": "Mary's Free Range Whole Chicken",
@@ -110,13 +442,81 @@
       },
       "regular_price": 3.99,
       "percent_off": 25,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Free-range whole chicken for under $3/lb.",
-      "valid_through": "2026-10-06",
+      "valid_through": null,
       "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Thin sliced pork belly",
+      "item_key": "pork-belly-sliced",
+      "category": "meat",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Heritage Berkshire Kurobuta Korean-style pork belly",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.99,
+        "per": "lb"
+      },
+      "regular_price": 10.99,
+      "percent_off": 18,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Whole saba (mackerel), 600 g and up",
+      "item_key": "mackerel",
+      "category": "seafood",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": 6.99,
+      "percent_off": 14,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Fuji apples, new crop",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Printed as save up to $1.00/lb."
     },
     {
       "store": "central-coop",
@@ -132,12 +532,8 @@
       },
       "regular_price": null,
       "percent_off": 26,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Organic avocados at $1.25 each.",
-      "valid_through": "2026-10-06",
+      "valid_through": null,
       "notes": ""
     },
     {
@@ -154,12 +550,8 @@
       },
       "regular_price": null,
       "percent_off": 32,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Nearly a third off organic winter squash.",
-      "valid_through": "2026-10-06",
+      "valid_through": null,
       "notes": ""
     },
     {
@@ -176,13 +568,45 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Avocados at 75 cents each, cheaper than the organic 4 for $5 deal this week.",
-      "valid_through": "2026-10-06",
+      "valid_through": null,
       "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Limes",
+      "item_key": "limes",
+      "category": "produce",
+      "price": 1,
+      "quantity": 3,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.33,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Tillamook cheddar or pepper jack snack slices",
+      "item_key": "cheese-other",
+      "category": "dairy-eggs",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
     }
   ]
 }

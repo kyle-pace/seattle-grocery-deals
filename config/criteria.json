@@ -1,29 +1,31 @@
 {
+  "note": "Every readable sale item is listed. These settings only decide how items are highlighted and ranked.",
   "categories": ["produce", "meat", "seafood", "dairy-eggs", "pantry", "frozen", "bakery", "prepared", "snacks-drinks", "other"],
   "priority_categories": ["produce", "meat", "seafood"],
-  "printed_discount": {
+  "standout": {
     "min_percent_off_priority": 25,
-    "min_percent_off_staple": 25,
     "min_percent_off_other": 40,
-    "exact_savings_counts_as_printed": true,
-    "save_up_to_counts_as_printed": false
+    "max_us_average_ratio": 0.75,
+    "below_lowest_listed": true
   },
-  "us_average": {
-    "max_ratio": 0.75,
-    "staples_only": true
+  "good": {
+    "min_percent_off": 15,
+    "max_us_average_ratio": 0.9,
+    "cheapest_across_stores": true,
+    "matches_lowest_listed": true
   },
-  "site_history": {
-    "min_prior_listings": 1,
-    "staples_only": true
-  },
-  "no_reference": {
-    "allowed": true,
-    "categories": ["produce", "meat", "seafood"]
-  },
+  "us_average_staples_only": true,
+  "save_up_to_counts_as_printed": false,
   "ranking": {
     "priority_category_bonus": 0.1,
-    "site_history_base": 0.25,
-    "no_reference_strength": 0.15
+    "highlight_bonus": 0.3,
+    "below_lowest_listed": 0.25,
+    "cheapest_across_stores": 0.12
+  },
+  "home": {
+    "highlights": 12,
+    "where_to_shop_items": 5,
+    "best_by_category_items": 4
   },
   "badges": {
     "lowest_listed_min_prior_listings": 2

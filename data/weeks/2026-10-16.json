@@ -109,7 +109,353 @@
       "note": "Only a general specials listing was read, not a dated flyer page."
     }
   ],
-  "deals": [
+  "items": [
+    {
+      "store": "lams",
+      "item": "Atlantic salmon steak",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic salmon fillet",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Pork belly, boneless",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Tilapia, fresh",
+      "item_key": "tilapia",
+      "category": "seafood",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Swai headless cut steak, 2 lb",
+      "item_key": "swai",
+      "category": "seafood",
+      "price": 6.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 3.25,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Chicken feet",
+      "item_key": "chicken-feet",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Yam, Hawaiian purple",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 2.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Tangerine, honey",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 2.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Tomato, Roma",
+      "item_key": "tomatoes",
+      "category": "produce",
+      "price": 1.89,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Pork baby back rib",
+      "item_key": "pork-baby-back-ribs",
+      "category": "meat",
+      "price": 4.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Beef back rib",
+      "item_key": "beef-ribs",
+      "category": "meat",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Beef feet",
+      "item_key": "beef-feet",
+      "category": "meat",
+      "price": 3.89,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Chicken drumstick",
+      "item_key": "chicken-drumsticks",
+      "category": "meat",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Chinese broccoli",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 2.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Shimeji mushrooms, white or brown",
+      "item_key": "mushrooms",
+      "category": "produce",
+      "price": 0.79,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.79,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Daikon",
+      "item_key": "daikon",
+      "category": "produce",
+      "price": 0.89,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Baby banana",
+      "item_key": "bananas",
+      "category": "produce",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Pickle cucumber",
+      "item_key": "cucumbers",
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Geoduck, live",
+      "item_key": "geoduck",
+      "category": "seafood",
+      "price": 14.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
     {
       "store": "uwajimaya",
       "item": "Spare Ribs for Sweet & Sour Pork",
@@ -124,13 +470,12 @@
       },
       "regular_price": 7.49,
       "percent_off": 53,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Half price, the biggest discount on any protein this week.",
-      "valid_through": "2026-10-20",
-      "notes": ""
+      "valid_through": null,
+      "notes": "",
+      "highlight": {
+        "reason": "Half price, the biggest discount on any protein this week."
+      }
     },
     {
       "store": "uwajimaya",
@@ -146,62 +491,211 @@
       },
       "regular_price": 5.99,
       "percent_off": 33,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "$2 a pound off free-range chicken wings.",
-      "valid_through": "2026-10-20",
+      "valid_through": null,
       "notes": ""
     },
     {
-      "store": "lams",
-      "item": "Chicken Drumstick",
-      "item_key": "chicken-drumsticks",
-      "category": "meat",
-      "price": 1.29,
+      "store": "uwajimaya",
+      "item": "Kasuzuke salmon (farmed Chilean coho)",
+      "item_key": "salmon-other",
+      "category": "seafood",
+      "price": 16.99,
       "quantity": 1,
       "unit": "lb",
       "unit_price": {
-        "value": 1.29,
+        "value": 16.99,
         "per": "lb"
       },
-      "regular_price": null,
-      "percent_off": null,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "chicken-legs",
-        "price": 1.739,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
+      "regular_price": 19.99,
+      "percent_off": 15,
       "member_price": false,
-      "reason": "Drumsticks at $1.29/lb, a quarter under the national average.",
-      "valid_through": "2026-10-22",
-      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last."
+      "valid_through": null,
+      "notes": ""
     },
     {
-      "store": "lams",
-      "item": "Atlantic salmon steak",
-      "item_key": "salmon-atlantic",
-      "category": "seafood",
-      "price": 7.49,
+      "store": "uwajimaya",
+      "item": "Mishima Reserve American Wagyu tri tip steak",
+      "item_key": "beef-steak",
+      "category": "meat",
+      "price": 27.99,
       "quantity": 1,
       "unit": "lb",
       "unit_price": {
-        "value": 7.49,
+        "value": 27.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 15,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kasuzuke black cod",
+      "item_key": "cod",
+      "category": "seafood",
+      "price": 23.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 23.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 11,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Hamachi sashimi block",
+      "item_key": "yellowtail",
+      "category": "seafood",
+      "price": 39.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 39.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 7,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Baby bok choy",
+      "item_key": "bok-choy",
+      "category": "produce",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.79,
         "per": "lb"
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Fresh Atlantic salmon steaks at $7.49 a pound for a second week running.",
-      "valid_through": "2026-10-22",
-      "notes": "Fillet is $7.99/lb. While supplies last."
+      "valid_through": null,
+      "notes": "Printed as save up to 30 cents/lb."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Fuyu persimmons",
+      "item_key": "persimmons",
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Printed as save up to $1.50/lb."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Satsuma imo (Japanese sweet potato)",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Printed as save up to $2.00/lb."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Shirakiku Sekka Rice, 15 lb",
+      "item_key": "rice-short-grain",
+      "category": "pantry",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.87,
+        "per": "lb"
+      },
+      "regular_price": 22.99,
+      "percent_off": 43,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Foster Farms chicken thighs",
+      "item_key": "chicken-thighs",
+      "category": "meat",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Boneless pork loin roast",
+      "item_key": "pork-loin",
+      "category": "meat",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Boneless beef top round steaks",
+      "item_key": "beef-round",
+      "category": "meat",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
     },
     {
       "store": "red-apple",
@@ -217,22 +711,16 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "site-history",
-      "us_average": null,
-      "site_history": {
-        "price": 2.49,
-        "per": "lb",
-        "week": "2026-10-09",
-        "store": "central-coop"
-      },
       "member_price": false,
-      "reason": "Local pears under $1 a pound, your pick of four kinds.",
-      "valid_through": "2026-10-20",
-      "notes": ""
+      "valid_through": null,
+      "notes": "",
+      "highlight": {
+        "reason": "Local pears under $1 a pound, your pick of four kinds."
+      }
     },
     {
       "store": "red-apple",
-      "item": "Jumbo Yellow Onions (local)",
+      "item": "Jumbo yellow onions, local",
       "item_key": "onions-yellow",
       "category": "produce",
       "price": 0.78,
@@ -244,12 +732,48 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Local jumbo yellow onions under 80 cents a pound.",
-      "valid_through": "2026-10-20",
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Green cabbage, local",
+      "item_key": "cabbage-green",
+      "category": "produce",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Red or yellow potatoes, 5 lb bag",
+      "item_key": "potatoes-red-yellow",
+      "category": "produce",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
       "notes": ""
     },
     {
@@ -266,48 +790,133 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Avocados at 75 cents each.",
-      "valid_through": "2026-10-20",
+      "valid_through": null,
       "notes": ""
     },
     {
       "store": "red-apple",
-      "item": "Red or Yellow Potatoes, 5 lb bag",
-      "item_key": "potatoes-red-yellow",
+      "item": "Navel oranges",
+      "item_key": "oranges-navel",
       "category": "produce",
-      "price": 2.98,
+      "price": 1.48,
       "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "lb"
-      },
+      "unit": "lb",
       "unit_price": {
-        "value": 0.6,
+        "value": 1.48,
         "per": "lb"
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "potatoes",
-        "price": 0.989,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
       "member_price": false,
-      "reason": "About 60 cents a pound for a 5 lb bag.",
-      "valid_through": "2026-10-20",
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Organic Fuji apples, 2 lb bag",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Organic yams",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Fuyu persimmons",
+      "item_key": "persimmons",
+      "category": "produce",
+      "price": 1.78,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.78,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
       "notes": ""
     },
     {
       "store": "smith-brothers",
-      "item": "Russet Potatoes, 5 lb",
+      "item": "Face Rock Creamery Vampire Slayer Garlic Cheddar, 6 oz",
+      "item_key": "cheese-other",
+      "category": "dairy-eggs",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 18.64,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Beecher's Hatch Chile Jack, 6.6 oz",
+      "item_key": "cheese-other",
+      "category": "dairy-eggs",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 16.95,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Russet potatoes, 5 lb",
       "item_key": "potatoes-russet",
       "category": "produce",
       "price": 2.99,
@@ -323,12 +932,30 @@
       },
       "regular_price": 3.99,
       "percent_off": 25,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "A quarter off a 5 lb bag, delivered.",
-      "valid_through": "2026-10-30",
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Organic yellow onions, 3 lb",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.33,
+        "per": "lb"
+      },
+      "regular_price": 4.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": null,
       "notes": "Home delivery add-on."
     }
   ]

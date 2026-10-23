@@ -93,7 +93,7 @@
       ]
     }
   ],
-  "deals": [
+  "items": [
     {
       "store": "lams",
       "item": "Bone-in pork chops",
@@ -108,18 +108,12 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "pork-chops",
-        "price": 4.219,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
       "member_price": false,
-      "reason": "Bone-in chops at about half the national average price.",
-      "valid_through": "2026-09-24",
-      "notes": "While supplies last."
+      "valid_through": null,
+      "notes": "While supplies last.",
+      "highlight": {
+        "reason": "Bone-in chops at about half the national average price."
+      }
     },
     {
       "store": "lams",
@@ -135,17 +129,8 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "us-average",
-      "us_average": {
-        "benchmark": "chicken-legs",
-        "price": 1.739,
-        "per": "lb",
-        "period": "2026-09"
-      },
-      "site_history": null,
       "member_price": false,
-      "reason": "Leg quarters at a quarter under the national average for bone-in chicken.",
-      "valid_through": "2026-09-24",
+      "valid_through": null,
       "notes": "While supplies last."
     },
     {
@@ -162,13 +147,153 @@
       },
       "regular_price": null,
       "percent_off": null,
-      "reference": "none",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Fresh Atlantic salmon steaks under $7.50 a pound.",
-      "valid_through": "2026-09-24",
-      "notes": "Fillet is $7.99/lb. While supplies last."
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic salmon fillet",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Pork spareribs",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Yellow potatoes",
+      "item_key": "potatoes-red-yellow",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Bitter melon",
+      "item_key": "bitter-melon",
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Taro",
+      "item_key": "taro",
+      "category": "produce",
+      "price": 1.39,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.39,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "King oyster mushrooms",
+      "item_key": "mushrooms",
+      "category": "produce",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Watercress",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
+    },
+    {
+      "store": "lams",
+      "item": "Lee Kum Kee oyster sauce",
+      "item_key": "oyster-sauce",
+      "category": "pantry",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 8.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila."
     },
     {
       "store": "uwajimaya",
@@ -188,12 +313,134 @@
       },
       "regular_price": 9.49,
       "percent_off": 47,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "Nearly half off a noodle soup base that keeps for months.",
-      "valid_through": "2026-09-22",
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Sanuki udon, frozen, 5 pc",
+      "item_key": "udon",
+      "category": "frozen",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": 39,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Aburaage",
+      "item_key": "fried-tofu",
+      "category": "other",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Vermont Curry",
+      "item_key": "curry-roux",
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": 31,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Carrots",
+      "item_key": "carrots",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Printed as up to 45% off."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Live Manila clams",
+      "item_key": "clams",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 11,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "pcc",
+      "item": "Organic local Bartlett pears",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 33,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic kabocha squash",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": null,
       "notes": ""
     },
     {
@@ -214,12 +461,8 @@
       },
       "regular_price": null,
       "percent_off": 25,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "A quarter off bacon, delivered.",
-      "valid_through": "2026-10-02",
+      "valid_through": null,
       "notes": "Home delivery add-on."
     },
     {
@@ -240,12 +483,52 @@
       },
       "regular_price": null,
       "percent_off": 25,
-      "reference": "printed",
-      "us_average": null,
-      "site_history": null,
       "member_price": false,
-      "reason": "About 60 cents a pound, delivered.",
-      "valid_through": "2026-10-02",
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Organic yellow onions, 3 lb",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Nancy's plain yogurt, 32 oz",
+      "item_key": "yogurt",
+      "category": "dairy-eggs",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 13,
+      "member_price": false,
+      "valid_through": null,
       "notes": "Home delivery add-on."
     }
   ]

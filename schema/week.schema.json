@@ -2,10 +2,10 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://kyle-pace.github.io/seattle-grocery-deals/schema/week.schema.json",
   "title": "Seattle Grocery Deals week file",
-  "description": "One week of flyers and selected deals. File name is data/weeks/<week>.json, where week is that Friday's Pacific date. scripts/validate.mjs runs extra checks beyond this schema.",
+  "description": "One week of flyers and every readable sale item from them. File name is data/weeks/<week>.json, where week is that Friday's Pacific date. scripts/validate.mjs runs extra checks beyond this schema. Highlighting and ranking are computed by the build.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["week", "flyers", "deals"],
+  "required": ["week", "flyers", "items"],
   "properties": {
     "week": { "type": "string", "format": "date", "description": "The Friday this week is named for (Pacific date)." },
     "flyers": {
@@ -13,10 +13,10 @@
       "description": "One entry per store checked this week.",
       "items": { "$ref": "#/definitions/flyer" }
     },
-    "deals": {
+    "items": {
       "type": "array",
-      "description": "Only the sales worth showing, picked by the criteria in UPDATING.md.",
-      "items": { "$ref": "#/definitions/deal" }
+      "description": "Every readable sale item from the flyers. Leave out anything whose price could not be read.",
+      "items": { "$ref": "#/definitions/item" }
     }
   },
   "definitions": {
@@ -50,14 +50,17 @@
         "note": { "type": "string", "maxLength": 300 }
       }
     },
-    "deal": {
+    "item": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["store", "item", "item_key", "category", "price", "quantity", "unit", "unit_price", "regular_price", "percent_off", "reference", "us_average", "site_history", "member_price", "reason", "valid_through", "notes"],
+      "required": ["store", "item", "item_key", "category", "price", "quantity", "unit", "unit_price", "regular_price", "percent_off", "member_price", "valid_through", "notes"],
       "properties": {
         "store": { "type": "string" },
         "item": { "type": "string", "minLength": 1, "maxLength": 120, "description": "Item name as printed on the flyer." },
-        "item_key": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "description": "Normalized key from config/items.json." },
+        "item_key": {
+          "oneOf": [{ "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }, { "type": "null" }],
+          "description": "Normalized key from config/items.json, used to compare across stores and weeks. Null when no key fits."
+        },
         "category": { "enum": ["produce", "meat", "seafood", "dairy-eggs", "pantry", "frozen", "bakery", "prepared", "snacks-drinks", "other"] },
         "price": { "$ref": "#/definitions/money", "description": "Sale price as printed, for `quantity` units. For \"4 for $5\", price is 5 and quantity is 4." },
         "quantity": { "type": "integer", "minimum": 1 },
@@ -94,48 +97,21 @@
           "oneOf": [{ "type": "integer", "minimum": 1, "maximum": 99 }, { "type": "null" }],
           "description": "Whole percent. Computed from regular_price, or as printed when only a percent is printed."
         },
-        "reference": {
-          "enum": ["printed", "us-average", "site-history", "none"],
-          "description": "What the deal is judged against. none means picked on judgment with no comparison price."
-        },
-        "site_history": {
-          "oneOf": [
-            { "type": "null" },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["price", "per", "week", "store"],
-              "properties": {
-                "price": { "type": "number", "exclusiveMinimum": 0 },
-                "per": { "enum": ["lb", "each", "dozen", "l", "gal"] },
-                "week": { "type": "string", "format": "date" },
-                "store": { "type": "string" }
-              }
-            }
-          ],
-          "description": "When reference is site-history: the lowest earlier listing of the same item_key on this site, which this deal beats."
-        },
-        "us_average": {
-          "oneOf": [
-            { "type": "null" },
-            {
-              "type": "object",
-              "additionalProperties": false,
-              "required": ["benchmark", "price", "per", "period"],
-              "properties": {
-                "benchmark": { "type": "string" },
-                "price": { "type": "number", "exclusiveMinimum": 0 },
-                "per": { "enum": ["lb", "each", "dozen", "l", "gal"] },
-                "period": { "type": "string", "pattern": "^\\d{4}-\\d{2}$" }
-              }
-            }
-          ],
-          "description": "Copied from config/benchmarks.json when reference is us-average."
-        },
         "member_price": { "type": "boolean", "description": "True for member, loyalty-card or app-only prices." },
-        "reason": { "type": "string", "minLength": 10, "maxLength": 140, "description": "One line on why it is a good deal." },
-        "valid_through": { "$ref": "#/definitions/date" },
-        "notes": { "type": "string", "maxLength": 200, "description": "Limits, while supplies last, member details, location caveats. Empty string if none." }
+        "valid_through": {
+          "oneOf": [{ "$ref": "#/definitions/date" }, { "type": "null" }],
+          "description": "Last day of the sale price. Null to use the flyer's valid_through."
+        },
+        "notes": { "type": "string", "maxLength": 200, "description": "Limits, while supplies last, member details, location caveats, \"save up to\" text. Empty string if none." },
+        "highlight": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reason"],
+          "properties": {
+            "reason": { "type": "string", "minLength": 10, "maxLength": 140 }
+          },
+          "description": "Optional hand pick: marks the item as a standout and shows the one-line reason."
+        }
       },
       "if": { "properties": { "unit": { "const": "pack" } } },
       "then": { "required": ["pack"] },

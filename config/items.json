@@ -1,77 +1,947 @@
 {
   "note": "Every deal's item_key must be listed here. staple: true lets an item qualify on price per unit against its benchmark. match lists lowercase words the draft helper uses to suggest a key.",
   "items": {
-    "chicken-whole": { "label": "Whole chicken", "category": "meat", "staple": true, "benchmark": "chicken-whole", "match": ["whole chicken", "fryer", "stewing chicken"] },
-    "chicken-leg-quarters": { "label": "Chicken leg quarters", "category": "meat", "staple": true, "benchmark": "chicken-legs", "match": ["leg quarter"] },
-    "chicken-drumsticks": { "label": "Chicken drumsticks", "category": "meat", "staple": true, "benchmark": "chicken-legs", "match": ["drumstick"] },
-    "chicken-thighs": { "label": "Chicken thighs", "category": "meat", "staple": true, "match": ["thigh"] },
-    "chicken-breast-boneless": { "label": "Chicken breast, boneless", "category": "meat", "staple": true, "benchmark": "chicken-breast-boneless", "match": ["boneless chicken breast", "chicken breast, boneless", "chicken breast boneless"] },
-    "chicken-wings": { "label": "Chicken wings", "category": "meat", "staple": true, "match": ["wing"] },
-    "chicken-feet": { "label": "Chicken feet", "category": "meat", "staple": false, "match": ["chicken feet"] },
-    "pork-chops": { "label": "Pork chops", "category": "meat", "staple": true, "benchmark": "pork-chops", "match": ["pork chop"] },
-    "pork-shoulder": { "label": "Pork shoulder or butt", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["pork shoulder", "pork butt"] },
-    "pork-loin": { "label": "Pork loin", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["pork loin"] },
-    "pork-belly": { "label": "Pork belly", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["pork belly"] },
-    "pork-belly-sliced": { "label": "Pork belly, sliced", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["sliced pork belly", "pork belly sliced", "pork belly, sliced"] },
-    "pork-spareribs": { "label": "Pork spareribs", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["spare rib", "sparerib"] },
-    "pork-baby-back-ribs": { "label": "Pork baby back ribs", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["baby back"] },
-    "pork-ground": { "label": "Ground pork", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["ground pork"] },
-    "pork-stew": { "label": "Pork stew meat", "category": "meat", "staple": true, "benchmark": "pork-other", "match": ["pork stew"] },
-    "bacon": { "label": "Bacon", "category": "meat", "staple": true, "benchmark": "bacon", "match": ["bacon"] },
-    "ham": { "label": "Ham", "category": "meat", "staple": false, "benchmark": "ham", "match": ["ham"] },
-    "beef-ground": { "label": "Ground beef", "category": "meat", "staple": true, "benchmark": "ground-beef", "match": ["ground beef"] },
-    "beef-round": { "label": "Beef round (roast or steak)", "category": "meat", "staple": true, "benchmark": "beef-round-roast", "match": ["round roast", "top round", "round eye", "eye of round", "london broil"] },
-    "beef-stew": { "label": "Beef stew meat", "category": "meat", "staple": true, "benchmark": "beef-stew", "match": ["beef for stew", "beef stew", "stew beef"] },
-    "beef-sirloin": { "label": "Beef sirloin steak", "category": "meat", "staple": true, "benchmark": "beef-sirloin", "match": ["sirloin"] },
-    "beef-short-ribs": { "label": "Beef short ribs", "category": "meat", "staple": true, "match": ["short rib", "galbi", "kalbi", "flanken"] },
-    "beef-brisket": { "label": "Beef brisket", "category": "meat", "staple": true, "match": ["brisket"] },
-    "beef-shank": { "label": "Beef shank", "category": "meat", "staple": true, "match": ["beef shank"] },
-    "salmon-atlantic": { "label": "Atlantic salmon", "category": "seafood", "staple": true, "match": ["atlantic salmon"] },
-    "salmon-other": { "label": "Salmon (other)", "category": "seafood", "staple": true, "match": ["salmon", "coho", "sockeye", "king salmon"] },
-    "shrimp": { "label": "Shrimp", "category": "seafood", "staple": true, "match": ["shrimp", "prawn"] },
-    "squid": { "label": "Squid or calamari", "category": "seafood", "staple": true, "match": ["squid", "calamari"] },
-    "cuttlefish": { "label": "Cuttlefish", "category": "seafood", "staple": true, "match": ["cuttlefish"] },
-    "catfish": { "label": "Catfish", "category": "seafood", "staple": true, "match": ["catfish"] },
-    "tilapia": { "label": "Tilapia", "category": "seafood", "staple": true, "match": ["tilapia"] },
-    "cod": { "label": "Cod or black cod", "category": "seafood", "staple": true, "match": ["cod"] },
-    "mackerel": { "label": "Mackerel", "category": "seafood", "staple": true, "match": ["mackerel", "saba"] },
-    "crab": { "label": "Crab", "category": "seafood", "staple": true, "match": ["crab"] },
-    "clams": { "label": "Clams", "category": "seafood", "staple": true, "match": ["clam"] },
-    "oysters": { "label": "Oysters", "category": "seafood", "staple": true, "match": ["oyster"] },
-    "eggs": { "label": "Eggs", "category": "dairy-eggs", "staple": true, "benchmark": "eggs", "match": ["eggs"] },
-    "milk": { "label": "Milk", "category": "dairy-eggs", "staple": false, "benchmark": "milk-whole", "match": ["milk"] },
-    "cheese-cheddar": { "label": "Cheddar cheese", "category": "dairy-eggs", "staple": false, "benchmark": "cheddar", "match": ["cheddar"] },
-    "butter": { "label": "Butter", "category": "dairy-eggs", "staple": false, "benchmark": "butter", "match": ["butter"] },
-    "tofu": { "label": "Tofu", "category": "other", "staple": false, "match": ["tofu"] },
-    "rice-short-grain": { "label": "Rice, short grain", "category": "pantry", "staple": true, "benchmark": "rice-white", "match": ["short grain", "sekka", "hitomebore", "nishiki", "koshihikari"] },
-    "rice-medium-grain": { "label": "Rice, medium grain (Calrose)", "category": "pantry", "staple": true, "benchmark": "rice-white", "match": ["calrose"] },
-    "rice-jasmine": { "label": "Rice, jasmine", "category": "pantry", "staple": true, "benchmark": "rice-white", "match": ["jasmine rice"] },
-    "rice-long-grain": { "label": "Rice, long grain", "category": "pantry", "staple": true, "benchmark": "rice-white", "match": ["long grain", "basmati"] },
-    "cooking-oil": { "label": "Cooking oil", "category": "pantry", "staple": true, "match": ["vegetable oil", "canola oil", "soybean oil", "olive oil"] },
-    "noodle-soup-base": { "label": "Noodle soup base (tsuyu)", "category": "pantry", "staple": false, "match": ["tsuyu", "hontsuyu"] },
-    "curry-roux": { "label": "Curry roux", "category": "pantry", "staple": false, "match": ["curry"] },
-    "coffee": { "label": "Coffee", "category": "snacks-drinks", "staple": false, "benchmark": "coffee-ground", "match": ["coffee"] },
-    "potatoes-russet": { "label": "Russet potatoes", "category": "produce", "staple": true, "benchmark": "potatoes", "match": ["russet"] },
-    "potatoes-red-yellow": { "label": "Red or yellow potatoes", "category": "produce", "staple": true, "benchmark": "potatoes", "match": ["yellow potato", "red potato", "gold potato"] },
-    "onions-yellow": { "label": "Yellow onions", "category": "produce", "staple": true, "match": ["yellow onion", "onion"] },
-    "cabbage-green": { "label": "Green cabbage", "category": "produce", "staple": true, "match": ["green cabbage"] },
-    "cabbage-napa": { "label": "Napa cabbage", "category": "produce", "staple": true, "match": ["napa", "nappa"] },
-    "bok-choy": { "label": "Bok choy", "category": "produce", "staple": true, "match": ["bok choy"] },
-    "carrots": { "label": "Carrots", "category": "produce", "staple": true, "match": ["carrot"] },
-    "tomatoes": { "label": "Tomatoes", "category": "produce", "staple": true, "benchmark": "tomatoes", "match": ["tomato"] },
-    "lettuce-iceberg": { "label": "Iceberg lettuce", "category": "produce", "staple": true, "benchmark": "lettuce-iceberg", "match": ["iceberg"] },
-    "lettuce-romaine": { "label": "Romaine lettuce", "category": "produce", "staple": true, "benchmark": "lettuce-romaine", "match": ["romaine"] },
-    "mushrooms": { "label": "Mushrooms", "category": "produce", "staple": true, "match": ["mushroom", "shimeji", "enoki"] },
-    "squash-winter": { "label": "Winter squash", "category": "produce", "staple": true, "match": ["kabocha", "butternut", "acorn squash"] },
-    "sweet-potatoes": { "label": "Sweet potatoes or yams", "category": "produce", "staple": true, "match": ["sweet potato", "yam", "satsuma imo"] },
-    "taro": { "label": "Taro", "category": "produce", "staple": true, "match": ["taro"] },
-    "avocados": { "label": "Avocados", "category": "produce", "staple": true, "match": ["avocado"] },
-    "bananas": { "label": "Bananas", "category": "produce", "staple": true, "benchmark": "bananas", "match": ["banana"] },
-    "apples": { "label": "Apples", "category": "produce", "staple": true, "match": ["apple", "fuji", "honeycrisp", "cosmic crisp", "gala"] },
-    "pears": { "label": "Pears", "category": "produce", "staple": true, "match": ["pear"] },
-    "oranges-navel": { "label": "Navel oranges", "category": "produce", "staple": true, "benchmark": "oranges-navel", "match": ["navel orange"] },
-    "mandarins": { "label": "Mandarins or tangerines", "category": "produce", "staple": true, "match": ["mandarin", "tangerine", "satsuma", "clementine"] },
-    "lemons": { "label": "Lemons", "category": "produce", "staple": true, "benchmark": "lemons", "match": ["lemon"] },
-    "persimmons": { "label": "Persimmons", "category": "produce", "staple": true, "match": ["persimmon"] }
+    "chicken-whole": {
+      "label": "Whole chicken",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "chicken-whole",
+      "match": [
+        "whole chicken",
+        "fryer",
+        "stewing chicken"
+      ]
+    },
+    "chicken-leg-quarters": {
+      "label": "Chicken leg quarters",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "chicken-legs",
+      "match": [
+        "leg quarter"
+      ]
+    },
+    "chicken-drumsticks": {
+      "label": "Chicken drumsticks",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "chicken-legs",
+      "match": [
+        "drumstick"
+      ]
+    },
+    "chicken-thighs": {
+      "label": "Chicken thighs",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "thigh"
+      ]
+    },
+    "chicken-breast-boneless": {
+      "label": "Chicken breast, boneless",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "chicken-breast-boneless",
+      "match": [
+        "boneless chicken breast",
+        "chicken breast, boneless",
+        "chicken breast boneless"
+      ]
+    },
+    "chicken-wings": {
+      "label": "Chicken wings",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "wing"
+      ]
+    },
+    "chicken-feet": {
+      "label": "Chicken feet",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "chicken feet"
+      ]
+    },
+    "pork-chops": {
+      "label": "Pork chops",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-chops",
+      "match": [
+        "pork chop"
+      ]
+    },
+    "pork-shoulder": {
+      "label": "Pork shoulder or butt",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "pork shoulder",
+        "pork butt"
+      ]
+    },
+    "pork-loin": {
+      "label": "Pork loin",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "pork loin"
+      ]
+    },
+    "pork-belly": {
+      "label": "Pork belly",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "pork belly"
+      ]
+    },
+    "pork-belly-sliced": {
+      "label": "Pork belly, sliced",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "sliced pork belly",
+        "pork belly sliced",
+        "pork belly, sliced"
+      ]
+    },
+    "pork-spareribs": {
+      "label": "Pork spareribs",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "spare rib",
+        "sparerib"
+      ]
+    },
+    "pork-baby-back-ribs": {
+      "label": "Pork baby back ribs",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "baby back"
+      ]
+    },
+    "pork-ground": {
+      "label": "Ground pork",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "ground pork"
+      ]
+    },
+    "pork-stew": {
+      "label": "Pork stew meat",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "pork stew"
+      ]
+    },
+    "bacon": {
+      "label": "Bacon",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "bacon",
+      "match": [
+        "bacon"
+      ]
+    },
+    "ham": {
+      "label": "Ham",
+      "category": "meat",
+      "staple": false,
+      "benchmark": "ham",
+      "match": [
+        "ham"
+      ]
+    },
+    "beef-ground": {
+      "label": "Ground beef",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "ground-beef",
+      "match": [
+        "ground beef"
+      ]
+    },
+    "beef-round": {
+      "label": "Beef round (roast or steak)",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "beef-round-roast",
+      "match": [
+        "round roast",
+        "top round",
+        "round eye",
+        "eye of round",
+        "london broil"
+      ]
+    },
+    "beef-stew": {
+      "label": "Beef stew meat",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "beef-stew",
+      "match": [
+        "beef for stew",
+        "beef stew",
+        "stew beef"
+      ]
+    },
+    "beef-sirloin": {
+      "label": "Beef sirloin steak",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "beef-sirloin",
+      "match": [
+        "sirloin"
+      ]
+    },
+    "beef-short-ribs": {
+      "label": "Beef short ribs",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "short rib",
+        "galbi",
+        "kalbi",
+        "flanken",
+        "thin rib"
+      ]
+    },
+    "beef-brisket": {
+      "label": "Beef brisket",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "brisket"
+      ]
+    },
+    "beef-shank": {
+      "label": "Beef shank",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "beef shank"
+      ]
+    },
+    "salmon-atlantic": {
+      "label": "Atlantic salmon",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "atlantic salmon"
+      ]
+    },
+    "salmon-other": {
+      "label": "Salmon (other)",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "salmon",
+        "coho",
+        "sockeye",
+        "king salmon"
+      ]
+    },
+    "shrimp": {
+      "label": "Shrimp",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "shrimp",
+        "prawn"
+      ]
+    },
+    "squid": {
+      "label": "Squid or calamari",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "squid",
+        "calamari"
+      ]
+    },
+    "cuttlefish": {
+      "label": "Cuttlefish",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "cuttlefish"
+      ]
+    },
+    "catfish": {
+      "label": "Catfish",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "catfish"
+      ]
+    },
+    "tilapia": {
+      "label": "Tilapia",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "tilapia"
+      ]
+    },
+    "cod": {
+      "label": "Cod or black cod",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "cod"
+      ]
+    },
+    "mackerel": {
+      "label": "Mackerel",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "mackerel",
+        "saba"
+      ]
+    },
+    "crab": {
+      "label": "Crab",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "crab"
+      ]
+    },
+    "clams": {
+      "label": "Clams",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "clam"
+      ]
+    },
+    "oysters": {
+      "label": "Oysters",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "oyster"
+      ]
+    },
+    "eggs": {
+      "label": "Eggs",
+      "category": "dairy-eggs",
+      "staple": true,
+      "benchmark": "eggs",
+      "match": [
+        "eggs"
+      ]
+    },
+    "milk": {
+      "label": "Milk",
+      "category": "dairy-eggs",
+      "staple": false,
+      "benchmark": "milk-whole",
+      "match": [
+        "milk"
+      ]
+    },
+    "cheese-cheddar": {
+      "label": "Cheddar cheese",
+      "category": "dairy-eggs",
+      "staple": false,
+      "benchmark": "cheddar",
+      "match": [
+        "cheddar"
+      ]
+    },
+    "butter": {
+      "label": "Butter",
+      "category": "dairy-eggs",
+      "staple": false,
+      "benchmark": "butter",
+      "match": [
+        "butter"
+      ]
+    },
+    "tofu": {
+      "label": "Tofu",
+      "category": "other",
+      "staple": false,
+      "match": [
+        "tofu"
+      ]
+    },
+    "rice-short-grain": {
+      "label": "Rice, short grain",
+      "category": "pantry",
+      "staple": true,
+      "benchmark": "rice-white",
+      "match": [
+        "short grain",
+        "sekka",
+        "hitomebore",
+        "nishiki",
+        "koshihikari"
+      ]
+    },
+    "rice-medium-grain": {
+      "label": "Rice, medium grain (Calrose)",
+      "category": "pantry",
+      "staple": true,
+      "benchmark": "rice-white",
+      "match": [
+        "calrose"
+      ]
+    },
+    "rice-jasmine": {
+      "label": "Rice, jasmine",
+      "category": "pantry",
+      "staple": true,
+      "benchmark": "rice-white",
+      "match": [
+        "jasmine rice"
+      ]
+    },
+    "rice-long-grain": {
+      "label": "Rice, long grain",
+      "category": "pantry",
+      "staple": true,
+      "benchmark": "rice-white",
+      "match": [
+        "long grain",
+        "basmati"
+      ]
+    },
+    "cooking-oil": {
+      "label": "Cooking oil",
+      "category": "pantry",
+      "staple": true,
+      "match": [
+        "vegetable oil",
+        "canola oil",
+        "soybean oil",
+        "olive oil"
+      ]
+    },
+    "noodle-soup-base": {
+      "label": "Noodle soup base (tsuyu)",
+      "category": "pantry",
+      "staple": false,
+      "match": [
+        "tsuyu",
+        "hontsuyu"
+      ]
+    },
+    "curry-roux": {
+      "label": "Curry roux",
+      "category": "pantry",
+      "staple": false,
+      "match": [
+        "curry"
+      ]
+    },
+    "coffee": {
+      "label": "Coffee",
+      "category": "snacks-drinks",
+      "staple": false,
+      "benchmark": "coffee-ground",
+      "match": [
+        "coffee"
+      ]
+    },
+    "potatoes-russet": {
+      "label": "Russet potatoes",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "potatoes",
+      "match": [
+        "russet"
+      ]
+    },
+    "potatoes-red-yellow": {
+      "label": "Red or yellow potatoes",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "potatoes",
+      "match": [
+        "yellow potato",
+        "red potato",
+        "gold potato"
+      ]
+    },
+    "onions-yellow": {
+      "label": "Yellow onions",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "yellow onion",
+        "onion"
+      ]
+    },
+    "cabbage-green": {
+      "label": "Green cabbage",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "green cabbage"
+      ]
+    },
+    "cabbage-napa": {
+      "label": "Napa cabbage",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "napa",
+        "nappa"
+      ]
+    },
+    "bok-choy": {
+      "label": "Bok choy",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "bok choy"
+      ]
+    },
+    "carrots": {
+      "label": "Carrots",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "carrot"
+      ]
+    },
+    "tomatoes": {
+      "label": "Tomatoes",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "tomatoes",
+      "match": [
+        "tomato"
+      ]
+    },
+    "lettuce-iceberg": {
+      "label": "Iceberg lettuce",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "lettuce-iceberg",
+      "match": [
+        "iceberg"
+      ]
+    },
+    "lettuce-romaine": {
+      "label": "Romaine lettuce",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "lettuce-romaine",
+      "match": [
+        "romaine"
+      ]
+    },
+    "mushrooms": {
+      "label": "Mushrooms",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "mushroom",
+        "shimeji",
+        "enoki"
+      ]
+    },
+    "squash-winter": {
+      "label": "Winter squash",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "kabocha",
+        "butternut",
+        "acorn squash"
+      ]
+    },
+    "sweet-potatoes": {
+      "label": "Sweet potatoes or yams",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "sweet potato",
+        "yam",
+        "satsuma imo"
+      ]
+    },
+    "taro": {
+      "label": "Taro",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "taro"
+      ]
+    },
+    "avocados": {
+      "label": "Avocados",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "avocado"
+      ]
+    },
+    "bananas": {
+      "label": "Bananas",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "bananas",
+      "match": [
+        "banana"
+      ]
+    },
+    "apples": {
+      "label": "Apples",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "apple",
+        "fuji",
+        "honeycrisp",
+        "cosmic crisp",
+        "gala"
+      ]
+    },
+    "pears": {
+      "label": "Pears",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "pear"
+      ]
+    },
+    "oranges-navel": {
+      "label": "Navel oranges",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "oranges-navel",
+      "match": [
+        "navel orange"
+      ]
+    },
+    "mandarins": {
+      "label": "Mandarins or tangerines",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "mandarin",
+        "tangerine",
+        "satsuma",
+        "clementine"
+      ]
+    },
+    "lemons": {
+      "label": "Lemons",
+      "category": "produce",
+      "staple": true,
+      "benchmark": "lemons",
+      "match": [
+        "lemon"
+      ]
+    },
+    "persimmons": {
+      "label": "Persimmons",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "persimmon"
+      ]
+    },
+    "chicken-stewing": {
+      "label": "Stewing chicken",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "stewing chicken"
+      ]
+    },
+    "pork-hock": {
+      "label": "Pork hock or shank",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "pork hock",
+        "pork shank"
+      ]
+    },
+    "pork-leg": {
+      "label": "Pork leg",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "pork-other",
+      "match": [
+        "pork leg"
+      ]
+    },
+    "pork-feet": {
+      "label": "Pork feet",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "pork feet",
+        "pork trotter"
+      ]
+    },
+    "beef-ribs": {
+      "label": "Beef back ribs",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "beef back rib",
+        "back rib"
+      ]
+    },
+    "beef-feet": {
+      "label": "Beef feet",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "beef feet"
+      ]
+    },
+    "beef-omasum": {
+      "label": "Beef omasum",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "omasum"
+      ]
+    },
+    "goat": {
+      "label": "Goat meat",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "goat"
+      ]
+    },
+    "swai": {
+      "label": "Swai",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "swai"
+      ]
+    },
+    "weakfish": {
+      "label": "Weakfish",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "weakfish"
+      ]
+    },
+    "galunggong": {
+      "label": "Galunggong (mackerel scad)",
+      "category": "seafood",
+      "staple": true,
+      "match": [
+        "galunggong"
+      ]
+    },
+    "abalone": {
+      "label": "Abalone",
+      "category": "seafood",
+      "staple": false,
+      "match": [
+        "abalone"
+      ]
+    },
+    "geoduck": {
+      "label": "Geoduck",
+      "category": "seafood",
+      "staple": false,
+      "match": [
+        "geoduck"
+      ]
+    },
+    "yellowtail": {
+      "label": "Yellowtail (hamachi)",
+      "category": "seafood",
+      "staple": false,
+      "match": [
+        "hamachi",
+        "yellowtail"
+      ]
+    },
+    "greens-asian": {
+      "label": "Asian greens",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "yu choy",
+        "choy sum",
+        "chinese broccoli",
+        "gai lan",
+        "tung ho",
+        "chrysanthemum",
+        "watercress",
+        "ong choy"
+      ]
+    },
+    "bitter-melon": {
+      "label": "Bitter melon",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "bitter melon"
+      ]
+    },
+    "fuzzy-melon": {
+      "label": "Fuzzy melon (muqua)",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "muqua",
+        "fuzzy melon"
+      ]
+    },
+    "daikon": {
+      "label": "Daikon",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "daikon"
+      ]
+    },
+    "cucumbers": {
+      "label": "Cucumbers",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "cucumber"
+      ]
+    },
+    "limes": {
+      "label": "Limes",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "lime"
+      ]
+    },
+    "papaya": {
+      "label": "Papaya",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "papaya"
+      ]
+    },
+    "pomelo": {
+      "label": "Pomelo",
+      "category": "produce",
+      "staple": true,
+      "match": [
+        "pummelo",
+        "pomelo"
+      ]
+    },
+    "coconut": {
+      "label": "Young coconut",
+      "category": "produce",
+      "staple": false,
+      "match": [
+        "coconut"
+      ]
+    },
+    "lemongrass": {
+      "label": "Lemongrass",
+      "category": "produce",
+      "staple": false,
+      "match": [
+        "lemongrass"
+      ]
+    },
+    "bamboo-shoots": {
+      "label": "Bamboo shoots",
+      "category": "produce",
+      "staple": false,
+      "match": [
+        "bamboo shoot"
+      ]
+    },
+    "oyster-sauce": {
+      "label": "Oyster sauce",
+      "category": "pantry",
+      "staple": false,
+      "match": [
+        "oyster sauce"
+      ]
+    },
+    "udon": {
+      "label": "Udon noodles",
+      "category": "frozen",
+      "staple": false,
+      "match": [
+        "udon"
+      ]
+    },
+    "fried-tofu": {
+      "label": "Fried tofu (aburaage)",
+      "category": "other",
+      "staple": false,
+      "match": [
+        "aburaage",
+        "fried tofu"
+      ]
+    },
+    "yogurt": {
+      "label": "Yogurt",
+      "category": "dairy-eggs",
+      "staple": false,
+      "match": [
+        "yogurt"
+      ]
+    },
+    "cheese-other": {
+      "label": "Cheese (specialty)",
+      "category": "dairy-eggs",
+      "staple": false,
+      "match": [
+        "jack",
+        "beecher",
+        "face rock",
+        "tillamook"
+      ]
+    },
+    "beef-steak": {
+      "label": "Beef steak",
+      "category": "meat",
+      "staple": true,
+      "benchmark": "beef-steaks",
+      "match": [
+        "steak",
+        "tri tip",
+        "ribeye",
+        "new york"
+      ]
+    },
+    "pork-loin-sliced": {
+      "label": "Pork loin, thin sliced",
+      "category": "meat",
+      "staple": true,
+      "match": [
+        "sliced pork loin",
+        "thin-sliced pork loin",
+        "thin sliced pork loin"
+      ]
+    }
   }
 }
