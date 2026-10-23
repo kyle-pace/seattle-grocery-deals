@@ -272,7 +272,9 @@ ${myStoresDialog()}`;
 function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "" }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : []), ["about/", "About"]]
-    .map(([p, label]) => `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
+    .map(([p, label]) => p === "persimmons/"
+      ? `<a class="nav-persim" href="${url(p)}" aria-label="Persimmons" title="Persimmons"${p === path ? ' aria-current="page"' : ""}>${PERSIMMON_SVG}</a>`
+      : `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
     .join("");
   return `<!doctype html>
 <html lang="en">
@@ -332,7 +334,6 @@ function write(path, html) {
 function homePage() {
   const body = `<h1>Grocery sales, week of ${esc(fmtDate(latest.week, { year: true }))}</h1>
 <p class="lede">${esc(cfg.site.tagline)}</p>
-${PERSIMMON_SEASON ? `<p class="persim-banner"><a href="${url("persimmons/")}">It's persimmon season. See where to buy Fuyu this week.</a></p>` : ""}
 ${weekBody(latest, { current: true })}`;
   write("", page({ title: "", path: "", body }));
 }

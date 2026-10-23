@@ -219,9 +219,6 @@ dialog button { padding: 0.4rem 1.1rem; border-radius: 8px; border: 0; backgroun
 .tiles-dark { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
 
 /* persimmon season */
-.persim-banner { margin: -0.4rem 0 1rem; }
-.persim-banner a { display: inline-block; background: #f7932f; color: #3a1a02; font-weight: 650; text-decoration: none; padding: 0.3rem 0.8rem; border-radius: 999px; }
-.persim-banner a::before { content: ""; display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 50%; background: #f07c1e; box-shadow: inset 0 0.15rem 0 #3f7a2b; margin-right: 0.4rem; vertical-align: -0.05rem; }
 body.persimmon { --persim: #f07c1e; --persim-soft: #ffe3c6; --persim-ink: #4a1f00; background: linear-gradient(#fff4e3, #ffe0bd) fixed; overflow-x: hidden; }
 @media (prefers-color-scheme: dark) { body.persimmon { --persim-soft: #3a2412; --persim-ink: #ffd2a1; background: linear-gradient(#1c130c, #2a180b) fixed; } }
 .persim-sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
@@ -268,3 +265,8 @@ body.persimmon main, body.persimmon footer.site { position: relative; z-index: 1
 .persim-foot { text-align: center; margin-top: 2rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .persim-title span, .persim-mascot { animation: none; } }
 body.persimmon .masthead { position: relative; z-index: 2; }
+.masthead nav a.nav-persim { display: inline-flex; align-items: center; opacity: 1; }
+.nav-persim svg { width: 1.5rem; height: 1.5rem; transition: transform 0.2s; }
+.nav-persim:hover svg, .nav-persim:focus-visible svg { transform: rotate(-15deg) scale(1.2); }
+.masthead nav a.nav-persim[aria-current="page"] { box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .nav-persim svg { transition: none; } }
