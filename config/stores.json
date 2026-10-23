@@ -289,6 +289,81 @@
         "Open the newest \"Weekly Ad\" post on the blog page. The ad is an image, with a PDF version further down the post.",
         "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are."
       ]
+    },
+    {
+      "id": "seafood-city",
+      "name": "Seafood City",
+      "aliases": [
+        "Seafood City",
+        "Seafood City Supermarket"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "website": "https://www.seafoodcity.com",
+      "flyer_url": "https://seafoodcity.com/?marketId=314",
+      "flyer_url_note": "The Tukwila store's page. Its Weekly Sale section loads with JavaScript; use View All to see every item.",
+      "sale_period": {
+        "starts": "varies",
+        "ends": "varies",
+        "note": "Confirm the sale days on the first read and update this entry."
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "web-page",
+      "representative_location": "Tukwila (Southcenter) store",
+      "how_to_read": [
+        "Open the Tukwila store page, then View All under Weekly Sale, and read the rendered list.",
+        "Confirm on the first read whether regular prices are printed and which days the sale runs, and update this entry."
+      ]
+    },
+    {
+      "id": "west-seattle-thriftway",
+      "name": "West Seattle Thriftway",
+      "aliases": [
+        "West Seattle Thriftway",
+        "Thriftway"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "website": "https://www.westseattlethriftway.com",
+      "flyer_url": "https://www.westseattlethriftway.com/weeklyad.html",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "West Seattle (SW Morgan St) store",
+      "how_to_read": [
+        "The weekly ad page shows four page images with a printed \"Prices Effective\" date range. Read all four and link each page.",
+        "Confirm on the first read whether regular prices or savings are printed, and update prints_regular_prices if they are."
+      ]
+    },
+    {
+      "id": "asian-family-market",
+      "name": "Asian Family Market",
+      "aliases": [
+        "Asian Family Market",
+        "Asian Family Mart",
+        "AFM"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "website": "https://asianfamilymkt.com",
+      "flyer_url": "https://asianfamilymkt.com",
+      "flyer_url_note": "Weekly specials are a poster image on the homepage, with tabs for each store. Use the Seattle tab.",
+      "sale_period": {
+        "starts": "varies",
+        "ends": "varies",
+        "note": "The poster says \"This Week Only\" but prints no dates."
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "Seattle (Aurora Ave N) store",
+      "how_to_read": [
+        "Open the homepage weekly specials, choose the Seattle tab, and enlarge the poster to read it.",
+        "No dates are printed, so record valid dates as null. If the poster is identical to last week's, mark the flyer stale.",
+        "Confirm on the first read whether regular prices are printed."
+      ]
     }
   ]
 }
