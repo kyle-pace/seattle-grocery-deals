@@ -511,7 +511,7 @@ function persimmonPage() {
   const hero = best
     ? `<section class="persim-hero" aria-labelledby="best-h">
   <div class="persim-mascot" data-bounce>${PERSIMMON_SVG}</div>
-  <p class="persim-kicker">The best Fuyu persimmon deal in town</p>
+  <p class="persim-kicker">The best Fuyu deal in this week's flyers</p>
   <h2 id="best-h" class="persim-price">${esc(priceText(best))}</h2>
   <p class="persim-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
   <p class="persim-item">${esc(best.item)}</p>
@@ -533,7 +533,7 @@ function persimmonPage() {
 ${hero}
 ${runners.length ? `<section><h2>Also on sale</h2><ul class="persim-list">${runners.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}${i.unit_price.per === "each" ? `<span class="muted small"> (about ${esc(money(persimPerLb(i)))}/lb)</span>` : ""}</strong></li>`).join("")}</ul></section>` : ""}
 ${others.length ? `<section><h2>Other persimmons</h2><p class="sub">The flyer didn't say which kind. Could be Fuyu, could be Hachiya. Ask before you bite.</p><ul class="persim-list">${others.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}</strong></li>`).join("")}</ul></section>` : ""}
-${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest Fuyu we listed each week.</p>
+${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">The best Fuyu deal in the flyers each week.</p>
 <ol class="persim-log">${log.map((l) => `<li><span class="pl-week">${esc(fmtDate(l.week, { weekday: false }))}</span><span class="pl-bar" style="--w:${Math.round((persimPerLb(l.f) / maxLog) * 100)}%"><span>${l.f.unit_price.per === "lb" ? "" : "about "}${esc(money(persimPerLb(l.f)))}/lb</span></span><span class="pl-store">${esc(storeName(l.f.store))}</span></li>`).join("")}</ol></section>` : ""}
 <section class="persim-facts"><h2>Persimmon facts, for the persimmon-curious</h2>
 <ul>
@@ -549,7 +549,7 @@ ${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest
 <template data-persim-svg>${PERSIMMON_SVG}</template>`;
   const live = best && (!best.valid_through || best.valid_through >= TODAY);
   const desc = live
-    ? `This is not a drill. The cheapest Fuyu in Seattle this week is ${priceText(best)} at ${storeName(best.store)}. Go. Go now.`
+    ? `This is not a drill. The best Fuyu deal in this week's flyers: ${priceText(best)} at ${storeName(best.store)}. Go. Go now.`
     : "No Fuyu on sale this week. We are devastated. Check back Friday.";
   const ogTitle = live ? `PERSIMMON ALERT!!! Fuyu at ${priceText(best)} at ${storeName(best.store)}` : "BUY PERSIMMONS NOW!!! (this is not a drill)";
   write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, description: desc,
