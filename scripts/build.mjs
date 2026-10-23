@@ -269,7 +269,7 @@ ${filterBar(items)}
 ${myStoresDialog()}`;
 }
 
-function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "" }) {
+function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "" }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : []), ["about/", "About"]]
     .map(([p, label]) => `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
@@ -281,6 +281,18 @@ function page({ title, path, body, description, map = false, extraScript = null,
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(full)}</title>
 <meta name="description" content="${esc(description ?? cfg.site.tagline)}">
+<meta property="og:site_name" content="${esc(cfg.site.title)}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(title || cfg.site.title)}">
+<meta property="og:description" content="${esc(description ?? cfg.site.tagline)}">
+<meta property="og:url" content="${esc(cfg.site.origin + cfg.site.base_path + path)}">${image ? `
+<meta property="og:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(imageAlt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">` : `
+<meta name="twitter:card" content="summary">`}
 <link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
 <link rel="preload" href="${url("assets/fonts/bricolage-grotesque.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${url("assets/style.css")}">
@@ -508,9 +520,12 @@ ${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest
   <li>Dried persimmons are called hoshigaki in Japan and gotgam in Korea.</li>
 </ul></section>
 <p class="persim-foot">Click anywhere for more persimmons. <a href="${url()}">Back to all the deals</a></p>
+<p class="persim-foot small">Preview photo: <a href="https://commons.wikimedia.org/wiki/File:Fuyu_persimmon_fruits,_one_cut_open.jpg">Fuyu persimmon fruits, one cut open</a> by Frank Schulenburg, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, cropped.</p>
 </div>
 <template data-persim-svg>${PERSIMMON_SVG}</template>`;
-  write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
+  const desc = best ? `The best Fuyu persimmon deal in town this week: ${priceText(best)} at ${storeName(best.store)}.` : "Where to buy Fuyu persimmons in Seattle this week.";
+  write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, description: desc,
+    image: "assets/img/persimmons-og.jpg", imageAlt: "Fuyu persimmons, one cut open", extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
 }
 
 function aboutPage() {
