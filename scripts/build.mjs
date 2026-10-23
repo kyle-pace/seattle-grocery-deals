@@ -269,9 +269,9 @@ ${filterBar(items)}
 ${myStoresDialog()}`;
 }
 
-function page({ title, path, body, description, map = false }) {
+function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "" }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
-  const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ["about/", "About"]]
+  const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : []), ["about/", "About"]]
     .map(([p, label]) => `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
     .join("");
   return `<!doctype html>
@@ -284,12 +284,13 @@ function page({ title, path, body, description, map = false }) {
 <link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
 <link rel="preload" href="${url("assets/fonts/bricolage-grotesque.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${url("assets/style.css")}">
-<script src="${url("assets/app.js")}" defer></script>${map ? `
+<script src="${url("assets/app.js")}" defer></script>${extraScript ? `
+<script src="${url(extraScript)}" defer></script>` : ""}${map ? `
 <link rel="stylesheet" href="${url("assets/leaflet/leaflet.css")}">
 <script src="${url("assets/leaflet/leaflet.js")}" defer></script>
 <script src="${url("assets/map.js")}" defer></script>` : ""}
 </head>
-<body>
+<body${bodyClass ? ` class="${bodyClass}"` : ""}>
 <header class="masthead">
   <div class="masthead-inner">
     <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span><small>Seattle</small></a>
@@ -319,6 +320,7 @@ function write(path, html) {
 function homePage() {
   const body = `<h1>Grocery sales, week of ${esc(fmtDate(latest.week, { year: true }))}</h1>
 <p class="lede">${esc(cfg.site.tagline)}</p>
+${PERSIMMON_SEASON ? `<p class="persim-banner"><a href="${url("persimmons/")}">It's persimmon season. See where to buy Fuyu this week.</a></p>` : ""}
 ${weekBody(latest, { current: true })}`;
   write("", page({ title: "", path: "", body }));
 }
@@ -444,6 +446,73 @@ ${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>
   }
 }
 
+// ---------- persimmon season ----------
+
+const PERSIMMON_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="26" ry="21" fill="#f07c1e"/><ellipse cx="32" cy="40" rx="22" ry="16" fill="#f7932f"/><ellipse cx="22" cy="33" rx="6" ry="4" fill="#ffc27a" opacity=".75"/><path d="M32 17l-11-4 5 8-10 3h11l5 7 5-7h11l-10-3 5-8z" fill="#3f7a2b"/><rect x="30.5" y="10" width="3" height="7" rx="1.5" fill="#5b3a1e"/></svg>`;
+
+function inPersimmonSeason(iso) {
+  const md = iso.slice(5);
+  const { from, to } = cfg.site.persimmon_season;
+  return from <= to ? md >= from && md <= to : md >= from || md <= to;
+}
+const PERSIMMON_SEASON = inPersimmonSeason(latest.week);
+const isFuyu = (i) => /fuyu/i.test(i.item);
+const isPersimmon = (i) => i.item_key === "persimmons" || /persimmon/i.test(i.item);
+
+function persimmonPage() {
+  const items = analyzed.get(latest.week).filter(isPersimmon).filter((i) => i.unit_price);
+  const fuyu = items.filter(isFuyu).sort((a, b) => a.unit_price.value - b.unit_price.value);
+  const others = items.filter((i) => !isFuyu(i)).sort((a, b) => a.unit_price.value - b.unit_price.value);
+  const best = fuyu[0];
+  // A Fuyu weighs about 7 oz.
+  const per10 = best && best.unit_price.per === "lb" ? Math.floor(10 / (best.unit_price.value * 7 / 16)) : null;
+
+  const log = [...weeks].reverse().map((w) => {
+    const f = analyzed.get(w.week).filter((i) => isPersimmon(i) && isFuyu(i) && i.unit_price).sort((a, b) => a.unit_price.value - b.unit_price.value)[0];
+    return f ? { week: w.week, f } : null;
+  }).filter(Boolean);
+  const maxLog = Math.max(...log.map((l) => l.f.unit_price.value), 1);
+
+  const hero = best
+    ? `<section class="persim-hero" aria-labelledby="best-h">
+  <div class="persim-mascot" data-bounce>${PERSIMMON_SVG}</div>
+  <p class="persim-kicker">The best Fuyu persimmon deal in town</p>
+  <h2 id="best-h" class="persim-price">${esc(priceText(best))}</h2>
+  <p class="persim-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
+  <p class="persim-item">${esc(best.item)}</p>
+  ${per10 ? `<p class="persim-math">That's about <strong>${per10} persimmons for $10</strong>.<span class="muted"> Roughly, at 7 oz a persimmon. We did the math so you don't have to.</span></p>` : ""}
+  ${best.notes ? `<p class="muted">${esc(best.notes)}</p>` : ""}
+</section>`
+    : `<section class="persim-hero">
+  <div class="persim-mascot sad" data-bounce>${PERSIMMON_SVG}</div>
+  <h2 class="persim-price">No Fuyu on sale this week.</h2>
+  <p class="persim-where">Stay strong. Check back Friday.</p>
+</section>`;
+
+  const runners = fuyu.slice(1);
+  const body = `<div class="persim-sky" data-persim-sky aria-hidden="true"></div>
+<div class="persim-page">
+<p class="persim-eyebrow">It is persimmon season${PERSIMMON_SEASON ? "" : " (or it was)"}. Week of ${esc(fmtDate(latest.week, { weekday: false, year: true }))}.</p>
+<h1 class="persim-title">Where to buy <span>persimmons</span> this week</h1>
+${hero}
+${runners.length ? `<section><h2>Also on sale</h2><ul class="persim-list">${runners.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}</strong></li>`).join("")}</ul></section>` : ""}
+${others.length ? `<section><h2>Other persimmons</h2><p class="sub">The flyer didn't say which kind. Could be Fuyu, could be Hachiya. Ask before you bite.</p><ul class="persim-list">${others.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}</strong></li>`).join("")}</ul></section>` : ""}
+${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest Fuyu we listed each week.</p>
+<ol class="persim-log">${log.map((l) => `<li><span class="pl-week">${esc(fmtDate(l.week, { weekday: false }))}</span><span class="pl-bar" style="--w:${Math.round((l.f.unit_price.value / maxLog) * 100)}%"><span>${esc(money(l.f.unit_price.value))}/lb</span></span><span class="pl-store">${esc(storeName(l.f.store))}</span></li>`).join("")}</ol></section>` : ""}
+<section class="persim-facts"><h2>Persimmon facts, for the persimmon-curious</h2>
+<ul>
+  <li><strong>Fuyu</strong> are the squat, tomato-shaped ones. Eat them crisp like an apple, skin and all.</li>
+  <li><strong>Hachiya</strong> are the acorn-shaped ones. Wait until they are soft as a water balloon, or they will make your whole mouth go dry.</li>
+  <li>Fuyu keep for a week or two on the counter and longer in the fridge.</li>
+  <li>Slice one sideways and you may find a little star in the middle.</li>
+  <li>Dried persimmons are called hoshigaki in Japan and gotgam in Korea.</li>
+</ul></section>
+<p class="persim-foot">Click anywhere for more persimmons. <a href="${url()}">Back to all the deals</a></p>
+</div>
+<template data-persim-svg>${PERSIMMON_SVG}</template>`;
+  write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
+}
+
 function aboutPage() {
   const c = cfg.criteria;
   const body = `<h1>About</h1>
@@ -495,6 +564,7 @@ homePage();
 weekPages();
 storePages();
 aboutPage();
+persimmonPage();
 dataPages();
 notFound();
 console.log(`Built ${weeks.length} week(s), latest ${latest.week}, into dist/ with base ${BASE}`);
