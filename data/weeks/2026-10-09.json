@@ -1,0 +1,270 @@
+{
+  "week": "2026-10-09",
+  "flyers": [
+    {
+      "store": "lams",
+      "status": "full",
+      "valid_from": "2026-10-09",
+      "valid_through": "2026-10-15",
+      "links": [
+        {
+          "label": "Specials page",
+          "url": "https://lamsseafood.com/specials"
+        }
+      ]
+    },
+    {
+      "store": "uwajimaya",
+      "status": "full",
+      "valid_from": "2026-10-07",
+      "valid_through": "2026-10-13",
+      "links": [
+        {
+          "label": "Weekly specials",
+          "url": "https://www.uwajimaya.com/weekly-specials/"
+        }
+      ]
+    },
+    {
+      "store": "smith-brothers",
+      "status": "full",
+      "valid_from": "2026-10-03",
+      "valid_through": "2026-10-16",
+      "links": [
+        {
+          "label": "On special",
+          "url": "https://www.smithbrothersfarms.com/on-special"
+        }
+      ]
+    },
+    {
+      "store": "pcc",
+      "status": "unreadable",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Homepage",
+          "url": "https://www.pccmarkets.com"
+        }
+      ],
+      "note": "The sales page showed no items."
+    },
+    {
+      "store": "central-coop",
+      "status": "full",
+      "valid_from": "2026-10-07",
+      "valid_through": "2026-10-13",
+      "links": [
+        {
+          "label": "Fresh deals",
+          "url": "https://www.centralcoop.coop/freshdeals"
+        }
+      ]
+    },
+    {
+      "store": "met-market",
+      "status": "full",
+      "valid_from": "2026-10-07",
+      "valid_through": "2026-10-13",
+      "links": [
+        {
+          "label": "Weekly ad",
+          "url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/"
+        }
+      ]
+    },
+    {
+      "store": "red-apple",
+      "status": "full",
+      "valid_from": "2026-10-07",
+      "valid_through": "2026-10-13",
+      "links": []
+    },
+    {
+      "store": "hmart",
+      "status": "full",
+      "valid_from": "2026-10-09",
+      "valid_through": "2026-10-15",
+      "links": [
+        {
+          "label": "Weekly ads",
+          "url": "https://www.hmart.com/weekly-ads"
+        }
+      ],
+      "note": "Meat and produce specials ran Friday to Monday only."
+    },
+    {
+      "store": "tnt",
+      "status": "full",
+      "valid_from": "2026-10-09",
+      "valid_through": "2026-10-15",
+      "links": [
+        {
+          "label": "Store flyer",
+          "url": "https://www.tntsupermarket.us/eng/store-flyer"
+        }
+      ]
+    }
+  ],
+  "deals": [
+    {
+      "store": "lams",
+      "item": "Atlantic salmon steak",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Fresh Atlantic salmon steaks back at $7.49 a pound.",
+      "valid_through": "2026-10-15",
+      "notes": "Fillet is $7.99/lb. While supplies last."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Shirakiku Sekka Rice, 15 lb",
+      "item_key": "rice-short-grain",
+      "category": "pantry",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.87,
+        "per": "lb"
+      },
+      "regular_price": 22.99,
+      "percent_off": 43,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "$10 off a 15 lb bag, under 90 cents a pound for Japanese rice.",
+      "valid_through": "2026-10-13",
+      "notes": ""
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Bosc Pears",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": 3.49,
+      "percent_off": 29,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "A dollar a pound off organic pears.",
+      "valid_through": "2026-10-13",
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Idaho Russet Potatoes, 5 lb bag",
+      "item_key": "potatoes-russet",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.4,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "potatoes",
+        "price": 0.989,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "A 5 lb bag for under $2, about 40 cents a pound.",
+      "valid_through": "2026-10-13",
+      "notes": ""
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Calrose Rice, 15 lb",
+      "item_key": "rice-medium-grain",
+      "category": "pantry",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.73,
+        "per": "lb"
+      },
+      "regular_price": 12.99,
+      "percent_off": 15,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "rice-white",
+        "price": 1.118,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "About 73 cents a pound, the cheapest rice we have listed so far.",
+      "valid_through": "2026-10-15",
+      "notes": ""
+    },
+    {
+      "store": "tnt",
+      "item": "Frozen Calamari Squid, 2.2 lb",
+      "item_key": "squid",
+      "category": "seafood",
+      "price": 7.96,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 3.62,
+        "per": "lb"
+      },
+      "regular_price": 11.99,
+      "percent_off": 34,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "A third off frozen squid, about $3.62 a pound.",
+      "valid_through": "2026-10-15",
+      "notes": ""
+    }
+  ]
+}

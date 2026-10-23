@@ -1,0 +1,227 @@
+{
+  "week": "2026-09-25",
+  "flyers": [
+    {
+      "store": "lams",
+      "status": "full",
+      "valid_from": "2026-09-25",
+      "valid_through": "2026-10-01",
+      "links": [
+        {
+          "label": "Specials page",
+          "url": "https://lamsseafood.com/specials"
+        }
+      ]
+    },
+    {
+      "store": "uwajimaya",
+      "status": "full",
+      "valid_from": "2026-09-23",
+      "valid_through": "2026-09-29",
+      "links": [
+        {
+          "label": "Weekly specials",
+          "url": "https://www.uwajimaya.com/weekly-specials/"
+        }
+      ]
+    },
+    {
+      "store": "smith-brothers",
+      "status": "full",
+      "valid_from": "2026-09-19",
+      "valid_through": "2026-10-02",
+      "links": [
+        {
+          "label": "On special",
+          "url": "https://www.smithbrothersfarms.com/on-special"
+        }
+      ]
+    },
+    {
+      "store": "pcc",
+      "status": "full",
+      "valid_from": null,
+      "valid_through": "2026-09-29",
+      "links": [
+        {
+          "label": "Homepage",
+          "url": "https://www.pccmarkets.com"
+        }
+      ]
+    },
+    {
+      "store": "central-coop",
+      "status": "stale",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Fresh deals",
+          "url": "https://www.centralcoop.coop/freshdeals"
+        }
+      ],
+      "note": "The deals page showed May 2026 dates."
+    },
+    {
+      "store": "met-market",
+      "status": "full",
+      "valid_from": "2026-09-23",
+      "valid_through": "2026-09-29",
+      "links": [
+        {
+          "label": "Weekly ad",
+          "url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/"
+        }
+      ]
+    },
+    {
+      "store": "red-apple",
+      "status": "full",
+      "valid_from": "2026-09-23",
+      "valid_through": "2026-09-29",
+      "links": []
+    },
+    {
+      "store": "hmart",
+      "status": "full",
+      "valid_from": "2026-09-25",
+      "valid_through": "2026-10-01",
+      "links": [
+        {
+          "label": "Weekly ads",
+          "url": "https://www.hmart.com/weekly-ads"
+        }
+      ],
+      "note": "Meat and produce specials ran Friday to Monday only (Sep 25 to Sep 28)."
+    }
+  ],
+  "deals": [
+    {
+      "store": "lams",
+      "item": "Chicken breast, boneless",
+      "item_key": "chicken-breast-boneless",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "chicken-breast-boneless",
+        "price": 4.203,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "Boneless breast under $3/lb, well below the national average.",
+      "valid_through": "2026-10-01",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Shirakiku Hitomebore Rice, 15 lb",
+      "item_key": "rice-short-grain",
+      "category": "pantry",
+      "price": 26.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.8,
+        "per": "lb"
+      },
+      "regular_price": 38.99,
+      "percent_off": 31,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "$12 off a 15 lb bag of premium Japanese short-grain rice.",
+      "valid_through": "2026-09-29",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "LA galbi (flanken-cut short ribs)",
+      "item_key": "beef-short-ribs",
+      "category": "meat",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Flanken short ribs under $9 a pound, against $12.99 for kalbi short ribs elsewhere this week.",
+      "valid_through": "2026-09-28",
+      "notes": "Meat special ran Friday to Monday only."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Chopped bacon, 1 lb",
+      "item_key": "bacon",
+      "category": "meat",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 25,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "A quarter off bacon, delivered.",
+      "valid_through": "2026-10-02",
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Russet potatoes, 5 lb",
+      "item_key": "potatoes-russet",
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 25,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "About 60 cents a pound, delivered.",
+      "valid_through": "2026-10-02",
+      "notes": "Home delivery add-on."
+    }
+  ]
+}

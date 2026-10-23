@@ -1,0 +1,188 @@
+{
+  "week": "2026-10-02",
+  "flyers": [
+    {
+      "store": "lams",
+      "status": "full",
+      "valid_from": "2026-10-02",
+      "valid_through": "2026-10-08",
+      "links": [
+        {
+          "label": "Specials page",
+          "url": "https://lamsseafood.com/specials"
+        }
+      ]
+    },
+    {
+      "store": "uwajimaya",
+      "status": "full",
+      "valid_from": "2026-09-30",
+      "valid_through": "2026-10-06",
+      "links": [
+        {
+          "label": "Weekly specials",
+          "url": "https://www.uwajimaya.com/weekly-specials/"
+        }
+      ]
+    },
+    {
+      "store": "smith-brothers",
+      "status": "full",
+      "valid_from": "2026-10-03",
+      "valid_through": "2026-10-16",
+      "links": [
+        {
+          "label": "On special",
+          "url": "https://www.smithbrothersfarms.com/on-special"
+        }
+      ]
+    },
+    {
+      "store": "pcc",
+      "status": "unreadable",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Homepage",
+          "url": "https://www.pccmarkets.com"
+        }
+      ],
+      "note": "The sales page showed no items."
+    },
+    {
+      "store": "central-coop",
+      "status": "full",
+      "valid_from": "2026-09-30",
+      "valid_through": "2026-10-06",
+      "links": [
+        {
+          "label": "Fresh deals",
+          "url": "https://www.centralcoop.coop/freshdeals"
+        }
+      ]
+    },
+    {
+      "store": "met-market",
+      "status": "full",
+      "valid_from": "2026-09-30",
+      "valid_through": "2026-10-06",
+      "links": [
+        {
+          "label": "Weekly ad",
+          "url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/"
+        }
+      ]
+    },
+    {
+      "store": "red-apple",
+      "status": "full",
+      "valid_from": "2026-09-30",
+      "valid_through": "2026-10-06",
+      "links": []
+    },
+    {
+      "store": "hmart",
+      "status": "full",
+      "valid_from": "2026-10-02",
+      "valid_through": "2026-10-08",
+      "links": [
+        {
+          "label": "Weekly ads",
+          "url": "https://www.hmart.com/weekly-ads"
+        }
+      ],
+      "note": "Meat and produce specials ran Friday to Monday only (Oct 2 to Oct 5)."
+    }
+  ],
+  "deals": [
+    {
+      "store": "uwajimaya",
+      "item": "Mary's Free Range Whole Chicken",
+      "item_key": "chicken-whole",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 25,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Free-range whole chicken for under $3/lb.",
+      "valid_through": "2026-10-06",
+      "notes": ""
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic avocados",
+      "item_key": "avocados",
+      "category": "produce",
+      "price": 5,
+      "quantity": 4,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.25,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": 26,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Organic avocados at $1.25 each.",
+      "valid_through": "2026-10-06",
+      "notes": ""
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic butternut squash",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 32,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Nearly a third off organic winter squash.",
+      "valid_through": "2026-10-06",
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Avocados",
+      "item_key": "avocados",
+      "category": "produce",
+      "price": 3,
+      "quantity": 4,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.75,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Avocados at 75 cents each, cheaper than the organic 4 for $5 deal this week.",
+      "valid_through": "2026-10-06",
+      "notes": ""
+    }
+  ]
+}

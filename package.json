@@ -1,0 +1,21 @@
+{
+  "name": "seattle-grocery-deals",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Weekly good grocery sales from Seattle-area store flyers, built as a static site.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "build": "node scripts/build.mjs",
+    "draft": "node scripts/draft-week.mjs",
+    "check": "node scripts/validate.mjs && node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.17.1",
+    "ajv-formats": "3.0.1"
+  }
+}

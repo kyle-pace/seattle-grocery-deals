@@ -1,0 +1,252 @@
+{
+  "week": "2026-09-18",
+  "flyers": [
+    {
+      "store": "lams",
+      "status": "full",
+      "valid_from": "2026-09-18",
+      "valid_through": "2026-09-24",
+      "links": [
+        {
+          "label": "Specials page",
+          "url": "https://lamsseafood.com/specials"
+        }
+      ]
+    },
+    {
+      "store": "uwajimaya",
+      "status": "full",
+      "valid_from": "2026-09-16",
+      "valid_through": "2026-09-22",
+      "links": [
+        {
+          "label": "Weekly specials",
+          "url": "https://www.uwajimaya.com/weekly-specials/"
+        }
+      ]
+    },
+    {
+      "store": "smith-brothers",
+      "status": "full",
+      "valid_from": "2026-09-19",
+      "valid_through": "2026-10-02",
+      "links": [
+        {
+          "label": "On special",
+          "url": "https://www.smithbrothersfarms.com/on-special"
+        }
+      ]
+    },
+    {
+      "store": "pcc",
+      "status": "full",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Homepage",
+          "url": "https://www.pccmarkets.com"
+        }
+      ]
+    },
+    {
+      "store": "central-coop",
+      "status": "full",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Fresh deals",
+          "url": "https://www.centralcoop.coop/freshdeals"
+        }
+      ]
+    },
+    {
+      "store": "met-market",
+      "status": "full",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Weekly ad",
+          "url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/"
+        }
+      ]
+    },
+    {
+      "store": "red-apple",
+      "status": "full",
+      "valid_from": null,
+      "valid_through": null,
+      "links": []
+    },
+    {
+      "store": "hmart",
+      "status": "full",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Weekly ads",
+          "url": "https://www.hmart.com/weekly-ads"
+        }
+      ]
+    }
+  ],
+  "deals": [
+    {
+      "store": "lams",
+      "item": "Bone-in pork chops",
+      "item_key": "pork-chops",
+      "category": "meat",
+      "price": 2.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "pork-chops",
+        "price": 4.219,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "Bone-in chops at about half the national average price.",
+      "valid_through": "2026-09-24",
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Chicken leg quarters",
+      "item_key": "chicken-leg-quarters",
+      "category": "meat",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "chicken-legs",
+        "price": 1.739,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "Leg quarters at a quarter under the national average for bone-in chicken.",
+      "valid_through": "2026-09-24",
+      "notes": "While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic salmon steak",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Fresh Atlantic salmon steaks under $7.50 a pound.",
+      "valid_through": "2026-09-24",
+      "notes": "Fillet is $7.99/lb. While supplies last."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kikkoman Hontsuyu, 1 L",
+      "item_key": "noodle-soup-base",
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "l"
+      },
+      "unit_price": {
+        "value": 4.99,
+        "per": "l"
+      },
+      "regular_price": 9.49,
+      "percent_off": 47,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Nearly half off a noodle soup base that keeps for months.",
+      "valid_through": "2026-09-22",
+      "notes": ""
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Chopped bacon, 1 lb",
+      "item_key": "bacon",
+      "category": "meat",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 25,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "A quarter off bacon, delivered.",
+      "valid_through": "2026-10-02",
+      "notes": "Home delivery add-on."
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Russet potatoes, 5 lb",
+      "item_key": "potatoes-russet",
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": 25,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "About 60 cents a pound, delivered.",
+      "valid_through": "2026-10-02",
+      "notes": "Home delivery add-on."
+    }
+  ]
+}

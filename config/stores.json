@@ -1,0 +1,294 @@
+{
+  "stores": [
+    {
+      "id": "lams",
+      "name": "Lam's Seafood",
+      "aliases": [
+        "Lam's",
+        "Lams",
+        "Lam's Seafood Market"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://lamsseafood.com",
+      "flyer_url": "https://lamsseafood.com/specials",
+      "sale_period": {
+        "starts": "fri",
+        "ends": "thu"
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "Seattle (International District) store",
+      "how_to_read": [
+        "Two flyer images on the specials page. Read both in full.",
+        "Check the printed date on each image. On Friday morning the page sometimes still shows last week's flyer; if so, mark the flyer stale.",
+        "One image is the Seattle store only; the other covers both the Seattle and Tukwila stores. Items only on the combined image get a note saying they may only be at Tukwila.",
+        "Every item is while supplies last."
+      ]
+    },
+    {
+      "id": "uwajimaya",
+      "name": "Uwajimaya",
+      "aliases": [
+        "Uwajimaya",
+        "Uwaji"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://www.uwajimaya.com",
+      "flyer_url": "https://www.uwajimaya.com/weekly-specials/",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": true,
+      "flyer_format": "images",
+      "representative_location": "Seattle store (all locations share one ad)",
+      "how_to_read": [
+        "Flyer images on the weekly specials page, with a printed \"Prices Valid\" date range.",
+        "Most items print a regular price or an exact \"save $X\" amount. \"Save up to\" amounts are not exact and do not count as a printed regular price."
+      ]
+    },
+    {
+      "id": "pcc",
+      "name": "PCC Community Markets",
+      "aliases": [
+        "PCC",
+        "PCC Markets"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://www.pccmarkets.com",
+      "flyer_url": "https://www.pccmarkets.com",
+      "flyer_url_note": "The dedicated sales page has been erroring or empty since September 2026, so the homepage is the only reliable link.",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": true,
+      "flyer_format": "web-page",
+      "representative_location": "Seattle-area stores (one shared ad)",
+      "how_to_read": [
+        "Check the sales section from the homepage. If it shows no items, mark the flyer unreadable."
+      ]
+    },
+    {
+      "id": "central-coop",
+      "name": "Central Co-op",
+      "aliases": [
+        "Central Co-op",
+        "Central Coop"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://www.centralcoop.coop",
+      "flyer_url": "https://www.centralcoop.coop/freshdeals",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": true,
+      "flyer_format": "web-page",
+      "representative_location": "Capitol Hill store",
+      "how_to_read": [
+        "Web page listing of fresh deals with regular prices.",
+        "The page often keeps showing old dates for weeks. If the printed dates are not this week, mark the flyer stale and use no items from it."
+      ]
+    },
+    {
+      "id": "smith-brothers",
+      "name": "Smith Brothers Farms",
+      "aliases": [
+        "Smith Brothers",
+        "Smith Brothers Farms"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://www.smithbrothersfarms.com",
+      "flyer_url": "https://www.smithbrothersfarms.com/on-special",
+      "sale_period": {
+        "starts": "varies",
+        "ends": "varies",
+        "note": "Two-week cycles (for example 10/17 to 10/30). Home delivery, not a store."
+      },
+      "prints_regular_prices": true,
+      "flyer_format": "web-page",
+      "representative_location": "Seattle-area home delivery",
+      "how_to_read": [
+        "The page is rendered with JavaScript. Read the rendered page in a browser; cached fetches go stale.",
+        "The cycle dates are printed at the top (\"Enjoy these deals 10/17 to 10/30\")."
+      ]
+    },
+    {
+      "id": "met-market",
+      "name": "Metropolitan Market",
+      "aliases": [
+        "Metropolitan Market",
+        "Met Market"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://www.metropolitan-market.com",
+      "flyer_url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": true,
+      "flyer_format": "catalogue-viewer",
+      "representative_location": "Seattle-area stores (one shared ad)",
+      "how_to_read": [
+        "Read the ad in sections, not one screenshot, so nothing is missed.",
+        "Printed \"Prices effective\" date range at the top."
+      ]
+    },
+    {
+      "id": "red-apple",
+      "name": "Red Apple Markets",
+      "aliases": [
+        "Red Apple",
+        "Hilltop Red Apple",
+        "Red Apple Markets"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": null,
+      "flyer_url": null,
+      "flyer_url_note": "No store website. The flyer appears as a catalogue on redpepper.digital and its URL changes every week, so each week's file links the exact catalogue pages.",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "catalogue-viewer",
+      "representative_location": "Beacon Hill (Hilltop) store flyer",
+      "how_to_read": [
+        "Find this week's catalogue on redpepper.digital and link each page read.",
+        "No regular prices are printed. Use US average prices for staples, labeled approximate."
+      ]
+    },
+    {
+      "id": "hmart",
+      "name": "H Mart",
+      "aliases": [
+        "H Mart",
+        "HMart",
+        "H-Mart"
+      ],
+      "active": true,
+      "tracked_since": "2026-09-18",
+      "website": "https://www.hmart.com",
+      "flyer_url": "https://www.hmart.com/weekly-ads",
+      "sale_period": {
+        "starts": "fri",
+        "ends": "thu",
+        "note": "Meat and produce specials often run Friday to Monday only."
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "Washington flyer (Lynnwood, Federal Way, Bellevue and other WA stores)",
+      "how_to_read": [
+        "Pick the Washington flyer. It does not apply to the small 2nd and Pine or University District stores.",
+        "Check whether meat and produce prices have a shorter Friday to Monday window and use that as their valid-through date."
+      ]
+    },
+    {
+      "id": "tnt",
+      "name": "T&T Supermarket",
+      "aliases": [
+        "T&T",
+        "T&T Supermarket",
+        "TNT",
+        "T&T Supermarket Bellevue"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-09",
+      "website": "https://www.tntsupermarket.us",
+      "flyer_url": "https://www.tntsupermarket.us/eng/store-flyer",
+      "sale_period": {
+        "starts": "fri",
+        "ends": "thu"
+      },
+      "prints_regular_prices": true,
+      "flyer_format": "web-page",
+      "representative_location": "Bellevue (Factoria) store, Washington flyer",
+      "how_to_read": [
+        "Use the .us site. tntsupermarket.com is the Canadian site and shows Ontario prices.",
+        "The item list loads as you scroll, so read it one category at a time. A single read catches only a fraction of the items."
+      ]
+    },
+    {
+      "id": "grocery-outlet",
+      "name": "Grocery Outlet",
+      "aliases": [
+        "Grocery Outlet",
+        "Grocery Outlet Bargain Market"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "website": "https://www.groceryoutlet.com",
+      "flyer_url": "https://www.groceryoutlet.com/circulars",
+      "sale_period": {
+        "starts": "wed",
+        "ends": "tue"
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "catalogue-viewer",
+      "representative_location": "One Seattle store, to be chosen and recorded here on the first read",
+      "how_to_read": [
+        "The ad is a per-store Flipp catalogue viewer that needs a store selected. Use the same Seattle store every week.",
+        "\"Compare at\" prices are other retailers' prices, not Grocery Outlet's own regular price, so they do not count as a printed regular price."
+      ]
+    },
+    {
+      "id": "99-ranch",
+      "name": "99 Ranch Market",
+      "aliases": [
+        "99 Ranch",
+        "99 Ranch Market",
+        "Ranch 99"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "website": "https://www.99ranch.com",
+      "flyer_url": "https://www.99ranch.com",
+      "flyer_url_note": "The weekly ad is per store inside the site's web app. Once the Kent store's weekly ad link is confirmed on the first read, put it here.",
+      "sale_period": {
+        "starts": "fri",
+        "ends": "thu"
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "web-page",
+      "representative_location": "Kent store",
+      "how_to_read": [
+        "Rendered with JavaScript. Choose the Kent store, open its weekly ad, and read the rendered page.",
+        "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are."
+      ]
+    },
+    {
+      "id": "viet-wah",
+      "name": "Viet-Wah",
+      "aliases": [
+        "Viet Wah",
+        "Viet-Wah",
+        "Viet-Wah Asian Food Market"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "website": "https://www.vietwah.com",
+      "flyer_url": "https://www.vietwah.com/blog",
+      "flyer_url_note": "Each week is a new post, for example https://www.vietwah.com/single-post/weekly-ad-oct-23-29-2026. Link that week's post.",
+      "sale_period": {
+        "starts": "fri",
+        "ends": "thu"
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "Seattle store (confirm on the first read whether the ad also covers Renton)",
+      "how_to_read": [
+        "Open the newest \"Weekly Ad\" post on the blog page. The ad is an image, with a PDF version further down the post.",
+        "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are."
+      ]
+    }
+  ]
+}

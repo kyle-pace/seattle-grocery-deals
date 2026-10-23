@@ -1,0 +1,32 @@
+{
+  "categories": ["produce", "meat", "seafood", "dairy-eggs", "pantry", "frozen", "bakery", "prepared", "snacks-drinks", "other"],
+  "priority_categories": ["produce", "meat", "seafood"],
+  "printed_discount": {
+    "min_percent_off_priority": 25,
+    "min_percent_off_staple": 25,
+    "min_percent_off_other": 40,
+    "exact_savings_counts_as_printed": true,
+    "save_up_to_counts_as_printed": false
+  },
+  "us_average": {
+    "max_ratio": 0.75,
+    "staples_only": true
+  },
+  "site_history": {
+    "min_prior_listings": 1,
+    "staples_only": true
+  },
+  "no_reference": {
+    "allowed": true,
+    "categories": ["produce", "meat", "seafood"]
+  },
+  "ranking": {
+    "priority_category_bonus": 0.1,
+    "site_history_base": 0.25,
+    "no_reference_strength": 0.15
+  },
+  "badges": {
+    "lowest_listed_min_prior_listings": 2
+  },
+  "reason_max_length": 140
+}

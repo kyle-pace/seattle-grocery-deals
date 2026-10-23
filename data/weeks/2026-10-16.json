@@ -1,0 +1,335 @@
+{
+  "week": "2026-10-16",
+  "flyers": [
+    {
+      "store": "lams",
+      "status": "full",
+      "valid_from": "2026-10-16",
+      "valid_through": "2026-10-22",
+      "links": [
+        {
+          "label": "Specials page",
+          "url": "https://lamsseafood.com/specials"
+        }
+      ],
+      "note": "On Friday morning the page still showed last week's flyer; read again Saturday Oct 17."
+    },
+    {
+      "store": "uwajimaya",
+      "status": "full",
+      "valid_from": "2026-10-14",
+      "valid_through": "2026-10-20",
+      "links": [
+        {
+          "label": "Weekly specials",
+          "url": "https://www.uwajimaya.com/weekly-specials/"
+        }
+      ]
+    },
+    {
+      "store": "smith-brothers",
+      "status": "full",
+      "valid_from": "2026-10-17",
+      "valid_through": "2026-10-30",
+      "links": [
+        {
+          "label": "On special",
+          "url": "https://www.smithbrothersfarms.com/on-special"
+        }
+      ]
+    },
+    {
+      "store": "pcc",
+      "status": "unreadable",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Homepage",
+          "url": "https://www.pccmarkets.com"
+        }
+      ],
+      "note": "The sales page showed no items."
+    },
+    {
+      "store": "central-coop",
+      "status": "stale",
+      "valid_from": "2026-10-07",
+      "valid_through": "2026-10-13",
+      "links": [
+        {
+          "label": "Fresh deals",
+          "url": "https://www.centralcoop.coop/freshdeals"
+        }
+      ],
+      "note": "Still showed last week's Oct 7 to 13 dates."
+    },
+    {
+      "store": "met-market",
+      "status": "full",
+      "valid_from": "2026-10-14",
+      "valid_through": "2026-10-20",
+      "links": [
+        {
+          "label": "Weekly ad",
+          "url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/"
+        }
+      ]
+    },
+    {
+      "store": "red-apple",
+      "status": "full",
+      "valid_from": "2026-10-14",
+      "valid_through": "2026-10-20",
+      "links": []
+    },
+    {
+      "store": "hmart",
+      "status": "full",
+      "valid_from": "2026-10-16",
+      "valid_through": "2026-10-22",
+      "links": [
+        {
+          "label": "Weekly ads",
+          "url": "https://www.hmart.com/weekly-ads"
+        }
+      ]
+    },
+    {
+      "store": "tnt",
+      "status": "partial",
+      "valid_from": null,
+      "valid_through": null,
+      "links": [
+        {
+          "label": "Store flyer",
+          "url": "https://www.tntsupermarket.us/eng/store-flyer"
+        }
+      ],
+      "note": "Only a general specials listing was read, not a dated flyer page."
+    }
+  ],
+  "deals": [
+    {
+      "store": "uwajimaya",
+      "item": "Spare Ribs for Sweet & Sour Pork",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": 7.49,
+      "percent_off": 53,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Half price, the biggest discount on any protein this week.",
+      "valid_through": "2026-10-20",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Mary's Free Range Chicken Party Wings",
+      "item_key": "chicken-wings",
+      "category": "meat",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": 5.99,
+      "percent_off": 33,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "$2 a pound off free-range chicken wings.",
+      "valid_through": "2026-10-20",
+      "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "Chicken Drumstick",
+      "item_key": "chicken-drumsticks",
+      "category": "meat",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "chicken-legs",
+        "price": 1.739,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "Drumsticks at $1.29/lb, a quarter under the national average.",
+      "valid_through": "2026-10-22",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last."
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic salmon steak",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Fresh Atlantic salmon steaks at $7.49 a pound for a second week running.",
+      "valid_through": "2026-10-22",
+      "notes": "Fillet is $7.99/lb. While supplies last."
+    },
+    {
+      "store": "red-apple",
+      "item": "Pears (Bartlett, Bosc, Starkrimson or Anjou, local)",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "site-history",
+      "us_average": null,
+      "site_history": {
+        "price": 2.49,
+        "per": "lb",
+        "week": "2026-10-09",
+        "store": "central-coop"
+      },
+      "member_price": false,
+      "reason": "Local pears under $1 a pound, your pick of four kinds.",
+      "valid_through": "2026-10-20",
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Jumbo Yellow Onions (local)",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 0.78,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.78,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Local jumbo yellow onions under 80 cents a pound.",
+      "valid_through": "2026-10-20",
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Avocados",
+      "item_key": "avocados",
+      "category": "produce",
+      "price": 3,
+      "quantity": 4,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.75,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "none",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "Avocados at 75 cents each.",
+      "valid_through": "2026-10-20",
+      "notes": ""
+    },
+    {
+      "store": "red-apple",
+      "item": "Red or Yellow Potatoes, 5 lb bag",
+      "item_key": "potatoes-red-yellow",
+      "category": "produce",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "reference": "us-average",
+      "us_average": {
+        "benchmark": "potatoes",
+        "price": 0.989,
+        "per": "lb",
+        "period": "2026-09"
+      },
+      "site_history": null,
+      "member_price": false,
+      "reason": "About 60 cents a pound for a 5 lb bag.",
+      "valid_through": "2026-10-20",
+      "notes": ""
+    },
+    {
+      "store": "smith-brothers",
+      "item": "Russet Potatoes, 5 lb",
+      "item_key": "potatoes-russet",
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.6,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 25,
+      "reference": "printed",
+      "us_average": null,
+      "site_history": null,
+      "member_price": false,
+      "reason": "A quarter off a 5 lb bag, delivered.",
+      "valid_through": "2026-10-30",
+      "notes": "Home delivery add-on."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "source": "US Bureau of Labor Statistics, Average Price Data, U.S. city average (series APU0000...). Approximate: national averages, not Seattle prices.",
+  "source_url": "https://www.bls.gov/cpi/factsheets/average-prices.htm",
+  "updated": "2026-10-23",
+  "benchmarks": {
+    "chicken-whole": { "series": "APU0000706111", "name": "Chicken, fresh, whole", "price": 2.064, "per": "lb", "period": "2026-09" },
+    "chicken-legs": { "series": "APU0000706212", "name": "Chicken legs, bone-in", "price": 1.739, "per": "lb", "period": "2026-09" },
+    "chicken-breast-boneless": { "series": "APU0000FF1101", "name": "Chicken breast, boneless", "price": 4.203, "per": "lb", "period": "2026-09" },
+    "pork-chops": { "series": "APU0000FD3101", "name": "All pork chops", "price": 4.219, "per": "lb", "period": "2026-09" },
+    "pork-other": { "series": "APU0000FD4101", "name": "All other pork (excluding canned ham and luncheon slices)", "price": 3.679, "per": "lb", "period": "2026-09" },
+    "ham": { "series": "APU0000FD2101", "name": "All ham (excluding canned ham and luncheon slices)", "price": 4.445, "per": "lb", "period": "2026-09" },
+    "bacon": { "series": "APU0000704111", "name": "Bacon, sliced", "price": 6.756, "per": "lb", "period": "2026-09" },
+    "ground-beef": { "series": "APU0000703112", "name": "Ground beef, 100% beef", "price": 6.792, "per": "lb", "period": "2026-09" },
+    "beef-round-roast": { "series": "APU0000703311", "name": "Round roast, USDA Choice, boneless", "price": 8.795, "per": "lb", "period": "2026-09" },
+    "beef-stew": { "series": "APU0000703432", "name": "Beef for stew, boneless", "price": 8.533, "per": "lb", "period": "2026-09" },
+    "beef-sirloin": { "series": "APU0000703613", "name": "Steak, sirloin, USDA Choice, boneless", "price": 14.106, "per": "lb", "period": "2026-09" },
+    "beef-steaks": { "series": "APU0000FC3101", "name": "All uncooked beef steaks", "price": 12.69, "per": "lb", "period": "2026-09" },
+    "eggs": { "series": "APU0000708111", "name": "Eggs, grade A, large", "price": 2.272, "per": "dozen", "period": "2026-09" },
+    "milk-whole": { "series": "APU0000709112", "name": "Milk, fresh, whole, fortified", "price": 4.106, "per": "gal", "period": "2026-09" },
+    "cheddar": { "series": "APU0000710212", "name": "Cheddar cheese, natural", "price": 6.133, "per": "lb", "period": "2026-09" },
+    "butter": { "series": "APU0000FS1101", "name": "Butter, stick", "price": 3.959, "per": "lb", "period": "2026-09" },
+    "rice-white": { "series": "APU0000701312", "name": "Rice, white, long grain, uncooked", "price": 1.118, "per": "lb", "period": "2026-09" },
+    "bananas": { "series": "APU0000711211", "name": "Bananas", "price": 0.656, "per": "lb", "period": "2026-09" },
+    "oranges-navel": { "series": "APU0000711311", "name": "Oranges, navel", "price": 1.723, "per": "lb", "period": "2026-09" },
+    "lemons": { "series": "APU0000711412", "name": "Lemons", "price": 2.128, "per": "lb", "period": "2026-09" },
+    "potatoes": { "series": "APU0000712112", "name": "Potatoes, white", "price": 0.989, "per": "lb", "period": "2026-09" },
+    "tomatoes": { "series": "APU0000712311", "name": "Tomatoes, field grown", "price": 1.992, "per": "lb", "period": "2026-09" },
+    "lettuce-iceberg": { "series": "APU0000712211", "name": "Lettuce, iceberg", "price": 1.636, "per": "lb", "period": "2026-09" },
+    "lettuce-romaine": { "series": "APU0000FL2101", "name": "Lettuce, romaine", "price": 3.312, "per": "lb", "period": "2026-09" },
+    "coffee-ground": { "series": "APU0000717311", "name": "Coffee, 100%, ground roast", "price": 9.332, "per": "lb", "period": "2026-09" }
+  }
+}
