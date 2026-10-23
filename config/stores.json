@@ -809,39 +809,6 @@
       ]
     },
     {
-      "id": "west-seattle-thriftway",
-      "name": "West Seattle Thriftway",
-      "aliases": [
-        "West Seattle Thriftway",
-        "Thriftway"
-      ],
-      "active": true,
-      "tracked_since": "2026-10-30",
-      "website": "https://www.westseattlethriftway.com",
-      "flyer_url": "https://www.westseattlethriftway.com/weeklyad.html",
-      "sale_period": {
-        "starts": "wed",
-        "ends": "tue"
-      },
-      "prints_regular_prices": false,
-      "flyer_format": "images",
-      "representative_location": "West Seattle (SW Morgan St) store",
-      "how_to_read": [
-        "The weekly ad page shows four page images with a printed \"Prices Effective\" date range. Read all four and link each page.",
-        "Confirm on the first read whether regular prices or savings are printed, and update prints_regular_prices if they are."
-      ],
-      "about": "An independent neighborhood grocery on SW Morgan Street in West Seattle, with a full deli and meat counter.",
-      "locations": [
-        {
-          "label": "West Seattle (Morgan Junction)",
-          "address": "4201 SW Morgan St, Seattle",
-          "lat": 47.54448,
-          "lon": -122.38621,
-          "flyer": true
-        }
-      ]
-    },
-    {
       "id": "asian-family-market",
       "name": "Asian Family Market",
       "aliases": [
