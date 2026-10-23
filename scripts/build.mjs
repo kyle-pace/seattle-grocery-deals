@@ -497,7 +497,7 @@ function persimmonPage() {
   <h2 id="best-h" class="persim-price">${esc(priceText(best))}</h2>
   <p class="persim-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
   <p class="persim-item">${esc(best.item)}</p>
-  ${per10 ? `<p class="persim-math">That's about <strong>${per10} persimmons for $10</strong>.<span class="muted"> Roughly, at 7 oz a persimmon. We did the math so you don't have to.</span></p>` : ""}
+  ${per10 ? `<p class="persim-math">That's about <strong>${per10} persimmons for $10</strong>.<span class="muted"> Roughly, at 7 oz a persimmon.</span></p>` : ""}
   ${best.notes ? `<p class="muted">${esc(best.notes)}</p>` : ""}
 </section>`
     : `<section class="persim-hero">
