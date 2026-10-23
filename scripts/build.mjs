@@ -84,7 +84,7 @@ function card(i, { showStore = true } = {}) {
 
 function row(i, { showStore = true } = {}) {
   return `<li class="row tier-${i.a.tier}" ${attrs(i)}>
-  <span class="r-item">${i.a.tier === "standout" ? `<span class="dot" title="Standout"></span>` : i.a.tier === "good" ? `<span class="dot dot-good" title="Good deal"></span>` : ""}${esc(i.item)}${showStore ? ` <a class="r-store" href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : ""}${i.notes ? ` <span class="r-note">${esc(i.notes)}</span>` : ""}</span>
+  <span class="r-item">${i.a.tier === "standout" ? `<span class="dot" aria-hidden="true"></span><span class="sr-only">Standout: </span>` : i.a.tier === "good" ? `<span class="dot dot-good" aria-hidden="true"></span><span class="sr-only">Good deal: </span>` : ""}${esc(i.item)}${showStore ? ` <a class="r-store" href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : ""}${i.notes ? ` <span class="r-note">${esc(i.notes)}</span>` : ""}</span>
   <span class="r-price">${priceBlock(i)}</span>
   ${i.a.tags.length ? `<span class="r-tags">${tagChips(i)}</span>` : ""}
 </li>`;
@@ -259,7 +259,7 @@ ${filterBar(items)}
 </section>
 <section id="all" aria-labelledby="h-all">
   <h2 id="h-all">All items on sale</h2>
-  <p class="sub"><span class="dot"></span> standout <span class="dot dot-good"></span> good deal. Within each category, the strongest come first.</p>
+  <p class="sub"><span class="dot" aria-hidden="true"></span> standout <span class="dot dot-good" aria-hidden="true"></span> good deal. Within each category, the strongest come first.</p>
   <div data-filterable>${allItems(items)}</div>
 </section>
 <section id="flyers" aria-labelledby="h-fly">
@@ -305,13 +305,14 @@ function page({ title, path, body, description, map = false, extraScript = null,
 <script src="${url("assets/map.js")}" defer></script>` : ""}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ""}>
+<a class="skip" href="#main">Skip to content</a>
 <header class="masthead">
   <div class="masthead-inner">
     <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span><small>Seattle</small></a>
     <nav>${nav}</nav>
   </div>
 </header>
-<main>
+<main id="main" tabindex="-1">
 ${body}
 </main>
 <footer class="site">
@@ -454,7 +455,7 @@ ${s.no_online_flyer ? "" : `<h2>This week (${esc(fmtDate(latest.week, { weekday:
 ${thisWeek}
 ${mine.length ? `<ul class="rows">${mine.map((i) => row(i, { showStore: false })).join("\n")}</ul>` : ""}
 <h2>Good deals in past weeks</h2>
-${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Item</th><th>Price</th><th></th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}`}`;
+${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Item</th><th>Price</th><th>Deal</th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}`}`;
     write(`stores/${s.id}/`, page({ title: s.name, path: "stores/", body, map: s.locations.length > 0 }));
   }
 }
