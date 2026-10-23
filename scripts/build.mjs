@@ -2,6 +2,7 @@
 // Set BASE_PATH=/ to build for a local server at the root.
 import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText,
   unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer,
@@ -26,6 +27,8 @@ const TIER_LABELS = { standout: "Standout", good: "Good deal", sale: "On sale" }
 const PER_LABEL = { lb: "/lb", each: " each", dozen: "/dozen", l: "/L", gal: "/gal" };
 
 const url = (p = "") => BASE + p;
+// Versioned asset links, so each deploy busts browser caches.
+const asset = (p) => `${url(p)}?v=${createHash("sha1").update(readFileSync(join(ROOT, "site", p))).digest("hex").slice(0, 8)}`;
 const LOGO = readFileSync(join(ROOT, "site", "assets", "logo.svg"), "utf8").trim().replace("<svg ", '<svg aria-hidden="true" ');
 const storeName = (id) => cfg.storeById[id]?.name ?? id;
 const keyLabel = (k) => cfg.items[k]?.label ?? k;
@@ -297,12 +300,12 @@ function page({ title, path, body, description, map = false, extraScript = null,
 <meta name="twitter:card" content="summary">`}
 <link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
 <link rel="preload" href="${url("assets/fonts/bricolage-grotesque.woff2")}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${url("assets/style.css")}">
-<script src="${url("assets/app.js")}" defer></script>${extraScript ? `
-<script src="${url(extraScript)}" defer></script>` : ""}${map ? `
-<link rel="stylesheet" href="${url("assets/leaflet/leaflet.css")}">
-<script src="${url("assets/leaflet/leaflet.js")}" defer></script>
-<script src="${url("assets/map.js")}" defer></script>` : ""}
+<link rel="stylesheet" href="${asset("assets/style.css")}">
+<script src="${asset("assets/app.js")}" defer></script>${extraScript ? `
+<script src="${asset(extraScript)}" defer></script>` : ""}${map ? `
+<link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
+<script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
+<script src="${asset("assets/map.js")}" defer></script>` : ""}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ""}>
 <a class="skip" href="#main">Skip to content</a>
