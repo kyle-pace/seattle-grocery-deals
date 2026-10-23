@@ -1,0 +1,636 @@
+{
+  "week": "2026-10-23",
+  "flyers": [
+    {
+      "store": "uwajimaya",
+      "status": "partial",
+      "valid_from": "2026-10-21",
+      "valid_through": "2026-10-27",
+      "links": [
+        {
+          "label": "Weekly ad (PDF)",
+          "url": "https://www.uwajimaya.com/wp-content/uploads/2026/10/WeeklyAd-10.21.26-V2.pdf"
+        }
+      ],
+      "note": "Pages 1 and 2 read. The Nagano Food Fair page was not. Savings amounts are printed apart from items, so regular prices are left out."
+    }
+  ],
+  "items": [
+    {
+      "store": "uwajimaya",
+      "item": "Kabocha Squash",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 0.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "",
+      "highlight": {
+        "reason": "Sweet kabocha under 80 cents a pound, right in soup season."
+      }
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Red or Green Grapes",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Katsu Shredded Cabbage, 6 oz",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Pork Loin Chop, boneless",
+      "item_key": "pork-chops",
+      "category": "meat",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "",
+      "highlight": {
+        "reason": "Boneless loin chops under $4 a pound, cut for tonkatsu."
+      }
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Mary's Free Range Chicken Thighs, boneless and skinless",
+      "item_key": "chicken-thighs",
+      "category": "meat",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Ahi Tuna Block",
+      "item_key": null,
+      "category": "seafood",
+      "price": 22.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 22.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Steamed Tako Octopus Legs for Sashimi",
+      "item_key": null,
+      "category": "seafood",
+      "price": 28.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 28.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Product of Japan. Previously frozen."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Day-Lee Arabiki Japanese Style Sausage, 12 oz",
+      "item_key": null,
+      "category": "meat",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Nozomi Super Premium Short Grain Rice, 15 lb",
+      "item_key": "rice-short-grain",
+      "category": "pantry",
+      "price": 29.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 2,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kokuho Rose Rice, 15 lb",
+      "item_key": "rice-medium-grain",
+      "category": "pantry",
+      "price": 19.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kikkoman Organic Soy Sauce, 25.4 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 25.4,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 10.64,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kikkoman Panko, 8 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Otafuku Tonkatsu Sauce, 17.6 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 17.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.45,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Lee Kum Kee Chili Crisp, 7 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 13.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Shirakiku Gokuuma Ramen Noodles, 5 pc",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Wang BBQ Sauce, 29.63 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 29.63,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Fukushima Katsuo Fushi No Dashi, 20 pc",
+      "item_key": null,
+      "category": "pantry",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 12.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Shirakiku Sriracha Sauce, 27.5 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 27.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.45,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Nissin Cup Noodle, 2.4 to 2.8 oz",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.49,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kibun no Kisetsu Oden Set, Family Size, 26.8 oz",
+      "item_key": null,
+      "category": "frozen",
+      "price": 15.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 26.8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.55,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "Previously frozen."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Samlip Cream Bun, 135 g",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 135,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 9.04,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Oyaki Dumplings, 2 pc",
+      "item_key": null,
+      "category": "prepared",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": "At the deli."
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Uwajimaya Tonkatsu Sando",
+      "item_key": null,
+      "category": "prepared",
+      "price": 8,
+      "quantity": 2,
+      "unit": "each",
+      "unit_price": {
+        "value": 4,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Calbee Shrimp Chips, 3.3 to 4 oz",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.79,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Meiji Choco Baby, 1.12 oz",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 1.19,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.19,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Ubae Ube Cookies, 7.6 oz",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 21.03,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Lollipunch Marshmallow Pops, 35 g",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 5,
+      "quantity": 4,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.25,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Maxi Tropical Roots Chips, 8 oz",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 3.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.38,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Ito-En Unsweetened Tea, 16.9 oz",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.79,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Binggrae Milk Drink, 6 pk",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 5.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Tomomasu Soda, 10.1 oz",
+      "item_key": null,
+      "category": "snacks-drinks",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.49,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": null,
+      "notes": ""
+    }
+  ]
+}

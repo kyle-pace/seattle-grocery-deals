@@ -97,5 +97,25 @@
     openBtn.hidden = true;
   }
 
+  // Dates: hide expired content and show "ending soon" against today in Seattle.
+  var today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(new Date());
+  function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }
+  all("[data-expired-after]").forEach(function (el) { el.hidden = !(today > el.dataset.expiredAfter); });
+  var ending = document.querySelector("[data-ending]");
+  if (ending) {
+    var shown = 0;
+    all("[data-ends]", ending).forEach(function (li) {
+      var d = daysUntil(li.dataset.ends);
+      var ok = d >= 0 && d <= 2 && shown < 8;
+      li.hidden = !ok;
+      li.removeAttribute("data-tier");
+      if (ok) {
+        shown++;
+        li.querySelector("[data-ends-label]").textContent = d === 0 ? "ends today" : d === 1 ? "ends tomorrow" : "ends in 2 days";
+      }
+    });
+    ending.hidden = shown === 0;
+  }
+
   apply();
 })();

@@ -15,6 +15,7 @@ const weeks = loadWeeks().map((w) => w.data); // oldest first
 if (!weeks.length) throw new Error("No week files in data/weeks");
 const latest = weeks[weeks.length - 1];
 const H = cfg.criteria.home;
+const TODAY = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(new Date());
 
 const CATEGORY_LABELS = {
   produce: "Produce", meat: "Meat", seafood: "Seafood", "dairy-eggs": "Dairy and eggs", pantry: "Pantry",
@@ -237,10 +238,24 @@ function weekBody(week, { current }) {
     return `${notice}<p>No sale items were recorded this week.</p>
 <section id="flyers"><h2>Flyers</h2>${flyerList(week)}</section>`;
   }
-  return `${notice}
+  const ends = items.map((i) => i.valid_through).filter(Boolean).sort();
+  const lastEnd = ends[ends.length - 1];
+  const fresh = current && lastEnd
+    ? `<p class="notice" data-expired-after="${lastEnd}" hidden>These sales have ended. New flyers come in on Friday, so check back then.</p>`
+    : "";
+  const soonPool = current ? items.filter((i) => i.valid_through).slice(0, 60) : [];
+  const soon = soonPool.length
+    ? `<section id="ending" class="ending" aria-labelledby="h-end" data-ending hidden>
+  <h2 id="h-end">Ending soon</h2>
+  <p class="sub">Last chance on these, within the next two days.</p>
+  <ul class="mini ending-list">${soonPool.map((i) => `<li data-ends="${i.valid_through}" ${attrs(i)} hidden><span>${esc(i.item)} <a class="muted" href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span> <span class="mini-price">${esc(priceText(i))} <span class="ends-when" data-ends-label></span></span></li>`).join("")}</ul>
+</section>`
+    : "";
+  return `${notice}${fresh}
 <p class="summary">${items.length} items on sale across ${read} flyers: <strong>${counts.standout} standouts</strong>, ${counts.good} good deals.</p>
 <nav class="jump" aria-label="On this page"><a href="#highlights">Highlights</a><a href="#where">Where to shop</a><a href="#categories">By category</a><a href="#compare">Compare stores</a><a href="#all">All items</a><a href="#flyers">Flyers</a></nav>
 ${filterBar(items)}
+${soon}
 <section id="highlights" aria-labelledby="h-high">
   <h2 id="h-high">Highlights</h2>
   <p class="sub">The strongest sales this week, from big discounts, prices well under the US average, and the lowest prices we've listed.</p>
@@ -497,6 +512,7 @@ function persimmonPage() {
   <h2 id="best-h" class="persim-price">${esc(priceText(best))}</h2>
   <p class="persim-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
   <p class="persim-item">${esc(best.item)}</p>
+  ${best.valid_through ? `<p class="notice" data-expired-after="${best.valid_through}" hidden>This deal ended ${esc(fmtDate(best.valid_through))}. New flyers come in on Friday.</p>` : ""}
   ${per10 ? `<p class="persim-math">That's about <strong>${per10} persimmons for $10</strong>.<span class="muted"> Roughly, at 7 oz a persimmon.</span></p>` : ""}
   ${best.notes ? `<p class="muted">${esc(best.notes)}</p>` : ""}
 </section>`
@@ -528,10 +544,11 @@ ${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest
 <p class="persim-foot small">Preview photo: <a href="https://commons.wikimedia.org/wiki/File:Fuyu_persimmon_fruits,_one_cut_open.jpg">Fuyu persimmon fruits, one cut open</a> by Frank Schulenburg, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, cropped.</p>
 </div>
 <template data-persim-svg>${PERSIMMON_SVG}</template>`;
-  const desc = best
+  const live = best && (!best.valid_through || best.valid_through >= TODAY);
+  const desc = live
     ? `This is not a drill. The cheapest Fuyu in Seattle this week is ${priceText(best)} at ${storeName(best.store)}. Go. Go now.`
     : "No Fuyu on sale this week. We are devastated. Check back Friday.";
-  const ogTitle = best ? `PERSIMMON ALERT!!! Fuyu at ${priceText(best)} at ${storeName(best.store)}` : "BUY PERSIMMONS NOW!!! (this is not a drill)";
+  const ogTitle = live ? `PERSIMMON ALERT!!! Fuyu at ${priceText(best)} at ${storeName(best.store)}` : "BUY PERSIMMONS NOW!!! (this is not a drill)";
   write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, description: desc,
     image: "assets/img/persimmons-og.jpg", imageAlt: "Fuyu persimmons, one cut open", ogTitle, extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
 }

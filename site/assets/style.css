@@ -291,3 +291,6 @@ main:focus { outline: none; }
 .masthead nav a.nav-persim[aria-current="page"] { box-shadow: 0 0 0 3px var(--mustard); }
 .nav-persim svg { width: 1.3rem; height: 1.3rem; }
 @media (prefers-color-scheme: dark) { .masthead nav a.nav-persim { background: #2b3832; } }
+.ending { background: var(--tomato-soft); border-radius: 12px; padding: 0.2rem 1rem 0.8rem; margin-top: 1rem; }
+.ending h2 { margin-top: 0.8rem; }
+.ends-when { font-size: 0.8rem; font-weight: 700; color: var(--tomato); margin-left: 0.3rem; text-transform: uppercase; letter-spacing: 0.03em; }
