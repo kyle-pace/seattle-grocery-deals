@@ -269,7 +269,7 @@ ${filterBar(items)}
 ${myStoresDialog()}`;
 }
 
-function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "" }) {
+function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "", ogTitle = null }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ["about/", "About"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : [])]
     .map(([p, label]) => p === "persimmons/"
@@ -285,7 +285,7 @@ function page({ title, path, body, description, map = false, extraScript = null,
 <meta name="description" content="${esc(description ?? cfg.site.tagline)}">
 <meta property="og:site_name" content="${esc(cfg.site.title)}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="${esc(title || cfg.site.title)}">
+<meta property="og:title" content="${esc(ogTitle || title || cfg.site.title)}">
 <meta property="og:description" content="${esc(description ?? cfg.site.tagline)}">
 <meta property="og:url" content="${esc(cfg.site.origin + cfg.site.base_path + path)}">${image ? `
 <meta property="og:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">
@@ -524,9 +524,12 @@ ${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest
 <p class="persim-foot small">Preview photo: <a href="https://commons.wikimedia.org/wiki/File:Fuyu_persimmon_fruits,_one_cut_open.jpg">Fuyu persimmon fruits, one cut open</a> by Frank Schulenburg, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, cropped.</p>
 </div>
 <template data-persim-svg>${PERSIMMON_SVG}</template>`;
-  const desc = best ? `The best Fuyu persimmon deal in town this week: ${priceText(best)} at ${storeName(best.store)}.` : "Where to buy Fuyu persimmons in Seattle this week.";
+  const desc = best
+    ? `This is not a drill. The cheapest Fuyu in Seattle this week is ${priceText(best)} at ${storeName(best.store)}. Go. Go now.`
+    : "No Fuyu on sale this week. We are devastated. Check back Friday.";
+  const ogTitle = best ? `PERSIMMON ALERT!!! Fuyu at ${priceText(best)} at ${storeName(best.store)}` : "BUY PERSIMMONS NOW!!! (this is not a drill)";
   write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, description: desc,
-    image: "assets/img/persimmons-og.jpg", imageAlt: "Fuyu persimmons, one cut open", extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
+    image: "assets/img/persimmons-og.jpg", imageAlt: "Fuyu persimmons, one cut open", ogTitle, extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
 }
 
 function aboutPage() {
