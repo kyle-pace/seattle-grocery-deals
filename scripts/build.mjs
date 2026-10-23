@@ -490,20 +490,23 @@ function inPersimmonSeason(iso) {
 const PERSIMMON_SEASON = inPersimmonSeason(latest.week);
 const isFuyu = (i) => /fuyu/i.test(i.item);
 const isPersimmon = (i) => i.item_key === "persimmons" || /persimmon/i.test(i.item);
+// A Fuyu weighs about 7 oz, so per-each prices are compared as an estimated price per pound.
+const PERSIM_LB = 7 / 16;
+const persimPerLb = (i) => i.unit_price.per === "lb" ? i.unit_price.value : i.unit_price.per === "each" ? i.unit_price.value / PERSIM_LB : Infinity;
+const byPerLb = (a, b) => persimPerLb(a) - persimPerLb(b);
 
 function persimmonPage() {
   const items = analyzed.get(latest.week).filter(isPersimmon).filter((i) => i.unit_price);
-  const fuyu = items.filter(isFuyu).sort((a, b) => a.unit_price.value - b.unit_price.value);
-  const others = items.filter((i) => !isFuyu(i)).sort((a, b) => a.unit_price.value - b.unit_price.value);
+  const fuyu = items.filter(isFuyu).sort(byPerLb);
+  const others = items.filter((i) => !isFuyu(i)).sort(byPerLb);
   const best = fuyu[0];
-  // A Fuyu weighs about 7 oz.
-  const per10 = best && best.unit_price.per === "lb" ? Math.floor(10 / (best.unit_price.value * 7 / 16)) : null;
+  const per10 = best && isFinite(persimPerLb(best)) ? Math.floor(10 / (persimPerLb(best) * PERSIM_LB)) : null;
 
   const log = [...weeks].reverse().map((w) => {
-    const f = analyzed.get(w.week).filter((i) => isPersimmon(i) && isFuyu(i) && i.unit_price).sort((a, b) => a.unit_price.value - b.unit_price.value)[0];
+    const f = analyzed.get(w.week).filter((i) => isPersimmon(i) && isFuyu(i) && i.unit_price).sort(byPerLb)[0];
     return f ? { week: w.week, f } : null;
   }).filter(Boolean);
-  const maxLog = Math.max(...log.map((l) => l.f.unit_price.value), 1);
+  const maxLog = Math.max(...log.map((l) => persimPerLb(l.f)), 1);
 
   const hero = best
     ? `<section class="persim-hero" aria-labelledby="best-h">
@@ -528,10 +531,10 @@ function persimmonPage() {
 <p class="persim-eyebrow">It is persimmon season${PERSIMMON_SEASON ? "" : " (or it was)"}. Week of ${esc(fmtDate(latest.week, { weekday: false, year: true }))}.</p>
 <h1 class="persim-title">Where to buy <span>persimmons</span> this week</h1>
 ${hero}
-${runners.length ? `<section><h2>Also on sale</h2><ul class="persim-list">${runners.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}</strong></li>`).join("")}</ul></section>` : ""}
+${runners.length ? `<section><h2>Also on sale</h2><ul class="persim-list">${runners.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}${i.unit_price.per === "each" ? `<span class="muted small"> (about ${esc(money(persimPerLb(i)))}/lb)</span>` : ""}</strong></li>`).join("")}</ul></section>` : ""}
 ${others.length ? `<section><h2>Other persimmons</h2><p class="sub">The flyer didn't say which kind. Could be Fuyu, could be Hachiya. Ask before you bite.</p><ul class="persim-list">${others.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}</strong></li>`).join("")}</ul></section>` : ""}
 ${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">Cheapest Fuyu we listed each week.</p>
-<ol class="persim-log">${log.map((l) => `<li><span class="pl-week">${esc(fmtDate(l.week, { weekday: false }))}</span><span class="pl-bar" style="--w:${Math.round((l.f.unit_price.value / maxLog) * 100)}%"><span>${esc(money(l.f.unit_price.value))}/lb</span></span><span class="pl-store">${esc(storeName(l.f.store))}</span></li>`).join("")}</ol></section>` : ""}
+<ol class="persim-log">${log.map((l) => `<li><span class="pl-week">${esc(fmtDate(l.week, { weekday: false }))}</span><span class="pl-bar" style="--w:${Math.round((persimPerLb(l.f) / maxLog) * 100)}%"><span>${l.f.unit_price.per === "lb" ? "" : "about "}${esc(money(persimPerLb(l.f)))}/lb</span></span><span class="pl-store">${esc(storeName(l.f.store))}</span></li>`).join("")}</ol></section>` : ""}
 <section class="persim-facts"><h2>Persimmon facts, for the persimmon-curious</h2>
 <ul>
   <li><strong>Fuyu</strong> are the squat, tomato-shaped ones. Eat them crisp like an apple, skin and all.</li>
