@@ -192,3 +192,28 @@ dialog::backdrop { background: rgb(0 0 0 / 0.4); }
 dialog h2 { margin-top: 0; }
 dialog .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.4rem; }
 dialog button { padding: 0.4rem 1.1rem; border-radius: 8px; border: 0; background: var(--green); color: var(--green-ink); font-weight: 600; cursor: pointer; }
+
+/* store map and info */
+.map { height: min(65vh, 32rem); border-radius: 12px; border: 1px solid var(--line); overflow: hidden; background: var(--surface); z-index: 0; }
+.map-small { height: 18rem; margin-bottom: 0.5rem; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; font-size: 0.85rem; color: var(--muted); margin: 0.5rem 0; }
+.pin { display: inline-block; width: 0.8rem; height: 0.8rem; border-radius: 50%; vertical-align: -0.1rem; margin-right: 0.25rem; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.pin-hot { background: var(--tomato); }
+.pin-flyer { background: var(--green); }
+.pin-other { background: var(--surface); border-color: var(--green); width: 0.7rem; height: 0.7rem; }
+.pin-none { background: var(--surface); border-color: var(--muted); width: 0.7rem; height: 0.7rem; }
+.map-toggles { margin: 0 0 1rem; font-size: 0.9rem; }
+.map-toggles summary { cursor: pointer; color: var(--green); }
+.map-toggles .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.3rem; margin-top: 0.5rem; }
+.info-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.info-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.9rem 1rem; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.35rem; }
+.info-card p { margin: 0; }
+.info-card h3 a { color: inherit; text-decoration: none; }
+.info-card .meta strong { color: var(--tomato); }
+.card-links { display: flex; gap: 1rem; font-size: 0.9rem; margin-top: auto !important; padding-top: 0.2rem; }
+.locations { list-style: none; padding: 0; margin: 0 0 1rem; }
+.locations li { padding: 0.4rem 0; border-bottom: 1px solid var(--line); }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
+.leaflet-popup-content { font: 0.9rem/1.4 var(--body); }
+.leaflet-container a { color: var(--green); }
+.tiles-dark { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }

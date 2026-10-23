@@ -104,7 +104,7 @@ function datesText(f) {
 function flyerList(week) {
   const byStore = Object.fromEntries(week.flyers.map((f) => [f.store, f]));
   const rows = cfg.stores
-    .filter((s) => s.active && s.tracked_since <= week.week)
+    .filter((s) => s.active && !s.no_online_flyer && s.tracked_since <= week.week)
     .map((s) => {
       const f = byStore[s.id];
       if (!f) {
@@ -210,7 +210,7 @@ ${cats.map((c) => {
 
 function myStoresDialog() {
   const boxes = cfg.stores
-    .filter((s) => s.active)
+    .filter((s) => s.active && !s.no_online_flyer)
     .map((s) => `<label class="check"><input type="checkbox" value="${esc(s.id)}" data-mystore> ${esc(s.name)}</label>`)
     .join("");
   return `<dialog data-mystores>
@@ -269,9 +269,9 @@ ${filterBar(items)}
 ${myStoresDialog()}`;
 }
 
-function page({ title, path, body, description }) {
+function page({ title, path, body, description, map = false }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
-  const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores"], ["about/", "About"]]
+  const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ["about/", "About"]]
     .map(([p, label]) => `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
     .join("");
   return `<!doctype html>
@@ -284,7 +284,10 @@ function page({ title, path, body, description }) {
 <link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
 <link rel="preload" href="${url("assets/fonts/bricolage-grotesque.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${url("assets/style.css")}">
-<script src="${url("assets/app.js")}" defer></script>
+<script src="${url("assets/app.js")}" defer></script>${map ? `
+<link rel="stylesheet" href="${url("assets/leaflet/leaflet.css")}">
+<script src="${url("assets/leaflet/leaflet.js")}" defer></script>
+<script src="${url("assets/map.js")}" defer></script>` : ""}
 </head>
 <body>
 <header class="masthead">
@@ -338,19 +341,60 @@ ${weekBody(w, { current: w === latest })}`;
   write("weeks/", page({ title: "Past weeks", path: "weeks/", body: `<h1>Past weeks</h1>\n<ul class="weeks">${rows.join("\n")}</ul>` }));
 }
 
+function mapData(stores, items) {
+  const locations = stores.flatMap((s) => {
+    const mine = items.filter((i) => i.store === s.id);
+    const stand = mine.filter((i) => i.a.tier === "standout").length;
+    const summary = s.no_online_flyer ? "" : mine.length ? `${mine.length} items on sale this week${stand ? `, ${stand} standout${stand > 1 ? "s" : ""}` : ""}` : "No sale items recorded this week";
+    return s.locations.map((l) => ({
+      storeId: s.id, store: s.name, url: url(`stores/${s.id}/`), label: l.label, address: l.address, lat: l.lat, lon: l.lon,
+      flyer: l.flyer, noFlyer: Boolean(s.no_online_flyer), highlight: l.flyer && stand > 0, summary: l.flyer ? summary : "",
+    }));
+  });
+  return `<script type="application/json" id="map-data">${JSON.stringify({ locations }).replace(/</g, "\\u003c")}</script>`;
+}
+
+const MAP_LEGEND = `<p class="legend">
+  <span><span class="pin pin-hot"></span> Flyer we track, with standouts this week</span>
+  <span><span class="pin pin-flyer"></span> Flyer we track</span>
+  <span><span class="pin pin-other"></span> Other location of the same store</span>
+  <span><span class="pin pin-none"></span> No online flyer</span>
+</p>`;
+
+function storeCard(s, items) {
+  const f = latest.flyers.find((x) => x.store === s.id);
+  const mine = items.filter((i) => i.store === s.id);
+  const stand = mine.filter((i) => i.a.tier === "standout").length;
+  const where = s.locations.length ? `${s.locations.length} location${s.locations.length > 1 ? "s" : ""}` : "Home delivery";
+  const status = s.no_online_flyer ? "No online flyer" : f ? `${STATUS_LABELS[f.status]} this week` : "Not checked this week";
+  return `<li class="info-card" data-store="${esc(s.id)}">
+  <h3><a href="${url(`stores/${s.id}/`)}">${esc(s.name)}</a></h3>
+  <p>${esc(s.about)}</p>
+  <p class="meta">${esc(status)}${mine.length ? ` <span aria-hidden="true">&middot;</span> ${mine.length} on sale${stand ? `, <strong>${stand} standout${stand > 1 ? "s" : ""}</strong>` : ""}` : ""} <span aria-hidden="true">&middot;</span> ${esc(where)}</p>
+  <p class="card-links">${s.locations.length ? `<a href="#store-map" data-map-focus="${esc(s.id)}">Show on map</a>` : ""}${!s.no_online_flyer && s.flyer_url ? ` <a href="${esc(s.flyer_url)}" rel="noopener">Flyer</a>` : ""}</p>
+</li>`;
+}
+
 function storePages() {
   const items = analyzed.get(latest.week);
-  const list = cfg.stores.filter((s) => s.active).map((s) => {
-    const f = latest.flyers.find((x) => x.store === s.id);
-    const mine = items.filter((i) => i.store === s.id);
-    return `<li><a class="store" href="${url(`stores/${s.id}/`)}">${esc(s.name)}</a>
-  <span class="muted">${f ? STATUS_LABELS[f.status] : "Not checked"} this week${mine.length ? `, ${mine.length} items on sale` : ""}</span></li>`;
-  });
+  const active = cfg.stores.filter((s) => s.active);
+  const tracked = active.filter((s) => !s.no_online_flyer);
+  const others = active.filter((s) => s.no_online_flyer);
+  const toggles = active.filter((s) => s.locations.length)
+    .map((s) => `<label class="check"><input type="checkbox" value="${esc(s.id)}" data-map-store checked> ${esc(s.name)}</label>`).join("");
   write("stores/", page({
-    title: "Stores", path: "stores/",
-    body: `<h1>Stores</h1>
-<p>Each store is tracked by one general Seattle-area flyer, not by location.</p>
-<ul class="stores">${list.join("\n")}</ul>
+    title: "Stores and map", path: "stores/", map: true,
+    body: `<h1>Stores and map</h1>
+<p class="lede">Every store we follow, where it is, and what it's good for. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.</p>
+<div id="store-map" class="map" role="region" aria-label="Map of store locations"></div>
+${MAP_LEGEND}
+<details class="map-toggles"><summary>Show or hide stores on the map</summary><div class="grid">${toggles}</div></details>
+${mapData(active, items)}
+<h2>Stores we track</h2>
+<ul class="info-grid">${tracked.map((s) => storeCard(s, items)).join("\n")}</ul>
+${others.length ? `<h2>Other markets worth knowing</h2>
+<p class="sub">Good local markets with no online flyer, so their prices are not tracked.</p>
+<ul class="info-grid">${others.map((s) => storeCard(s, items)).join("\n")}</ul>` : ""}
 <p><a href="${esc(cfg.site.suggest_store_url)}">Suggest a store</a></p>`,
   }));
 
@@ -371,22 +415,32 @@ function storePages() {
   <td>${esc(priceText(i))}${unitPriceIsExtra(i) ? `<br><span class="muted">${esc(unitPriceText(i.unit_price))}</span>` : ""}</td>
   <td>${esc(TIER_LABELS[i.a.tier])}</td>
 </tr>`);
-    const body = `<p class="crumb"><a href="${url("stores/")}">Stores</a></p>
-<h1>${esc(s.name)}</h1>
-<dl class="facts">
+    const locs = s.locations.length
+      ? `<ul class="locations">${s.locations.map((l) => `<li><strong>${esc(l.label)}</strong> <span class="muted">${esc(l.address)}</span>${s.no_online_flyer ? "" : l.flyer ? ` <span class="tag">Flyer tracked here</span>` : ` <span class="tag tag-member">Prices may differ</span>`}</li>`).join("")}</ul>`
+      : `<p class="muted">Home delivery only, no store to visit.</p>`;
+    const facts = s.no_online_flyer
+      ? `<dl class="facts">${s.website ? `<dt>Website</dt><dd><a href="${esc(s.website)}" rel="noopener">${esc(s.website.replace(/^https:\/\/(www\.)?/, ""))}</a></dd>` : ""}<dt>Flyer</dt><dd>${esc(s.flyer_url_note)}</dd></dl>`
+      : `<dl class="facts">
   <dt>Flyer</dt><dd>${s.flyer_url ? `<a href="${esc(s.flyer_url)}" rel="noopener">${esc(s.flyer_url.replace(/^https:\/\/(www\.)?/, ""))}</a>` : "No fixed link"}${s.flyer_url_note ? `<br><span class="muted">${esc(s.flyer_url_note)}</span>` : ""}</dd>
   <dt>Sale period</dt><dd>${esc(period)}${s.sale_period.note ? `<br><span class="muted">${esc(s.sale_period.note)}</span>` : ""}</dd>
   <dt>Format</dt><dd>${FORMAT_LABELS[s.flyer_format]}</dd>
   <dt>Regular prices</dt><dd>${s.prints_regular_prices ? "Printed" : "Not printed, so staples are compared to US averages"}</dd>
   <dt>Flyer used</dt><dd>${esc(s.representative_location)}</dd>
   ${s.website ? `<dt>Website</dt><dd><a href="${esc(s.website)}" rel="noopener">${esc(s.website.replace(/^https:\/\/(www\.)?/, ""))}</a></dd>` : ""}
-</dl>
-<h2>This week (${esc(fmtDate(latest.week, { weekday: false }))})</h2>
+</dl>`;
+    const body = `<p class="crumb"><a href="${url("stores/")}">Stores and map</a></p>
+<h1>${esc(s.name)}</h1>
+<p class="lede">${esc(s.about)}</p>
+${s.locations.length ? `<div id="store-map" class="map map-small" role="region" aria-label="Map of ${esc(s.name)} locations"></div>${mapData([s], items)}` : ""}
+<h2>Locations</h2>
+${locs}
+${facts}
+${s.no_online_flyer ? "" : `<h2>This week (${esc(fmtDate(latest.week, { weekday: false }))})</h2>
 ${thisWeek}
 ${mine.length ? `<ul class="rows">${mine.map((i) => row(i, { showStore: false })).join("\n")}</ul>` : ""}
 <h2>Good deals in past weeks</h2>
-${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Item</th><th>Price</th><th></th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}`;
-    write(`stores/${s.id}/`, page({ title: s.name, path: "stores/", body }));
+${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Item</th><th>Price</th><th></th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}`}`;
+    write(`stores/${s.id}/`, page({ title: s.name, path: "stores/", body, map: s.locations.length > 0 }));
   }
 }
 
@@ -415,7 +469,7 @@ function aboutPage() {
 <h2>Suggest a store</h2>
 <p>Know a Seattle-area store with a public weekly flyer? <a href="${esc(cfg.site.suggest_store_url)}">Open a suggestion on GitHub</a> (needs a free GitHub account).</p>
 <h2>Privacy</h2>
-<p>No accounts, analytics or tracking. Your "my stores" choice is saved only in your browser.</p>
+<p>No accounts, analytics or tracking. Your "my stores" choice is saved only in your browser. The store map loads its map tiles from OpenStreetMap.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
 }

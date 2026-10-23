@@ -35,6 +35,14 @@ function checkConfig() {
     }
     if (!["web-page", "images", "pdf", "catalogue-viewer"].includes(s.flyer_format)) err(w, `unknown flyer_format ${s.flyer_format}`);
     if (s.flyer_url === null && !s.flyer_url_note) err(w, "flyer_url is null, so flyer_url_note must explain why");
+    if (typeof s.about !== "string" || s.about.length < 20 || s.about.length > 300) err(w, "about must be 20 to 300 characters");
+    if (!Array.isArray(s.locations)) err(w, "locations must be a list (empty for delivery-only)");
+    for (const [i, l] of (s.locations || []).entries()) {
+      const lw = `${w} locations[${i}]`;
+      if (!l.label || !l.address) err(lw, "needs label and address");
+      if (!(l.lat > 46.5 && l.lat < 48.5 && l.lon > -123.5 && l.lon < -121.5)) err(lw, "lat/lon is not in the Seattle area");
+      if (typeof l.flyer !== "boolean") err(lw, "flyer must be true or false (does the tracked flyer apply here?)");
+    }
   }
   for (const [key, item] of Object.entries(cfg.items)) {
     const w = `config/items.json ${key}`;
@@ -90,7 +98,7 @@ function checkWeek(path) {
     if (f.status === "full" && f.valid_through && f.valid_through < week.week) err(w, "valid_through is before the week date; should this be stale?");
   }
   for (const s of cfg.stores) {
-    if (s.active && s.tracked_since <= week.week && !flyerByStore[s.id]) warn(name, `active store ${s.id} has no flyer entry (shown as not checked)`);
+    if (s.active && !s.no_online_flyer && s.tracked_since <= week.week && !flyerByStore[s.id]) warn(name, `active store ${s.id} has no flyer entry (shown as not checked)`);
   }
 
   // Items
@@ -139,7 +147,7 @@ function checkWeek(path) {
 
 function scanText(dir) {
   for (const entry of readdirSync(dir)) {
-    if ([".git", "node_modules", "dist", "drafts", "fonts"].includes(entry)) continue;
+    if ([".git", "node_modules", "dist", "drafts", "fonts", "leaflet"].includes(entry)) continue;
     const p = join(dir, entry);
     if (statSync(p).isDirectory()) scanText(p);
     else if (/\.(md|json|mjs|js|css|html|yml|txt)$/.test(entry)) {

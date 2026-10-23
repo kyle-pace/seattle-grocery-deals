@@ -24,6 +24,23 @@
         "Check the printed date on each image. On Friday morning the page sometimes still shows last week's flyer; if so, mark the flyer stale.",
         "One image is the Seattle store only; the other covers both the Seattle and Tukwila stores. Items only on the combined image get a note saying they may only be at Tukwila.",
         "Every item is while supplies last."
+      ],
+      "about": "An Asian grocery in the Chinatown–International District with a big fresh seafood counter, inexpensive meat and Asian produce. A second store is in Tukwila.",
+      "locations": [
+        {
+          "label": "Seattle (Chinatown–International District)",
+          "address": "1221 S King St, Seattle",
+          "lat": 47.59809,
+          "lon": -122.31633,
+          "flyer": true
+        },
+        {
+          "label": "Tukwila",
+          "address": "17348 Southcenter Pkwy, Tukwila",
+          "lat": 47.44821,
+          "lon": -122.26008,
+          "flyer": true
+        }
       ]
     },
     {
@@ -47,6 +64,30 @@
       "how_to_read": [
         "Flyer images on the weekly specials page, with a printed \"Prices Valid\" date range.",
         "Most items print a regular price or an exact \"save $X\" amount. \"Save up to\" amounts are not exact and do not count as a printed regular price."
+      ],
+      "about": "A Pacific Northwest Asian supermarket founded in 1928, best known for Japanese groceries, a seafood counter and a food hall.",
+      "locations": [
+        {
+          "label": "Seattle (Chinatown–International District)",
+          "address": "600 5th Ave S, Seattle",
+          "lat": 47.59684,
+          "lon": -122.32704,
+          "flyer": true
+        },
+        {
+          "label": "Bellevue",
+          "address": "699 120th Ave NE, Bellevue",
+          "lat": 47.61575,
+          "lon": -122.18225,
+          "flyer": true
+        },
+        {
+          "label": "Renton",
+          "address": "501 S Grady Way, Renton",
+          "lat": 47.46986,
+          "lon": -122.21224,
+          "flyer": true
+        }
       ]
     },
     {
@@ -70,6 +111,128 @@
       "representative_location": "Seattle-area stores (one shared ad)",
       "how_to_read": [
         "Check the sales section from the homepage. If it shows no items, mark the flyer unreadable."
+      ],
+      "about": "A member-owned natural foods co-op with stores across the Seattle area, strong on organic produce and local products. Anyone can shop.",
+      "locations": [
+        {
+          "label": "Fremont",
+          "address": "600 N 34th St, Seattle",
+          "lat": 47.64995,
+          "lon": -122.35089,
+          "flyer": true
+        },
+        {
+          "label": "View Ridge",
+          "address": "6514 40th Ave NE, Seattle",
+          "lat": 47.67613,
+          "lon": -122.28436,
+          "flyer": true
+        },
+        {
+          "label": "Green Lake Village",
+          "address": "450 NE 71st St, Seattle",
+          "lat": 47.68037,
+          "lon": -122.32352,
+          "flyer": true
+        },
+        {
+          "label": "Green Lake Aurora",
+          "address": "7504 Aurora Ave N, Seattle",
+          "lat": 47.68355,
+          "lon": -122.34412,
+          "flyer": true
+        },
+        {
+          "label": "Ballard",
+          "address": "1451 NW 46th St, Seattle",
+          "lat": 47.66186,
+          "lon": -122.37566,
+          "flyer": true
+        },
+        {
+          "label": "Central District",
+          "address": "2230 E Union St, Seattle",
+          "lat": 47.61312,
+          "lon": -122.30298,
+          "flyer": true
+        },
+        {
+          "label": "Madison Valley",
+          "address": "2925 E Madison St, Seattle",
+          "lat": 47.62464,
+          "lon": -122.29407,
+          "flyer": true
+        },
+        {
+          "label": "Columbia City",
+          "address": "3610 S Edmunds St, Seattle",
+          "lat": 47.55894,
+          "lon": -122.28685,
+          "flyer": true
+        },
+        {
+          "label": "West Seattle",
+          "address": "2749 California Ave SW, Seattle",
+          "lat": 47.57752,
+          "lon": -122.38708,
+          "flyer": true
+        },
+        {
+          "label": "Downtown Corner Market",
+          "address": "1320 4th Ave, Seattle",
+          "lat": 47.60909,
+          "lon": -122.33526,
+          "flyer": true
+        },
+        {
+          "label": "Burien",
+          "address": "15840 1st Ave S, Burien",
+          "lat": 47.46103,
+          "lon": -122.33217,
+          "flyer": true
+        },
+        {
+          "label": "Edmonds",
+          "address": "9803 Edmonds Way, Edmonds",
+          "lat": 47.7915,
+          "lon": -122.36606,
+          "flyer": true
+        },
+        {
+          "label": "Bothell",
+          "address": "22621 Bothell-Everett Hwy, Bothell",
+          "lat": 47.79263,
+          "lon": -122.21456,
+          "flyer": true
+        },
+        {
+          "label": "Kirkland",
+          "address": "430 Kirkland Way, Kirkland",
+          "lat": 47.67571,
+          "lon": -122.20006,
+          "flyer": true
+        },
+        {
+          "label": "Redmond",
+          "address": "11435 Avondale Rd NE, Redmond",
+          "lat": 47.70159,
+          "lon": -122.0934,
+          "flyer": true
+        },
+        {
+          "label": "Issaquah",
+          "address": "1810 12th Ave NW, Issaquah",
+          "lat": 47.55135,
+          "lon": -122.05634,
+          "flyer": true
+        },
+        {
+          "label": "Bellevue",
+          "address": "Bellevue",
+          "lat": 47.6126,
+          "lon": -122.18499,
+          "flyer": true
+        }
       ]
     },
     {
@@ -93,6 +256,23 @@
       "how_to_read": [
         "Web page listing of fresh deals with regular prices.",
         "The page often keeps showing old dates for weeks. If the printed dates are not this week, mark the flyer stale and use no items from it."
+      ],
+      "about": "A member-owned co-op on East Madison Street in Seattle, with a second store in Tacoma. Organic and local produce and bulk foods.",
+      "locations": [
+        {
+          "label": "Seattle (Capitol Hill)",
+          "address": "1600 E Madison St, Seattle",
+          "lat": 47.61539,
+          "lon": -122.31123,
+          "flyer": true
+        },
+        {
+          "label": "Tacoma",
+          "address": "4502 N Pearl St, Tacoma",
+          "lat": 47.29032,
+          "lon": -122.51671,
+          "flyer": true
+        }
       ]
     },
     {
@@ -117,7 +297,9 @@
       "how_to_read": [
         "The page is rendered with JavaScript. Read the rendered page in a browser; cached fetches go stale.",
         "The cycle dates are printed at the top (\"Enjoy these deals 10/17 to 10/30\")."
-      ]
+      ],
+      "about": "A Kent dairy that delivers milk, eggs and groceries to homes around Puget Sound. Not a store: sales run in two-week cycles.",
+      "locations": []
     },
     {
       "id": "met-market",
@@ -140,6 +322,72 @@
       "how_to_read": [
         "Read the ad in sections, not one screenshot, so nothing is missed.",
         "Printed \"Prices effective\" date range at the top."
+      ],
+      "about": "A Seattle-area specialty grocery known for prepared foods, wine, and premium meat and produce.",
+      "locations": [
+        {
+          "label": "Uptown (Lower Queen Anne)",
+          "address": "100 Mercer St, Seattle",
+          "lat": 47.62477,
+          "lon": -122.35506,
+          "flyer": true
+        },
+        {
+          "label": "Magnolia",
+          "address": "3830 34th Ave W, Seattle",
+          "lat": 47.65528,
+          "lon": -122.40045,
+          "flyer": true
+        },
+        {
+          "label": "Crown Hill",
+          "address": "8532 15th Ave NW, Seattle",
+          "lat": 47.69169,
+          "lon": -122.37611,
+          "flyer": true
+        },
+        {
+          "label": "Admiral (West Seattle)",
+          "address": "2320 42nd Ave SW, Seattle",
+          "lat": 47.58196,
+          "lon": -122.38479,
+          "flyer": true
+        },
+        {
+          "label": "Sand Point",
+          "address": "5250 40th Ave NE, Seattle",
+          "lat": 47.66819,
+          "lon": -122.28362,
+          "flyer": true
+        },
+        {
+          "label": "Mercer Island",
+          "address": "2755 77th Ave SE, Mercer Island",
+          "lat": 47.58528,
+          "lon": -122.23581,
+          "flyer": true
+        },
+        {
+          "label": "Kirkland",
+          "address": "10611 NE 68th St, Kirkland",
+          "lat": 47.66586,
+          "lon": -122.19723,
+          "flyer": true
+        },
+        {
+          "label": "Sammamish",
+          "address": "301 228th Ave SE, Sammamish",
+          "lat": 47.60601,
+          "lon": -122.03602,
+          "flyer": true
+        },
+        {
+          "label": "Tacoma (Proctor)",
+          "address": "2420 N Proctor St, Tacoma",
+          "lat": 47.26955,
+          "lon": -122.48969,
+          "flyer": true
+        }
       ]
     },
     {
@@ -165,6 +413,30 @@
       "how_to_read": [
         "Find this week's catalogue on redpepper.digital and link each page read.",
         "No regular prices are printed. Use US average prices for staples, labeled approximate."
+      ],
+      "about": "Independent neighborhood markets that share the Red Apple name. This site uses the Beacon Hill (Hilltop) store's flyer; other Red Apple stores may have different prices.",
+      "locations": [
+        {
+          "label": "Hilltop Red Apple (Beacon Hill)",
+          "address": "2701 Beacon Ave S, Seattle",
+          "lat": 47.57897,
+          "lon": -122.31292,
+          "flyer": true
+        },
+        {
+          "label": "Bert's Red Apple (Madison Park)",
+          "address": "1801 41st Ave E, Seattle",
+          "lat": 47.63483,
+          "lon": -122.28,
+          "flyer": false
+        },
+        {
+          "label": "Dominic's Red Apple (White Center area)",
+          "address": "9627 Des Moines Memorial Dr S, Seattle",
+          "lat": 47.51572,
+          "lon": -122.31477,
+          "flyer": false
+        }
       ]
     },
     {
@@ -190,6 +462,58 @@
       "how_to_read": [
         "Pick the Washington flyer. It does not apply to the small 2nd and Pine or University District stores.",
         "Check whether meat and produce prices have a shorter Friday to Monday window and use that as their valid-through date."
+      ],
+      "about": "A Korean-American supermarket chain with a big produce section, thin-sliced meats for Korean barbecue, and banchan. The Washington flyer covers the larger stores.",
+      "locations": [
+        {
+          "label": "Lynnwood",
+          "address": "Lynnwood",
+          "lat": 47.83313,
+          "lon": -122.27746,
+          "flyer": true
+        },
+        {
+          "label": "Federal Way",
+          "address": "31217 Pacific Hwy S, Federal Way",
+          "lat": 47.32185,
+          "lon": -122.31532,
+          "flyer": true
+        },
+        {
+          "label": "Bellevue",
+          "address": "Bellevue",
+          "lat": 47.61135,
+          "lon": -122.19585,
+          "flyer": true
+        },
+        {
+          "label": "Redmond",
+          "address": "7589 170th Ave NE, Redmond",
+          "lat": 47.67042,
+          "lon": -122.1158,
+          "flyer": true
+        },
+        {
+          "label": "Ballard",
+          "address": "951 NW Ballard Way, Seattle",
+          "lat": 47.66257,
+          "lon": -122.37038,
+          "flyer": false
+        },
+        {
+          "label": "Downtown (2nd and Pine)",
+          "address": "1601 2nd Ave, Seattle",
+          "lat": 47.61031,
+          "lon": -122.34025,
+          "flyer": false
+        },
+        {
+          "label": "University District",
+          "address": "4216 University Way NE, Seattle",
+          "lat": 47.6589,
+          "lon": -122.31303,
+          "flyer": false
+        }
       ]
     },
     {
@@ -215,6 +539,23 @@
       "how_to_read": [
         "Use the .us site. tntsupermarket.com is the Canadian site and shows Ontario prices.",
         "The item list loads as you scroll, so read it one category at a time. A single read catches only a fraction of the items."
+      ],
+      "about": "A Canadian Asian supermarket chain with Washington stores in Bellevue and Lynnwood, known for its seafood counter, bakery and hot food.",
+      "locations": [
+        {
+          "label": "Bellevue (Factoria)",
+          "address": "12620 SE 41st Pl, Bellevue",
+          "lat": 47.57286,
+          "lon": -122.17253,
+          "flyer": true
+        },
+        {
+          "label": "Lynnwood",
+          "address": "19630 Hwy 99, Lynnwood",
+          "lat": 47.82017,
+          "lon": -122.319,
+          "flyer": true
+        }
       ]
     },
     {
@@ -234,10 +575,125 @@
       },
       "prints_regular_prices": false,
       "flyer_format": "catalogue-viewer",
-      "representative_location": "One Seattle store, to be chosen and recorded here on the first read",
+      "representative_location": "One Seattle store, to be chosen on the first read. Set that location's flyer flag to true here.",
       "how_to_read": [
         "The ad is a per-store Flipp catalogue viewer that needs a store selected. Use the same Seattle store every week.",
         "\"Compare at\" prices are other retailers' prices, not Grocery Outlet's own regular price, so they do not count as a printed regular price."
+      ],
+      "about": "A discount grocery chain selling overstock and closeout brand-name food at low prices. Stock changes constantly, and deals vary by store.",
+      "locations": [
+        {
+          "label": "Central District",
+          "address": "1126 Martin Luther King Jr Way, Seattle",
+          "lat": 47.61235,
+          "lon": -122.29551,
+          "flyer": false
+        },
+        {
+          "label": "Lake City",
+          "address": "3020 NE 127th St, Seattle",
+          "lat": 47.72164,
+          "lon": -122.29521,
+          "flyer": false
+        },
+        {
+          "label": "Crown Hill",
+          "address": "8700 15th Ave NW, Seattle",
+          "lat": 47.69291,
+          "lon": -122.37591,
+          "flyer": false
+        },
+        {
+          "label": "Rainier Beach area",
+          "address": "11656 68th Ave S, Seattle",
+          "lat": 47.49633,
+          "lon": -122.24843,
+          "flyer": false
+        },
+        {
+          "label": "Burien",
+          "address": "236 SW 152nd St, Burien",
+          "lat": 47.4678,
+          "lon": -122.3382,
+          "flyer": false
+        },
+        {
+          "label": "Renton",
+          "address": "2809 NE Sunset Blvd, Renton",
+          "lat": 47.50044,
+          "lon": -122.1793,
+          "flyer": false
+        },
+        {
+          "label": "Bellevue",
+          "address": "15625 NE 8th St, Bellevue",
+          "lat": 47.61639,
+          "lon": -122.13137,
+          "flyer": false
+        },
+        {
+          "label": "Kirkland",
+          "address": "6625 132nd Ave NE, Kirkland",
+          "lat": 47.66576,
+          "lon": -122.16591,
+          "flyer": false
+        },
+        {
+          "label": "Kenmore",
+          "address": "7800 NE Bothell Way, Kenmore",
+          "lat": 47.75728,
+          "lon": -122.23615,
+          "flyer": false
+        },
+        {
+          "label": "Mountlake Terrace",
+          "address": "24360 Van Ry Blvd, Mountlake Terrace",
+          "lat": 47.77796,
+          "lon": -122.31422,
+          "flyer": false
+        },
+        {
+          "label": "Lynnwood",
+          "address": "1725 Hwy 99, Lynnwood",
+          "lat": 47.83955,
+          "lon": -122.29692,
+          "flyer": false
+        },
+        {
+          "label": "Kent (Pacific Hwy)",
+          "address": "26104 Pacific Hwy S, Kent",
+          "lat": 47.36744,
+          "lon": -122.30253,
+          "flyer": false
+        },
+        {
+          "label": "Kent (East Hill)",
+          "address": "23910 104th Ave SE, Kent",
+          "lat": 47.38757,
+          "lon": -122.20053,
+          "flyer": false
+        },
+        {
+          "label": "Federal Way",
+          "address": "1618 SW Dash Point Rd, Federal Way",
+          "lat": 47.32357,
+          "lon": -122.35668,
+          "flyer": false
+        },
+        {
+          "label": "Federal Way (Pacific Hwy)",
+          "address": "32945 Pacific Hwy S, Federal Way",
+          "lat": 47.3065,
+          "lon": -122.31445,
+          "flyer": false
+        },
+        {
+          "label": "Auburn",
+          "address": "102 Cross St SE, Auburn",
+          "lat": 47.30406,
+          "lon": -122.22797,
+          "flyer": false
+        }
       ]
     },
     {
@@ -263,6 +719,23 @@
       "how_to_read": [
         "Rendered with JavaScript. Choose the Kent store, open its weekly ad, and read the rendered page.",
         "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are."
+      ],
+      "about": "A large Chinese and Taiwanese-American supermarket chain. The nearest stores are in Kent and Edmonds.",
+      "locations": [
+        {
+          "label": "Kent",
+          "address": "18230 E Valley Hwy, Kent",
+          "lat": 47.43871,
+          "lon": -122.21988,
+          "flyer": true
+        },
+        {
+          "label": "Edmonds",
+          "address": "22511 Hwy 99, Edmonds",
+          "lat": 47.79482,
+          "lon": -122.33384,
+          "flyer": false
+        }
       ]
     },
     {
@@ -284,10 +757,20 @@
       },
       "prints_regular_prices": false,
       "flyer_format": "images",
-      "representative_location": "Seattle store (confirm on the first read whether the ad also covers Renton)",
+      "representative_location": "Renton store (the only store)",
       "how_to_read": [
         "Open the newest \"Weekly Ad\" post on the blog page. The ad is an image, with a PDF version further down the post.",
         "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are."
+      ],
+      "about": "A Vietnamese and pan-Asian supermarket. Its original Chinatown–International District store closed in 2022; today's store is in Renton.",
+      "locations": [
+        {
+          "label": "Renton",
+          "address": "2825 NE Sunset Blvd, Renton",
+          "lat": 47.50141,
+          "lon": -122.17801,
+          "flyer": true
+        }
       ]
     },
     {
@@ -313,6 +796,16 @@
       "how_to_read": [
         "Open the Tukwila store page, then View All under Weekly Sale, and read the rendered list.",
         "Confirm on the first read whether regular prices are printed and which days the sale runs, and update this entry."
+      ],
+      "about": "A Filipino supermarket chain. The Tukwila store at Westfield Southcenter has a seafood market, Filipino groceries and food stalls.",
+      "locations": [
+        {
+          "label": "Tukwila (Westfield Southcenter)",
+          "address": "Westfield Southcenter, Tukwila",
+          "lat": 47.45989,
+          "lon": -122.2561,
+          "flyer": true
+        }
       ]
     },
     {
@@ -336,6 +829,16 @@
       "how_to_read": [
         "The weekly ad page shows four page images with a printed \"Prices Effective\" date range. Read all four and link each page.",
         "Confirm on the first read whether regular prices or savings are printed, and update prints_regular_prices if they are."
+      ],
+      "about": "An independent neighborhood grocery on SW Morgan Street in West Seattle, with a full deli and meat counter.",
+      "locations": [
+        {
+          "label": "West Seattle (Morgan Junction)",
+          "address": "4201 SW Morgan St, Seattle",
+          "lat": 47.54448,
+          "lon": -122.38621,
+          "flyer": true
+        }
       ]
     },
     {
@@ -363,6 +866,100 @@
         "Open the homepage weekly specials, choose the Seattle tab, and enlarge the poster to read it.",
         "No dates are printed, so record valid dates as null. If the poster is identical to last week's, mark the flyer stale.",
         "Confirm on the first read whether regular prices are printed."
+      ],
+      "about": "An Asian supermarket with stores on Aurora Avenue North in Seattle, in Bellevue and in Tukwila. Each store posts its own weekly poster.",
+      "locations": [
+        {
+          "label": "Seattle (Aurora Ave N)",
+          "address": "13200 Aurora Ave N, Seattle",
+          "lat": 47.7248,
+          "lon": -122.34335,
+          "flyer": true
+        },
+        {
+          "label": "Bellevue",
+          "address": "14515 NE 20th St, Bellevue",
+          "lat": 47.6269,
+          "lon": -122.14662,
+          "flyer": false
+        },
+        {
+          "label": "Tukwila",
+          "address": "17501 Southcenter Pkwy, Tukwila",
+          "lat": 47.44679,
+          "lon": -122.26337,
+          "flyer": false
+        }
+      ]
+    },
+    {
+      "id": "hau-hau",
+      "name": "Hau Hau Market",
+      "aliases": [
+        "Hau Hau",
+        "Hau Hau Market"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "no_online_flyer": true,
+      "website": null,
+      "flyer_url": null,
+      "flyer_url_note": "No online flyer found (checked 2026-10-23). Listed for its location only; prices are not tracked.",
+      "sale_period": {
+        "starts": "varies",
+        "ends": "varies",
+        "note": "No online flyer."
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "Little Saigon",
+      "how_to_read": [
+        "No online flyer. Not part of the weekly routine."
+      ],
+      "about": "A small Chinese and Vietnamese grocery in Little Saigon, known locally for low prices on produce, meat and seafood. No online flyer.",
+      "locations": [
+        {
+          "label": "Little Saigon",
+          "address": "412 12th Ave S, Seattle",
+          "lat": 47.59861,
+          "lon": -122.31681,
+          "flyer": false
+        }
+      ]
+    },
+    {
+      "id": "dong-hing",
+      "name": "Dong Hing Market",
+      "aliases": [
+        "Dong Hing",
+        "Dong Hing Market"
+      ],
+      "active": true,
+      "tracked_since": "2026-10-30",
+      "no_online_flyer": true,
+      "website": null,
+      "flyer_url": null,
+      "flyer_url_note": "No online flyer found (checked 2026-10-23). Listed for its location only; prices are not tracked.",
+      "sale_period": {
+        "starts": "varies",
+        "ends": "varies",
+        "note": "No online flyer."
+      },
+      "prints_regular_prices": false,
+      "flyer_format": "images",
+      "representative_location": "Little Saigon",
+      "how_to_read": [
+        "No online flyer. Not part of the weekly routine."
+      ],
+      "about": "A Chinese grocery on South Jackson Street in Little Saigon, with produce, meat and pantry staples. No online flyer.",
+      "locations": [
+        {
+          "label": "Little Saigon",
+          "address": "1001 S Jackson St, Seattle",
+          "lat": 47.599,
+          "lon": -122.3194,
+          "flyer": false
+        }
       ]
     }
   ]
