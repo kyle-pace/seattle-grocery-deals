@@ -252,7 +252,7 @@ function weekBody(week, { current }) {
 </section>`
     : "";
   return `${notice}${fresh}
-<p class="summary">${items.length} items on sale across ${read} flyers: <strong>${counts.standout} standouts</strong>, ${counts.good} good deals.</p>
+<p class="summary">${items.length} items on sale across ${read} flyer${read === 1 ? "" : "s"}: <strong>${counts.standout} standouts</strong>, ${counts.good} good deals.</p>
 <nav class="jump" aria-label="On this page"><a href="#highlights">Highlights</a><a href="#where">Where to shop</a><a href="#categories">By category</a><a href="#compare">Compare stores</a><a href="#all">All items</a><a href="#flyers">Flyers</a></nav>
 ${filterBar(items)}
 ${soon}
