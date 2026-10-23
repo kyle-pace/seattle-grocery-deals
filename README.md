@@ -1,4 +1,4 @@
-# Flyer Friday
+# Seattle Grocery Deals
 
 A static site that shows what's on sale in Seattle-area grocery flyers each week: every readable sale item, the standouts, where to shop, and the same item compared across stores, plus links to every store's flyer. A new week is added every Friday.
 
