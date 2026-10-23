@@ -271,7 +271,7 @@ ${myStoresDialog()}`;
 
 function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "", ogTitle = null }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
-  const nav = [["", "This week"], ["weeks/", "Past weeks"], ["stores/", "Stores and map"], ["about/", "About"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : [])]
+  const nav = [["", "This week"], ["stores/", "Stores and map"], ["about/", "About"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : [])]
     .map(([p, label]) => p === "persimmons/"
       ? `<a class="nav-persim" href="${url(p)}" aria-label="Persimmons" title="Persimmons"${p === path ? ' aria-current="page"' : ""}>${PERSIMMON_SVG}</a>`
       : `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
@@ -316,7 +316,7 @@ ${body}
 </main>
 <footer class="site">
   <p>Prices come from store flyers and can change. Check in store. Not affiliated with any store.</p>
-  <p><a href="${url("about/")}">How deals are highlighted</a> <span aria-hidden="true">&middot;</span> <a href="${esc(cfg.site.repo_url)}">Source</a></p>
+  <p><a href="${url("weeks/")}">Past weeks</a> <span aria-hidden="true">&middot;</span> <a href="${url("about/")}">How deals are highlighted</a> <span aria-hidden="true">&middot;</span> <a href="${esc(cfg.site.repo_url)}">Source</a></p>
 </footer>
 </body>
 </html>
