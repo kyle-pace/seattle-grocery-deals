@@ -40,6 +40,14 @@ The owner wants to learn how a backend fits together, so prefer a conventional s
 - **Backend:** TypeScript API, Postgres on Neon, a scheduled Friday job. Stores device tokens and watched item keys only.
 - **Needs:** Apple Developer account ($99/year) for the push key and TestFlight; Google Play account for Android testers.
 
+### Product images (not started)
+
+Don't copy photos from store flyers, brand sites or Wikipedia articles on a fair use theory: thumbnails in an app are a weak fair use case. The plan instead:
+
+- Generic foods (produce, seafood, meat cuts) get one photo per `item_key` from **Wikimedia Commons**, only files under public domain, CC0, CC BY or CC BY-SA, fetched with their license and author through the Commons API and shown on a credits screen. Not Wikipedia's "non-free" images.
+- Packaged and branded products get no photo; use a department illustration.
+- Department and store art: commissioned or drawn illustrations the project owns. Store names, not store logos.
+
 ### Build order
 
 1. Expo app that reads the site's weekly JSON (`/data/weeks/<week>.json`, schema at `/schema/week.schema.json`): This week, deal detail, stores. No backend.
