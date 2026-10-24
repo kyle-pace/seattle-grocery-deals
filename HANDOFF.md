@@ -8,13 +8,13 @@ Keep the "Where we left off" section current. Work happens on a branch per task 
 
 Updated 2026-10-24, evening.
 
-- **Pull requests waiting for the owner:** #6 (this handoff file, `design/` mockups, product images plan) and #7 (`mobile-app` branch: the iPhone app, `/api/week.json` feed, `docs/architecture.svg`). Read both branches if they aren't merged yet.
+- **Merged 2026-10-24:** #6 (this file, `design/` mockups) and #7 (the iPhone app in `mobile/`, the `/api/week.json` feed now live, `docs/architecture.svg`).
 - **Site:** redesign live (#5), "Vegetarian only" live (#4). The Friday routine runs at 10am Pacific as a Claude cloud routine.
 - **iPhone app (`mobile/`, see its README):** works on the owner's iPhone as a standalone build installed with `mobile/install-on-iphone.sh` (needs the Mac, Xcode beta in `~/Downloads` because the phone runs an iOS beta, and a free Apple ID, so builds expire after 7 days). Features: This week, Aisles, Stores, deal detail, list kept in the app or in a Reminders list (asked on first add), tap the checkmark to remove, trip plan, local notifications (Friday reminder, ends tomorrow), price watches, share, Grocery Deals icon.
 - **Just fixed, not yet confirmed by the owner:** adding a deal to a Reminders list. expo-calendar SDK 58's `ExpoCalendar.get()` demands Calendar permission, so lists are found through `getCalendars(EntityTypes.REMINDER)`; reminder dates are passed as ISO strings.
-- **Confluence** (owner's personal space, kylepace.atlassian.net): "Seattle Grocery Deals: architecture" (diagram, components, schema, Firebase plan with "New deals are in" as the first push, Amplitude events, build order) and "Recipe + pantry app: product brief". The architecture diagram image points at the `mobile-app` branch; repoint it to `main` after #7 merges.
+- **Confluence** (owner's personal space, kylepace.atlassian.net): "Seattle Grocery Deals: architecture" (diagram, components, schema, Firebase plan with "New deals are in" as the first push, Amplitude events, build order) and "Recipe + pantry app: product brief". The architecture diagram image is served from `main` (`docs/architecture.png`).
 - **Issues:** #8 product images (future).
-- **Next:** confirm Reminders works; merge #6 and #7; paid Apple Developer account; then the backend (Neon, API, publish step) and Firebase "New deals are in" push; Amplitude.
+- **Next:** confirm Reminders works; paid Apple Developer account; then the backend (Neon, API, publish step) and Firebase "New deals are in" push; Amplitude.
 - **A cloud session can't** build or install the iPhone app, read the owner's Obsidian vault, or reach the Mac. Do code, docs, backend and site work there; leave phone builds for the Mac.
 
 ## Future ideas
