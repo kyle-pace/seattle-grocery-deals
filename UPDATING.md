@@ -123,6 +123,7 @@ The settings are in `config/criteria.json`. Every item gets a tier:
 | `regular_price` | Only if printed, for the same quantity and unit as `price`. Otherwise `null`. |
 | `percent_off` | Whole number, computed from `regular_price`, or as printed when only a percent was printed. Otherwise `null`. |
 | `member_price` | `true` for member or loyalty prices. |
+| `vegetarian` | Optional. Leave it out normally: the site decides from the category and name, and hides anything unsure. Set `false` on an item that contains meat or fish but whose name does not say so (for example a dumpling brand), or `true` on one it hides wrongly. |
 | `valid_through` | The last day of the sale price, or `null` to use the flyer's. Set it when it is shorter (H Mart meat often ends Monday). |
 | `notes` | Limits, while supplies last, member details, location caveats, "save up to" text. Empty string if none. |
 | `highlight` | Optional `{ "reason" }` (section 5). |

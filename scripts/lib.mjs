@@ -249,3 +249,52 @@ export function esc(s) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
+
+// Vegetarian means no meat, poultry or seafood (dairy and eggs are fine).
+// Meat and seafood categories are never vegetarian. Elsewhere an item is left
+// out if its name mentions meat or fish (pork dumplings, fish sauce, shrimp
+// chips), or if it is a kind of food that usually has meat and the name does
+// not say otherwise (dumplings, frozen meals, sushi). When unsure, leave it
+// out: someone hiding meat would rather miss a deal than see one.
+// A week file can set `vegetarian: true|false` on an item to override this.
+const words = (list) => new RegExp("\\b(" + list.join("|") + ")\\b", "i");
+const MEAT = words([
+  "meats?", "pork", "beef", "veal", "chicken", "duck", "goose", "lamb", "mutton", "goat", "turkey", "quail", "rabbit", "venison", "bison",
+  "bacon", "ham", "hams", "sausages?", "salami", "soppressata", "pepperoni", "prosciutto", "chorizo", "jerky", "hot ?dogs?", "spam", "lard", "gelatin",
+  "ribs?", "brisket", "steaks?", "wings?", "drumsticks?", "thighs?", "breasts?", "tendon", "tripe", "oxtail", "liver", "gizzards?", "trotters?", "feet",
+  "belly", "loin", "chops?", "shank", "chashu", "char siu", "bulgogi", "galbi", "kalbi", "longganisa", "tocino", "lap cheong", "floss", "luncheon",
+  "seafood", "fish", "fillets?", "salmon", "tuna", "cod", "pollock", "tilapia", "halibut", "mackerel", "sardines?", "anchov(y|ies)", "herring", "trout",
+  "catfish", "snapper", "sole", "swai", "basa", "milkfish", "bangus", "pompano", "croaker", "dace", "perch", "eel", "unagi", "bonito", "katsuo",
+  "katsuobushi", "dashi", "talakitok", "yellowtail", "hamachi", "branzino", "rockfish", "jackfish", "smelt", "roe", "caviar", "ikura", "tobiko",
+  "shrimp", "prawns?", "crabs?", "lobsters?", "crawfish", "crayfish", "squid", "calamari", "octopus", "cuttlefish", "clams?", "mussels?", "oysters?",
+  "scallops?", "abalone", "whelk", "sea ?cucumber", "geoduck", "uni", "surimi", "kamaboko", "kikiam", "fish ?balls?", "fish ?cakes?", "oden",
+  "tonkotsu", "broths?", "bone",
+]);
+const USUALLY_MEAT = words([
+  "dumplings?", "gyoza", "shumai", "siu ?mai", "wontons?", "bao", "baozi", "xiao ?long ?bao", "kimbap", "gimbap", "sushi", "egg ?rolls?",
+  "spring ?rolls?", "lumpia", "loompya", "ring roll", "hot pockets", "lunchables", "jimmy dean", "stouffer's", "taquitos", "burritos?", "pizzas?",
+  "meals?", "entrees?", "stews?", "jjajang", "jjamppong", "sando", "hot ?pot base", "hotpot base", "chunky soup", "pot pies?", "shepherd's",
+  "pho", "ramen", "ramyun", "noodle soup", "noodle bowl", "cup noodles?", "instant noodles?", "boat noodles?", "rice a roni", "pasta roni",
+  "refried beans", "baked beans", "curry", "radish cake", "turnip cake", "sticky rice", "yu fan", "tom yum", "sinigang", "soup mix", "soups?",
+  "gravy", "lunch kits?", "sandwich(es)?", "tteokbokki", "kimchi",
+]);
+// Phrases that look like meat but are not.
+const NOT_MEAT = /\b(oyster mushrooms?|(duck|quail|salted|preserved) eggs?|jackfruit meat|coconut meat|hot dog (rolls|buns)|drumstick novelties|tonkatsu sauce|pho chili sauce|pizza sauce|burrito size|(peanut|red bean|sweet) soup|meal bars?|egg roll tin|jia ?duo ?bao|fish-free|vegetarian \w+|vegan \w+)\b/gi;
+const IS_VEG = /\b(vegetarian|vegan|plant[- ]based|meatless)\b|^(amy's|dr\.? mcdougall's|gardein|morningstar|field roast|tofurky|quorn|abbot's butcher|chunk foods)\b/i;
+const SAYS_VEG = /\b(tofu|vegetables?|veggie|cheese|margherita)\b/i;
+
+export function isVegetarian(item) {
+  if (typeof item.vegetarian === "boolean") return item.vegetarian;
+  if (item.category === "meat" || item.category === "seafood") return false;
+  if (IS_VEG.test(item.item)) return true;
+  const name = item.item.replace(NOT_MEAT, " ");
+  if (MEAT.test(name)) return false;
+  if (USUALLY_MEAT.test(name)) return SAYS_VEG.test(name);
+  return true;
+}
+
+// True when the name alone names a meat or fish: used to warn about a
+// `vegetarian: true` override that may be a mistake.
+export function namesMeat(item) {
+  return MEAT.test(item.item.replace(NOT_MEAT, " "));
+}
