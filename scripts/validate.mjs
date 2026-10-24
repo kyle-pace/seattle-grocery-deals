@@ -139,6 +139,7 @@ function checkWeek(path) {
       err(w, `${store.id} does not print regular prices (config), so regular_price and percent_off must be null`);
     }
 
+    if (/\bCHECK:/.test(d.notes ?? "")) err(w, "notes still has a CHECK: from fetch-flipp.mjs; confirm it on the flyer and remove it");
     if (d.member_price && !/member|card|app|loyalty|prime/i.test(d.notes)) warn(w, "member_price is true; say which program in notes");
   }
 }
