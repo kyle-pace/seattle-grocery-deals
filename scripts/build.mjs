@@ -40,7 +40,7 @@ const PER_LABEL = { lb: "/lb", each: " each", dozen: "/dozen", l: "/L", gal: "/g
 const url = (p = "") => BASE + p;
 // Versioned asset links, so each deploy busts browser caches.
 const asset = (p) => `${url(p)}?v=${createHash("sha1").update(readFileSync(join(ROOT, "site", p))).digest("hex").slice(0, 8)}`;
-const LOGO = readFileSync(join(ROOT, "site", "assets", "logo.svg"), "utf8").trim().replace("<svg ", '<svg aria-hidden="true" ');
+const LOGO = readFileSync(join(ROOT, "site", "assets", "logo.svg"), "utf8").trim().replace("<svg ", '<svg aria-hidden="true" width="30" height="30" ');
 const storeName = (id) => cfg.storeById[id]?.name ?? id;
 const keyLabel = (k) => cfg.items[k]?.label ?? k;
 
@@ -490,7 +490,7 @@ ${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>
 
 // ---------- persimmon season ----------
 
-const PERSIMMON_SVG = `<svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="38" rx="26" ry="21" fill="#f07c1e"/><ellipse cx="32" cy="40" rx="22" ry="16" fill="#f7932f"/><ellipse cx="22" cy="33" rx="6" ry="4" fill="#ffc27a" opacity=".75"/><path d="M32 17l-11-4 5 8-10 3h11l5 7 5-7h11l-10-3 5-8z" fill="#3f7a2b"/><rect x="30.5" y="10" width="3" height="7" rx="1.5" fill="#5b3a1e"/></svg>`;
+const PERSIMMON_SVG = `<svg viewBox="0 0 64 64" width="21" height="21" aria-hidden="true"><ellipse cx="32" cy="38" rx="26" ry="21" fill="#f07c1e"/><ellipse cx="32" cy="40" rx="22" ry="16" fill="#f7932f"/><ellipse cx="22" cy="33" rx="6" ry="4" fill="#ffc27a" opacity=".75"/><path d="M32 17l-11-4 5 8-10 3h11l5 7 5-7h11l-10-3 5-8z" fill="#3f7a2b"/><rect x="30.5" y="10" width="3" height="7" rx="1.5" fill="#5b3a1e"/></svg>`;
 
 function inPersimmonSeason(iso) {
   const md = iso.slice(5);
