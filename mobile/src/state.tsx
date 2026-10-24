@@ -17,7 +17,7 @@ type Ctx = {
   stores: Record<string, Store>; storeName: (id: string) => string;
   veg: boolean; setVeg: (v: boolean) => void;
   list: ListItem[]; addToList: (text: string, deal?: Deal) => void; toggleItem: (id: string) => void; removeItem: (id: string) => void;
-  inList: (deal: Deal) => boolean;
+  inList: (deal: Deal) => boolean; removeDeal: (deal: Deal) => void;
   source: ListSource; connectReminders: () => Promise<void>; keepInApp: () => void; reloadList: () => void;
   prefs: AlertPrefs; setPrefs: (p: AlertPrefs) => void;
   watches: Watch[]; watch: (d: Deal) => void; unwatch: (id: string) => void; watching: (d: Deal) => Watch | undefined;
@@ -144,6 +144,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
         else saveAppList(appList.filter((i) => i.id !== id));
       },
       inList: (deal) => list.some((i) => i.dealId === deal.id && !i.done),
+      // Undo "add": remove the list item that came from this deal.
+      removeDeal: (deal) => {
+        const ids = list.filter((i) => i.dealId === deal.id && !i.done).map((i) => i.id);
+        if (isRem(source)) { setRemList(remList.filter((i) => !ids.includes(i.id))); ids.forEach((id) => removeReminder(id).catch(() => {})); }
+        else saveAppList(appList.filter((i) => !ids.includes(i.id)));
+      },
       source, connectReminders, keepInApp: () => setSource("app"), reloadList,
       prefs,
       setPrefs: (p) => { setPrefsState(p); save(K.prefs, p); if (p.friday !== prefs.friday) setFridayReminder(p.friday).catch(() => {}); },
