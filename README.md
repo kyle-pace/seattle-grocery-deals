@@ -14,7 +14,6 @@ Live site: https://seattlegrocery.deals/
 - `data/weeks/YYYY-MM-DD.json`: one file per week, named by that Friday's date.
 - `schema/week.schema.json`: the JSON Schema for a week file.
 - `scripts/validate.mjs`: schema plus cross checks (unit prices, percent off, printed prices only, no em dashes).
-- `scripts/fetch-flipp.mjs`: pulls this week's rows for stores listed on Flipp (stores with a `flipp` entry), in All Items note format.
 - `scripts/draft-week.mjs`: turns a weekly All Items note into a draft week file.
 - `notes/all-items/`: the All Items note for each week written by the cloud routine.
 - `scripts/build.mjs`: ranks items and renders the site into `dist/`.
@@ -30,7 +29,6 @@ npm run build        # build dist/
 npm run check        # both
 npm run serve        # build for / and preview at http://localhost:8080
 npm run draft -- "path/to/All Items YYYY-MM-DD.md"
-node scripts/fetch-flipp.mjs YYYY-MM-DD   # Flipp rows to work/
 ```
 
 Requires Node 20 or newer. The only dependencies are Ajv and ajv-formats, used for schema validation.

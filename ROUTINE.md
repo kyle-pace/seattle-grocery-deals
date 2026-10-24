@@ -22,37 +22,24 @@ In both modes: **never push to `main`, never merge, never close or edit other pu
 - Try to get a headless browser for pages that only render with JavaScript: `npx -y playwright@latest install --with-deps chromium`. If that fails, carry on without it and say so in the pull request.
 - Keep a run log as you go (what worked and what failed per store, and the reason). It goes in the pull request body.
 
-### 2. Flipp stores
+### 2. Read every store
 
-```
-node scripts/fetch-flipp.mjs YYYY-MM-DD
-```
-
-This writes `work/flipp-YYYY-MM-DD.md` for every store with a `flipp` entry in `config/stores.json`. Every row came from Flipp's listing of the store's printed flyer. Before using the rows:
-
-- Fill in `Category` for every row.
-- Drop non-food rows (flowers, household, pet, alcohol) and rows that are not a sale price (everyday prices, "download the app" tiles).
-- Resolve every `CHECK:` note. Open the item image linked in the note and read the printed price. Set the `Sale price` cell to the printed form (`4/$5.00` when it is 4 for $5, `$1.25` with `ea` when it is $1.25 each), then delete the `CHECK:` sentence. If you cannot tell, drop the row. The validator rejects any `CHECK:` left in a week file.
-- Check pack sizes in item names against the unit (a "1 lb" pack priced `ea` is fine as is).
-
-If the script fails or finds no flyer for a store, read that store directly as in step 3.
-
-### 3. Every other active store
-
-For each store in `config/stores.json` with `active: true` and no `flipp` entry, follow its `how_to_read` notes. Skip stores whose notes say they are not part of the weekly routine.
+For each store in `config/stores.json` with `active: true`, follow its `how_to_read` notes. Skip stores whose notes say they are not part of the weekly routine.
 
 - **Web pages:** fetch the page. If it is empty or clearly needs JavaScript, use the headless browser.
 - **Flyer images:** download each image with `curl` into `work/` and read it with the Read tool. Read every image in full, zooming in by cropping if text is small (for example with Python and Pillow, if available). Link each image in the flyer line.
 - **Dates:** check the printed dates. If they are not this week, the flyer is `stale`: list it, with no items.
+- **Unsure rows:** if you are not sure how to read a row (a multi-buy that might be per item or for the set, a price partly hidden), either leave it out or keep it with a note starting `CHECK:` while you work, then resolve every `CHECK:` before step 4. The validator rejects any `CHECK:` left in a week file.
+- Do not use flyer aggregators such as Flipp or their APIs. Read each store's own site.
 - Spend at most about 15 minutes on any one store. If you cannot read it, mark it `unreadable` or `partial` with a short reason, and move on.
 
 Write the store's rows in the All Items table format. Any price you cannot read clearly is left out.
 
-### 4. The All Items note
+### 3. The All Items note
 
-Write `notes/all-items/All Items YYYY-MM-DD.md` in the format from UPDATING.md section 1: a `## Flyers` list with one line per active store (dates, links, `status: full`, `partial, <what was missed>`, `stale` or `unreadable, <why>`) and one `## Items` table with every row from steps 2 and 3. This file is kept in the repo as the source for the week.
+Write `notes/all-items/All Items YYYY-MM-DD.md` in the format from UPDATING.md section 1: a `## Flyers` list with one line per active store (dates, links, `status: full`, `partial, <what was missed>`, `stale` or `unreadable, <why>`) and one `## Items` table with every row from step 2. This file is kept in the repo as the source for the week.
 
-### 5. Draft, review and highlight
+### 4. Draft, review and highlight
 
 ```
 npm run draft -- "notes/all-items/All Items YYYY-MM-DD.md"
@@ -64,7 +51,7 @@ Then work through UPDATING.md sections 4 and 5 on `drafts/YYYY-MM-DD.json`:
 - Look at every skipped row in `drafts/YYYY-MM-DD.report.json`. Fix the note and redraft if a row was skipped only because of formatting.
 - Add 3 to 6 highlights with reasons.
 
-### 6. Check
+### 5. Check
 
 ```
 mv drafts/YYYY-MM-DD.json data/weeks/
@@ -77,7 +64,7 @@ Fix every error. Then compare with last week's file and note anything surprising
 - any item key whose unit price changed by more than 3 times from its last listing (likely a unit or pack mistake: fix it or drop the row);
 - every flyer's dates cover this Friday, or the flyer is marked `stale`.
 
-### 7. Pull request
+### 6. Pull request
 
 Commit `data/weeks/YYYY-MM-DD.json`, the All Items note and any `config/items.json` changes on the branch for the mode, push it, and open the pull request against `main` with `gh pr create` (add `--draft` for a dry run).
 
@@ -86,9 +73,9 @@ Title: `Week of <Month D>: <N> items from <M> flyers` (prefixed `[Dry run] ` for
 Body:
 
 1. One line: what this is, and for a dry run, "Do not merge."
-2. A table: store, status, items, how it was read (Flipp, page, images, browser), and a note for anything not `full`.
+2. A table: store, status, items, how it was read (page, images, PDF, browser), and a note for anything not `full`.
 3. The highlights.
-4. Anything a reviewer should look at: CHECK rows that were dropped, sanity check findings, items the validator warned about.
+4. Anything a reviewer should look at: rows left out because they could not be read clearly, sanity check findings, items the validator warned about.
 5. The run log: what failed and why, including network or browser problems, so the routine can be improved.
 
 If something blocks the pull request (no network, the repo cannot be pushed), finish what you can and put the run log in the final message of the session instead.
