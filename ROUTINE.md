@@ -19,7 +19,8 @@ In both modes: **never push to `main`, never merge, never close or edit other pu
 
 - The week is this Friday's Pacific date: `TZ=America/Los_Angeles date +%F` on a Friday. On any other day, use the most recent Friday, unless the prompt names a week.
 - Run `npm ci`.
-- Try to get a headless browser for pages that only render with JavaScript: `npx -y playwright@latest install --with-deps chromium`. If that fails, carry on without it and say so in the pull request.
+- A headless browser is needed for pages that only render with JavaScript. The cloud environment usually has Playwright and Chromium already: check with `node -e "require('playwright').chromium.launch().then(b => b.close())"`. Use that one; do not install another version over it. If there is none, try `npx -y playwright@latest install --with-deps chromium`, and if that fails too, carry on without a browser and say so in the pull request.
+- Before reading stores, check the network: fetch one store's flyer page. If every store host is refused (for example a proxy 403), stop. Do not write a week file or open a pull request, because an empty week would replace the live one. Say in your final message which hosts were refused.
 - Keep a run log as you go (what worked and what failed per store, and the reason). It goes in the pull request body.
 
 ### 2. Read every store
