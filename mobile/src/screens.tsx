@@ -245,7 +245,7 @@ export function List({ open }: { open: (d: Deal) => void }) {
 // ---------- Deal detail ----------
 export function DealSheet({ deal, close, goStore }: { deal: Deal | null; close: () => void; goStore: (id: string) => void }) {
   const c = useColors();
-  const { feed, storeName, stores, addToList, inList, watch, unwatch, watching } = useApp();
+  const { feed, storeName, stores, addToList, inList, removeDeal, watch, unwatch, watching } = useApp();
   if (!deal) return null;
   const others = deal.key ? (feed?.items ?? []).filter((x) => x.key === deal.key && x.id !== deal.id) : [];
   const added = inList(deal);
@@ -261,8 +261,8 @@ export function DealSheet({ deal, close, goStore }: { deal: Deal | null; close: 
         {deal.regular ? <Text style={{ fontFamily: font.body, color: c.ink, fontSize: 15 }}>Regular {deal.regular}{deal.off ? <Text style={{ color: c.red, fontFamily: font.bold }}>{`, ${deal.off}% off`}</Text> : null}</Text> : null}
         {deal.why ? <Text style={{ fontFamily: font.body, color: c.ink, fontSize: 16 }}>{deal.why}</Text> : null}
         {deal.notes ? <Text style={{ fontFamily: font.body, color: c.muted, fontSize: 14 }}>{deal.notes}</Text> : null}
-        <Pressable onPress={() => !added && addToList(shortName(deal.name), deal)} accessibilityRole="button" style={{ marginTop: 12, minHeight: 50, borderRadius: 12, backgroundColor: c.ink, alignItems: "center", justifyContent: "center" }}>
-          <Text style={{ color: c.paper, fontFamily: font.bold, fontSize: 16 }}>{added ? "✓ On your list" : "+ Add to Groceries"}</Text>
+        <Pressable onPress={() => (added ? removeDeal(deal) : addToList(shortName(deal.name), deal))} accessibilityRole="button" style={{ marginTop: 12, minHeight: 50, borderRadius: 12, backgroundColor: c.ink, alignItems: "center", justifyContent: "center" }}>
+          <Text style={{ color: c.paper, fontFamily: font.bold, fontSize: 16 }}>{added ? "✓ On your list (tap to remove)" : "+ Add to list"}</Text>
         </Pressable>
         {(() => { const w = watching(deal); return (
           <Pressable onPress={async () => { if (w) unwatch(w.id); else { await allowNotifications(); watch(deal); } }} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center", paddingHorizontal: 12 }}>

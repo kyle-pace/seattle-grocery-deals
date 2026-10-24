@@ -41,7 +41,7 @@ export function Price({ d, size = 28, tag }: { d: Deal; size?: number; tag?: boo
 
 export function DealRow({ d, onPress, showStore = true, why = false }: { d: Deal; onPress: () => void; showStore?: boolean; why?: boolean }) {
   const c = useColors();
-  const { storeName, addToList, inList } = useApp();
+  const { storeName, addToList, inList, removeDeal } = useApp();
   const added = inList(d);
   const meta = [showStore ? storeName(d.store) : "", ...d.detail, d.regular ? `was ${d.regular}` : ""].filter(Boolean).join(" · ");
   return (
@@ -57,8 +57,8 @@ export function DealRow({ d, onPress, showStore = true, why = false }: { d: Deal
       </View>
       <Price d={d} tag={d.tier === "standout"} />
       <Pressable
-        onPress={() => { if (!added) { addToList(shortName(d.name), d); Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {}); } }}
-        accessibilityRole="button" accessibilityLabel={added ? `${d.name} is on your list` : `Add ${d.name} to your list`}
+        onPress={() => { if (added) { removeDeal(d); Haptics.selectionAsync().catch(() => {}); } else { addToList(shortName(d.name), d); Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {}); } }}
+        accessibilityRole="button" accessibilityLabel={added ? `Remove ${d.name} from your list` : `Add ${d.name} to your list`}
         hitSlop={8} style={[s.add, { borderColor: c.ink, backgroundColor: added ? c.ink : c.surface }]}>
         <Text style={{ color: added ? c.paper : c.ink, fontFamily: font.bold, fontSize: 18, lineHeight: 20 }}>{added ? "✓" : "+"}</Text>
       </Pressable>
