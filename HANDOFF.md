@@ -35,7 +35,7 @@ Updated 2026-10-24, evening.
 - **Removed in the redesign:** the "my stores" dialog and the category and tier filters. Bring "my stores" back if people miss it.
 - **Parked:** a store "spotlight" card to encourage shopping at a store going through a hard time. Removed for now at the owner's request; the owner writes any such text.
 - **Delivery notes** for Lam's and T&T come from the owner and were not confirmed online. Add delivery links when known.
-- **Analytics:** Amplitude on the website (analytics with autocapture, Session Replay at 100%), set up from Amplitude's install prompt; Google Analytics removed. First event: `Viewed Home Page`. Next: Amplitude in the app (React Native SDK), then the event plan on the Confluence architecture page. Do not run Firebase Analytics.
+- **Analytics:** Amplitude on the website, made private at the owner's request: autocapture, Session Replay for 5% of visits with all text and input masked (code loaded only for those visits), no IP, ID in localStorage (no cookies), off for Global Privacy Control, Do Not Track or the About page opt-out, and only on the live domain. Google Analytics removed. First event: `Viewed Home Page`. The app has its own private setup (no IP, ad ID or carrier; off switch on Alerts). Next: Amplitude in the app (React Native SDK), then the event plan on the Confluence architecture page. Do not run Firebase Analytics.
 
 ## The app
 

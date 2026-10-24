@@ -248,7 +248,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <link rel="stylesheet" href="${asset("assets/style.css")}">
 <script>try{if(JSON.parse(localStorage.getItem("sgd.vegOnly")))document.documentElement.classList.add("veg-on")}catch(e){}</script>
 <script src="${asset("assets/app.js")}" defer></script>
-<script src="${ANALYTICS_SRC}" defer></script>${extraScript ? `
+<script type="module" src="${ANALYTICS_SRC}"></script>${extraScript ? `
 <script src="${asset(extraScript)}" defer></script>` : ""}${map ? `
 <link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
 <script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
@@ -691,8 +691,9 @@ function aboutPage() {
 <p>If you run a store listed here and want a price corrected or the store removed, <a href="${esc(cfg.site.repo_url)}/issues/new?title=Store+request">open a request on GitHub</a>. Requests are handled within a week.</p>
 <h2>Privacy</h2>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold.</p>
-<p>The site uses <a href="https://amplitude.com">Amplitude</a> to understand how it's used: which pages are viewed, what gets clicked, and anonymous recordings of sessions (Session Replay) that show how people move through a page. Text you type, such as searches, is masked in recordings. Amplitude stores a random identifier in your browser and receives your IP address and basic details about your browser and device. Its handling of that data is described in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>. A content blocker will stop it.</p>
-<p>Your "Vegetarian only" choice is saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
+<p>The site uses <a href="https://amplitude.com">Amplitude</a> to count which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so repeat visits count once, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. Its handling of that data is described in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
+<p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
+<p>Your "Vegetarian only" choice and the analytics setting are saved only in your browser and are never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
 }
@@ -740,13 +741,15 @@ function appFeed() {
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "site", "assets"), join(DIST, "assets"), { recursive: true });
-// Bundle Amplitude (npm package) into one browser file; the site has no other bundler.
-const analyticsJs = buildSync({
-  entryPoints: [join(ROOT, "client", "analytics.js")], bundle: true, minify: true, format: "iife", target: "es2018",
-  define: { __AMPLITUDE_API_KEY__: JSON.stringify(AMPLITUDE_KEY) }, write: false, legalComments: "none",
-}).outputFiles[0].contents;
-writeFileSync(join(DIST, "assets", "analytics.js"), analyticsJs);
-ANALYTICS_SRC = `${url("assets/analytics.js")}?v=${createHash("sha1").update(analyticsJs).digest("hex").slice(0, 8)}`;
+// Bundle Amplitude (npm packages) into an ES module with split chunks, so Session Replay's
+// code downloads only for the visits it records. The site has no other bundler.
+const analyticsOut = buildSync({
+  entryPoints: { analytics: join(ROOT, "client", "analytics.js") }, bundle: true, minify: true, format: "esm", splitting: true,
+  target: "es2020", outdir: join(DIST, "assets", "analytics"), chunkNames: "chunk-[hash]", legalComments: "none",
+  define: { __AMPLITUDE_API_KEY__: JSON.stringify(AMPLITUDE_KEY) }, write: true, metafile: true,
+});
+const analyticsEntry = readFileSync(join(DIST, "assets", "analytics", "analytics.js"));
+ANALYTICS_SRC = `${url("assets/analytics/analytics.js")}?v=${createHash("sha1").update(analyticsEntry).digest("hex").slice(0, 8)}`;
 writeFileSync(join(DIST, ".nojekyll"), "");
 homePage();
 standoutsPage();
