@@ -6,12 +6,22 @@ Keep the "Where we left off" section current. Work happens on a branch per task 
 
 ## Where we left off
 
-Updated 2026-10-24.
+Updated 2026-10-24, evening.
 
-- The site redesign is live (pull request #5): newsprint look, menu (This week, Departments, Stores, Compare, About), department, standouts and compare pages, store pages that lead with the store's own weekly ad, and a `delivery` note per store.
-- The "Vegetarian only" switch is live (pull request #4).
-- The Friday routine runs every Friday at 10am Pacific as a Claude cloud routine and opens a pull request for the week. It needs the owner's Claude account.
-- **Next:** step 1 of the app (below).
+- **Pull requests waiting for the owner:** #6 (this handoff file, `design/` mockups, product images plan) and #7 (`mobile-app` branch: the iPhone app, `/api/week.json` feed, `docs/architecture.svg`). Read both branches if they aren't merged yet.
+- **Site:** redesign live (#5), "Vegetarian only" live (#4). The Friday routine runs at 10am Pacific as a Claude cloud routine.
+- **iPhone app (`mobile/`, see its README):** works on the owner's iPhone as a standalone build installed with `mobile/install-on-iphone.sh` (needs the Mac, Xcode beta in `~/Downloads` because the phone runs an iOS beta, and a free Apple ID, so builds expire after 7 days). Features: This week, Aisles, Stores, deal detail, list kept in the app or in a Reminders list (asked on first add), tap the checkmark to remove, trip plan, local notifications (Friday reminder, ends tomorrow), price watches, share, Grocery Deals icon.
+- **Just fixed, not yet confirmed by the owner:** adding a deal to a Reminders list. expo-calendar SDK 58's `ExpoCalendar.get()` demands Calendar permission, so lists are found through `getCalendars(EntityTypes.REMINDER)`; reminder dates are passed as ISO strings.
+- **Confluence** (owner's personal space, kylepace.atlassian.net): "Seattle Grocery Deals: architecture" (diagram, components, schema, Firebase plan with "New deals are in" as the first push, Amplitude events, build order) and "Recipe + pantry app: product brief". The architecture diagram image points at the `mobile-app` branch; repoint it to `main` after #7 merges.
+- **Issues:** #8 product images (future).
+- **Next:** confirm Reminders works; merge #6 and #7; paid Apple Developer account; then the backend (Neon, API, publish step) and Firebase "New deals are in" push; Amplitude.
+- **A cloud session can't** build or install the iPhone app, read the owner's Obsidian vault, or reach the Mac. Do code, docs, backend and site work there; leave phone builds for the Mac.
+
+## Future ideas
+
+- **Recipe + pantry app** (separate app, "Mela plus pantry features"): see the Confluence product brief. Connects to Grocery Deals only through the Reminders list. The owner's Obsidian "Cooking Wiki" vault already runs the pantry model (one note per item with status have, low, out, unconfirmed). Leaning SwiftUI with CloudKit, no logins. Do not add pantry or recipes to Grocery Deals.
+- **Mac bridge** for the vault: low and out pantry items to the Reminders list; checked-off items back to `have`.
+- A Mac mini at home would make phone builds and Remote Control available any time.
 
 ## Decisions
 
