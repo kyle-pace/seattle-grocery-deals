@@ -52,6 +52,7 @@ Then work through UPDATING.md sections 4 and 5 on `drafts/YYYY-MM-DD.json`:
 - Fix every item in the "Check by hand" list. Add keys to `config/items.json` for items that will come up again; use `null` for one-offs.
 - Look at every skipped row in `drafts/YYYY-MM-DD.report.json`. Fix the note and redraft if a row was skipped only because of formatting.
 - Add 3 to 6 highlights with reasons.
+- Check the vegetarian filter: `node scripts/veg-check.mjs drafts/YYYY-MM-DD.json` lists the items outside meat and seafood that the site would show as vegetarian. Set `vegetarian: false` on any that contain meat, poultry or fish (UPDATING.md section 7).
 
 ### 5. Check
 

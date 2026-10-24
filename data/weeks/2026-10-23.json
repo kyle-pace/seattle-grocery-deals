@@ -3948,7 +3948,8 @@
       "percent_off": 17,
       "member_price": false,
       "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
+      "notes": "Home delivery add-on",
+      "vegetarian": false
     },
     {
       "store": "smith-brothers",
@@ -3970,7 +3971,8 @@
       "percent_off": 17,
       "member_price": false,
       "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
+      "notes": "Home delivery add-on",
+      "vegetarian": false
     },
     {
       "store": "smith-brothers",
@@ -9982,7 +9984,8 @@
       "percent_off": null,
       "member_price": false,
       "valid_through": "2026-10-29",
-      "notes": "4pk/127g"
+      "notes": "4pk/127g",
+      "vegetarian": false
     },
     {
       "store": "hmart",
@@ -15912,7 +15915,8 @@
       "percent_off": null,
       "member_price": false,
       "valid_through": "2026-10-29",
-      "notes": "Asian Gourmet Kitchen. Plus tax."
+      "notes": "Asian Gourmet Kitchen. Plus tax.",
+      "vegetarian": false
     },
     {
       "store": "99-ranch",
@@ -17366,7 +17370,8 @@
       "percent_off": 16,
       "member_price": false,
       "valid_through": "2026-10-28",
-      "notes": ""
+      "notes": "",
+      "vegetarian": false
     },
     {
       "store": "seafood-city",

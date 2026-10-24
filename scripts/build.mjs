@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText,
-  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer,
+  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
@@ -71,7 +71,7 @@ function compareLine(i) {
 }
 
 function attrs(i) {
-  return `data-store="${esc(i.store)}" data-category="${esc(i.category)}" data-tier="${i.a.tier}"`;
+  return `data-store="${esc(i.store)}" data-category="${esc(i.category)}" data-tier="${i.a.tier}" data-veg="${isVegetarian(i) ? 1 : 0}"`;
 }
 
 function priceBlock(i) {
@@ -156,7 +156,7 @@ function whereToShop(week, items) {
   <h3><a href="${url(`stores/${s.id}/`)}">${esc(storeName(s.id))}</a></h3>
   <p class="meta">${s.mine.length} item${s.mine.length === 1 ? "" : "s"} on sale${s.standouts ? `, <strong>${s.standouts} standout${s.standouts > 1 ? "s" : ""}</strong>` : ""}${s.good ? `, ${s.good} good` : ""}${f[s.id]?.valid_through ? ` <span aria-hidden="true">&middot;</span> through ${esc(fmtDate(f[s.id].valid_through))}` : ""}</p>
   ${s.cats.length ? `<p class="strong-in">Strong in: ${s.cats.slice(0, 3).map(([c]) => esc(CATEGORY_LABELS[c].toLowerCase())).join(", ")}</p>` : ""}
-  <ul class="mini">${s.mine.slice(0, H.where_to_shop_items).map((i) => `<li><span>${esc(i.item)}</span> <span class="mini-price">${esc(priceText(i))}</span></li>`).join("")}</ul>
+  <ul class="mini">${s.mine.slice(0, H.where_to_shop_items).map((i) => `<li data-veg="${isVegetarian(i) ? 1 : 0}"><span>${esc(i.item)}</span> <span class="mini-price">${esc(priceText(i))}</span></li>`).join("")}</ul>
   <p class="more"><a href="#all" data-jump-store="${esc(s.id)}">See all ${s.mine.length}</a></p>
 </li>`).join("\n")}</ol>`;
 }
@@ -201,6 +201,7 @@ function filterBar(items) {
   const stores = [...new Set(items.map((i) => i.store))];
   const cats = cfg.criteria.categories.filter((c) => items.some((i) => i.category === c));
   return `<div class="filters" data-filters>
+  <button type="button" class="veg-toggle" role="switch" aria-checked="false" data-veg-toggle><span class="switch" aria-hidden="true"></span>Vegetarian only</button>
   <label>Store <select data-filter="store"><option value="">All stores</option>${stores.map((s) => `<option value="${esc(s)}">${esc(storeName(s))}</option>`).join("")}</select></label>
   <label>Category <select data-filter="category"><option value="">All categories</option>${cats.map((c) => `<option value="${c}">${CATEGORY_LABELS[c]}</option>`).join("")}</select></label>
   <label>Show <select data-filter="tier"><option value="">Everything on sale</option><option value="good">Good deals and up</option><option value="standout">Standouts only</option></select></label>
@@ -239,7 +240,13 @@ function myStoresDialog() {
 
 function weekBody(week, { current }) {
   const items = analyzed.get(week.week);
-  const highlights = items.filter((i) => i.a.tier === "standout").slice(0, H.highlights);
+  // Highlights for everyone, plus the best vegetarian ones, so the section
+  // stays full when "Vegetarian only" is on. data-hl says which list a card is in.
+  const standouts = items.filter((i) => i.a.tier === "standout");
+  const hlAll = standouts.slice(0, H.highlights);
+  const hlVeg = standouts.filter(isVegetarian).slice(0, H.highlights);
+  const highlights = standouts.filter((i) => hlAll.includes(i) || hlVeg.includes(i))
+    .map((i) => [i, (hlAll.includes(i) ? "a" : "") + (hlVeg.includes(i) ? "v" : "")]);
   const counts = { standout: 0, good: 0, sale: 0 };
   for (const i of items) counts[i.a.tier]++;
   const read = week.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
@@ -269,7 +276,7 @@ ${soon}
 <section id="highlights" aria-labelledby="h-high">
   <h2 id="h-high">Highlights</h2>
   <p class="sub">The strongest sales this week, from big discounts, prices well under the US average, and the lowest prices we've listed.</p>
-  <ol class="cards" data-filterable>${highlights.map((i) => card(i)).join("\n")}</ol>
+  <ol class="cards" data-filterable>${highlights.map(([i, hl]) => card(i).replace("<li ", `<li data-hl="${hl}" `)).join("\n")}</ol>
 </section>
 <section id="where" aria-labelledby="h-where">
   <h2 id="h-where">Where to shop</h2>
@@ -580,6 +587,8 @@ function aboutPage() {
 </ul>
 <h2>What's listed</h2>
 <p>Every sale item that could be read from each flyer. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
+<h2 id="vegetarian">Vegetarian only</h2>
+<p>The "Vegetarian only" switch hides meat, poultry and seafood, and anything made with them, such as fish sauce, broth or pork dumplings. Dairy and eggs stay. It works from each item's category and name, so when a name doesn't make it clear, as with many dumplings and frozen meals, the item is hidden to be safe. It doesn't check for other animal ingredients, like gelatin in a pudding or lard in a pastry, unless the name says so. Check the label if it matters to you.</p>
 <h2>How deals are highlighted</h2>
 <p><span class="dot"></span> <strong>Standouts</strong> are any of these:</p>
 <ul>
@@ -603,7 +612,7 @@ function aboutPage() {
 <h2>Privacy</h2>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold.</p>
 <p>The site uses Google Analytics to count visits and see which pages are used. Google Analytics sets cookies and receives your IP address and basic details about your browser and device. Google's own use of that data is described in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites that use its services</a>. To opt out, use a content blocker or <a href="https://tools.google.com/dlpage/gaoptout">Google's opt-out add-on</a>.</p>
-<p>Your "my stores" choice is saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Google Analytics and the map tiles, everything, fonts included, is served from this site.</p>
+<p>Your "my stores" and "Vegetarian only" choices are saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Google Analytics and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
 }
