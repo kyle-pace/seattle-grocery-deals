@@ -34,6 +34,7 @@ The free Apple ID can't sign push notifications, so `plugins/without-push-entitl
 - **Plan my trip** (on the list): the fewest stores that cover your sale items.
 - **Alerts:** a Friday reminder and "ends tomorrow" reminders for list items, as local notifications. **Watch price** on any deal; the app alerts you when the same item is cheaper. Watches are checked when the app opens; server push (Firebase) will replace that.
 - **Share** a deal from its detail sheet.
+- **Amplitude** analytics (`src/analytics.ts`), same project as the website: screens, deals viewed, list adds and removals, list connected, weekly ads opened, searches, price watches, alert settings, shares. Private by default: anonymous device ID, no IP address, no advertising ID or carrier, never the list contents, and a "Share anonymous usage data" switch on the Alerts tab.
 - **Liquid Glass** tab bar on iOS 26, with a solid fallback when Reduce Transparency is on, on older iOS and on Android.
 
 ## Data

@@ -1,13 +1,19 @@
 #!/bin/sh
 # Build a standalone release of the app and install it on a plugged-in, unlocked iPhone.
 # Usage: ./install-on-iphone.sh            (uses the first connected iPhone)
-# Set XCODE to the Xcode app to use; it must support the phone's iOS version (betas need Xcode beta).
+# Uses the first Xcode found (beta first); set XCODE=/path/to/Xcode.app to choose. It must support the
+# phone's iOS version, so an iOS beta needs the Xcode beta.
 set -e
 cd "$(dirname "$0")"
-export DEVELOPER_DIR="${XCODE:-/Users/kylepace/Downloads/Xcode.app}/Contents/Developer"
+if [ -z "$XCODE" ]; then
+  for x in "$HOME/Downloads/Xcode Beta.app" "$HOME/Downloads/Xcode.app" /Applications/Xcode-beta.app "/Applications/Xcode Beta.app" /Applications/Xcode.app /Applications/Utilities/Xcode.app; do
+    [ -d "$x" ] && XCODE="$x" && break
+  done
+fi
+export DEVELOPER_DIR="$XCODE/Contents/Developer"
 export LANG=en_US.UTF-8 CI=1
 TEAM=$(node -p 'require("./app.json").expo.ios.appleTeamId')
-DEVICE=$(xcrun devicectl list devices 2>/dev/null | awk '/iPhone/ && /available/ && !/simulated/ { for (i = 1; i <= NF; i++) if ($i ~ /^[0-9A-F]{8}-[0-9A-F]{16}$/) { print $i; exit } }')
+DEVICE=$(xcrun devicectl list devices 2>/dev/null | awk '/iPhone/ && (/available/ || /connected/) && !/simulated/ { for (i = 1; i <= NF; i++) if ($i ~ /^[0-9A-F]{8}-[0-9A-F]{16}$/) { print $i; exit } }')
 [ -n "$DEVICE" ] || { echo "No iPhone found. Plug it in, unlock it, and trust this Mac."; exit 1; }
 npx expo prebuild --platform ios
 (cd ios && xcodebuild -workspace GroceryDeals.xcworkspace -scheme GroceryDeals -configuration Release \

@@ -3,6 +3,8 @@ import { useMemo, useState } from "react";
 import { FlatList, Linking, Modal, Pressable, RefreshControl, ScrollView, Share, Switch, Text, TextInput, View } from "react-native";
 import { allowNotifications, watchHit } from "./alerts";
 import { remindersSupported } from "./reminders";
+import { analyticsOff, setAnalyticsOff, track } from "./analytics";
+import { useEffect } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Deal, fmtDate, matchDeal, planTrip } from "./data";
 import { useApp } from "./state";
@@ -28,11 +30,11 @@ function Header({ kicker, title, sub, onBack }: { kicker?: string; title: string
   );
 }
 
-function Search({ value, onChange, placeholder = "Search deals and stores" }: { value: string; onChange: (t: string) => void; placeholder?: string }) {
+function Search({ value, onChange, placeholder = "Search deals and stores", where = "this_week" }: { value: string; onChange: (t: string) => void; placeholder?: string; where?: string }) {
   const c = useColors();
   return (
     <TextInput value={value} onChangeText={onChange} placeholder={placeholder} placeholderTextColor={c.muted} clearButtonMode="while-editing"
-      accessibilityLabel="Search" returnKeyType="search" autoCorrect={false}
+      accessibilityLabel="Search" returnKeyType="search" autoCorrect={false} onSubmitEditing={() => value.trim() && track("Searched", { query_length: value.trim().length, screen: where })}
       style={{ marginTop: 12, minHeight: 44, borderWidth: 1.5, borderColor: c.lineUi, borderRadius: 10, paddingHorizontal: 12, backgroundColor: c.surface, color: c.ink, fontFamily: font.body, fontSize: 16 }} />
   );
 }
@@ -150,7 +152,7 @@ export function Stores({ open, initial = null }: { open: (d: Deal) => void; init
           <Header onBack={() => setId(null)} title={st.name} sub={[towns.join(" · "), st.from ? `Sale ${fmtDate(st.from)} to ${fmtDate(st.through)}` : ""].filter(Boolean).join(" · ")} />
           <View style={{ paddingHorizontal: PAD, paddingTop: 14, gap: 10 }}>
             {st.flyer_url ? (
-              <Pressable onPress={() => Linking.openURL(st.flyer_url!)} accessibilityRole="link" style={{ minHeight: 48, borderRadius: 12, backgroundColor: c.ink, alignItems: "center", justifyContent: "center" }}>
+              <Pressable onPress={() => { track("Opened Weekly Ad", { store: st.id }); Linking.openURL(st.flyer_url!); }} accessibilityRole="link" style={{ minHeight: 48, borderRadius: 12, backgroundColor: c.ink, alignItems: "center", justifyContent: "center" }}>
                 <Text style={{ color: c.paper, fontFamily: font.bold, fontSize: 16 }}>See {st.name}'s weekly ad ↗</Text>
               </Pressable>
             ) : null}
@@ -268,7 +270,7 @@ export function DealSheet({ deal, close, goStore }: { deal: Deal | null; close: 
           <Pressable onPress={async () => { if (w) unwatch(w.id); else { await allowNotifications(); watch(deal); } }} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center", paddingHorizontal: 12 }}>
             <Text style={{ color: c.ink, fontFamily: font.bold, fontSize: 16, textAlign: "center" }}>{w ? `Watching: alert under ${w.label} (tap to stop)` : `Watch price: alert me if it's cheaper`}</Text>
           </Pressable>); })()}
-        <Pressable onPress={() => Share.share({ message: `${deal.name}: ${deal.text} at ${storeName(deal.store)}${deal.ends ? ` through ${fmtDate(deal.ends)}` : ""}. https://seattlegrocery.deals/stores/${deal.store}/` })} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center" }}>
+        <Pressable onPress={() => { track("Shared Deal", { deal_id: deal.id, store: deal.store }); Share.share({ message: `${deal.name}: ${deal.text} at ${storeName(deal.store)}${deal.ends ? ` through ${fmtDate(deal.ends)}` : ""}. https://seattlegrocery.deals/stores/${deal.store}/` }); }} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center" }}>
           <Text style={{ color: c.ink, fontFamily: font.bold, fontSize: 16 }}>Share this deal</Text>
         </Pressable>
         {st ? (
@@ -326,7 +328,25 @@ export function Alerts({ open }: { open: (d: Deal) => void }) {
           </Pressable>
         );
       })}
+      <Heading title="Privacy" />
+      <UsageSwitch />
       <Text style={{ fontFamily: font.body, fontSize: 13, color: c.muted, marginTop: 16 }}>For now these alerts come from the app itself, so price watches are checked when you open it. Once the backend is built, they'll arrive as push notifications on Friday morning.</Text>
     </ScrollView>
+  );
+}
+
+// Off switch for anonymous usage data (Amplitude).
+function UsageSwitch() {
+  const c = useColors();
+  const [on, setOn] = useState(true);
+  useEffect(() => { analyticsOff().then((off) => setOn(!off)); }, []);
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderBottomWidth: 1, borderColor: c.line }}>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: font.bold, fontSize: 16, color: c.ink }}>Share anonymous usage data</Text>
+        <Text style={{ fontFamily: font.body, fontSize: 13, color: c.muted }}>Which screens and features get used, to improve the app. No name, no IP address, never your list.</Text>
+      </View>
+      <Switch value={on} onValueChange={(v) => { setOn(v); setAnalyticsOff(!v); }} trackColor={{ true: c.brand }} accessibilityLabel="Share anonymous usage data" />
+    </View>
   );
 }

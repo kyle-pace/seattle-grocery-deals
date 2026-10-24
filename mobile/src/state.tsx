@@ -5,6 +5,7 @@ import { createContext, ReactNode, useContext, useEffect, useMemo, useRef, useSt
 import { Alert, AppState as RNAppState } from "react-native";
 import { notifyNow, setEndingReminders, setFridayReminder, unitValue, Watch, watchHit } from "./alerts";
 import { Deal, Feed, loadFeed, matchDeal, Store } from "./data";
+import { setUserProps, track } from "./analytics";
 import { addReminder, chooseList, readList, removeReminder, RemindersList, remindersSupported, setDone } from "./reminders";
 
 export type ListItem = { id: string; text: string; done: boolean; dealId?: string };
@@ -62,7 +63,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return () => sub.remove();
   }, []);
 
-  const setSource = (s: ListSource) => { setSourceState(s); sourceRef.current = s; save(K.source, s); };
+  const setSource = (s: ListSource) => { setSourceState(s); sourceRef.current = s; save(K.source, s); setUserProps({ list_source: isRem(s) ? "reminders" : s ?? "none" }); };
   const storeName = (id: string) => feed?.stores.find((s) => s.id === id)?.name ?? id;
   const list = isRem(source) ? remList : appList;
 
@@ -84,6 +85,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const hit = watchHit(w, feed.items);
       if (hit && w.notifiedWeek !== feed.week) {
         changed = true;
+        track("Hit Price Watch", { item_key: w.key, store: hit.store, week: feed.week });
         notifyNow(`Price drop: ${w.name}`, `${hit.text} at ${storeName(hit.store)}, under your ${w.label} watch.`).catch(() => {});
         return { ...w, notifiedWeek: feed.week };
       }
@@ -94,11 +96,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const saveAppList = (next: ListItem[]) => { setAppList(next); save(K.list, next); };
 
-  const connectReminders = async () => {
+  const connectReminders = async (prompt: "first_add" | "list_tab" = "list_tab") => {
     try {
       const chosen = await chooseList();
       if (!chosen) return;
       setSource(chosen);
+      track("Connected List", { source: "reminders", prompt });
       setRemList(await readList(chosen.id));
     } catch (e) {
       Alert.alert("Couldn't open Reminders", `Check Settings > Grocery Deals > Reminders, then try again.\n\n(${e instanceof Error ? e.message : String(e)})`);
@@ -106,6 +109,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   };
 
   const addTo = async (s: ListSource, text: string, deal?: Deal) => {
+    track(deal ? "Added Deal to List" : "Added Item to List", { list_source: isRem(s) ? "reminders" : "app", ...(deal ? { deal_id: deal.id, store: deal.store, category: deal.category, tier: deal.tier } : {}) });
     if (isRem(s)) {
       await addReminder(s.id, text, deal, deal ? storeName(deal.store) : undefined).catch((e) => Alert.alert("Couldn't add to Reminders", e instanceof Error ? e.message : String(e)));
       reloadList();
@@ -119,14 +123,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const sameItem = (w: Watch, d: Deal) => (w.key ? w.key === d.key : w.name === d.name);
     return {
       feed, refreshing, refresh, stores, storeName,
-      veg, setVeg: (v) => { setVegState(v); save(K.veg, v); },
+      veg, setVeg: (v) => { setVegState(v); save(K.veg, v); track("Toggled Vegetarian Only", { on: v }); setUserProps({ veg_only: v }); },
       list,
       // The first add asks where the list should live.
       addToList: (text, deal) => {
         if (source === null && remindersSupported) {
           Alert.alert("Use your Reminders list?", "Items go into a Reminders list you pick, like a shared Groceries list, with the price and when the sale ends.", [
-            { text: "Keep in this app", onPress: () => { setSource("app"); addTo("app", text, deal); } },
-            { text: "Use Reminders", style: "default", onPress: async () => { await connectReminders(); addTo(sourceRef.current, text, deal); } },
+            { text: "Keep in this app", onPress: () => { setSource("app"); track("Connected List", { source: "app", prompt: "first_add" }); addTo("app", text, deal); } },
+            { text: "Use Reminders", style: "default", onPress: async () => { await connectReminders("first_add"); addTo(sourceRef.current, text, deal); } },
           ]);
           return;
         }
@@ -147,12 +151,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       // Undo "add": remove the list item that came from this deal.
       removeDeal: (deal) => {
         const ids = list.filter((i) => i.dealId === deal.id && !i.done).map((i) => i.id);
+        track("Removed Deal from List", { deal_id: deal.id, store: deal.store, list_source: isRem(source) ? "reminders" : "app" });
         if (isRem(source)) { setRemList(remList.filter((i) => !ids.includes(i.id))); ids.forEach((id) => removeReminder(id).catch(() => {})); }
         else saveAppList(appList.filter((i) => !ids.includes(i.id)));
       },
-      source, connectReminders, keepInApp: () => setSource("app"), reloadList,
+      source, connectReminders: () => connectReminders("list_tab"), keepInApp: () => { setSource("app"); track("Connected List", { source: "app", prompt: "list_tab" }); }, reloadList,
       prefs,
-      setPrefs: (p) => { setPrefsState(p); save(K.prefs, p); if (p.friday !== prefs.friday) setFridayReminder(p.friday).catch(() => {}); },
+      setPrefs: (p) => { setPrefsState(p); save(K.prefs, p); for (const k of ["friday", "ending"] as const) if (p[k] !== prefs[k]) track("Changed Alert Setting", { setting: k, on: p[k] }); if (p.friday !== prefs.friday) setFridayReminder(p.friday).catch(() => {}); },
       watches,
       watch: (d) => {
         const u = unitValue(d);
@@ -161,8 +166,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         const w: Watch = { id: String(Date.now()), name: d.name, key: d.key, store: d.store, target: u.value, per: u.per, label, notifiedWeek: feed?.week };
         const next = [w, ...watches.filter((x) => !sameItem(x, d))];
         setWatches(next); save(K.watches, next);
+        track("Created Price Watch", { item_key: d.key, store: d.store, per: u.per, target: u.value }); setUserProps({ watches_count: next.length });
       },
-      unwatch: (id) => { const next = watches.filter((w) => w.id !== id); setWatches(next); save(K.watches, next); },
+      unwatch: (id) => { const next = watches.filter((w) => w.id !== id); setWatches(next); save(K.watches, next); track("Removed Price Watch"); setUserProps({ watches_count: next.length }); },
       watching: (d) => watches.find((w) => sameItem(w, d)),
     };
   }, [feed, refreshing, veg, appList, remList, source, prefs, watches]);
