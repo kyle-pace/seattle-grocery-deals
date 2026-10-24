@@ -715,6 +715,33 @@ function notFound() {
   writeFileSync(join(DIST, "404.html"), page({ title: "Not found", path: "", body: `<h1>Not found</h1>\n<p><a href="${url()}">Go to this week's sales</a></p>` }));
 }
 
+
+// A ready-to-use feed for the mobile app: this week's deals with the analysis done.
+function appFeed() {
+  const items = analyzed.get(latest.week);
+  const feed = {
+    week: latest.week, end: weekEnd(latest), generated: TODAY,
+    categories: CATS.filter((c) => items.some((i) => i.category === c)).map((c) => ({ id: c, label: CATEGORY_LABELS[c] })),
+    stores: cfg.stores.filter((s) => s.active && !s.no_online_flyer).map((s) => {
+      const f = latest.flyers.find((x) => x.store === s.id);
+      return { id: s.id, name: s.name, about: s.about, website: s.website ?? null, flyer_url: s.flyer_url ?? f?.links?.[0]?.url ?? null,
+        delivery: s.delivery ?? null, status: f?.status ?? null, from: f?.valid_from ?? null, through: f?.valid_through ?? null,
+        locations: s.locations.map((l) => ({ label: l.label, address: l.address, lat: l.lat, lon: l.lon })) };
+    }),
+    items: items.map((i, rank) => {
+      const p = priceParts(i);
+      return { id: `${i.store}-${rank}`, rank, name: i.item, store: i.store, category: i.category, key: i.item_key ?? null,
+        price: i.price, text: priceText(i), lead: p.lead, amount: p.cur + p.num, unit: p.unit.trim(), spoken: p.spoken, detail: p.detail,
+        regular: i.regular_price != null ? priceText(i, i.regular_price) : null, off: i.percent_off ?? null,
+        unit_price: i.unit_price ? unitPriceText(i.unit_price) : null, tier: i.a.tier,
+        why: i.highlight?.reason ?? i.a.tags.filter((t) => t.kind !== "pct").map((t) => t.text).join(". "),
+        veg: isVegetarian(i), ends: i.valid_through, notes: i.notes ?? null };
+    }),
+  };
+  mkdirSync(join(DIST, "api"), { recursive: true });
+  writeFileSync(join(DIST, "api", "week.json"), JSON.stringify(feed));
+}
+
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "site", "assets"), join(DIST, "assets"), { recursive: true });
@@ -728,5 +755,6 @@ storePages();
 aboutPage();
 persimmonPage();
 dataPages();
+appFeed();
 notFound();
 console.log(`Built ${weeks.length} week(s), latest ${latest.week}, into dist/ with base ${BASE}`);
