@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#1D4D33",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -26,7 +26,20 @@
     },
     "plugins": [
       "expo-font",
-      "./plugins/without-push-entitlement"
+      "./plugins/without-push-entitlement",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "resizeMode": "contain",
+          "backgroundColor": "#1D4D33",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#1D4D33"
+          }
+        }
+      ]
     ],
     "scheme": "grocerydeals"
   }
