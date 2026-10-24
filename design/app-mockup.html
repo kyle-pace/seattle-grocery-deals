@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seattle Grocery Deals app mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;700&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a gallery of phone screens on a quiet page, each with a caption, then notes on how it would work. Screens use the site's newsprint system. */
+:root {
+  --page: #E9E6DF; --page-ink: #1B1A17; --page-muted: #5B574F;
+  --paper: #F7F5F0; --surface: #FFFFFF; --ink: #141414; --muted: #57534C; --line: #DDD8CE; --line-ui: #8C867B;
+  --brand: #1D4D33; --on-brand: #FFFFFF; --tag: #FFE45C; --red: #B3261E; --ios-blue: #0A63D6;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "Atkinson Hyperlegible Next", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--page-ink); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--ios-blue); outline-offset: 2px; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.intro { max-width: 1180px; margin: 0 auto; padding: 40px 20px 8px; }
+.intro h1 { font-family: var(--display); text-transform: uppercase; font-size: clamp(36px, 6vw, 60px); line-height: .95; margin: 0 0 10px; text-wrap: balance; }
+.intro p { margin: 0; max-width: 68ch; color: var(--page-muted); font-size: 17px; line-height: 1.5; }
+
+.gallery { max-width: 1180px; margin: 0 auto; padding: 28px 20px 16px; display: grid; gap: 40px 28px; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); justify-items: center; }
+figure { margin: 0; display: grid; gap: 14px; justify-items: center; width: 100%; max-width: 360px; }
+figcaption { width: 100%; font-size: 15px; line-height: 1.45; color: var(--page-muted); }
+figcaption b { display: block; color: var(--page-ink); font-size: 16px; margin-bottom: 2px; }
+.n { font-family: var(--display); font-size: 15px; color: var(--page-ink); margin-right: 6px; }
+
+/* phone */
+.phone { width: 330px; height: 700px; border-radius: 48px; background: #0D0D0D; padding: 11px; box-shadow: 0 24px 50px rgb(0 0 0 / .18); position: relative; }
+.screen { width: 100%; height: 100%; border-radius: 38px; overflow: hidden; background: var(--paper); color: var(--ink); position: relative; display: flex; flex-direction: column; font-size: 15px; line-height: 1.35; }
+.status { height: 46px; flex: none; display: flex; justify-content: space-between; align-items: center; padding: 6px 26px 0 30px; font-size: 14px; font-weight: 700; position: relative; z-index: 3; }
+.island { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 104px; height: 30px; background: #000; border-radius: 20px; }
+.bars { display: inline-flex; gap: 5px; align-items: center; }
+.bars i { display: inline-block; width: 22px; height: 11px; border: 1.5px solid currentColor; border-radius: 3px; position: relative; }
+.bars i::after { content: ""; position: absolute; inset: 1.5px 4px 1.5px 1.5px; background: currentColor; border-radius: 1px; }
+.homebar { position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%); width: 120px; height: 5px; border-radius: 3px; background: currentColor; opacity: .8; z-index: 5; }
+.scroll { flex: 1; overflow-y: auto; scrollbar-width: none; }
+.scroll::-webkit-scrollbar { display: none; }
+
+/* app chrome */
+.apphead { background: var(--brand); color: var(--on-brand); padding: 4px 18px 16px; margin-top: -46px; padding-top: 50px; }
+.apphead .k { font-size: 13px; font-weight: 700; opacity: .9; }
+.apphead h2 { font-family: var(--display); text-transform: uppercase; font-size: 38px; line-height: .95; margin: 2px 0 4px; }
+.apphead p { margin: 0; font-size: 13px; opacity: .95; }
+.status.on-brand { color: #fff; }
+.search { margin: 12px 14px 4px; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1.5px solid var(--line-ui); border-radius: 10px; padding: 9px 12px; color: var(--muted); font-size: 15px; }
+.search svg { width: 16px; height: 16px; flex: none; }
+.sec { padding: 14px 16px 4px; }
+.sec-h { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2.5px solid var(--ink); padding-bottom: 4px; }
+.sec-h h3 { font-family: var(--display); text-transform: uppercase; font-size: 22px; margin: 0; }
+.sec-h span { font-size: 12px; color: var(--muted); }
+.strip { display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px 4px; scrollbar-width: none; }
+.strip::-webkit-scrollbar { display: none; }
+.pill { flex: none; width: 132px; background: var(--surface); border: 1.5px solid var(--line-ui); border-radius: 10px; padding: 9px 10px; display: grid; gap: 2px; }
+.pill .t { font-weight: 700; font-size: 14px; }
+.pill .s { font-size: 12px; color: var(--muted); }
+.pill .p { font-family: var(--display); font-size: 24px; line-height: 1; margin-top: 4px; }
+.deal { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.deal .nm { font-weight: 700; font-size: 15px; margin: 0; line-height: 1.25; }
+.deal .mt { font-size: 12.5px; color: var(--muted); margin: 2px 0 0; }
+.deal .mt .off { color: var(--red); font-weight: 700; }
+.right { display: flex; align-items: center; gap: 8px; flex: none; }
+.amt { font-family: var(--display); font-size: 26px; line-height: 1; text-align: right; font-variant-numeric: tabular-nums; }
+.amt small { font-size: 14px; }
+.amt sup { font-size: 14px; }
+.amt.tag span { display: inline-block; background: var(--tag); padding: 3px 6px 1px; box-shadow: 2px 2px 0 var(--ink); transform: rotate(-3deg); }
+.add { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--ink); background: var(--surface); display: grid; place-items: center; cursor: pointer; flex: none; padding: 0; }
+.add svg { width: 16px; height: 16px; }
+.add[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.toast { position: absolute; left: 14px; right: 14px; bottom: 92px; background: var(--ink); color: var(--paper); border-radius: 12px; padding: 11px 14px; font-size: 14px; display: flex; justify-content: space-between; gap: 8px; z-index: 6; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s; pointer-events: none; }
+.toast.show { opacity: 1; transform: none; }
+.toast b { color: var(--tag); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+.tabs { flex: none; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1.5px solid var(--line-ui); background: var(--paper); padding: 6px 4px 24px; }
+.tabs span { display: grid; justify-items: center; gap: 1px; font-size: 10.5px; font-weight: 700; color: var(--muted); position: relative; }
+.tabs span.on { color: var(--ink); }
+.tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.badge { position: absolute; top: -3px; left: calc(50% + 6px); background: var(--red); color: #fff; font-size: 10px; border-radius: 8px; padding: 0 5px; line-height: 15px; }
+
+/* lock screen */
+.lock { background: linear-gradient(170deg, #2C5A43 0%, #16251D 60%, #0E1512 100%); color: #fff; }
+.lock .time { text-align: center; font-size: 80px; font-weight: 700; letter-spacing: -2px; line-height: 1; margin-top: 18px; font-family: system-ui, -apple-system, sans-serif; }
+.lock .date { text-align: center; font-size: 17px; font-weight: 600; opacity: .9; margin-top: 2px; }
+.lock .notes { margin-top: auto; padding: 0 10px 46px; display: grid; gap: 8px; }
+.notif { background: rgb(245 245 245 / .82); color: #111; border-radius: 20px; padding: 11px 13px; display: grid; grid-template-columns: 34px 1fr; gap: 0 10px; backdrop-filter: blur(20px); }
+.notif .ic { width: 34px; height: 34px; border-radius: 8px; background: var(--brand); display: grid; place-items: center; grid-row: span 3; }
+.notif .ic svg { width: 22px; height: 22px; }
+.notif .top { display: flex; justify-content: space-between; font-size: 13px; }
+.notif .top b { font-weight: 700; }
+.notif .top span { color: #555; }
+.notif .msg { font-size: 14px; line-height: 1.3; margin-top: 1px; }
+.notif .acts { display: flex; gap: 6px; margin-top: 7px; }
+.notif .acts span { font-size: 12px; font-weight: 700; background: rgb(0 0 0 / .08); border-radius: 8px; padding: 4px 8px; }
+.stack { height: 10px; margin: -6px 14px 0; background: rgb(245 245 245 / .45); border-radius: 0 0 16px 16px; }
+
+/* detail sheet */
+.dim { background: #3d3b37; }
+.sheet { position: absolute; inset: 70px 0 0 0; background: var(--paper); border-radius: 22px 22px 0 0; display: flex; flex-direction: column; }
+.grab { width: 40px; height: 5px; border-radius: 3px; background: var(--line-ui); margin: 8px auto 0; flex: none; }
+.sheet .body { padding: 10px 18px 20px; overflow-y: auto; flex: 1; scrollbar-width: none; }
+.lbl { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1.5px solid currentColor; border-radius: 4px; padding: 0 4px; }
+.sheet h3 { font-family: var(--display); text-transform: uppercase; font-size: 30px; line-height: 1; margin: 8px 0 4px; }
+.big { font-family: var(--display); font-size: 54px; line-height: 1; display: inline-block; background: var(--tag); padding: 4px 10px 0; box-shadow: 3px 3px 0 var(--ink); transform: rotate(-2deg); margin: 10px 0 8px; }
+.big small { font-size: 24px; }
+.why { font-size: 14px; margin: 6px 0 0; }
+.btns { display: grid; gap: 8px; margin: 14px 0 6px; }
+.btn { display: flex; justify-content: center; align-items: center; gap: 8px; min-height: 46px; border-radius: 12px; border: 2px solid var(--ink); font-weight: 700; font-size: 15px; background: var(--surface); }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn svg { width: 18px; height: 18px; }
+.mini-h { font-family: var(--display); text-transform: uppercase; font-size: 18px; margin: 16px 0 4px; border-bottom: 2px solid var(--ink); padding-bottom: 2px; }
+.hist { display: grid; gap: 6px; margin-top: 8px; }
+.hist div { display: grid; grid-template-columns: 54px 1fr 50px; align-items: center; gap: 8px; font-size: 12.5px; }
+.hist i { display: block; height: 14px; background: var(--brand); border-radius: 2px; }
+.cmp { display: flex; justify-content: space-between; font-size: 14px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.cmp b { font-variant-numeric: tabular-nums; }
+
+/* list */
+.listhead { padding: 4px 18px 10px; }
+.listhead h2 { font-family: var(--display); text-transform: uppercase; font-size: 38px; margin: 0; line-height: 1; }
+.sync { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+.sync i { width: 8px; height: 8px; border-radius: 50%; background: #2E9E5B; display: inline-block; }
+.trip { margin: 6px 16px 4px; border: 2px solid var(--ink); background: var(--tag); padding: 10px 12px; box-shadow: 3px 3px 0 var(--ink); }
+.trip b { display: block; font-size: 15px; }
+.trip span { font-size: 13px; }
+.li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.check { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--line-ui); flex: none; margin-top: 1px; cursor: pointer; background: none; padding: 0; display: grid; place-items: center; }
+.check[aria-checked="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+.check svg { width: 13px; height: 13px; display: none; }
+.check[aria-checked="true"] svg { display: block; }
+.li .what { flex: 1; min-width: 0; }
+.li .what p { margin: 0; }
+.li .t { font-weight: 700; }
+.li.done .t { text-decoration: line-through; color: var(--muted); }
+.li .m { font-size: 12.5px; color: var(--muted); margin-top: 2px !important; }
+.li .m b { color: var(--ink); }
+.li .amt { font-size: 22px; }
+
+/* alerts */
+.row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.row p { margin: 0; }
+.row .t { font-weight: 700; font-size: 15px; }
+.row .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.tog { width: 50px; height: 30px; border-radius: 15px; background: #CFCAC0; position: relative; flex: none; border: 0; cursor: pointer; padding: 0; }
+.tog::after { content: ""; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .15s; }
+.tog[aria-checked="true"] { background: var(--brand); }
+.tog[aria-checked="true"]::after { transform: translateX(20px); }
+@media (prefers-reduced-motion: reduce) { .tog::after { transition: none; } }
+.hit { font-size: 11px; font-weight: 700; background: var(--tag); padding: 1px 6px; border: 1.5px solid var(--ink); }
+
+/* home screen with widgets */
+.springboard { background: linear-gradient(165deg, #E7D9C3 0%, #C9B79A 100%); }
+.widgets { padding: 6px 18px; display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+.wid { background: var(--paper); border-radius: 22px; padding: 14px 14px 12px; box-shadow: 0 4px 14px rgb(0 0 0 / .12); }
+.wid .wh { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: .06em; }
+.wid .wl { display: grid; gap: 6px; margin-top: 8px; }
+.wid .wl div { display: flex; justify-content: space-between; font-size: 13.5px; gap: 8px; }
+.wid .wl b { font-family: var(--display); font-size: 19px; line-height: 1; }
+.smalls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.wid.sq { min-width: 0; overflow: hidden; aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.wid.sq .num { font-family: var(--display); font-size: 48px; line-height: .9; }
+.wid.sq p { margin: 0; font-size: 13px; }
+.icons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 0; padding: 4px 18px; justify-items: center; }
+.icons span { display: grid; justify-items: center; gap: 4px; font-size: 11px; color: #2a241b; }
+.icons i { width: 56px; height: 56px; border-radius: 14px; display: block; background: rgb(255 255 255 / .55); }
+.icons i.app { background: var(--brand); display: grid; place-items: center; }
+.icons i.app svg { width: 34px; height: 34px; }
+
+/* onboarding */
+.onb { padding: 4px 20px 30px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.onb .art { height: 104px; display: grid; place-items: center; }
+.onb h2 { font-family: var(--display); text-transform: uppercase; font-size: 32px; line-height: .95; margin: 0; }
+.onb p { margin: 0; font-size: 15px; }
+.choice { display: flex; gap: 10px; align-items: center; border: 1.5px solid var(--line-ui); background: var(--surface); border-radius: 12px; padding: 8px 12px; font-weight: 700; cursor: pointer; width: 100%; text-align: left; }
+.choice .dot { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line-ui); flex: none; }
+.choice[aria-checked="true"] { border-color: var(--ink); border-width: 2px; }
+.choice[aria-checked="true"] .dot { border: 7px solid var(--brand); }
+.choice small { display: block; font-weight: 400; font-size: 12.5px; color: var(--muted); }
+.fine { font-size: 12.5px !important; color: var(--muted); }
+
+/* notes */
+.notes-sec { max-width: 1180px; margin: 0 auto; padding: 24px 20px 64px; display: grid; gap: 24px 48px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.notes-sec section h2 { font-family: var(--display); text-transform: uppercase; font-size: 28px; margin: 0 0 8px; border-bottom: 3px solid var(--page-ink); padding-bottom: 4px; }
+.notes-sec ul { margin: 0; padding-left: 18px; display: grid; gap: 8px; font-size: 16px; line-height: 1.5; color: var(--page-muted); }
+.notes-sec ul b { color: var(--page-ink); }
+</style>
+</head>
+<body>
+<header class="intro">
+  <h1>Seattle Grocery Deals, the app</h1>
+  <p>A mockup of a dedicated iPhone app in the same newsprint style as the site. The big new ideas: your Reminders grocery list gets matched against this week's deals, and push notifications tell you when something on your list goes on sale. Real deals from the week of Oct 23. The plus buttons, list checkboxes and switches work.</p>
+</header>
+
+<main class="gallery">
+
+<figure>
+  <div class="phone"><div class="screen lock">
+    <div class="status"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="time">10:32</div>
+    <div class="date">Friday, October 23</div>
+    <div class="notes">
+      <div class="notif"><span class="ic" aria-hidden="true">__LOGO__</span><div class="top"><b>Grocery Deals</b><span>now</span></div>
+        <div class="msg"><b>5 things on your list are on sale.</b> Persimmons $1.48/lb at T&amp;T, pork shoulder $3.29/lb at Lam's, and 3 more.</div>
+        <div class="acts"><span>Plan my trip</span><span>See all</span></div></div>
+      <div class="notif"><span class="ic" aria-hidden="true">__LOGO__</span><div class="top"><b>Price watch hit</b><span>now</span></div>
+        <div class="msg">Fuyu persimmons are under your $1.60/lb watch: <b>$1.48/lb at T&amp;T</b> through Thursday.</div></div>
+      <div class="notif"><span class="ic" aria-hidden="true">__LOGO__</span><div class="top"><b>Ending soon</b><span>Sun</span></div>
+        <div class="msg">Shanghai bok choy, $1.48/lb at H Mart, ends tomorrow. You watched it last week.</div></div>
+      <div class="stack"></div>
+    </div>
+    <span class="homebar"></span>
+  </div></div>
+  <figcaption><b><span class="n">1</span>Push notifications</b>One Friday digest after the new flyers post, built around your list. Price watches and "ending soon" only fire for things you care about, so it never feels like spam.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone"><div class="screen">
+    <div class="status on-brand"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="scroll">
+      <div class="apphead"><div class="k">Oct 23 to Oct 29</div><h2>This week</h2><p>860 deals from 12 stores</p></div>
+      <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>Search deals, stores</div>
+      <div class="sec" style="padding-bottom:0"><div class="sec-h"><h3>On your list</h3><span>5 on sale</span></div></div>
+      <div class="strip">
+        <div class="pill"><span class="t">Persimmons</span><span class="s">T&amp;T</span><span class="p">$1.48<small>/lb</small></span></div>
+        <div class="pill"><span class="t">Pork shoulder</span><span class="s">Lam's Seafood</span><span class="p">$3.29<small>/lb</small></span></div>
+        <div class="pill"><span class="t">Rice, 15 lb</span><span class="s">H Mart</span><span class="p">$10.98</span></div>
+        <div class="pill"><span class="t">Tofu</span><span class="s">T&amp;T, 2 for</span><span class="p">$3.50</span></div>
+        <div class="pill"><span class="t">Green onions</span><span class="s">Lam's Seafood</span><span class="p">99¢</span></div>
+      </div>
+      <div class="sec"><div class="sec-h"><h3>Best this week</h3><span>57 standouts</span></div>
+        <div data-adds></div>
+      </div>
+    </div>
+    <div class="toast" role="status" data-toast><span>Added <b data-toast-item></b> to Groceries</span><span>Undo</span></div>
+    <nav class="tabs" aria-label="Tabs"><span class="on">__I_HOME__This week</span><span>__I_LIST__List<em class="badge">5</em></span><span>__I_STORE__Stores</span><span>__I_BELL__Alerts</span></nav>
+    <span class="homebar"></span>
+  </div></div>
+  <figcaption><b><span class="n">2</span>This week</b>Opens on what matters to you: list items on sale first, then the week's standouts. Tap <b style="display:inline">+</b> to drop a deal straight into your Reminders list.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone"><div class="screen dim">
+    <div class="status" style="color:#fff"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="sheet"><div class="grab"></div><div class="body">
+      <span class="lbl">Standout</span>
+      <h3>Fuyu persimmon, jumbo</h3>
+      <div style="font-size:14px;color:var(--muted)">T&amp;T Supermarket · Bellevue, Lynnwood · through Thu, Oct 29</div>
+      <div class="big"><sup style="font-size:26px">$</sup>1.48<small>/lb</small></div>
+      <p class="why">The lowest persimmon price we've listed, and the cheapest of 5 stores this week.</p>
+      <div class="btns">
+        <div class="btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add to Groceries</div>
+        <div class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/></svg>Watch: alert me under $1.60/lb</div>
+      </div>
+      <div class="mini-h">Price history</div>
+      <div class="hist"><div><span>Oct 16</span><i style="width:100%"></i><b>$1.78</b></div><div><span>Oct 23</span><i style="width:83%"></i><b>$1.48</b></div></div>
+      <div class="mini-h">Also on sale</div>
+      <div class="cmp"><span>H Mart</span><b>$1.78/lb</b></div>
+      <div class="cmp"><span>99 Ranch, 4 lb case</span><b>$2.25/lb</b></div>
+      <div class="cmp"><span>Met Market</span><b>$2.99 each</b></div>
+      <div class="cmp"><span>Central Co-op, organic</span><b>$3.99/lb</b></div>
+    </div></div>
+    <span class="homebar" style="color:var(--ink)"></span>
+  </div></div>
+  <figcaption><b><span class="n">3</span>Deal detail</b>Everything to decide fast: the price, why it's good, price history, and the same item at other stores. "Watch" sets a price alert in one tap.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="scroll">
+      <div class="listhead"><h2>Groceries</h2><span class="sync"><i></i>Synced with Reminders · Shared with 1 person</span></div>
+      <div class="trip"><b>Plan: T&amp;T and Lam's</b><span>Two stops cover 4 of your 5 sale items.</span></div>
+      <div class="sec"><div class="sec-h"><h3>On sale this week</h3><span>5</span></div><div data-list="sale"></div></div>
+      <div class="sec"><div class="sec-h"><h3>Not on sale</h3><span>3</span></div><div data-list="rest"></div></div>
+    </div>
+    <nav class="tabs" aria-label="Tabs"><span>__I_HOME__This week</span><span class="on">__I_LIST__List</span><span>__I_STORE__Stores</span><span>__I_BELL__Alerts</span></nav>
+    <span class="homebar"></span>
+  </div></div>
+  <figcaption><b><span class="n">4</span>Your list, matched</b>This is your Reminders "Groceries" list, the one you already add to with Siri, shared with your household. The app reads it and shows where each item is on sale. Check something off here and it's checked off in Reminders.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="scroll">
+      <div class="listhead"><h2>Alerts</h2></div>
+      <div class="sec" style="padding-top:0"><div class="sec-h"><h3>Notify me</h3></div>
+        <div class="row"><div><p class="t">Friday digest</p><p class="s">After new deals post, about 10:30 AM</p></div><button class="tog" role="switch" aria-checked="true" aria-label="Friday digest"></button></div>
+        <div class="row"><div><p class="t">My list goes on sale</p><p class="s">Included in the digest</p></div><button class="tog" role="switch" aria-checked="true" aria-label="My list goes on sale"></button></div>
+        <div class="row"><div><p class="t">Ending soon</p><p class="s">The day before a list item's sale ends</p></div><button class="tog" role="switch" aria-checked="true" aria-label="Ending soon"></button></div>
+        <div class="row"><div><p class="t">Vegetarian only</p><p class="s">Leave meat and seafood out of alerts</p></div><button class="tog" role="switch" aria-checked="false" aria-label="Vegetarian only"></button></div>
+      </div>
+      <div class="sec"><div class="sec-h"><h3>Price watches</h3><span>3</span></div>
+        <div class="row"><div><p class="t">Fuyu persimmons <span class="hit">Hit</span></p><p class="s">Under $1.60/lb · now $1.48 at T&amp;T</p></div></div>
+        <div class="row"><div><p class="t">Calrose rice, 15 lb <span class="hit">Hit</span></p><p class="s">Under 80¢/lb · now 73¢/lb at H Mart</p></div></div>
+        <div class="row"><div><p class="t">White shrimp</p><p class="s">Under $4.50/lb · best now $4.75 at Viet-Wah</p></div></div>
+      </div>
+      <div class="sec"><div class="sec-h"><h3>Stores I follow</h3></div>
+        <div class="row"><div><p class="t">Lam's Seafood</p><p class="s">New flyer, Fridays · Delivers</p></div><button class="tog" role="switch" aria-checked="true" aria-label="Lam's Seafood"></button></div>
+        <div class="row"><div><p class="t">99 Ranch Market</p><p class="s">New flyer, Fridays</p></div><button class="tog" role="switch" aria-checked="true" aria-label="99 Ranch Market"></button></div>
+      </div>
+    </div>
+    <nav class="tabs" aria-label="Tabs"><span>__I_HOME__This week</span><span>__I_LIST__List</span><span>__I_STORE__Stores</span><span class="on">__I_BELL__Alerts</span></nav>
+    <span class="homebar"></span>
+  </div></div>
+  <figcaption><b><span class="n">5</span>Alerts you control</b>A few clear switches instead of a firehose. Price watches come from the "Watch" button on any deal; following a store gets you its flyer the day it posts.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone"><div class="screen springboard">
+    <div class="status"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="widgets">
+      <div class="wid"><div class="wh"><span>Best this week</span><span>Oct 23</span></div>
+        <div class="wl"><div><span>Beef tendon · 99 Ranch</span><b>$4.99/lb</b></div><div><span>Fuyu persimmon · T&amp;T</span><b>$1.48/lb</b></div><div><span>Pork loin chop · Seafood City</span><b>$2.49/lb</b></div></div></div>
+      <div class="smalls">
+        <div class="wid sq"><div class="wh"><span>My list</span></div><div class="num">5</div><p>items on sale this week</p></div>
+        <div class="wid sq"><div class="wh"><span>Ends soon</span></div><div class="num" style="font-size:26px">Bok choy</div><p>$1.48/lb at H Mart, ends tomorrow</p></div>
+      </div>
+    </div>
+    <div class="icons" style="margin-top:14px"><span><i class="app">__LOGO_BIG__</i>Deals</span><span><i></i>Reminders</span><span><i></i>Maps</span><span><i></i>Photos</span></div>
+    <span class="homebar" style="color:#2a241b"></span>
+  </div></div>
+  <figcaption><b><span class="n">6</span>Widgets</b>Glanceable without opening the app: the week's best, how many list items are on sale, and what ends soon. The app icon is where some rainbow flair could live later.</figcaption>
+</figure>
+
+<figure>
+  <div class="phone"><div class="screen">
+    <div class="status"><span>9:41</span><span class="island"></span><span class="bars">5G <i></i></span></div>
+    <div class="onb">
+      <div class="art" aria-hidden="true"><svg width="118" height="102" viewBox="0 0 150 130"><rect x="20" y="10" width="86" height="110" rx="10" fill="#fff" stroke="#141414" stroke-width="3"/><g fill="none" stroke="#141414" stroke-width="3"><circle cx="38" cy="38" r="7"/><circle cx="38" cy="64" r="7"/><circle cx="38" cy="90" r="7"/></g><g stroke="#8C867B" stroke-width="5" stroke-linecap="round"><path d="M54 38h36M54 64h28M54 90h32"/></g><rect x="78" y="48" width="62" height="34" fill="#FFE45C" stroke="#141414" stroke-width="3" transform="rotate(-6 109 65)"/><text x="109" y="72" font-family="Barlow Condensed, sans-serif" font-size="22" font-weight="700" text-anchor="middle" transform="rotate(-6 109 65)">$1.48</text></svg></div>
+      <h2>Use the list you already have</h2>
+      <p>Pick a Reminders list and we'll show which items are on sale each week. Add a deal here and it shows up there.</p>
+      <div style="display:grid;gap:8px" data-choices>
+        <button class="choice" role="radio" aria-checked="true"><span class="dot"></span><span>Groceries<small>12 items · shared with 1 person</small></span></button>
+        <button class="choice" role="radio" aria-checked="false"><span class="dot"></span><span>Costco run<small>4 items</small></span></button>
+        <button class="choice" role="radio" aria-checked="false"><span class="dot"></span><span>Keep a list in the app instead<small>Works without Reminders</small></span></button>
+      </div>
+      <div class="btn primary" style="margin-top:auto">Continue</div>
+      <p class="fine">Your list is matched on your phone. It isn't uploaded or shared with us.</p>
+    </div>
+    <span class="homebar"></span>
+  </div></div>
+  <figcaption><b><span class="n">7</span>Connecting Reminders</b>Asked once, with a clear reason, and with an in-app list as a fallback. Matching runs on the phone, which keeps the privacy story simple.</figcaption>
+</figure>
+
+</main>
+
+<div class="notes-sec">
+  <section>
+    <h2>How it would work</h2>
+    <ul>
+      <li><b>Reminders sync:</b> iOS lets apps read and write Reminders lists through EventKit. In Expo, the expo-calendar module covers this on iOS (needs a development build, not Expo Go). The app reads your chosen list, matches each item to deals, and writes new items back. Apple's automatic grocery sections in Reminders may not be settable from an app, so items could land unsorted.</li>
+      <li><b>Matching:</b> "persimmons" or "green onions" in your list is matched against deal names and the site's item keys (persimmons, rice, shrimp…). That runs on the phone against the week's JSON, so your list never leaves it.</li>
+      <li><b>Push:</b> the Friday routine publishes the week, then a small backend job sends one digest per phone through Apple's push service (Expo's push service in front of it). Price watches and list matches have to be known to that job, so phones send it only the item keys you watch, not your full list.</li>
+      <li><b>Android:</b> there's no Reminders equivalent with an open API, so Android would use the in-app list (Google Tasks sync could come later).</li>
+    </ul>
+  </section>
+  <section>
+    <h2>More ideas</h2>
+    <ul>
+      <li><b>Plan my trip:</b> pick the fewest stores that cover your sale items, with a map and directions.</li>
+      <li><b>In-store mode:</b> your list sorted by department, big text, screen stays awake.</li>
+      <li><b>Share a deal:</b> send a deal card to a friend or group chat.</li>
+      <li><b>Apple Watch:</b> your list on your wrist while you shop.</li>
+      <li><b>Siri:</b> "What's on sale at 99 Ranch?" or "Add persimmons to my grocery list."</li>
+      <li><b>Spotlight a store:</b> the editorial "show them some love" card, when you're ready.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Build order</h2>
+    <ul>
+      <li><b>1.</b> Expo app reading the site's weekly JSON: This week, deal detail, stores. No backend yet.</li>
+      <li><b>2.</b> Reminders list matching and "Add to list" (all on device).</li>
+      <li><b>3.</b> Backend: Postgres on Neon, an API, and a Friday push job. Amplitude for app analytics.</li>
+      <li><b>4.</b> Price watches, widgets, then Android with the in-app list.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+const ICON = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
+const I = {
+  HOME: ICON('<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>'),
+  LIST: ICON('<path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/>'),
+  STORE: ICON('<path d="M4 9l1-5h14l1 5M4 9h16v11H4zM9 20v-6h6v6"/>'),
+  BELL: ICON('<path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/>'),
+};
+const LOGO = '<svg viewBox="0 0 32 32"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h10.1c.66 0 1.3.26 1.77.73l11.4 11.4a2.5 2.5 0 0 1 0 3.54l-9.9 9.9a2.5 2.5 0 0 1-3.54 0L3.73 17.17A2.5 2.5 0 0 1 3 15.4z" fill="#f2c14e"/><circle cx="9.3" cy="9.3" r="2.2" fill="#1d4d3a"/><path d="M14.2 23.2l8.6-8.6" stroke="#d9442b" stroke-width="2.4" stroke-linecap="round"/><circle cx="15.6" cy="16.4" r="1.7" fill="#d9442b"/><circle cx="21.6" cy="22.4" r="1.7" fill="#d9442b"/></svg>';
+document.body.innerHTML = document.body.innerHTML
+  .replaceAll("__LOGO_BIG__", LOGO).replaceAll("__LOGO__", LOGO)
+  .replaceAll("__I_HOME__", I.HOME).replaceAll("__I_LIST__", I.LIST).replaceAll("__I_STORE__", I.STORE).replaceAll("__I_BELL__", I.BELL);
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const BEST = [
+  { n: "Beef tendon", s: "99 Ranch", was: "$10.99", off: 55, amt: "4.99", u: "/lb" },
+  { n: "Fuyu persimmon, jumbo", s: "T&T", amt: "1.48", u: "/lb", why: "Cheapest of 5 stores" },
+  { n: "Nishiki rice, 15 lb", s: "Asian Family Market", lead: "2 for", amt: "19.99", u: "", why: "About 67¢/lb" },
+  { n: "Pork loin chop", s: "Seafood City", was: "$3.99", off: 38, amt: "2.49", u: "/lb" },
+  { n: "White shrimp, 4 lb", s: "Viet-Wah", amt: "18.99", u: "", why: "$4.75/lb, lowest in town" },
+  { n: "Sweet potato", s: "99 Ranch", amt: "1.79", u: "/lb", why: "Lowest we've listed" },
+];
+const plus = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>';
+document.querySelector("[data-adds]").innerHTML = BEST.map((d, i) => `<div class="deal"><div><p class="nm">${esc(d.n)}</p><p class="mt">${esc(d.s)}${d.was ? ` · was <s>${d.was}</s> · <span class="off">${d.off}% off</span>` : ""}${d.why ? ` · ${esc(d.why)}` : ""}</p></div>
+  <div class="right"><div class="amt tag"><span>${d.lead ? `<small style="font-family:var(--body);font-size:11px;display:block">${d.lead}</small>` : ""}<sup>$</sup>${d.amt}<small>${d.u}</small></span></div><button class="add" aria-pressed="false" aria-label="Add ${esc(d.n)} to Groceries" data-add="${i}">${plus}</button></div></div>`).join("");
+let toastT;
+document.addEventListener("click", e => {
+  const a = e.target.closest("[data-add]");
+  if (a) {
+    const on = a.getAttribute("aria-pressed") !== "true";
+    a.setAttribute("aria-pressed", on); a.innerHTML = on ? tick : plus;
+    if (on) { const t = document.querySelector("[data-toast]"); document.querySelector("[data-toast-item]").textContent = BEST[a.dataset.add].n; t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("show"), 1800); }
+    return;
+  }
+  const tg = e.target.closest(".tog, .check");
+  if (tg) { const on = tg.getAttribute("aria-checked") !== "true"; tg.setAttribute("aria-checked", on); const li = tg.closest(".li"); if (li) li.classList.toggle("done", on); return; }
+  const ch = e.target.closest(".choice");
+  if (ch) { ch.parentElement.querySelectorAll(".choice").forEach(c => c.setAttribute("aria-checked", c === ch)); }
+});
+const SALE = [
+  ["Persimmons", "T&T", "Fuyu, jumbo", "$1.48/lb"],
+  ["Pork shoulder", "Lam's Seafood", "boneless", "$3.29/lb"],
+  ["Green onions", "Lam's Seafood", "", "99¢ ea"],
+  ["Tofu", "T&T", "Natures Soy, 2 for $3.50", "$1.75"],
+  ["Rice", "H Mart", "Calrose, 15 lb", "$10.98"],
+];
+const REST = ["Garlic", "Paper towels", "Dish soap"];
+document.querySelector('[data-list="sale"]').innerHTML = SALE.map(([t, s, d, p]) => `<div class="li"><button class="check" role="checkbox" aria-checked="false" aria-label="${esc(t)}">${tick}</button><div class="what"><p class="t">${esc(t)}</p><p class="m"><b>${esc(s)}</b>${d ? " · " + esc(d) : ""}</p></div><div class="amt">${esc(p)}</div></div>`).join("");
+document.querySelector('[data-list="rest"]').innerHTML = REST.map(t => `<div class="li"><button class="check" role="checkbox" aria-checked="false" aria-label="${esc(t)}">${tick}</button><div class="what"><p class="t">${esc(t)}</p></div></div>`).join("");
+</script>
+</body>
+</html>
