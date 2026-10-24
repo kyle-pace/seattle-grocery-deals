@@ -13,9 +13,10 @@ const DEAL_URL = "grocerydeals://deal/";
 
 // Ask for access, then let the person pick a list. Null if they cancel or say no.
 export async function chooseList(): Promise<RemindersList | null> {
-  const perm = await requestRemindersPermissions();
+  const step = async <T>(name: string, f: () => Promise<T>) => { try { return await f(); } catch (e) { throw new Error(`${name}: ${e instanceof Error ? e.message : String(e)}`); } };
+  const perm = await step("permission", () => requestRemindersPermissions());
   if (!perm.granted) return null;
-  const lists = (await getCalendars(EntityTypes.REMINDER)).filter((c) => c.allowsModifications);
+  const lists = (await step("lists", () => getCalendars(EntityTypes.REMINDER))).filter((c) => c.allowsModifications !== false);
   if (!lists.length) return null;
   // Put a list named like "Groceries" first.
   lists.sort((a, b) => Number(/grocer|shopping/i.test(b.title)) - Number(/grocer|shopping/i.test(a.title)));
@@ -27,9 +28,20 @@ export async function chooseList(): Promise<RemindersList | null> {
   });
 }
 
+// ExpoCalendar.get() asks for Calendar permission even for a Reminders list (expo-calendar
+// SDK 58), so find the list among the Reminders lists instead.
+async function getList(listId: string): Promise<ExpoCalendar> {
+  const list = (await getCalendars(EntityTypes.REMINDER)).find((c) => c.id === listId);
+  if (!list) throw new Error("That Reminders list no longer exists. Pick another on the List tab.");
+  return list;
+}
+
 export async function readList(listId: string): Promise<Item[]> {
-  const cal = await ExpoCalendar.get(listId);
-  const open = await cal.listReminders(null, null, ReminderStatus.INCOMPLETE);
+  let open;
+  try {
+    const cal = await getList(listId);
+    open = await cal.listReminders(null, null, ReminderStatus.INCOMPLETE);
+  } catch (e) { throw new Error(`read: ${e instanceof Error ? e.message : String(e)}`); }
   return open.map((r) => ({
     id: r.id!, text: r.title ?? "", done: false,
     dealId: r.url?.startsWith(DEAL_URL) ? r.url.slice(DEAL_URL.length) : undefined,
@@ -37,20 +49,20 @@ export async function readList(listId: string): Promise<Item[]> {
 }
 
 export async function addReminder(listId: string, text: string, deal?: Deal, storeName?: string): Promise<void> {
-  const cal = await ExpoCalendar.get(listId);
+  const cal = await getList(listId);
   await cal.createReminder({
     title: text,
     ...(deal ? {
       notes: `${deal.text} at ${storeName ?? deal.store}${deal.ends ? `. Sale ends ${fmtDate(deal.ends)}.` : "."}`,
       url: DEAL_URL + deal.id,
-      ...(deal.ends ? { dueDate: new Date(deal.ends + "T12:00:00"), allDay: true } : {}),
+      ...(deal.ends ? { dueDate: new Date(deal.ends + "T12:00:00").toISOString(), allDay: true } : {}),
     } : {}),
   });
 }
 
 export async function setDone(reminderId: string, done: boolean) {
   const r = await ExpoCalendarReminder.get(reminderId);
-  await r.update({ completed: done, completionDate: done ? new Date() : undefined });
+  await r.update(done ? { completed: true, completionDate: new Date().toISOString() } : { completed: false });
 }
 
 export async function removeReminder(reminderId: string) {
