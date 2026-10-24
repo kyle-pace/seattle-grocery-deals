@@ -10,6 +10,16 @@ import {
 
 const cfg = loadConfig();
 const BASE = process.env.BASE_PATH ?? cfg.site.base_path;
+// Google Analytics loads only in the deployed build, so local previews (BASE_PATH=/) are not counted.
+const GA_ID = BASE === cfg.site.base_path ? cfg.site.ga_measurement_id : null;
+const GA_TAG = GA_ID ? `
+<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(GA_ID)}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${esc(GA_ID)}');
+</script>` : "";
 const DIST = join(ROOT, "dist");
 const weeks = loadWeeks().map((w) => w.data); // oldest first
 if (!weeks.length) throw new Error("No week files in data/weeks");
@@ -298,7 +308,7 @@ function page({ title, path, body, description, map = false, extraScript = null,
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">${GA_TAG}
 <title>${esc(full)}</title>
 <meta name="description" content="${esc(description ?? cfg.site.tagline)}">
 <meta property="og:site_name" content="${esc(cfg.site.title)}">
