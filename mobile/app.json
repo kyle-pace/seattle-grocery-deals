@@ -39,6 +39,14 @@
             "backgroundColor": "#1D4D33"
           }
         }
+      ],
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": false,
+          "writeOnlyCalendarPermission": false,
+          "remindersPermission": "Grocery Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale."
+        }
       ]
     ],
     "scheme": "grocerydeals"

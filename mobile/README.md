@@ -30,6 +30,7 @@ The free Apple ID can't sign push notifications, so `plugins/without-push-entitl
 - **Departments** and **Stores:** every deal, best first. Store pages lead with a button to the store's own weekly ad, plus delivery notes.
 - **Deal detail:** price, why it's a deal, the same item at other stores, add to list.
 - **List:** a grocery list saved on the phone. Each item shows its best deal this week. Tap + on any deal to add it. Long-press to remove.
+- **Reminders:** the first time you add to the list (or with "Use a Reminders list" on the List tab), the app offers to keep the list in a Reminders list you pick, including shared lists and Siri. Items added from a deal carry the price and store in the notes and the sale end date as the due date. Check-offs sync both ways; changes made in Reminders show up when you return to the app. `src/reminders.ts`.
 - **Plan my trip** (on the list): the fewest stores that cover your sale items.
 - **Alerts:** a Friday reminder and "ends tomorrow" reminders for list items, as local notifications. **Watch price** on any deal; the app alerts you when the same item is cheaper. Watches are checked when the app opens; server push (Firebase) will replace that.
 - **Share** a deal from its detail sheet.
