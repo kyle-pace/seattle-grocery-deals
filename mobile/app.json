@@ -49,6 +49,9 @@
         }
       ]
     ],
-    "scheme": "grocerydeals"
+    "scheme": "grocerydeals",
+    "extra": {
+      "amplitudeApiKey": "209f961ae2c60b11c922363aa094ed0a"
+    }
   }
 }
