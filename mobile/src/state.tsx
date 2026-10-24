@@ -100,14 +100,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (!chosen) return;
       setSource(chosen);
       setRemList(await readList(chosen.id));
-    } catch {
-      Alert.alert("Couldn't open Reminders", "Check Settings > Grocery Deals > Reminders, then try again.");
+    } catch (e) {
+      Alert.alert("Couldn't open Reminders", `Check Settings > Grocery Deals > Reminders, then try again.\n\n(${e instanceof Error ? e.message : String(e)})`);
     }
   };
 
   const addTo = async (s: ListSource, text: string, deal?: Deal) => {
     if (isRem(s)) {
-      await addReminder(s.id, text, deal, deal ? storeName(deal.store) : undefined).catch(() => Alert.alert("Couldn't add to Reminders"));
+      await addReminder(s.id, text, deal, deal ? storeName(deal.store) : undefined).catch((e) => Alert.alert("Couldn't add to Reminders", e instanceof Error ? e.message : String(e)));
       reloadList();
     } else {
       saveAppList([{ id: String(Date.now()), text, done: false, dealId: deal?.id }, ...appList]);
