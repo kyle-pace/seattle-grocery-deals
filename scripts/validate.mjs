@@ -37,6 +37,7 @@ function checkConfig() {
     if (s.flyer_url === null && !s.flyer_url_note) err(w, "flyer_url is null, so flyer_url_note must explain why");
     if (typeof s.about !== "string" || s.about.length < 20 || s.about.length > 300) err(w, "about must be 20 to 300 characters");
     if (!Array.isArray(s.locations)) err(w, "locations must be a list (empty for delivery-only)");
+    if (s.delivery !== undefined && (typeof s.delivery !== "string" || s.delivery.length < 10 || s.delivery.length > 200)) err(w, "delivery must be 10 to 200 characters saying how the store delivers");
     for (const [i, l] of (s.locations || []).entries()) {
       const lw = `${w} locations[${i}]`;
       if (!l.label || !l.address) err(lw, "needs label and address");

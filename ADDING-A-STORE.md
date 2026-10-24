@@ -56,6 +56,7 @@ The store needs a public weekly flyer or specials page that can be read without 
 | `prints_regular_prices` | `true` only if the flyer prints regular prices or exact savings. When it is `false`, deals from this store can only qualify on US average. |
 | `representative_location` | Which store's flyer is used, if it varies. |
 | `how_to_read` | Short instructions for the weekly routine. Include any quirks. |
+| `delivery` | Optional. One sentence, 10 to 200 characters, on how the store delivers groceries itself. Adds a "Delivers" badge and a Delivery note on the store page. Leave it out for stores that only deliver through apps like Instacart. |
 
 ## 4. The weekly routine
 
