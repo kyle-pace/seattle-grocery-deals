@@ -140,6 +140,8 @@ function checkWeek(path) {
     }
 
     if (/\bCHECK:/.test(d.notes ?? "")) err(w, "notes still has a CHECK: note; confirm it on the flyer and remove it");
+    if (d.vegetarian === true && (d.category === "meat" || d.category === "seafood")) err(w, "vegetarian is true on a meat or seafood item");
+    else if (d.vegetarian === true && namesMeat(d)) warn(w, "vegetarian is true but the name mentions meat or fish; check it");
     if (d.member_price && !/member|card|app|loyalty|prime/i.test(d.notes)) warn(w, "member_price is true; say which program in notes");
   }
 

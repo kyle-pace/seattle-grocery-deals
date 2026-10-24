@@ -103,6 +103,7 @@
           "description": "Last day of the sale price. Null to use the flyer's valid_through."
         },
         "notes": { "type": "string", "maxLength": 200, "description": "Limits, while supplies last, member details, location caveats, \"save up to\" text. Empty string if none." },
+        "vegetarian": { "type": "boolean", "description": "Only to correct the automatic vegetarian check: true to show an item it wrongly hides, false to hide one it wrongly shows." },
         "highlight": {
           "type": "object",
           "additionalProperties": false,
