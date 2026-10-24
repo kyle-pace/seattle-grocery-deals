@@ -4,7 +4,7 @@ import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync } from "node:fs"
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import {
-  ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText,
+  ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
   unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian,
 } from "./lib.mjs";
 
@@ -29,20 +29,26 @@ const TODAY = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles"
 
 const CATEGORY_LABELS = {
   produce: "Produce", meat: "Meat", seafood: "Seafood", "dairy-eggs": "Dairy and eggs", pantry: "Pantry",
-  frozen: "Frozen", bakery: "Bakery", prepared: "Prepared", "snacks-drinks": "Snacks and drinks", other: "Other",
+  frozen: "Frozen", bakery: "Bakery", prepared: "Deli and prepared", "snacks-drinks": "Snacks and drinks", other: "Other",
 };
 const STATUS_LABELS = { full: "Read in full", partial: "Partly read", stale: "Stale", unreadable: "Unreadable" };
 const FORMAT_LABELS = { "web-page": "Web page", images: "Flyer images", pdf: "PDF", "catalogue-viewer": "Catalogue viewer" };
 const DAY_LABELS = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri", sat: "Sat", sun: "Sun" };
 const TIER_LABELS = { standout: "Standout", good: "Good deal", sale: "On sale" };
 const PER_LABEL = { lb: "/lb", each: " each", dozen: "/dozen", l: "/L", gal: "/gal" };
+const CATS = cfg.criteria.categories;
+// How many standouts the home page shows before "See all".
+const HOME_BEST = 6;
+const HOME_STORES = 6;
 
 const url = (p = "") => BASE + p;
 // Versioned asset links, so each deploy busts browser caches.
 const asset = (p) => `${url(p)}?v=${createHash("sha1").update(readFileSync(join(ROOT, "site", p))).digest("hex").slice(0, 8)}`;
-const LOGO = readFileSync(join(ROOT, "site", "assets", "logo.svg"), "utf8").trim().replace("<svg ", '<svg aria-hidden="true" width="30" height="30" ');
+const LOGO = readFileSync(join(ROOT, "site", "assets", "logo.svg"), "utf8").trim().replace("<svg ", '<svg aria-hidden="true" width="28" height="28" ');
 const storeName = (id) => cfg.storeById[id]?.name ?? id;
 const keyLabel = (k) => cfg.items[k]?.label ?? k;
+const plural = (n, one, many = one + "s") => `${n} ${n === 1 ? one : many}`;
+const ext = `<span aria-hidden="true">&#8599;</span><span class="sr-only"> (opens the store's site)</span>`;
 
 // ---------- analysis ----------
 
@@ -56,53 +62,84 @@ function analyzeWeek(week) {
 }
 const analyzed = new Map(weeks.map((w) => [w.week, analyzeWeek(w)]));
 
-// ---------- pieces ----------
-
-function tagChips(i) {
-  return i.a.tags.map((t) => `<span class="tag tag-${t.kind}">${esc(t.text)}</span>`).join("");
+// The end date most of a week's flyers share, for "Oct 23 to Oct 29".
+function weekEnd(week) {
+  const n = {};
+  for (const f of week.flyers) if (f.valid_through) n[f.valid_through] = (n[f.valid_through] ?? 0) + 1;
+  return Object.entries(n).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? null;
 }
 
-function compareLine(i) {
-  const parts = [];
-  if (i.regular_price != null) parts.push(`Regular ${priceText(i, i.regular_price)}`);
-  if (i.a.us) parts.push(`US average ${money(i.a.us.price)}${PER_LABEL[i.a.us.per]} (BLS ${fmtPeriod(i.a.us.period)}, approximate)`);
-  if (i.a.low) parts.push(`Lowest listed before ${money(i.a.low.price)}${PER_LABEL[i.a.low.per]} at ${storeName(i.a.low.store)}, ${fmtDate(i.a.low.week, { weekday: false })}`);
-  return parts.join(". ");
+// ---------- deal rows ----------
+
+// Price split into parts so the number can be large and the unit small.
+function priceParts(i) {
+  const q = i.quantity;
+  const m = money(i.price);
+  const cents = !m.startsWith("$");
+  let lead = "", unit = "", spokenUnit = "";
+  if (q > 1) lead = i.unit === "lb" ? `${q} lb for` : `${q} for`;
+  else if (i.unit === "lb") { unit = "/lb"; spokenUnit = " per pound"; }
+  else if (i.unit === "each") { unit = " ea"; spokenUnit = " each"; }
+  const detail = [];
+  if (i.pack) detail.push(q > 1 ? `${packText(i.pack)} each` : packText(i.pack));
+  if (unitPriceIsExtra(i)) detail.push(unitPriceText(i.unit_price));
+  return { lead, cur: cents ? "" : "$", num: cents ? m : m.slice(1), unit, spoken: `${lead ? lead + " " : ""}${m}${spokenUnit}`, detail };
 }
 
-function attrs(i) {
-  return `data-store="${esc(i.store)}" data-category="${esc(i.category)}" data-tier="${i.a.tier}" data-veg="${isVegetarian(i) ? 1 : 0}"`;
+function amount(i, { tag = false } = {}) {
+  const p = priceParts(i);
+  return `<p class="amt${tag ? " amt-tag" : ""}"><span class="sr-only">${esc(p.spoken)}</span><span aria-hidden="true">${p.lead ? `<span class="amt-lead">${esc(p.lead)}</span>` : ""}${p.cur ? `<span class="amt-cur">$</span>` : ""}${esc(p.num)}${p.unit ? `<span class="amt-unit">${esc(p.unit)}</span>` : ""}</span></p>`;
 }
 
-function priceBlock(i) {
-  const extra = unitPriceIsExtra(i) ? ` <span class="unit">${esc(unitPriceText(i.unit_price))}</span>` : "";
-  return `<span class="price">${esc(priceText(i))}</span>${extra}`;
+function rowAttrs(i, rank) {
+  const unit = i.unit_price ? convertPer(i.unit_price.value, i.unit_price.per, i.unit_price.per) : i.price;
+  return `data-store="${esc(i.store)}" data-category="${esc(i.category)}" data-tier="${i.a.tier}" data-veg="${isVegetarian(i) ? 1 : 0}" data-rank="${rank}" data-price="${i.price}" data-off="${i.percent_off ?? 0}" data-name="${esc(i.item.toLowerCase())}" data-text="${esc(`${i.item} ${storeName(i.store)}`.toLowerCase())}" data-unit="${unit}"`;
 }
 
-function card(i, { showStore = true } = {}) {
+// One deal. why: show the reason it's a deal. store: link the store.
+function dealRow(i, rank, { why = false, store = true, ends = true } = {}) {
+  const p = priceParts(i);
+  const label = i.a.tier === "standout" ? `<span class="lbl">Standout</span> ` : i.a.tier === "good" ? `<span class="lbl lbl-good">Good deal</span> ` : "";
   const meta = [
-    showStore ? `<a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : "",
-    esc(CATEGORY_LABELS[i.category]),
-    i.valid_through ? `through ${esc(fmtDate(i.valid_through))}` : "",
-  ].filter(Boolean).join(` <span aria-hidden="true">&middot;</span> `);
-  const cmp = compareLine(i);
-  return `<li class="card tier-${i.a.tier}" ${attrs(i)}>
-  <div class="card-head"><h3>${esc(i.item)}</h3><p>${priceBlock(i)}</p></div>
-  <p class="meta">${meta}</p>
-  ${i.highlight ? `<p class="reason">${esc(i.highlight.reason)}</p>` : ""}
-  ${i.a.tags.length ? `<p class="tags">${tagChips(i)}</p>` : ""}
-  ${cmp ? `<p class="cmp">${esc(cmp)}.</p>` : ""}
-  ${i.notes ? `<p class="notes">${esc(i.notes)}</p>` : ""}
+    store ? `<a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : "",
+    ...p.detail.map(esc),
+    i.regular_price != null ? `was <s>${esc(priceText(i, i.regular_price))}</s>` : "",
+    i.percent_off != null ? `<span class="off">${i.percent_off}% off</span>` : "",
+    i.member_price ? "member price" : "",
+    ends && i.valid_through ? `through ${esc(fmtDate(i.valid_through))}` : "",
+  ].filter(Boolean).join(" &middot; ");
+  const reason = why ? (i.highlight?.reason ?? i.a.tags.filter((t) => t.kind !== "pct").map((t) => t.text).join(". ")) : "";
+  return `<li class="deal" ${rowAttrs(i, rank)}>
+  <div class="deal-main"><p class="deal-name">${label}${esc(i.item)}</p><p class="deal-meta">${meta}</p>${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
+  ${amount(i, { tag: i.a.tier === "standout" })}
 </li>`;
 }
 
-function row(i, { showStore = true } = {}) {
-  return `<li class="row tier-${i.a.tier}" ${attrs(i)}>
-  <span class="r-item">${i.a.tier === "standout" ? `<span class="dot" aria-hidden="true"></span><span class="sr-only">Standout: </span>` : i.a.tier === "good" ? `<span class="dot dot-good" aria-hidden="true"></span><span class="sr-only">Good deal: </span>` : ""}${esc(i.item)}${showStore ? ` <a class="r-store" href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : ""}${i.notes ? ` <span class="r-note">${esc(i.notes)}</span>` : ""}</span>
-  <span class="r-price">${priceBlock(i)}</span>
-  ${i.a.tags.length ? `<span class="r-tags">${tagChips(i)}</span>` : ""}
-</li>`;
+// Deals grouped by department, each group a section that hides when filters empty it.
+function grouped(items, opts = {}) {
+  return CATS.filter((c) => items.some((i) => i.category === c)).map((c) => {
+    const list = items.filter((i) => i.category === c);
+    return `<section class="group" data-group aria-labelledby="g-${c}">
+  <h2 class="group-h" id="g-${c}">${esc(CATEGORY_LABELS[c])} <span data-group-count>${list.length}</span></h2>
+  <ul class="deals" data-sortable>${list.map((i) => dealRow(i, items.indexOf(i), opts)).join("\n")}</ul>
+</section>`;
+  }).join("\n");
 }
+
+// Search, store, sort and vegetarian controls. Rows below with [data-filterable] respond.
+function controls({ search = true, store = true, sort = false, stores = [], searchLabel = "Find" } = {}) {
+  return `<div class="bar" data-filters><div class="wrap bar-in">
+  ${search ? `<div class="find"><label for="f-q">${esc(searchLabel)}</label><input id="f-q" type="search" data-search placeholder="tofu, persimmon, 99 Ranch" autocomplete="off"></div>` : ""}
+  ${store && stores.length ? `<div class="pick"><label for="f-store">Store</label><select id="f-store" data-filter="store"><option value="">All stores</option>${stores.map((s) => `<option value="${esc(s)}">${esc(storeName(s))}</option>`).join("")}</select></div>` : ""}
+  ${sort ? `<div class="pick"><label for="f-sort">Sort</label><select id="f-sort" data-sort><option value="rank">Best deals first</option><option value="off">Biggest % off</option><option value="price">Lowest price</option><option value="name">A to Z</option></select></div>` : ""}
+  <button type="button" class="switch" role="switch" aria-checked="false" data-veg-toggle><span class="track" aria-hidden="true"></span>Vegetarian only<span class="switch-state" aria-hidden="true" data-when-all>Off</span><span class="switch-state" aria-hidden="true" data-when-veg>On</span></button>
+</div></div>`;
+}
+
+const countLine = () => `<p class="count" data-count role="status"></p>`;
+const emptyLine = (text) => `<p class="empty" data-empty hidden>${esc(text)}</p>`;
+// Text that changes with the vegetarian switch: both versions are in the page, CSS shows one.
+const vegText = (all, veg) => all === veg ? all : `<span data-when-all>${all}</span><span data-when-veg>${veg}</span>`;
 
 function flyerLinks(f, store) {
   if (f.links.length) return f.links.map((l) => `<a href="${esc(l.url)}" rel="noopener">${esc(l.label)}</a>`).join(" ");
@@ -122,12 +159,12 @@ function flyerList(week) {
     .map((s) => {
       const f = byStore[s.id];
       if (!f) {
-        return `<li class="flyer status-none" data-store="${esc(s.id)}">
+        return `<li class="flyer status-none">
   <div><a class="store" href="${url(`stores/${s.id}/`)}">${esc(s.name)}</a> <span class="status">Not checked</span></div>
   <div class="links">${s.flyer_url ? `<a href="${esc(s.flyer_url)}" rel="noopener">Store flyer page</a>` : `<span class="muted">No link</span>`}</div>
 </li>`;
       }
-      return `<li class="flyer status-${f.status}" data-store="${esc(s.id)}">
+      return `<li class="flyer status-${f.status}">
   <div><a class="store" href="${url(`stores/${s.id}/`)}">${esc(s.name)}</a> <span class="status">${STATUS_LABELS[f.status]}</span></div>
   <div class="dates">${datesText(f)}</div>
   <div class="links">${flyerLinks(f, s)}</div>
@@ -137,43 +174,229 @@ function flyerList(week) {
   return `<ul class="flyers">${rows.join("\n")}</ul>`;
 }
 
-// Stores ranked by how much is worth buying there this week.
-function whereToShop(week, items) {
-  const stores = [...new Set(items.map((i) => i.store))].map((id) => {
-    const mine = items.filter((i) => i.store === id);
-    const standouts = mine.filter((i) => i.a.tier === "standout").length;
-    const good = mine.filter((i) => i.a.tier === "good").length;
-    const cats = cfg.criteria.categories
-      .map((c) => [c, mine.filter((i) => i.category === c && i.a.tier !== "sale").length])
-      .filter(([, n]) => n > 0)
-      .sort((a, b) => b[1] - a[1]);
-    const weight = mine.slice(0, H.where_to_shop_items).reduce((s, i) => s + i.a.score, 0);
-    return { id, mine, standouts, good, cats, weight };
-  }).sort((a, b) => b.standouts - a.standouts || b.weight - a.weight);
+const chips = (s) => {
+  const c = [];
+  if (s.delivery) c.push(`<span class="chip">Delivers</span>`);
+  return c.length ? `<span class="chips">${c.join("")}</span>` : "";
+};
 
-  const f = Object.fromEntries(week.flyers.map((x) => [x.store, x]));
-  return `<ol class="stores-grid">${stores.map((s) => `<li class="store-card" data-store="${esc(s.id)}">
-  <h3><a href="${url(`stores/${s.id}/`)}">${esc(storeName(s.id))}</a></h3>
-  <p class="meta">${s.mine.length} item${s.mine.length === 1 ? "" : "s"} on sale${s.standouts ? `, <strong>${s.standouts} standout${s.standouts > 1 ? "s" : ""}</strong>` : ""}${s.good ? `, ${s.good} good` : ""}${f[s.id]?.valid_through ? ` <span aria-hidden="true">&middot;</span> through ${esc(fmtDate(f[s.id].valid_through))}` : ""}</p>
-  ${s.cats.length ? `<p class="strong-in">Strong in: ${s.cats.slice(0, 3).map(([c]) => esc(CATEGORY_LABELS[c].toLowerCase())).join(", ")}</p>` : ""}
-  <ul class="mini">${s.mine.slice(0, H.where_to_shop_items).map((i) => `<li data-veg="${isVegetarian(i) ? 1 : 0}"><span>${esc(i.item)}</span> <span class="mini-price">${esc(priceText(i))}</span></li>`).join("")}</ul>
-  <p class="more"><a href="#all" data-jump-store="${esc(s.id)}">See all ${s.mine.length}</a></p>
-</li>`).join("\n")}</ol>`;
+// A store tile: name, counts and its top deal, linking to the store page.
+function storeTile(s, items, { about = false } = {}) {
+  const f = latest.flyers.find((x) => x.store === s.id);
+  const mine = items.filter((i) => i.store === s.id);
+  const veg = mine.filter(isVegetarian);
+  const st = (l) => l.filter((i) => i.a.tier === "standout").length;
+  const counts = (l) => `${plural(l.length, "deal")}${st(l) ? `, ${plural(st(l), "standout")}` : ""}`;
+  const top = (l) => l[0] ? `Top: <b>${esc(l[0].item)}</b> ${esc(priceText(l[0]))}` : "";
+  const status = s.no_online_flyer ? "No online flyer" : !f ? "Not checked this week" : f.status === "unreadable" ? "Flyer couldn't be read this week" : f.status === "stale" ? "Flyer not updated this week" : f.valid_through ? `Sale through ${fmtDate(f.valid_through)}` : "";
+  return `<li${s.delivery ? " data-delivers" : ""}><a class="tile" href="${url(`stores/${s.id}/`)}">
+  <span class="tile-t">${esc(s.name)}</span>${chips(s)}
+  ${about ? `<span class="tile-about">${esc(s.about)}</span>` : ""}
+  ${mine.length ? `<span class="tile-n">${vegText(counts(mine), counts(veg))}</span>` : ""}
+  ${status ? `<span class="tile-n">${esc(status)}</span>` : ""}
+  ${mine.length ? `<span class="tile-top">${vegText(top(mine), top(veg) || "No vegetarian deals")}</span>` : ""}
+</a></li>`;
 }
 
-function bestByCategory(items) {
-  const cats = cfg.criteria.categories.filter((c) => items.some((i) => i.category === c && i.a.tier !== "sale"));
-  return `<div class="cat-grid">${cats.map((c) => {
-    const top = items.filter((i) => i.category === c && i.a.tier !== "sale").slice(0, H.best_by_category_items);
-    return `<section class="cat-box">
-  <h3>${esc(CATEGORY_LABELS[c])}</h3>
-  <ul class="mini">${top.map((i) => `<li ${attrs(i)}><span>${esc(i.item)} <span class="muted">${esc(storeName(i.store))}</span></span> <span class="mini-price">${esc(priceText(i))}</span></li>`).join("")}</ul>
-</section>`;
-  }).join("\n")}</div>`;
+function deptTile(c, items, base = "departments/") {
+  const l = items.filter((i) => i.category === c);
+  const veg = l.filter(isVegetarian);
+  const st = (x) => x.filter((i) => i.a.tier === "standout").length;
+  const counts = (x) => `${plural(x.length, "deal")}${st(x) ? `, ${plural(st(x), "standout")}` : ""}`;
+  const top = (x) => x[0] ? `Top: <b>${esc(x[0].item)}</b> ${esc(priceText(x[0]))} at ${esc(storeName(x[0].store))}` : "No vegetarian deals";
+  return `<li${veg.length ? "" : " data-meat-only"}><a class="tile" href="${url(`${base}${c}/`)}">
+  <span class="tile-t">${esc(CATEGORY_LABELS[c])}</span>
+  <span class="tile-n">${vegText(counts(l), counts(veg))}</span>
+  <span class="tile-top">${vegText(top(l), top(veg))}</span>
+</a></li>`;
 }
 
-// Items with the same key at two or more stores, side by side.
-function compareTable(items) {
+// ---------- page frame ----------
+
+const ICONS = {
+  "": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
+  "departments/": `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
+  "stores/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l1-5h14l1 5M4 9h16v11H4zM9 20v-6h6v6"/></svg>`,
+  "compare/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9M20 17l-3-3M20 17l-3 3"/></svg>`,
+};
+const MAIN_NAV = [["", "This week"], ["departments/", "Departments"], ["stores/", "Stores"], ["compare/", "Compare"]];
+
+// section: which menu item this page belongs to ("" is This week).
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "", ogTitle = null }) {
+  const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
+  const cur = (p) => (p === section ? ' aria-current="page"' : "");
+  const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}</a>`).join("")
+    + (PERSIMMON_SEASON ? `<a class="nav-persim" href="${url("persimmons/")}" aria-label="Persimmons" title="Persimmons"${cur("persimmons/")}>${PERSIMMON_SVG}</a>` : "");
+  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span></a>`).join("");
+  return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">${GA_TAG}
+<title>${esc(full)}</title>
+<meta name="description" content="${esc(description ?? cfg.site.tagline)}">
+<meta property="og:site_name" content="${esc(cfg.site.title)}">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(ogTitle || title || cfg.site.title)}">
+<meta property="og:description" content="${esc(description ?? cfg.site.tagline)}">
+<meta property="og:url" content="${esc(cfg.site.origin + cfg.site.base_path + path)}">${image ? `
+<meta property="og:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(imageAlt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">` : `
+<meta name="twitter:card" content="summary">`}
+<meta name="theme-color" content="#1d4d33">
+<link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
+<link rel="preload" href="${url("assets/fonts/atkinson-hyperlegible-next.woff2")}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${url("assets/fonts/barlow-condensed-700.woff2")}" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="${asset("assets/style.css")}">
+<script>try{if(JSON.parse(localStorage.getItem("sgd.vegOnly")))document.documentElement.classList.add("veg-on")}catch(e){}</script>
+<script src="${asset("assets/app.js")}" defer></script>${extraScript ? `
+<script src="${asset(extraScript)}" defer></script>` : ""}${map ? `
+<link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
+<script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
+<script src="${asset("assets/map.js")}" defer></script>` : ""}
+</head>
+<body${bodyClass ? ` class="${bodyClass}"` : ""}>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head">
+  <div class="wrap head-in">
+    <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span></a>
+    <nav class="topnav" aria-label="Main">${top}</nav>
+    <a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
+</main>
+<footer class="site-foot"><div class="wrap">
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("about/")}">About and privacy</a>${PERSIMMON_SEASON ? `<a href="${url("persimmons/")}">Persimmons</a>` : ""}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
+</div></footer>
+<nav class="tabbar" aria-label="Main">${tabs}</nav>
+</body>
+</html>
+`;
+}
+
+function write(path, html) {
+  const dir = join(DIST, path);
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, "index.html"), html);
+}
+
+const crumbs = (...links) => `<p class="crumbs">${links.map(([p, t]) => `<a href="${url(p)}">${esc(t)}</a>`).join(" / ")}</p>`;
+const pageHead = (title, sub, extra = "") => `<div class="page-h"><h1>${title}</h1>${sub ? `<p class="page-sub">${sub}</p>` : ""}${extra}</div>`;
+const storesIn = (items) => [...new Set(items.map((i) => i.store))].sort((a, b) => storeName(a).localeCompare(storeName(b)));
+
+// ---------- home ----------
+
+function homePage() {
+  const items = analyzed.get(latest.week);
+  const end = weekEnd(latest);
+  const standouts = items.filter((i) => i.a.tier === "standout");
+  // The best few for everyone, plus the best vegetarian ones, so the section stays
+  // full when "Vegetarian only" is on. data-hl says which list a row belongs to.
+  const hlAll = standouts.slice(0, HOME_BEST);
+  const hlVeg = standouts.filter(isVegetarian).slice(0, HOME_BEST);
+  const best = standouts.filter((i) => hlAll.includes(i) || hlVeg.includes(i));
+  const read = latest.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
+  const persim = PERSIMMON_SEASON ? items.filter((i) => isPersimmon(i) && isFuyu(i) && i.unit_price).sort(byPerLb) : [];
+  const persimStores = new Set(items.filter(isPersimmon).map((i) => i.store)).size;
+  const lastEnd = items.map((i) => i.valid_through).filter(Boolean).sort().pop();
+  const soonPool = items.filter((i) => i.valid_through).slice(0, 60);
+  const shops = [...new Set(items.map((i) => i.store))]
+    .map((id) => ({ s: cfg.storeById[id], n: items.filter((i) => i.store === id && i.a.tier === "standout").length, w: items.filter((i) => i.store === id).slice(0, 5).reduce((t, i) => t + i.a.score, 0) }))
+    .sort((a, b) => b.n - a.n || b.w - a.w).map((x) => x.s);
+
+  const body = `<div class="hero"><div class="wrap">
+  <h1>This week's deals</h1>
+  <p>${esc(fmtDate(latest.week, { weekday: false }))}${end ? ` to ${esc(fmtDate(end, { weekday: false }))}` : ""} &middot; ${plural(items.length, "deal")} from ${plural(read, "store")} &middot; New every Friday</p>
+</div></div>
+${controls({ stores: storesIn(items) })}
+<div class="wrap" data-filterable>
+${lastEnd ? `<p class="notice" data-expired-after="${lastEnd}" hidden>These sales have ended. New flyers come in on Friday, so check back then.</p>` : ""}
+<div data-home>
+<section class="block" aria-labelledby="h-best">
+  <div class="sec-h"><h2 id="h-best">Best this week</h2><p>${vegText(`${standouts.length} standouts`, `${standouts.filter(isVegetarian).length} vegetarian standouts`)}: big drops, low prices, or the cheapest in town</p></div>
+  <ul class="deals deals-2">${best.map((i) => dealRow(i, items.indexOf(i), { why: true }).replace('<li class="deal" ', `<li class="deal" data-hl="${(hlAll.includes(i) ? "a" : "") + (hlVeg.includes(i) ? "v" : "")}" `)).join("\n")}</ul>
+  <a class="go" href="${url("standouts/")}">See all ${vegText(`${standouts.length} standouts`, `${standouts.filter(isVegetarian).length} vegetarian standouts`)}</a>
+</section>
+${soonPool.length ? `<section class="block ending" data-ending hidden aria-labelledby="h-end">
+  <div class="sec-h"><h2 id="h-end">Ending soon</h2><p>Last chance, within the next two days</p></div>
+  <ul class="mini">${soonPool.map((i) => `<li data-ends="${i.valid_through}" data-veg="${isVegetarian(i) ? 1 : 0}" data-store="${esc(i.store)}" hidden><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span> <span class="mini-price">${esc(priceText(i))} <span class="ends-when" data-ends-label></span></span></li>`).join("")}</ul>
+</section>` : ""}
+${persim.length ? `<section class="story" aria-labelledby="h-story">
+  <p class="kicker">In season</p>
+  <h2 id="h-story">Persimmon season</h2>
+  <p>Fuyu persimmons are at their best now, and ${plural(persimStores, "store")} ${persimStores === 1 ? "has" : "have"} them on sale. The cheapest is ${esc(storeName(persim[0].store))} at ${esc(priceText(persim[0]))}. Eat them crisp like an apple, skin and all.</p>
+  <p><a href="${url("persimmons/")}">Where to buy persimmons this week</a></p>
+</section>` : ""}
+<section class="block" aria-labelledby="h-dep">
+  <div class="sec-h"><h2 id="h-dep">Shop by department</h2></div>
+  <ul class="tiles">${CATS.filter((c) => items.some((i) => i.category === c)).map((c) => deptTile(c, items)).join("\n")}</ul>
+</section>
+<section class="block" aria-labelledby="h-where">
+  <div class="sec-h"><h2 id="h-where">Where to shop</h2><p>Stores with the most standouts first</p></div>
+  <ul class="tiles">${shops.slice(0, HOME_STORES).map((s) => storeTile(s, items)).join("\n")}</ul>
+  <a class="go" href="${url("stores/")}">All stores, flyers and the map</a>
+</section>
+</div>
+<div data-results hidden>
+  ${countLine()}
+  ${grouped(items)}
+  ${emptyLine("Nothing matches. Try a shorter word or a store name.")}
+</div>
+</div>`;
+  write("", page({ title: "", path: "", body, wrap: false }));
+}
+
+// ---------- list pages ----------
+
+function listPage({ path, section, title, h1, sub, items, crumbsHtml = "", group = true, why = true, empty }) {
+  const body = `<div class="wrap">${crumbsHtml}${pageHead(h1, sub)}</div>
+${controls({ stores: storesIn(items), sort: true, searchLabel: "Find" })}
+<div class="wrap list" data-filterable>
+${countLine()}
+${group ? grouped(items, { why }) : `<ul class="deals" data-sortable>${items.map((i, n) => dealRow(i, n, { why })).join("\n")}</ul>`}
+${emptyLine(empty)}
+</div>`;
+  write(path, page({ title, path, section, body, wrap: false }));
+}
+
+function departmentPages() {
+  const items = analyzed.get(latest.week);
+  const cats = CATS.filter((c) => items.some((i) => i.category === c));
+  write("departments/", page({
+    title: "Departments", path: "departments/", body: `${pageHead("Departments", `Every deal for the week of ${esc(fmtDate(latest.week, { weekday: false }))}, by section of the store.`)}
+<ul class="tiles">${cats.map((c) => deptTile(c, items)).join("\n")}</ul>`,
+  }));
+  for (const c of cats) {
+    const list = items.filter((i) => i.category === c);
+    const veg = list.filter(isVegetarian).length;
+    listPage({
+      path: `departments/${c}/`, section: "departments/", title: CATEGORY_LABELS[c], h1: esc(CATEGORY_LABELS[c]), items: list, group: false,
+      crumbsHtml: crumbs(["departments/", "Departments"]),
+      sub: `${vegText(plural(list.length, "deal"), plural(veg, "vegetarian deal"))} this week, best first. Prices through each store's sale end date.`,
+      empty: veg ? "Nothing matches these filters." : "No vegetarian deals here this week. Turn off Vegetarian only to see them all.",
+    });
+  }
+}
+
+function standoutsPage() {
+  const items = analyzed.get(latest.week).filter((i) => i.a.tier === "standout");
+  listPage({
+    path: "standouts/", section: "", title: "All standouts", h1: "All standouts", items,
+    crumbsHtml: crumbs(["", "This week"]),
+    sub: "Big drops from the regular price, prices well under the US average, the lowest we've listed, or hand-picked. <a href=\"" + url("about/#how") + "\">How deals are chosen</a>",
+    empty: "No standouts match these filters.",
+  });
+}
+
+function comparePage() {
+  const items = analyzed.get(latest.week);
   const byKey = new Map();
   for (const i of items) {
     if (!i.item_key || !i.unit_price) continue;
@@ -190,196 +413,31 @@ function compareTable(items) {
     })
     .filter((g) => g.stores >= 2)
     .sort((a, b) => b.stores - a.stores || keyLabel(a.k).localeCompare(keyLabel(b.k)));
-  if (!groups.length) return `<p class="muted">No item is on sale at more than one store this week.</p>`;
-  return `<div class="compare">${groups.map((g) => `<details class="cmp-group" ${g.stores >= 3 ? "open" : ""}>
-  <summary><strong>${esc(keyLabel(g.k))}</strong> <span class="muted">${g.stores} stores, from ${esc(money(g.rows[0].v))}${PER_LABEL[g.per]}</span></summary>
-  <ul class="mini">${g.rows.map((r, n) => `<li ${attrs(r.i)}${n === 0 ? ' class="best"' : ""}><span>${esc(storeName(r.i.store))} <span class="muted">${esc(r.i.item)}</span></span> <span class="mini-price">${esc(money(r.v))}${PER_LABEL[g.per]}</span></li>`).join("")}</ul>
-</details>`).join("\n")}</div>`;
+  const body = `${pageHead("Compare stores", "The same item on sale at more than one store this week, cheapest first by price per unit.")}
+${groups.length ? `<nav class="jump" aria-label="Items">${groups.map((g) => `<a href="#${esc(g.k)}">${esc(keyLabel(g.k))}</a>`).join("")}</nav>
+${groups.map((g) => `<section class="block cmp" id="${esc(g.k)}" aria-labelledby="c-${esc(g.k)}">
+  <div class="sec-h"><h2 id="c-${esc(g.k)}">${esc(keyLabel(g.k))}</h2><p>${g.stores} stores, from ${esc(money(g.rows[0].v))}${PER_LABEL[g.per]}</p></div>
+  <div class="table-wrap"><table><thead><tr><th scope="col">Store</th><th scope="col">Item</th><th scope="col">Sale price</th><th scope="col">Per ${esc(PER_LABEL[g.per].replace(/^[/ ]/, ""))}</th></tr></thead>
+  <tbody>${g.rows.map((r, n) => `<tr${n === 0 ? ' class="best"' : ""}><td><a href="${url(`stores/${r.i.store}/`)}">${esc(storeName(r.i.store))}</a>${n === 0 ? ` <span class="chip">Cheapest</span>` : ""}</td><td>${esc(r.i.item)}</td><td class="num">${esc(priceText(r.i))}</td><td class="num">${esc(money(r.v))}${PER_LABEL[g.per]}</td></tr>`).join("")}</tbody></table></div>
+</section>`).join("\n")}` : `<p class="muted">No item is on sale at more than one store this week.</p>`}`;
+  write("compare/", page({ title: "Compare stores", path: "compare/", body }));
 }
 
-function filterBar(items) {
-  const stores = [...new Set(items.map((i) => i.store))];
-  const cats = cfg.criteria.categories.filter((c) => items.some((i) => i.category === c));
-  return `<div class="filters" data-filters>
-  <button type="button" class="veg-toggle" role="switch" aria-checked="false" data-veg-toggle><span class="switch" aria-hidden="true"></span>Vegetarian only</button>
-  <label>Store <select data-filter="store"><option value="">All stores</option>${stores.map((s) => `<option value="${esc(s)}">${esc(storeName(s))}</option>`).join("")}</select></label>
-  <label>Category <select data-filter="category"><option value="">All categories</option>${cats.map((c) => `<option value="${c}">${CATEGORY_LABELS[c]}</option>`).join("")}</select></label>
-  <label>Show <select data-filter="tier"><option value="">Everything on sale</option><option value="good">Good deals and up</option><option value="standout">Standouts only</option></select></label>
-  <label class="check"><input type="checkbox" data-filter="mine"> Only my stores</label>
-  <button type="button" class="linkish" data-mystores-open>Choose my stores</button>
-</div>`;
-}
-
-function allItems(items) {
-  const cats = cfg.criteria.categories.filter((c) => items.some((i) => i.category === c));
-  return `<p class="count" data-count aria-live="polite"></p>
-${cats.map((c) => {
-    const list = items.filter((i) => i.category === c);
-    return `<details class="cat" data-cat-section open>
-  <summary><h3>${esc(CATEGORY_LABELS[c])} <span class="muted" data-cat-count>${list.length}</span></h3></summary>
-  <ul class="rows">${list.map((i) => row(i)).join("\n")}</ul>
-</details>`;
-  }).join("\n")}
-<p class="empty" data-empty hidden>Nothing matches these filters.</p>`;
-}
-
-function myStoresDialog() {
-  const boxes = cfg.stores
-    .filter((s) => s.active && !s.no_online_flyer)
-    .map((s) => `<label class="check"><input type="checkbox" value="${esc(s.id)}" data-mystore> ${esc(s.name)}</label>`)
-    .join("");
-  return `<dialog data-mystores>
-  <form method="dialog">
-    <h2>My stores</h2>
-    <p class="muted">Saved in this browser only.</p>
-    <div class="grid">${boxes}</div>
-    <p><button value="done">Done</button></p>
-  </form>
-</dialog>`;
-}
-
-function weekBody(week, { current }) {
-  const items = analyzed.get(week.week);
-  // Highlights for everyone, plus the best vegetarian ones, so the section
-  // stays full when "Vegetarian only" is on. data-hl says which list a card is in.
-  const standouts = items.filter((i) => i.a.tier === "standout");
-  const hlAll = standouts.slice(0, H.highlights);
-  const hlVeg = standouts.filter(isVegetarian).slice(0, H.highlights);
-  const highlights = standouts.filter((i) => hlAll.includes(i) || hlVeg.includes(i))
-    .map((i) => [i, (hlAll.includes(i) ? "a" : "") + (hlVeg.includes(i) ? "v" : "")]);
-  const counts = { standout: 0, good: 0, sale: 0 };
-  for (const i of items) counts[i.a.tier]++;
-  const read = week.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
-  const notice = current ? "" : `<p class="notice">This is a past week. These prices have ended, and flyer links may now show a newer flyer.</p>`;
-  if (!items.length) {
-    return `${notice}<p>No sale items were recorded this week.</p>
-<section id="flyers"><h2>Flyers</h2>${flyerList(week)}</section>`;
-  }
-  const ends = items.map((i) => i.valid_through).filter(Boolean).sort();
-  const lastEnd = ends[ends.length - 1];
-  const fresh = current && lastEnd
-    ? `<p class="notice" data-expired-after="${lastEnd}" hidden>These sales have ended. New flyers come in on Friday, so check back then.</p>`
-    : "";
-  const soonPool = current ? items.filter((i) => i.valid_through).slice(0, 60) : [];
-  const soon = soonPool.length
-    ? `<section id="ending" class="ending" aria-labelledby="h-end" data-ending hidden>
-  <h2 id="h-end">Ending soon</h2>
-  <p class="sub">Last chance on these, within the next two days.</p>
-  <ul class="mini ending-list">${soonPool.map((i) => `<li data-ends="${i.valid_through}" ${attrs(i)} hidden><span>${esc(i.item)} <a class="muted" href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span> <span class="mini-price">${esc(priceText(i))} <span class="ends-when" data-ends-label></span></span></li>`).join("")}</ul>
-</section>`
-    : "";
-  return `${notice}${fresh}
-<p class="summary">${items.length} items on sale across ${read} flyer${read === 1 ? "" : "s"}: <strong>${counts.standout} standouts</strong>, ${counts.good} good deals.</p>
-<nav class="jump" aria-label="On this page"><a href="#highlights">Highlights</a><a href="#where">Where to shop</a><a href="#categories">By category</a><a href="#compare">Compare stores</a><a href="#all">All items</a><a href="#flyers">Flyers</a></nav>
-${filterBar(items)}
-${soon}
-<section id="highlights" aria-labelledby="h-high">
-  <h2 id="h-high">Highlights</h2>
-  <p class="sub">The strongest sales this week, from big discounts, prices well under the US average, and the lowest prices we've listed.</p>
-  <ol class="cards" data-filterable>${highlights.map(([i, hl]) => card(i).replace("<li ", `<li data-hl="${hl}" `)).join("\n")}</ol>
-</section>
-<section id="where" aria-labelledby="h-where">
-  <h2 id="h-where">Where to shop</h2>
-  <p class="sub">Stores with the most worth buying come first.</p>
-  ${whereToShop(week, items)}
-</section>
-<section id="categories" aria-labelledby="h-cat">
-  <h2 id="h-cat">Best by category</h2>
-  ${bestByCategory(items)}
-</section>
-<section id="compare" aria-labelledby="h-cmp">
-  <h2 id="h-cmp">Compare stores</h2>
-  <p class="sub">The same item on sale at more than one store, cheapest first, by price per unit.</p>
-  ${compareTable(items)}
-</section>
-<section id="all" aria-labelledby="h-all">
-  <h2 id="h-all">All items on sale</h2>
-  <p class="sub"><span class="dot" aria-hidden="true"></span> standout <span class="dot dot-good" aria-hidden="true"></span> good deal. Within each category, the strongest come first.</p>
-  <div data-filterable>${allItems(items)}</div>
-</section>
-<section id="flyers" aria-labelledby="h-fly">
-  <h2 id="h-fly">${current ? "This week's flyers" : "Flyers that week"}</h2>
-  ${flyerList(week)}
-</section>
-${myStoresDialog()}`;
-}
-
-function page({ title, path, body, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "", ogTitle = null }) {
-  const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
-  const nav = [["", "This week"], ["stores/", "Stores and map"], ["about/", "About"], ...(PERSIMMON_SEASON ? [["persimmons/", "Persimmons"]] : [])]
-    .map(([p, label]) => p === "persimmons/"
-      ? `<a class="nav-persim" href="${url(p)}" aria-label="Persimmons" title="Persimmons"${p === path ? ' aria-current="page"' : ""}>${PERSIMMON_SVG}</a>`
-      : `<a href="${url(p)}"${p === path ? ' aria-current="page"' : ""}>${label}</a>`)
-    .join("");
-  return `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">${GA_TAG}
-<title>${esc(full)}</title>
-<meta name="description" content="${esc(description ?? cfg.site.tagline)}">
-<meta property="og:site_name" content="${esc(cfg.site.title)}">
-<meta property="og:type" content="website">
-<meta property="og:title" content="${esc(ogTitle || title || cfg.site.title)}">
-<meta property="og:description" content="${esc(description ?? cfg.site.tagline)}">
-<meta property="og:url" content="${esc(cfg.site.origin + cfg.site.base_path + path)}">${image ? `
-<meta property="og:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(imageAlt)}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">` : `
-<meta name="twitter:card" content="summary">`}
-<link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
-<link rel="preload" href="${url("assets/fonts/bricolage-grotesque.woff2")}" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="${asset("assets/style.css")}">
-<script src="${asset("assets/app.js")}" defer></script>${extraScript ? `
-<script src="${asset(extraScript)}" defer></script>` : ""}${map ? `
-<link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
-<script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
-<script src="${asset("assets/map.js")}" defer></script>` : ""}
-</head>
-<body${bodyClass ? ` class="${bodyClass}"` : ""}>
-<a class="skip" href="#main">Skip to content</a>
-<header class="masthead">
-  <div class="masthead-inner">
-    <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span><small>Seattle</small></a>
-    <nav>${nav}</nav>
-  </div>
-</header>
-<main id="main" tabindex="-1">
-${body}
-</main>
-<footer class="site">
-  <p>Prices come from store flyers and can change. Check in store. Not affiliated with any store.</p>
-  <p><a href="${url("weeks/")}">Past weeks</a> <span aria-hidden="true">&middot;</span> <a href="${url("about/")}">How deals are highlighted</a> <span aria-hidden="true">&middot;</span> <a href="${esc(cfg.site.repo_url)}">Source</a></p>
-</footer>
-</body>
-</html>
-`;
-}
-
-function write(path, html) {
-  const dir = join(DIST, path);
-  mkdirSync(dir, { recursive: true });
-  writeFileSync(join(dir, "index.html"), html);
-}
-
-// ---------- pages ----------
-
-function homePage() {
-  const body = `<h1>Grocery sales, week of ${esc(fmtDate(latest.week, { year: true }))}</h1>
-<p class="lede">${esc(cfg.site.tagline)}</p>
-${weekBody(latest, { current: true })}`;
-  write("", page({ title: "", path: "", body }));
-}
+// ---------- past weeks ----------
 
 function weekPages() {
   for (const w of weeks) {
-    const body = `<p class="crumb"><a href="${url("weeks/")}">Past weeks</a></p>
-<h1>Week of ${esc(fmtDate(w.week, { year: true }))}</h1>
-${weekBody(w, { current: w === latest })}`;
-    write(`weeks/${w.week}/`, page({ title: `Week of ${fmtDate(w.week, { weekday: false, year: true })}`, path: "weeks/", body }));
+    const items = analyzed.get(w.week);
+    const current = w === latest;
+    const body = `<div class="wrap">${crumbs(["weeks/", "Past weeks"])}${pageHead(`Week of ${esc(fmtDate(w.week, { year: true }))}`, current ? `This is the current week. <a href="${url()}">See it on the home page</a>.` : "These prices have ended, and flyer links may now show a newer flyer.")}</div>
+${items.length ? `${controls({ stores: storesIn(items), sort: true })}
+<div class="wrap list" data-filterable>
+${countLine()}
+${grouped(items, { ends: false })}
+${emptyLine("Nothing matches these filters.")}
+</div>` : `<div class="wrap"><p>No sale items were recorded this week.</p></div>`}
+<div class="wrap"><section class="block" aria-labelledby="h-fly"><div class="sec-h"><h2 id="h-fly">Flyers that week</h2></div>${flyerList(w)}</section></div>`;
+    write(`weeks/${w.week}/`, page({ title: `Week of ${fmtDate(w.week, { weekday: false, year: true })}`, path: `weeks/${w.week}/`, section: "", body, wrap: false }));
   }
   const rows = [...weeks].reverse().map((w) => {
     const items = analyzed.get(w.week);
@@ -389,7 +447,7 @@ ${weekBody(w, { current: w === latest })}`;
   <span class="muted">${items.length} items, ${stand.length} standouts, ${read} flyers read</span>
   ${stand.length ? `<div class="small">Top: ${stand.slice(0, 3).map((i) => `${esc(i.item)} at ${esc(storeName(i.store))}`).join("; ")}</div>` : ""}</li>`;
   });
-  write("weeks/", page({ title: "Past weeks", path: "weeks/", body: `<h1>Past weeks</h1>\n<ul class="weeks">${rows.join("\n")}</ul>` }));
+  write("weeks/", page({ title: "Past weeks", path: "weeks/", section: "", body: `${pageHead("Past weeks", "Every week since the site started.")}\n<ul class="weeks">${rows.join("\n")}</ul>` }));
 }
 
 function mapData(stores, items) {
@@ -412,40 +470,38 @@ const MAP_LEGEND = `<p class="legend">
   <span><span class="pin pin-none"></span> No online flyer</span>
 </p>`;
 
-function storeCard(s, items) {
-  const f = latest.flyers.find((x) => x.store === s.id);
-  const mine = items.filter((i) => i.store === s.id);
-  const stand = mine.filter((i) => i.a.tier === "standout").length;
-  const where = s.locations.length ? `${s.locations.length} location${s.locations.length > 1 ? "s" : ""}` : "Home delivery";
-  const status = s.no_online_flyer ? "No online flyer" : f ? `${STATUS_LABELS[f.status]} this week` : "Not checked this week";
-  return `<li class="info-card" data-store="${esc(s.id)}">
-  <h3><a href="${url(`stores/${s.id}/`)}">${esc(s.name)}</a></h3>
-  <p>${esc(s.about)}</p>
-  <p class="meta">${esc(status)}${mine.length ? ` <span aria-hidden="true">&middot;</span> ${mine.length} on sale${stand ? `, <strong>${stand} standout${stand > 1 ? "s" : ""}</strong>` : ""}` : ""} <span aria-hidden="true">&middot;</span> ${esc(where)}</p>
-  <p class="card-links">${s.locations.length ? `<a href="#store-map" data-map-focus="${esc(s.id)}">Show on map</a>` : ""}${!s.no_online_flyer && s.flyer_url ? ` <a href="${esc(s.flyer_url)}" rel="noopener">Flyer</a>` : ""}</p>
-</li>`;
-}
+// ---------- stores ----------
 
 function storePages() {
   const items = analyzed.get(latest.week);
   const active = cfg.stores.filter((s) => s.active);
-  const tracked = active.filter((s) => !s.no_online_flyer);
+  const tracked = active.filter((s) => !s.no_online_flyer)
+    .map((s) => ({ s, n: items.filter((i) => i.store === s.id && i.a.tier === "standout").length, c: items.filter((i) => i.store === s.id).length }))
+    .sort((a, b) => b.n - a.n || b.c - a.c).map((x) => x.s);
   const others = active.filter((s) => s.no_online_flyer);
   const toggles = active.filter((s) => s.locations.length)
     .map((s) => `<label class="check"><input type="checkbox" value="${esc(s.id)}" data-map-store checked> ${esc(s.name)}</label>`).join("");
   write("stores/", page({
     title: "Stores and map", path: "stores/", map: true,
-    body: `<h1>Stores and map</h1>
-<p class="lede">Every store we follow, where it is, and what it's good for. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.</p>
-<div id="store-map" class="map" role="region" aria-label="Map of store locations"></div>
-${MAP_LEGEND}
-<details class="map-toggles"><summary>Show or hide stores on the map</summary><div class="grid">${toggles}</div></details>
-${mapData(active, items)}
-<h2>Stores we track</h2>
-<ul class="info-grid">${tracked.map((s) => storeCard(s, items)).join("\n")}</ul>
-${others.length ? `<h2>Other markets worth knowing</h2>
-<p class="sub">Good local markets with no online flyer, so their prices are not tracked.</p>
-<ul class="info-grid">${others.map((s) => storeCard(s, items)).join("\n")}</ul>` : ""}
+    body: `${pageHead("Stores", "The Asian markets, seafood shops and co-ops we read every Friday, with the most standouts first. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.")}
+<div class="tools"><button type="button" class="switch" role="switch" aria-checked="false" data-deliv-toggle><span class="track" aria-hidden="true"></span>Only stores that deliver</button></div>
+<ul class="tiles" data-store-tiles>${tracked.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
+<p class="empty" data-deliv-empty hidden>No stores match.</p>
+<section class="block" aria-labelledby="h-map">
+  <div class="sec-h"><h2 id="h-map">Map</h2></div>
+  <div id="store-map" class="map" role="region" aria-label="Map of store locations"></div>
+  ${MAP_LEGEND}
+  <details class="map-toggles"><summary>Show or hide stores on the map</summary><div class="grid">${toggles}</div></details>
+  ${mapData(active, items)}
+</section>
+${others.length ? `<section class="block" aria-labelledby="h-other">
+  <div class="sec-h"><h2 id="h-other">Other markets worth knowing</h2><p>Good local markets with no online flyer, so their prices are not tracked</p></div>
+  <ul class="tiles">${others.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
+</section>` : ""}
+<section class="block" aria-labelledby="h-fly">
+  <div class="sec-h"><h2 id="h-fly">This week's flyers</h2></div>
+  ${flyerList(latest)}
+</section>
 <p><a href="${esc(cfg.site.suggest_store_url)}">Suggest a store</a></p>`,
   }));
 
@@ -453,13 +509,24 @@ ${others.length ? `<h2>Other markets worth knowing</h2>
     const period = s.sale_period.starts === "varies" ? "Varies" : `${DAY_LABELS[s.sale_period.starts]} to ${DAY_LABELS[s.sale_period.ends]}`;
     const f = latest.flyers.find((x) => x.store === s.id);
     const mine = items.filter((i) => i.store === s.id);
+    const vegN = mine.filter(isVegetarian).length;
     const history = [...weeks].slice(0, -1).reverse().flatMap((w) =>
       analyzed.get(w.week).filter((i) => i.store === s.id && i.a.tier !== "sale").map((i) => ({ week: w.week, i })),
     );
-    const thisWeek = f
-      ? `<p><span class="status-pill status-${f.status}">${STATUS_LABELS[f.status]}</span> ${datesText(f)}</p>
-<p class="links">${flyerLinks(f, s)}</p>${f.note ? `<p class="note">${esc(f.note)}</p>` : ""}`
-      : `<p class="muted">Not checked this week.</p>${s.flyer_url ? `<p><a href="${esc(s.flyer_url)}" rel="noopener">Store flyer page</a></p>` : ""}`;
+    const towns = [...new Set(s.locations.map((l) => l.address.split(",").pop().trim().replace(/\s+WA.*$/, "")))];
+    const adUrl = s.flyer_url ?? f?.links?.[0]?.url ?? null;
+    const sub = [
+      towns.length ? esc(towns.join(" · ")) : s.locations.length ? "" : "Home delivery",
+      f && (f.status === "full" || f.status === "partial") && f.valid_from ? `Sale runs ${esc(fmtDate(f.valid_from))} to ${esc(fmtDate(f.valid_through))}` : "",
+    ].filter(Boolean).join(" &middot; ");
+    const actions = `<div class="actions">
+  ${adUrl && !s.no_online_flyer ? `<a class="btn btn-primary" href="${esc(adUrl)}" rel="noopener">See ${esc(s.name)}'s weekly ad ${ext}</a>` : ""}
+  ${mine.length ? `<a class="btn" href="#deals">This week's ${vegText(plural(mine.length, "deal"), plural(vegN, "vegetarian deal"))} here</a>` : ""}
+  ${s.website ? `<a class="btn" href="${esc(s.website)}" rel="noopener">Store website ${ext}</a>` : ""}
+</div>`;
+    const flyerNote = !s.no_online_flyer && f && f.status !== "full"
+      ? `<div class="note-card"><b>${STATUS_LABELS[f.status]} this week</b>${f.note ? `<span>${esc(f.note)}</span>` : ""}${f.links.length ? `<span class="links">${flyerLinks(f, s)}</span>` : ""}</div>`
+      : !s.no_online_flyer && !f ? `<div class="note-card"><b>Not checked this week</b></div>` : "";
     const histRows = history.map(({ week, i }) => `<tr>
   <td><a href="${url(`weeks/${week}/`)}">${esc(fmtDate(week, { weekday: false }))}</a></td>
   <td>${esc(i.item)}</td>
@@ -467,7 +534,7 @@ ${others.length ? `<h2>Other markets worth knowing</h2>
   <td>${esc(TIER_LABELS[i.a.tier])}</td>
 </tr>`);
     const locs = s.locations.length
-      ? `<ul class="locations">${s.locations.map((l) => `<li><strong>${esc(l.label)}</strong> <span class="muted">${esc(l.address)}</span>${s.no_online_flyer ? "" : l.flyer ? ` <span class="tag">Flyer tracked here</span>` : ` <span class="tag tag-member">Prices may differ</span>`}</li>`).join("")}</ul>`
+      ? `<ul class="locations">${s.locations.map((l) => `<li><strong>${esc(l.label)}</strong> <span class="muted">${esc(l.address)}</span>${s.no_online_flyer ? "" : l.flyer ? ` <span class="chip">Flyer tracked here</span>` : ` <span class="chip chip-quiet">Prices may differ</span>`}</li>`).join("")}</ul>`
       : `<p class="muted">Home delivery only, no store to visit.</p>`;
     const facts = s.no_online_flyer
       ? `<dl class="facts">${s.website ? `<dt>Website</dt><dd><a href="${esc(s.website)}" rel="noopener">${esc(s.website.replace(/^https:\/\/(www\.)?/, ""))}</a></dd>` : ""}<dt>Flyer</dt><dd>${esc(s.flyer_url_note)}</dd></dl>`
@@ -477,21 +544,37 @@ ${others.length ? `<h2>Other markets worth knowing</h2>
   <dt>Format</dt><dd>${FORMAT_LABELS[s.flyer_format]}</dd>
   <dt>Regular prices</dt><dd>${s.prints_regular_prices ? "Printed" : "Not printed, so staples are compared to US averages"}</dd>
   <dt>Flyer used</dt><dd>${esc(s.representative_location)}</dd>
-  ${s.website ? `<dt>Website</dt><dd><a href="${esc(s.website)}" rel="noopener">${esc(s.website.replace(/^https:\/\/(www\.)?/, ""))}</a></dd>` : ""}
 </dl>`;
-    const body = `<p class="crumb"><a href="${url("stores/")}">Stores and map</a></p>
-<h1>${esc(s.name)}</h1>
+    const body = `<div class="wrap">
+${crumbs(["stores/", "Stores"])}
+${pageHead(esc(s.name), sub, actions)}
 <p class="lede">${esc(s.about)}</p>
-${s.locations.length ? `<div id="store-map" class="map map-small" role="region" aria-label="Map of ${esc(s.name)} locations"></div>${mapData([s], items)}` : ""}
-<h2>Locations</h2>
-${locs}
-${facts}
-${s.no_online_flyer ? "" : `<h2>This week (${esc(fmtDate(latest.week, { weekday: false }))})</h2>
-${thisWeek}
-${mine.length ? `<ul class="rows">${mine.map((i) => row(i, { showStore: false })).join("\n")}</ul>` : ""}
-<h2>Good deals in past weeks</h2>
-${histRows.length ? `<div class="table-wrap"><table><thead><tr><th>Week</th><th>Item</th><th>Price</th><th>Deal</th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}`}`;
-    write(`stores/${s.id}/`, page({ title: s.name, path: "stores/", body, map: s.locations.length > 0 }));
+${s.delivery ? `<div class="note-card"><b>Delivery</b><span>${esc(s.delivery)}</span></div>` : ""}
+${flyerNote}
+${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals at ${esc(s.name)} this week</h2><p>${vegText(plural(mine.length, "deal"), plural(vegN, "vegetarian deal"))}, ${plural(mine.filter((i) => i.a.tier === "standout").length, "standout")}</p></div>` : ""}
+</div>
+${mine.length ? `${controls({ store: false, sort: true })}
+<div class="wrap list" data-filterable>
+${countLine()}
+${grouped(mine, { store: false })}
+${emptyLine(vegN ? "Nothing matches these filters." : "No vegetarian deals here this week. Turn off Vegetarian only to see them all.")}
+</div>` : ""}
+<div class="wrap">
+<section class="block" aria-labelledby="h-loc">
+  <div class="sec-h"><h2 id="h-loc">Locations</h2></div>
+  ${s.locations.length ? `<div id="store-map" class="map map-small" role="region" aria-label="Map of ${esc(s.name)} locations"></div>${mapData([s], items)}` : ""}
+  ${locs}
+</section>
+<section class="block" aria-labelledby="h-facts">
+  <div class="sec-h"><h2 id="h-facts">About the flyer</h2></div>
+  ${facts}
+</section>
+${s.no_online_flyer ? "" : `<section class="block" aria-labelledby="h-past">
+  <div class="sec-h"><h2 id="h-past">Good deals in past weeks</h2></div>
+  ${histRows.length ? `<div class="table-wrap"><table><thead><tr><th scope="col">Week</th><th scope="col">Item</th><th scope="col">Price</th><th scope="col">Deal</th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}
+</section>`}
+</div>`;
+    write(`stores/${s.id}/`, page({ title: s.name, path: `stores/${s.id}/`, section: "stores/", body, wrap: false, map: s.locations.length > 0 }));
   }
 }
 
@@ -589,18 +672,20 @@ function aboutPage() {
 <p>Every sale item that could be read from each flyer. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
 <h2 id="vegetarian">Vegetarian only</h2>
 <p>The "Vegetarian only" switch hides meat, poultry and seafood, and anything made with them, such as fish sauce, broth or pork dumplings. Dairy and eggs stay. It works from each item's category and name, so when a name doesn't make it clear, as with many dumplings and frozen meals, the item is hidden to be safe. It doesn't check for other animal ingredients, like gelatin in a pudding or lard in a pastry, unless the name says so. Check the label if it matters to you.</p>
-<h2>How deals are highlighted</h2>
-<p><span class="dot"></span> <strong>Standouts</strong> are any of these:</p>
+<h2 id="how">How deals are highlighted</h2>
+<p><span class="lbl">Standout</span> deals are any of these:</p>
 <ul>
   <li>At least ${c.standout.min_percent_off_priority}% off a printed regular price for produce, meat, seafood and staples, or ${c.standout.min_percent_off_other}% off for anything else.</li>
   <li>A staple priced at ${Math.round(c.standout.max_us_average_ratio * 100)}% or less of the US average price from the <a href="${esc(cfg.benchmarksFile.source_url)}">Bureau of Labor Statistics</a>. These are national averages, not Seattle prices, so the comparison is approximate.</li>
   <li>Lower than any price this site has listed before for the same item.</li>
   <li>Hand-picked, with a short note on why.</li>
 </ul>
-<p><span class="dot dot-good"></span> <strong>Good deals</strong> are at least ${c.good.min_percent_off}% off, under ${Math.round(c.good.max_us_average_ratio * 100)}% of the US average, matching the lowest price we've listed, or the cheapest of several stores this week.</p>
+<p><span class="lbl lbl-good">Good deal</span> means at least ${c.good.min_percent_off}% off, under ${Math.round(c.good.max_us_average_ratio * 100)}% of the US average, matching the lowest price we've listed, or the cheapest of several stores this week.</p>
 <p>Everything else is still on sale and still listed. Many stores print no regular price, so an unmarked item can still be a good buy.</p>
 <h2>Where to shop and comparing stores</h2>
-<p>"Where to shop" ranks stores by how many standouts and good deals they have this week. "Compare stores" puts the same item side by side when it's on sale at more than one store, by price per unit.</p>
+<p>"Where to shop" and the Stores page rank stores by how many standouts they have this week. "Compare" puts the same item side by side when it's on sale at more than one store, by price per unit.</p>
+<h2>Delivery</h2>
+<p>Stores marked "Delivers" deliver groceries themselves. Delivery areas, minimums and fees vary, so check with the store.</p>
 <h2>Flyers</h2>
 <p>Each store is tracked by one general Seattle-area flyer, not by location. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and does not copy them.</p>
 <h2>Check in store</h2>
@@ -612,7 +697,7 @@ function aboutPage() {
 <h2>Privacy</h2>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold.</p>
 <p>The site uses Google Analytics to count visits and see which pages are used. Google Analytics sets cookies and receives your IP address and basic details about your browser and device. Google's own use of that data is described in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites that use its services</a>. To opt out, use a content blocker or <a href="https://tools.google.com/dlpage/gaoptout">Google's opt-out add-on</a>.</p>
-<p>Your "my stores" and "Vegetarian only" choices are saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Google Analytics and the map tiles, everything, fonts included, is served from this site.</p>
+<p>Your "Vegetarian only" choice is saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Google Analytics and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
 }
@@ -635,6 +720,9 @@ mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "site", "assets"), join(DIST, "assets"), { recursive: true });
 writeFileSync(join(DIST, ".nojekyll"), "");
 homePage();
+standoutsPage();
+departmentPages();
+comparePage();
 weekPages();
 storePages();
 aboutPage();
