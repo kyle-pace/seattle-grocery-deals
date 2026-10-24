@@ -2,7 +2,17 @@
 
 Adding a store is a config change. No code changes.
 
-## 1. Check the flyer first
+## 1. Check that it fits
+
+The site covers the stores the big chains' apps skip. A store fits when it:
+
+1. publishes a weekly flyer or specials page online;
+2. is not a mainstream supermarket, discount or big-box chain (Safeway, QFC, Fred Meyer, Albertsons, Haggen, Costco, Walmart, Target, Grocery Outlet, Sprouts and the like); and
+3. sells something that's hard to find at those chains: a cuisine, a specialty such as seafood, or co-op produce.
+
+Size alone does not rule a store out. T&T and H Mart are large chains, but they are specialty grocers. The About page says the same thing, so keep the two in step.
+
+## 2. Check the flyer
 
 The store needs a public weekly flyer or specials page that can be read without an account. Note:
 - the flyer URL, and whether it changes each week;
@@ -11,7 +21,7 @@ The store needs a public weekly flyer or specials page that can be read without 
 - whether it prints regular prices (or exact savings amounts);
 - whether it varies by location. If it does, pick one representative Seattle-area store and use it every week.
 
-## 2. Add an entry to `config/stores.json`
+## 3. Add an entry to `config/stores.json`
 
 ```json
 {
@@ -47,11 +57,11 @@ The store needs a public weekly flyer or specials page that can be read without 
 | `representative_location` | Which store's flyer is used, if it varies. |
 | `how_to_read` | Short instructions for the weekly routine. Include any quirks. |
 
-## 3. Add it to the weekly routine
+## 4. The weekly routine
 
-The scheduled routine that writes the All Items note needs to read the new store. Add the store, its flyer URL and its reading notes to the routine's instructions, so its items show up in the note from `tracked_since` on.
+Nothing to change. The Friday routine ([ROUTINE.md](ROUTINE.md)) reads every active store in `config/stores.json` using its `how_to_read` notes, from `tracked_since` on. Write those notes so someone who has never seen the site could follow them.
 
-## 4. Check
+## 5. Check
 
 ```
 npm run check

@@ -65,10 +65,6 @@
         "Flyer images on the weekly specials page, with a printed \"Prices Valid\" date range.",
         "Most items print a regular price or an exact \"save $X\" amount. \"Save up to\" amounts are not exact and do not count as a printed regular price."
       ],
-      "flipp": {
-        "merchant": "Uwajimaya",
-        "postal_code": "98104"
-      },
       "about": "A Pacific Northwest Asian supermarket founded in 1928, best known for Japanese groceries, a seafood counter and a food hall.",
       "locations": [
         {
@@ -327,10 +323,6 @@
         "Read the ad in sections, not one screenshot, so nothing is missed.",
         "Printed \"Prices effective\" date range at the top."
       ],
-      "flipp": {
-        "merchant": "Metropolitan Market",
-        "postal_code": "98104"
-      },
       "about": "A Seattle-area specialty grocery known for prepared foods, wine, and premium meat and produce.",
       "locations": [
         {
@@ -588,10 +580,6 @@
         "The ad is a per-store Flipp catalogue viewer that needs a store selected. Use the same Seattle store every week.",
         "\"Compare at\" prices are other retailers' prices, not Grocery Outlet's own regular price, so they do not count as a printed regular price."
       ],
-      "flipp": {
-        "merchant": "Grocery Outlet",
-        "postal_code": "98104"
-      },
       "about": "A discount grocery chain selling overstock and closeout brand-name food at low prices. Stock changes constantly, and deals vary by store.",
       "locations": [
         {
@@ -774,10 +762,6 @@
         "Open the newest \"Weekly Ad\" post on the blog page. The ad is an image, with a PDF version further down the post.",
         "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are."
       ],
-      "flipp": {
-        "merchant": "Viet Wah Supermarket",
-        "postal_code": "98104"
-      },
       "about": "A Vietnamese and pan-Asian supermarket. Its original Chinatown–International District store closed in 2022; today's store is in Renton.",
       "locations": [
         {

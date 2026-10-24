@@ -569,7 +569,15 @@ ${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">The best
 function aboutPage() {
   const c = cfg.criteria;
   const body = `<h1>About</h1>
-<p>Every Friday this site lists what's on sale in Seattle-area grocery flyers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
+<p>Every Friday this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
+<h2>Which stores</h2>
+<p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
+<p>A store is included when it:</p>
+<ul>
+  <li>publishes a weekly flyer or specials page online;</li>
+  <li>is not a mainstream supermarket, discount or big-box chain; and</li>
+  <li>sells something that's hard to find at those chains, such as a cuisine, a specialty like seafood, or co-op produce.</li>
+</ul>
 <h2>What's listed</h2>
 <p>Every sale item that could be read from each flyer. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
 <h2>How deals are highlighted</h2>
@@ -587,11 +595,15 @@ function aboutPage() {
 <h2>Flyers</h2>
 <p>Each store is tracked by one general Seattle-area flyer, not by location. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and does not copy them.</p>
 <h2>Check in store</h2>
-<p>Prices come from store flyers and can change, sell out, or differ by location. Check in store before you rely on a price. This site is not affiliated with any store.</p>
+<p>Prices come from store flyers and can change, sell out, or differ by location. Check in store before you rely on a price. This site is not affiliated with any store, and store names belong to their owners.</p>
 <h2>Suggest a store</h2>
-<p>Know a Seattle-area store with a public weekly flyer? <a href="${esc(cfg.site.suggest_store_url)}">Open a suggestion on GitHub</a> (needs a free GitHub account).</p>
+<p>Know a Seattle-area store that fits and has a public weekly flyer? <a href="${esc(cfg.site.suggest_store_url)}">Open a suggestion on GitHub</a> (needs a free GitHub account).</p>
+<h2>For stores</h2>
+<p>If you run a store listed here and want a price corrected or the store removed, <a href="${esc(cfg.site.repo_url)}/issues/new?title=Store+request">open a request on GitHub</a>. Requests are handled within a week.</p>
 <h2>Privacy</h2>
-<p>No accounts, analytics or tracking. Your "my stores" choice is saved only in your browser. The store map loads its map tiles from OpenStreetMap.</p>
+<p>There are no accounts, ads or sign-ups, and nothing you do here is sold.</p>
+<p>The site uses Google Analytics to count visits and see which pages are used. Google Analytics sets cookies and receives your IP address and basic details about your browser and device. Google's own use of that data is described in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites that use its services</a>. To opt out, use a content blocker or <a href="https://tools.google.com/dlpage/gaoptout">Google's opt-out add-on</a>.</p>
+<p>Your "my stores" choice is saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Google Analytics and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
 }
