@@ -10,7 +10,7 @@ Live site: https://seattlegrocery.deals/
 - `config/criteria.json`: how items are highlighted and ranked.
 - `config/items.json`: normalized item keys, so prices can be compared across weeks and stores.
 - `config/benchmarks.json`: US average prices from the Bureau of Labor Statistics.
-- `config/site.json`: site title, paths, and the Google Analytics measurement ID (`ga_measurement_id`). The tag is added only to the deployed build, not local previews; remove the ID to turn analytics off.
+- `config/site.json`: site title, paths, and the Amplitude API key (`amplitude_api_key`, public by design). `client/analytics.js` initializes Amplitude (analytics with autocapture, and Session Replay); `scripts/build.mjs` bundles it with esbuild into `dist/assets/analytics.js`. Remove the key to turn analytics off.
 - `data/weeks/YYYY-MM-DD.json`: one file per week, named by that Friday's date.
 - `schema/week.schema.json`: the JSON Schema for a week file.
 - `scripts/validate.mjs`: schema plus cross checks (unit prices, percent off, printed prices only, no em dashes).

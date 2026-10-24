@@ -3,6 +3,7 @@
 import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
+import { buildSync } from "esbuild";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
   unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian,
@@ -10,16 +11,9 @@ import {
 
 const cfg = loadConfig();
 const BASE = process.env.BASE_PATH ?? cfg.site.base_path;
-// Google Analytics loads only in the deployed build, so local previews (BASE_PATH=/) are not counted.
-const GA_ID = BASE === cfg.site.base_path ? cfg.site.ga_measurement_id : null;
-const GA_TAG = GA_ID ? `
-<script async src="https://www.googletagmanager.com/gtag/js?id=${esc(GA_ID)}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '${esc(GA_ID)}');
-</script>` : "";
+// Amplitude (analytics and Session Replay) is bundled from client/analytics.js at build time.
+const AMPLITUDE_KEY = cfg.site.amplitude_api_key ?? "";
+let ANALYTICS_SRC = "";
 const DIST = join(ROOT, "dist");
 const weeks = loadWeeks().map((w) => w.data); // oldest first
 if (!weeks.length) throw new Error("No week files in data/weeks");
@@ -222,7 +216,7 @@ const ICONS = {
 const MAIN_NAV = [["", "This week"], ["departments/", "Departments"], ["stores/", "Stores"], ["compare/", "Compare"]];
 
 // section: which menu item this page belongs to ("" is This week).
-function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", image = null, imageAlt = "", ogTitle = null }) {
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
   const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}</a>`).join("")
@@ -232,7 +226,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">${GA_TAG}
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(full)}</title>
 <meta name="description" content="${esc(description ?? cfg.site.tagline)}">
 <meta property="og:site_name" content="${esc(cfg.site.title)}">
@@ -253,13 +247,14 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <link rel="preload" href="${url("assets/fonts/barlow-condensed-700.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset("assets/style.css")}">
 <script>try{if(JSON.parse(localStorage.getItem("sgd.vegOnly")))document.documentElement.classList.add("veg-on")}catch(e){}</script>
-<script src="${asset("assets/app.js")}" defer></script>${extraScript ? `
+<script src="${asset("assets/app.js")}" defer></script>
+<script src="${ANALYTICS_SRC}" defer></script>${extraScript ? `
 <script src="${asset(extraScript)}" defer></script>` : ""}${map ? `
 <link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
 <script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
 <script src="${asset("assets/map.js")}" defer></script>` : ""}
 </head>
-<body${bodyClass ? ` class="${bodyClass}"` : ""}>
+<body${bodyClass ? ` class="${bodyClass}"` : ""}${pageId ? ` data-page="${pageId}"` : ""}>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
   <div class="wrap head-in">
@@ -350,7 +345,7 @@ ${persim.length ? `<section class="story" aria-labelledby="h-story">
   ${emptyLine("Nothing matches. Try a shorter word or a store name.")}
 </div>
 </div>`;
-  write("", page({ title: "", path: "", body, wrap: false }));
+  write("", page({ title: "", path: "", body, wrap: false, pageId: "home" }));
 }
 
 // ---------- list pages ----------
@@ -696,8 +691,8 @@ function aboutPage() {
 <p>If you run a store listed here and want a price corrected or the store removed, <a href="${esc(cfg.site.repo_url)}/issues/new?title=Store+request">open a request on GitHub</a>. Requests are handled within a week.</p>
 <h2>Privacy</h2>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold.</p>
-<p>The site uses Google Analytics to count visits and see which pages are used. Google Analytics sets cookies and receives your IP address and basic details about your browser and device. Google's own use of that data is described in <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites that use its services</a>. To opt out, use a content blocker or <a href="https://tools.google.com/dlpage/gaoptout">Google's opt-out add-on</a>.</p>
-<p>Your "Vegetarian only" choice is saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Google Analytics and the map tiles, everything, fonts included, is served from this site.</p>
+<p>The site uses <a href="https://amplitude.com">Amplitude</a> to understand how it's used: which pages are viewed, what gets clicked, and anonymous recordings of sessions (Session Replay) that show how people move through a page. Text you type, such as searches, is masked in recordings. Amplitude stores a random identifier in your browser and receives your IP address and basic details about your browser and device. Its handling of that data is described in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>. A content blocker will stop it.</p>
+<p>Your "Vegetarian only" choice is saved only in your browser and is never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
 }
@@ -745,6 +740,13 @@ function appFeed() {
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "site", "assets"), join(DIST, "assets"), { recursive: true });
+// Bundle Amplitude (npm package) into one browser file; the site has no other bundler.
+const analyticsJs = buildSync({
+  entryPoints: [join(ROOT, "client", "analytics.js")], bundle: true, minify: true, format: "iife", target: "es2018",
+  define: { __AMPLITUDE_API_KEY__: JSON.stringify(AMPLITUDE_KEY) }, write: false, legalComments: "none",
+}).outputFiles[0].contents;
+writeFileSync(join(DIST, "assets", "analytics.js"), analyticsJs);
+ANALYTICS_SRC = `${url("assets/analytics.js")}?v=${createHash("sha1").update(analyticsJs).digest("hex").slice(0, 8)}`;
 writeFileSync(join(DIST, ".nojekyll"), "");
 homePage();
 standoutsPage();
