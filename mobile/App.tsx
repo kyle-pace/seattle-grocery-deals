@@ -3,7 +3,8 @@ import { BarlowCondensed_700Bold } from "@expo-google-fonts/barlow-condensed";
 import { useFonts } from "expo-font";
 import * as Haptics from "expo-haptics";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { screen, startAnalytics, track } from "./src/analytics";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Deal } from "./src/data";
@@ -25,7 +26,8 @@ function Shell() {
   const [deal, setDeal] = useState<Deal | null>(null);
   const [storeKey, setStoreKey] = useState(0);
   const [storeId, setStoreId] = useState<string | null>(null);
-  const open = (d: Deal) => setDeal(d);
+  const open = (d: Deal) => { setDeal(d); track("Viewed Deal", { deal_id: d.id, store: d.store, category: d.category, tier: d.tier, from_screen: tab }); };
+  useEffect(() => { screen(TABS.find((t) => t[0] === tab)![1]); }, [tab]);
   const left = list.filter((i) => !i.done).length;
   return (
     <View style={{ flex: 1, backgroundColor: c.paper }}>
@@ -55,6 +57,8 @@ function Shell() {
     </View>
   );
 }
+
+startAnalytics().catch(() => {});
 
 export default function App() {
   const [loaded] = useFonts({ BarlowCondensed_700Bold, AtkinsonHyperlegible_400Regular, AtkinsonHyperlegible_700Bold });
