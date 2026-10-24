@@ -713,7 +713,7 @@
         "starts": "fri",
         "ends": "thu"
       },
-      "prints_regular_prices": false,
+      "prints_regular_prices": true,
       "flyer_format": "web-page",
       "representative_location": "Kent store",
       "how_to_read": [
@@ -790,7 +790,7 @@
         "ends": "varies",
         "note": "Confirm the sale days on the first read and update this entry."
       },
-      "prints_regular_prices": false,
+      "prints_regular_prices": true,
       "flyer_format": "web-page",
       "representative_location": "Tukwila (Southcenter) store",
       "how_to_read": [
