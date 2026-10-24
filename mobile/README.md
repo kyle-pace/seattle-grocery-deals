@@ -12,6 +12,18 @@ An Expo (React Native) app for iPhone, and later Android. Step 1 of the plan in 
    ```
 3. Scan the QR code with the iPhone camera. The phone and the Mac must be on the same Wi-Fi (or run `npx expo start --tunnel`).
 
+## Install it on your iPhone as a real app
+
+With the phone plugged in, unlocked and trusted, and Developer Mode on:
+
+```bash
+./install-on-iphone.sh
+```
+
+It builds a standalone release (no Mac or Expo Go needed to run it) and installs it. With a free Apple ID the app stops opening after 7 days; run the script again. If the phone runs an iOS beta, the matching Xcode beta is needed: the script uses the one in `~/Downloads`, or set `XCODE=/path/to/Xcode.app`.
+
+The free Apple ID can't sign push notifications, so `plugins/without-push-entitlement.js` removes that capability. Delete it from `app.json` once there's a paid Apple Developer account.
+
 ## What's in it
 
 - **This week:** search, Vegetarian only, the items on your list that are on sale, and the week's standouts. Pull down to refresh.
