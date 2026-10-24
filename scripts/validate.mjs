@@ -139,7 +139,18 @@ function checkWeek(path) {
       err(w, `${store.id} does not print regular prices (config), so regular_price and percent_off must be null`);
     }
 
+    if (/\bCHECK:/.test(d.notes ?? "")) err(w, "notes still has a CHECK: note; confirm it on the flyer and remove it");
     if (d.member_price && !/member|card|app|loyalty|prime/i.test(d.notes)) warn(w, "member_price is true; say which program in notes");
+  }
+
+  // A week with nothing read would replace the live week with an empty one.
+  const readable = week.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
+  if (!readable) err(name, "no flyer was read (full or partial); publishing this would empty the live site");
+  if (!week.items.length) err(name, "no items; publishing this would empty the live site");
+  const prev = weekFiles().filter((f) => f < `${week.week}.json`).pop();
+  if (prev && week.items.length) {
+    const n = readJson(join(WEEKS_DIR, prev)).items.length;
+    if (week.items.length < n / 2) warn(name, `${week.items.length} items, under half of the ${n} in ${prev}; check that no store was missed`);
   }
 }
 

@@ -15,6 +15,7 @@ Live site: https://seattlegrocery.deals/
 - `schema/week.schema.json`: the JSON Schema for a week file.
 - `scripts/validate.mjs`: schema plus cross checks (unit prices, percent off, printed prices only, no em dashes).
 - `scripts/draft-week.mjs`: turns a weekly All Items note into a draft week file.
+- `notes/all-items/`: the All Items note for each week written by the cloud routine.
 - `scripts/build.mjs`: ranks items and renders the site into `dist/`.
 - `site/assets/`: styles, the filter script, the logo, and the Bricolage Grotesque font (SIL Open Font License, see `fonts/OFL.txt`).
 - `.github/workflows/pages.yml`: validates, builds and deploys to GitHub Pages on every push to `main`.
@@ -34,6 +35,7 @@ Requires Node 20 or newer. The only dependencies are Ajv and ajv-formats, used f
 
 ## Docs
 
+- [ROUTINE.md](ROUTINE.md): the Friday cloud routine that reads the flyers and opens a pull request.
 - [UPDATING.md](UPDATING.md): how to make a week's file.
 - [ADDING-A-STORE.md](ADDING-A-STORE.md): how to add a store.
 
