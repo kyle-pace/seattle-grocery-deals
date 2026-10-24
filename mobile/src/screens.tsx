@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import { FlatList, Linking, Modal, Pressable, RefreshControl, ScrollView, Share, Switch, Text, TextInput, View } from "react-native";
 import { allowNotifications, watchHit } from "./alerts";
+import { remindersSupported } from "./reminders";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Deal, fmtDate, matchDeal, planTrip } from "./data";
 import { useApp } from "./state";
@@ -184,7 +185,8 @@ export function Stores({ open, initial = null }: { open: (d: Deal) => void; init
 export function List({ open }: { open: (d: Deal) => void }) {
   const c = useColors();
   const top = useSafeAreaInsets().top;
-  const { list, addToList, toggleItem, removeItem, storeName, veg } = useApp();
+  const { list, addToList, toggleItem, removeItem, storeName, veg, source, connectReminders, keepInApp, reloadList } = useApp();
+  const rem = source && typeof source === "object" ? source : null;
   const items = useItems();
   const [text, setText] = useState("");
   const rows = list.map((i) => ({ i, d: i.dealId ? items.find((x) => x.id === i.dealId) ?? matchDeal(i.text, items, veg) : matchDeal(i.text, items, veg) }));
@@ -192,9 +194,22 @@ export function List({ open }: { open: (d: Deal) => void }) {
   const add = () => { const t = text.trim(); if (t) { addToList(t); setText(""); } };
   const plan = planTrip(rows.filter((r) => r.d && !r.i.done).map((r) => r.i.text), items, veg);
   return (
-    <ScrollView style={{ backgroundColor: c.paper }} contentContainerStyle={{ paddingBottom: TAB_SPACE, paddingHorizontal: PAD, paddingTop: top + 8 }} keyboardShouldPersistTaps="handled">
-      <Text accessibilityRole="header" style={{ fontFamily: font.display, fontSize: 40, color: c.ink, textTransform: "uppercase" }}>Groceries</Text>
-      <Text style={{ fontFamily: font.body, color: c.muted }}>{onSale} on sale this week · Saved on this phone</Text>
+    <ScrollView style={{ backgroundColor: c.paper }} contentContainerStyle={{ paddingBottom: TAB_SPACE, paddingHorizontal: PAD, paddingTop: top + 8 }} keyboardShouldPersistTaps="handled"
+      refreshControl={<RefreshControl refreshing={false} onRefresh={reloadList} />}>
+      <Text accessibilityRole="header" style={{ fontFamily: font.display, fontSize: 40, color: c.ink, textTransform: "uppercase" }}>{rem ? rem.title : "Groceries"}</Text>
+      <Text style={{ fontFamily: font.body, color: c.muted }}>{onSale} on sale this week · {rem ? "Synced with Reminders" : "Saved in this app"}</Text>
+      {remindersSupported ? (
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+          <Pressable onPress={connectReminders} accessibilityRole="button" style={{ minHeight: 40, paddingHorizontal: 12, borderRadius: 10, borderWidth: 1.5, borderColor: c.ink, justifyContent: "center" }}>
+            <Text style={{ fontFamily: font.bold, color: c.ink }}>{rem ? "Change Reminders list" : "Use a Reminders list"}</Text>
+          </Pressable>
+          {rem ? (
+            <Pressable onPress={keepInApp} accessibilityRole="button" style={{ minHeight: 40, paddingHorizontal: 12, justifyContent: "center" }}>
+              <Text style={{ fontFamily: font.bold, color: c.muted, textDecorationLine: "underline" }}>Keep the list in the app instead</Text>
+            </Pressable>
+          ) : null}
+        </View>
+      ) : null}
       <View style={{ flexDirection: "row", gap: 8, marginTop: 12 }}>
         <TextInput value={text} onChangeText={setText} onSubmitEditing={add} placeholder="Add an item, like bok choy" placeholderTextColor={c.muted} returnKeyType="done" accessibilityLabel="Add an item"
           style={{ flex: 1, minHeight: 44, borderWidth: 1.5, borderColor: c.lineUi, borderRadius: 10, paddingHorizontal: 12, backgroundColor: c.surface, color: c.ink, fontFamily: font.body, fontSize: 16 }} />
