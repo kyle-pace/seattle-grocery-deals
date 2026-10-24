@@ -311,3 +311,6 @@ body.persimmon main, body.persimmon .site-foot { position: relative; z-index: 1;
 @media (prefers-reduced-motion: reduce) { .persim-title span, .persim-mascot { animation: none; } }
 .persim-title { font-family: var(--display); font-weight: 700; text-transform: uppercase; line-height: 0.95; }
 body.persimmon .site-head { position: relative; z-index: 2; }
+
+/* inline text button (About: analytics opt-out) */
+.linkish { background: none; border: 0; padding: 0; min-height: 44px; font: inherit; font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }

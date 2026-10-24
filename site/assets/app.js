@@ -133,3 +133,22 @@
 
   apply();
 })();
+
+// About page: turn Amplitude off (or back on) in this browser.
+(function () {
+  var btn = document.querySelector("[data-analytics-toggle]");
+  var state = document.querySelector("[data-analytics-state]");
+  if (!btn) return;
+  function off() { try { return localStorage.getItem("sgd.analyticsOff") === "true"; } catch (e) { return false; } }
+  function show() {
+    var gpc = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1";
+    btn.textContent = off() ? "Turn analytics back on in this browser" : "Turn off analytics in this browser";
+    if (state) state.textContent = gpc ? "(already off: your browser asks sites not to track)" : off() ? "(off)" : "";
+  }
+  btn.addEventListener("click", function () {
+    try { localStorage.setItem("sgd.analyticsOff", off() ? "false" : "true"); } catch (e) {}
+    show();
+    if (off()) location.reload();
+  });
+  show();
+})();
