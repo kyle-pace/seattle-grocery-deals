@@ -1,8 +1,9 @@
-// Filters everything on a week page by store, category and tier, plus a
-// "my stores" choice kept in localStorage.
+// Filters everything on a week page by store, category and tier, plus the
+// "my stores" and "Vegetarian only" choices kept in localStorage.
 (function () {
   var KEY_STORES = "sgd.myStores";
   var KEY_ONLY = "sgd.onlyMine";
+  var KEY_VEG = "sgd.vegOnly";
   var RANK = { sale: 0, good: 1, standout: 2 };
 
   function load(key, fallback) {
@@ -20,6 +21,7 @@
 
   var mine = load(KEY_STORES, []);
   var onlyMine = load(KEY_ONLY, false);
+  var vegOnly = load(KEY_VEG, false);
 
   var bar = document.querySelector("[data-filters]");
   var dialog = document.querySelector("[data-mystores]");
@@ -27,6 +29,7 @@
   var catSel = bar && bar.querySelector('[data-filter="category"]');
   var tierSel = bar && bar.querySelector('[data-filter="tier"]');
   var mineBox = bar && bar.querySelector('[data-filter="mine"]');
+  var vegBtn = bar && bar.querySelector("[data-veg-toggle]");
   var count = document.querySelector("[data-count]");
   var empty = document.querySelector("[data-empty]");
 
@@ -36,6 +39,8 @@
     return true;
   }
   function itemOk(el) {
+    if (vegOnly && el.dataset.veg === "0") return false;
+    if (el.dataset.hl && el.dataset.hl.indexOf(vegOnly ? "v" : "a") === -1) return false;
     if (!storeOk(el.dataset.store)) return false;
     if (catSel && catSel.value && el.dataset.category !== catSel.value) return false;
     if (tierSel && tierSel.value && RANK[el.dataset.tier] < RANK[tierSel.value]) return false;
@@ -57,12 +62,15 @@
       if (c) c.textContent = visible;
     });
     all(".store-card, .flyer").forEach(function (el) { el.hidden = !storeOk(el.dataset.store); });
+    all(".store-card .mini [data-veg]").forEach(function (el) { el.hidden = vegOnly && el.dataset.veg === "0"; });
+    showEnding();
     all(".cmp-group, .cat-box").forEach(function (g) {
       g.hidden = all("[data-tier]", g).every(function (r) { return r.hidden; });
     });
-    if (count) count.textContent = "Showing " + shown + " of " + total + " items" + (onlyMine && mine.length ? " at my stores" : "") + ".";
+    if (count) count.textContent = "Showing " + shown + " of " + total + (vegOnly ? " items, vegetarian only" : " items") + (onlyMine && mine.length ? ", at my stores" : "") + ".";
     if (empty) empty.hidden = shown !== 0;
     if (mineBox) mineBox.checked = onlyMine;
+    if (vegBtn) vegBtn.setAttribute("aria-checked", vegOnly ? "true" : "false");
   }
 
   [storeSel, catSel, tierSel].forEach(function (s) { if (s) s.addEventListener("change", apply); });
@@ -70,6 +78,12 @@
     onlyMine = mineBox.checked;
     save(KEY_ONLY, onlyMine);
     if (onlyMine && mine.length === 0 && dialog && dialog.showModal) dialog.showModal();
+    apply();
+  });
+
+  if (vegBtn) vegBtn.addEventListener("click", function () {
+    vegOnly = !vegOnly;
+    save(KEY_VEG, vegOnly);
     apply();
   });
 
@@ -102,13 +116,14 @@
   function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }
   all("[data-expired-after]").forEach(function (el) { el.hidden = !(today > el.dataset.expiredAfter); });
   var ending = document.querySelector("[data-ending]");
-  if (ending) {
+  if (ending) all("[data-ends]", ending).forEach(function (li) { li.removeAttribute("data-tier"); });
+  function showEnding() {
+    if (!ending) return;
     var shown = 0;
     all("[data-ends]", ending).forEach(function (li) {
       var d = daysUntil(li.dataset.ends);
-      var ok = d >= 0 && d <= 2 && shown < 8;
+      var ok = d >= 0 && d <= 2 && shown < 8 && !(vegOnly && li.dataset.veg === "0");
       li.hidden = !ok;
-      li.removeAttribute("data-tier");
       if (ok) {
         shown++;
         li.querySelector("[data-ends-label]").textContent = d === 0 ? "ends today" : d === 1 ? "ends tomorrow" : "ends in 2 days";

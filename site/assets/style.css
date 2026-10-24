@@ -87,6 +87,14 @@ footer.site { margin-top: 3rem; padding-block: 1.25rem 2.5rem; border-top: 1px d
 /* filters */
 .filters { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; padding: 0.6rem 0.75rem; margin: 0 -0.75rem; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
 .filters label { display: flex; gap: 0.35rem; align-items: center; font-size: 0.9rem; color: var(--muted); }
+.veg-toggle { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.85rem 0.35rem 0.4rem; border: 1.5px solid var(--green); border-radius: 999px; background: var(--surface); color: var(--green); font: inherit; font-weight: 700; font-size: 0.95rem; cursor: pointer; }
+.veg-toggle .switch { position: relative; width: 2.1rem; height: 1.2rem; border-radius: 999px; background: var(--line); transition: background 0.15s; }
+.veg-toggle .switch::after { content: ""; position: absolute; top: 0.15rem; left: 0.15rem; width: 0.9rem; height: 0.9rem; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgb(0 0 0 / 0.25); transition: transform 0.15s; }
+.veg-toggle[aria-checked="true"] { background: var(--green); color: var(--green-ink); }
+.veg-toggle[aria-checked="true"] .switch { background: var(--green-ink); }
+.veg-toggle[aria-checked="true"] .switch::after { background: var(--green); transform: translateX(0.9rem); }
+.veg-toggle:focus-visible { outline: 3px solid var(--mustard); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .veg-toggle .switch, .veg-toggle .switch::after { transition: none; } }
 select, button { font: inherit; }
 select { padding: 0.3rem 0.4rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--ink); max-width: 100%; }
 .check { display: inline-flex; gap: 0.4rem; align-items: center; color: var(--ink) !important; }
