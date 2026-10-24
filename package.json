@@ -15,7 +15,7 @@
     "serve": "node scripts/serve.mjs"
   },
   "dependencies": {
-    "@amplitude/unified": "^1.1.43",
+    "@amplitude/analytics-browser": "^2.48.1",
     "ajv": "8.17.1",
     "ajv-formats": "3.0.1"
   },
