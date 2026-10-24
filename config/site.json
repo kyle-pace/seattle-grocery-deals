@@ -1,13 +1,13 @@
 {
   "title": "Seattle Grocery Deals",
   "tagline": "Seattle grocery sales, sorted. New every Friday.",
-  "base_path": "/seattle-grocery-deals/",
+  "base_path": "/",
   "repo_url": "https://github.com/kyle-pace/seattle-grocery-deals",
   "suggest_store_url": "https://github.com/kyle-pace/seattle-grocery-deals/issues/new?title=Store+suggestion",
   "persimmon_season": {
     "from": "09-15",
     "to": "01-15"
   },
-  "origin": "https://kyle-pace.github.io",
+  "origin": "https://seattlegrocery.deals",
   "ga_measurement_id": "G-QYGDXEBGHZ"
 }
