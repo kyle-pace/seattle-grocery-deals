@@ -26,6 +26,7 @@
         "Every item is while supplies last."
       ],
       "about": "An Asian grocery in the Chinatown–International District with a big fresh seafood counter, inexpensive meat and Asian produce. A second store is in Tukwila.",
+      "delivery": "Delivers groceries directly. Ask the store about the delivery area and how to order.",
       "locations": [
         {
           "label": "Seattle (Chinatown–International District)",
@@ -302,6 +303,7 @@
         "In the headless browser, waiting for the network to go idle times out. Wait for the page load, then scroll to the bottom before reading."
       ],
       "about": "A Kent dairy that delivers milk, eggs and groceries to homes around Puget Sound. Not a store: sales run in two-week cycles.",
+      "delivery": "Home delivery is how they sell: groceries come with your milk order.",
       "locations": []
     },
     {
@@ -547,6 +549,7 @@
         "The site blocks curl (Akamai 403) and headless browsers. A non-headless browser on a virtual display (xvfb) loads it, and the eight flyer page images can then be downloaded from that session."
       ],
       "about": "A Canadian Asian supermarket chain with Washington stores in Bellevue and Lynnwood, known for its seafood counter, bakery and hot food.",
+      "delivery": "Delivers groceries directly from its Washington stores. Check their site for the delivery area and how to order.",
       "locations": [
         {
           "label": "Bellevue (Factoria)",
