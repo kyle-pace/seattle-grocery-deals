@@ -1,10 +1,8 @@
-// Filters everything on a week page by store, category and tier, plus the
-// "my stores" and "Vegetarian only" choices kept in localStorage.
+// Filters, search and sorting for deal lists, the "Vegetarian only" switch kept in
+// localStorage, the delivery filter on the Stores page, and date-based notices.
 (function () {
-  var KEY_STORES = "sgd.myStores";
-  var KEY_ONLY = "sgd.onlyMine";
   var KEY_VEG = "sgd.vegOnly";
-  var RANK = { sale: 0, good: 1, standout: 2 };
+  var root = document.documentElement;
 
   function load(key, fallback) {
     try {
@@ -17,112 +15,113 @@
   function save(key, value) {
     try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {}
   }
-  function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  function all(sel, el) { return Array.prototype.slice.call((el || document).querySelectorAll(sel)); }
 
-  var mine = load(KEY_STORES, []);
-  var onlyMine = load(KEY_ONLY, false);
   var vegOnly = load(KEY_VEG, false);
+  var area = document.querySelector("[data-filterable]");
+  var search = document.querySelector("[data-search]");
+  var storeSel = document.querySelector('[data-filter="store"]');
+  var sortSel = document.querySelector("[data-sort]");
+  var home = document.querySelector("[data-home]");
+  var results = document.querySelector("[data-results]");
 
-  var bar = document.querySelector("[data-filters]");
-  var dialog = document.querySelector("[data-mystores]");
-  var storeSel = bar && bar.querySelector('[data-filter="store"]');
-  var catSel = bar && bar.querySelector('[data-filter="category"]');
-  var tierSel = bar && bar.querySelector('[data-filter="tier"]');
-  var mineBox = bar && bar.querySelector('[data-filter="mine"]');
-  var vegBtn = bar && bar.querySelector("[data-veg-toggle]");
-  var count = document.querySelector("[data-count]");
-  var empty = document.querySelector("[data-empty]");
+  function query() { return search ? search.value.trim().toLowerCase() : ""; }
 
-  function storeOk(id) {
-    if (storeSel && storeSel.value && id !== storeSel.value) return false;
-    if (onlyMine && mine.length && mine.indexOf(id) === -1) return false;
-    return true;
-  }
-  function itemOk(el) {
+  function rowOk(el, q) {
     if (vegOnly && el.dataset.veg === "0") return false;
     if (el.dataset.hl && el.dataset.hl.indexOf(vegOnly ? "v" : "a") === -1) return false;
-    if (!storeOk(el.dataset.store)) return false;
-    if (catSel && catSel.value && el.dataset.category !== catSel.value) return false;
-    if (tierSel && tierSel.value && RANK[el.dataset.tier] < RANK[tierSel.value]) return false;
+    if (storeSel && storeSel.value && el.dataset.store !== storeSel.value) return false;
+    if (q && el.dataset.text && el.dataset.text.indexOf(q) === -1) return false;
     return true;
   }
 
   function apply() {
-    var rows = all("[data-filterable] [data-tier], .mini [data-tier]");
-    var shown = 0, total = 0;
-    rows.forEach(function (el) {
-      var ok = itemOk(el);
+    root.classList.toggle("veg-on", vegOnly);
+    all("[data-veg-toggle]").forEach(function (b) { b.setAttribute("aria-checked", vegOnly ? "true" : "false"); });
+    if (!area) { showEnding(); return; }
+    var q = query();
+    // On the home page, a search swaps the summary sections for the full list.
+    if (home && results) {
+      home.hidden = Boolean(q);
+      results.hidden = !q;
+    }
+    var scope = results && !results.hidden ? results : home && results ? home : area;
+    var shown = 0;
+    all(".deal", area).forEach(function (el) {
+      var ok = rowOk(el, scope === home ? "" : q);
       el.hidden = !ok;
-      if (el.classList.contains("row")) { total++; if (ok) shown++; }
+      if (ok && scope.contains(el)) shown++;
     });
-    all("[data-cat-section]").forEach(function (sec) {
-      var visible = all(".row", sec).filter(function (r) { return !r.hidden; }).length;
-      sec.hidden = visible === 0;
-      var c = sec.querySelector("[data-cat-count]");
-      if (c) c.textContent = visible;
+    all("[data-group]", scope).forEach(function (g) {
+      var n = all(".deal", g).filter(function (r) { return !r.hidden; }).length;
+      g.hidden = n === 0;
+      var c = g.querySelector("[data-group-count]");
+      if (c) c.textContent = n;
     });
-    all(".store-card, .flyer").forEach(function (el) { el.hidden = !storeOk(el.dataset.store); });
-    all(".store-card .mini [data-veg]").forEach(function (el) { el.hidden = vegOnly && el.dataset.veg === "0"; });
-    showEnding();
-    all(".cmp-group, .cat-box").forEach(function (g) {
-      g.hidden = all("[data-tier]", g).every(function (r) { return r.hidden; });
+    // Store tiles on the home page follow the store picker.
+    if (home) all(".tiles li", home).forEach(function (li) {
+      var a = li.querySelector("a[href*='/stores/']");
+      if (!a || !storeSel) return;
+      li.hidden = Boolean(storeSel.value) && a.getAttribute("href").indexOf("/stores/" + storeSel.value + "/") === -1;
     });
-    if (count) count.textContent = "Showing " + shown + " of " + total + (vegOnly ? " items, vegetarian only" : " items") + (onlyMine && mine.length ? ", at my stores" : "") + ".";
+    var count = scope.querySelector("[data-count]");
+    if (count) {
+      count.textContent = (q ? shown + (shown === 1 ? " deal matches “" : " deals match “") + search.value.trim() + "”" : "Showing " + shown + (shown === 1 ? " deal" : " deals")) +
+        (vegOnly ? ", vegetarian only" : "") + (storeSel && storeSel.value ? ", at " + storeSel.options[storeSel.selectedIndex].text : "") + ".";
+    }
+    var empty = scope.querySelector("[data-empty]");
     if (empty) empty.hidden = shown !== 0;
-    if (mineBox) mineBox.checked = onlyMine;
-    if (vegBtn) vegBtn.setAttribute("aria-checked", vegOnly ? "true" : "false");
+    showEnding();
   }
 
-  [storeSel, catSel, tierSel].forEach(function (s) { if (s) s.addEventListener("change", apply); });
-  if (mineBox) mineBox.addEventListener("change", function () {
-    onlyMine = mineBox.checked;
-    save(KEY_ONLY, onlyMine);
-    if (onlyMine && mine.length === 0 && dialog && dialog.showModal) dialog.showModal();
-    apply();
-  });
-
-  if (vegBtn) vegBtn.addEventListener("click", function () {
-    vegOnly = !vegOnly;
-    save(KEY_VEG, vegOnly);
-    apply();
-  });
-
-  // "See all" on a store card filters the full list to that store.
-  all("[data-jump-store]").forEach(function (a) {
-    a.addEventListener("click", function () {
-      if (storeSel) { storeSel.value = a.dataset.jumpStore; apply(); }
+  function sortRows() {
+    var by = sortSel ? sortSel.value : "rank";
+    var key = {
+      rank: function (el) { return +el.dataset.rank; },
+      off: function (el) { return -(+el.dataset.off) * 1000 + +el.dataset.rank / 1000; },
+      price: function (el) { return +el.dataset.price; },
+      name: null,
+    }[by];
+    all("[data-sortable]").forEach(function (ul) {
+      var rows = all(":scope > .deal", ul);
+      rows.sort(key ? function (a, b) { return key(a) - key(b); } : function (a, b) { return a.dataset.name.localeCompare(b.dataset.name); });
+      rows.forEach(function (r) { ul.appendChild(r); });
     });
-  });
-
-  var openBtn = document.querySelector("[data-mystores-open]");
-  if (openBtn && dialog && dialog.showModal) {
-    openBtn.addEventListener("click", function () { dialog.showModal(); });
-    var boxes = all("[data-mystore]", dialog);
-    boxes.forEach(function (b) {
-      b.checked = mine.indexOf(b.value) !== -1;
-      b.addEventListener("change", function () {
-        mine = boxes.filter(function (x) { return x.checked; }).map(function (x) { return x.value; });
-        save(KEY_STORES, mine);
-        if (mine.length && !onlyMine) { onlyMine = true; save(KEY_ONLY, true); }
-        apply();
-      });
-    });
-  } else if (openBtn) {
-    openBtn.hidden = true;
   }
+
+  all("[data-veg-toggle]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      vegOnly = !vegOnly;
+      save(KEY_VEG, vegOnly);
+      apply();
+    });
+  });
+  if (search) search.addEventListener("input", apply);
+  if (storeSel) storeSel.addEventListener("change", apply);
+  if (sortSel) sortSel.addEventListener("change", function () { sortRows(); apply(); });
+
+  // Stores page: only stores that deliver.
+  var deliv = document.querySelector("[data-deliv-toggle]");
+  if (deliv) deliv.addEventListener("click", function () {
+    var on = deliv.getAttribute("aria-checked") !== "true";
+    deliv.setAttribute("aria-checked", on ? "true" : "false");
+    var tiles = all("[data-store-tiles] > li");
+    tiles.forEach(function (li) { li.hidden = on && !li.hasAttribute("data-delivers"); });
+    var none = document.querySelector("[data-deliv-empty]");
+    if (none) none.hidden = tiles.some(function (li) { return !li.hidden; });
+  });
 
   // Dates: hide expired content and show "ending soon" against today in Seattle.
   var today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(new Date());
   function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }
   all("[data-expired-after]").forEach(function (el) { el.hidden = !(today > el.dataset.expiredAfter); });
   var ending = document.querySelector("[data-ending]");
-  if (ending) all("[data-ends]", ending).forEach(function (li) { li.removeAttribute("data-tier"); });
   function showEnding() {
     if (!ending) return;
     var shown = 0;
     all("[data-ends]", ending).forEach(function (li) {
       var d = daysUntil(li.dataset.ends);
-      var ok = d >= 0 && d <= 2 && shown < 8 && !(vegOnly && li.dataset.veg === "0");
+      var ok = d >= 0 && d <= 2 && shown < 8 && !(vegOnly && li.dataset.veg === "0") && !(storeSel && storeSel.value && li.dataset.store !== storeSel.value);
       li.hidden = !ok;
       if (ok) {
         shown++;

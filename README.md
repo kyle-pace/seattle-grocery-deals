@@ -17,7 +17,7 @@ Live site: https://seattlegrocery.deals/
 - `scripts/draft-week.mjs`: turns a weekly All Items note into a draft week file.
 - `notes/all-items/`: the All Items note for each week written by the cloud routine.
 - `scripts/build.mjs`: ranks items and renders the site into `dist/`.
-- `site/assets/`: styles, the filter script, the logo, and the Bricolage Grotesque font (SIL Open Font License, see `fonts/OFL.txt`).
+- `site/assets/`: styles, the filter script, the logo, and the Atkinson Hyperlegible Next and Barlow Condensed fonts (SIL Open Font License, see the `OFL-*.txt` files in `fonts/`).
 - `.github/workflows/pages.yml`: validates, builds and deploys to GitHub Pages on every push to `main`.
 
 ## Commands
