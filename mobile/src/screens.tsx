@@ -1,8 +1,9 @@
 // The four tabs and the deal detail sheet.
 import { useMemo, useState } from "react";
-import { FlatList, Linking, Modal, Pressable, RefreshControl, ScrollView, Text, TextInput, View } from "react-native";
+import { FlatList, Linking, Modal, Pressable, RefreshControl, ScrollView, Share, Switch, Text, TextInput, View } from "react-native";
+import { allowNotifications, watchHit } from "./alerts";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Deal, fmtDate, matchDeal } from "./data";
+import { Deal, fmtDate, matchDeal, planTrip } from "./data";
 import { useApp } from "./state";
 import { font, useColors } from "./theme";
 import { DealRow, Heading, Price, shortName, VegSwitch } from "./ui";
@@ -189,6 +190,7 @@ export function List({ open }: { open: (d: Deal) => void }) {
   const rows = list.map((i) => ({ i, d: i.dealId ? items.find((x) => x.id === i.dealId) ?? matchDeal(i.text, items, veg) : matchDeal(i.text, items, veg) }));
   const onSale = rows.filter((r) => r.d && !r.i.done).length;
   const add = () => { const t = text.trim(); if (t) { addToList(t); setText(""); } };
+  const plan = planTrip(rows.filter((r) => r.d && !r.i.done).map((r) => r.i.text), items, veg);
   return (
     <ScrollView style={{ backgroundColor: c.paper }} contentContainerStyle={{ paddingBottom: TAB_SPACE, paddingHorizontal: PAD, paddingTop: top + 8 }} keyboardShouldPersistTaps="handled">
       <Text accessibilityRole="header" style={{ fontFamily: font.display, fontSize: 40, color: c.ink, textTransform: "uppercase" }}>Groceries</Text>
@@ -200,6 +202,13 @@ export function List({ open }: { open: (d: Deal) => void }) {
           <Text style={{ color: c.paper, fontFamily: font.bold }}>Add</Text>
         </Pressable>
       </View>
+      {plan.length > 1 || (plan.length === 1 && plan[0].entries.length > 1) ? (
+        <View style={{ marginTop: 14, padding: 12, borderWidth: 2, borderColor: c.ink, backgroundColor: c.tag, gap: 4 }}>
+          <Text style={{ fontFamily: font.bold, fontSize: 16, color: c.onTag }}>Plan: {plan.slice(0, 3).map((p) => storeName(p.store)).join(", then ")}</Text>
+          {plan.slice(0, 3).map((p) => <Text key={p.store} style={{ fontFamily: font.body, fontSize: 14, color: c.onTag }}>{storeName(p.store)}: {p.entries.join(", ")}</Text>)}
+          {plan.length > 3 ? <Text style={{ fontFamily: font.body, fontSize: 13, color: c.onTag }}>And {plan.length - 3} more stops for the rest.</Text> : null}
+        </View>
+      ) : null}
       <Heading title="My list" note="Long-press to remove" />
       {rows.map(({ i, d }) => (
         <Pressable key={i.id} onPress={() => (d ? open(d) : toggleItem(i.id))} onLongPress={() => removeItem(i.id)} style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 11, borderBottomWidth: 1, borderColor: c.line }}>
@@ -221,7 +230,7 @@ export function List({ open }: { open: (d: Deal) => void }) {
 // ---------- Deal detail ----------
 export function DealSheet({ deal, close, goStore }: { deal: Deal | null; close: () => void; goStore: (id: string) => void }) {
   const c = useColors();
-  const { feed, storeName, stores, addToList, inList } = useApp();
+  const { feed, storeName, stores, addToList, inList, watch, unwatch, watching } = useApp();
   if (!deal) return null;
   const others = deal.key ? (feed?.items ?? []).filter((x) => x.key === deal.key && x.id !== deal.id) : [];
   const added = inList(deal);
@@ -240,6 +249,13 @@ export function DealSheet({ deal, close, goStore }: { deal: Deal | null; close: 
         <Pressable onPress={() => !added && addToList(shortName(deal.name), deal)} accessibilityRole="button" style={{ marginTop: 12, minHeight: 50, borderRadius: 12, backgroundColor: c.ink, alignItems: "center", justifyContent: "center" }}>
           <Text style={{ color: c.paper, fontFamily: font.bold, fontSize: 16 }}>{added ? "✓ On your list" : "+ Add to Groceries"}</Text>
         </Pressable>
+        {(() => { const w = watching(deal); return (
+          <Pressable onPress={async () => { if (w) unwatch(w.id); else { await allowNotifications(); watch(deal); } }} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center", paddingHorizontal: 12 }}>
+            <Text style={{ color: c.ink, fontFamily: font.bold, fontSize: 16, textAlign: "center" }}>{w ? `Watching: alert under ${w.label} (tap to stop)` : `Watch price: alert me if it's cheaper`}</Text>
+          </Pressable>); })()}
+        <Pressable onPress={() => Share.share({ message: `${deal.name}: ${deal.text} at ${storeName(deal.store)}${deal.ends ? ` through ${fmtDate(deal.ends)}` : ""}. https://seattlegrocery.deals/stores/${deal.store}/` })} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center" }}>
+          <Text style={{ color: c.ink, fontFamily: font.bold, fontSize: 16 }}>Share this deal</Text>
+        </Pressable>
         {st ? (
           <Pressable onPress={() => { close(); goStore(st.id); }} accessibilityRole="button" style={{ minHeight: 50, borderRadius: 12, borderWidth: 2, borderColor: c.ink, alignItems: "center", justifyContent: "center" }}>
             <Text style={{ color: c.ink, fontFamily: font.bold, fontSize: 16 }}>More at {st.name}</Text>
@@ -256,5 +272,46 @@ export function DealSheet({ deal, close, goStore }: { deal: Deal | null; close: 
         </> : null}
       </ScrollView>
     </Modal>
+  );
+}
+
+// ---------- Alerts ----------
+export function Alerts({ open }: { open: (d: Deal) => void }) {
+  const c = useColors();
+  const top = useSafeAreaInsets().top;
+  const { prefs, setPrefs, watches, unwatch, feed, storeName } = useApp();
+  const toggle = async (k: "friday" | "ending", v: boolean) => {
+    if (v && !(await allowNotifications())) return;
+    setPrefs({ ...prefs, [k]: v });
+  };
+  const row = (title: string, sub: string, k: "friday" | "ending") => (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 12, paddingVertical: 12, borderBottomWidth: 1, borderColor: c.line }}>
+      <View style={{ flex: 1 }}>
+        <Text style={{ fontFamily: font.bold, fontSize: 16, color: c.ink }}>{title}</Text>
+        <Text style={{ fontFamily: font.body, fontSize: 13, color: c.muted }}>{sub}</Text>
+      </View>
+      <Switch value={prefs[k]} onValueChange={(v) => toggle(k, v)} trackColor={{ true: c.brand }} accessibilityLabel={title} />
+    </View>
+  );
+  return (
+    <ScrollView style={{ backgroundColor: c.paper }} contentContainerStyle={{ paddingBottom: TAB_SPACE, paddingHorizontal: PAD, paddingTop: top + 8 }}>
+      <Text accessibilityRole="header" style={{ fontFamily: font.display, fontSize: 40, color: c.ink, textTransform: "uppercase" }}>Alerts</Text>
+      <Heading title="Notify me" />
+      {row("Friday reminder", "When new deals post, about 10:30 AM", "friday")}
+      {row("Ending soon", "The day before a list item's sale ends", "ending")}
+      <VegSwitch />
+      <Heading title="Price watches" note={String(watches.length)} />
+      {!watches.length ? <Text style={{ fontFamily: font.body, color: c.muted, marginTop: 10 }}>Open any deal and tap "Watch price". You'll get an alert when it's cheaper than it is today.</Text> : null}
+      {watches.map((w) => {
+        const hit = feed ? watchHit(w, feed.items) : null;
+        return (
+          <Pressable key={w.id} onPress={() => hit && open(hit)} onLongPress={() => unwatch(w.id)} style={{ paddingVertical: 12, borderBottomWidth: 1, borderColor: c.line, gap: 2 }}>
+            <Text style={{ fontFamily: font.bold, fontSize: 16, color: c.ink }}>{w.name}{hit ? <Text style={{ fontSize: 12, backgroundColor: c.tag, color: c.onTag }}>{"  CHEAPER NOW  "}</Text> : null}</Text>
+            <Text style={{ fontFamily: font.body, fontSize: 13, color: c.muted }}>Under {w.label}{hit ? ` · now ${hit.text} at ${storeName(hit.store)}` : " · not yet"} · long-press to remove</Text>
+          </Pressable>
+        );
+      })}
+      <Text style={{ fontFamily: font.body, fontSize: 13, color: c.muted, marginTop: 16 }}>For now these alerts come from the app itself, so price watches are checked when you open it. Once the backend is built, they'll arrive as push notifications on Friday morning.</Text>
+    </ScrollView>
   );
 }
