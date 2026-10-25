@@ -1,0 +1,1361 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "ExpoFileSystem",
+    "printedName": "ExpoFileSystem",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "Exported",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "Exported"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "QuickLook",
+        "printedName": "QuickLook",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "Exported"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoFileSystem_ios_objc",
+        "printedName": "ExpoFileSystem_ios_objc",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "Exported"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "MobileCoreServices",
+        "printedName": "MobileCoreServices",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "UIKit",
+        "printedName": "UIKit",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "UniformTypeIdentifiers",
+        "printedName": "UniformTypeIdentifiers",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "CryptoKit",
+        "printedName": "CryptoKit",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "UniformTypeIdentifiers",
+        "printedName": "UniformTypeIdentifiers",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "QuickLook",
+        "printedName": "QuickLook",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FileSystemModule",
+        "printedName": "FileSystemModule",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "definition",
+            "printedName": "definition()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ModuleDefinition",
+                "printedName": "ExpoModulesCore.ModuleDefinition",
+                "usr": "s:15ExpoModulesCore16ModuleDefinitionC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ExpoFileSystem0bC6ModuleC10definition0A11ModulesCore0D10DefinitionCyF",
+            "mangledName": "$s14ExpoFileSystem0bC6ModuleC10definition0A11ModulesCore0D10DefinitionCyF",
+            "moduleName": "ExpoFileSystem",
+            "declAttributes": [
+              "Final",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(appContext:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FileSystemModule",
+                "printedName": "ExpoFileSystem.FileSystemModule",
+                "usr": "s:14ExpoFileSystem0bC6ModuleC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AppContext",
+                "printedName": "ExpoModulesCore.AppContext",
+                "usr": "c:@M@ExpoModulesCore@objc(cs)EXAppContext"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:14ExpoFileSystem0bC6ModuleC10appContextAC0A11ModulesCore03AppF0C_tcfc",
+            "mangledName": "$s14ExpoFileSystem0bC6ModuleC10appContextAC0A11ModulesCore03AppF0C_tcfc",
+            "moduleName": "ExpoFileSystem",
+            "overriding": true,
+            "implicit": true,
+            "declAttributes": [
+              "Required"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:14ExpoFileSystem0bC6ModuleC",
+        "mangledName": "$s14ExpoFileSystem0bC6ModuleC",
+        "moduleName": "ExpoFileSystem",
+        "intro_iOS": "14",
+        "intro_tvOS": "14",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "Available",
+          "Available"
+        ],
+        "superclassUsr": "s:15ExpoModulesCore10BaseModuleC",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ExpoModulesCore.BaseModule"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "AnyModule",
+            "printedName": "AnyModule",
+            "usr": "s:15ExpoModulesCore9AnyModuleP",
+            "mangledName": "$s15ExpoModulesCore9AnyModuleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AnyArgument",
+            "printedName": "AnyArgument",
+            "usr": "s:15ExpoModulesCore11AnyArgumentP",
+            "mangledName": "$s15ExpoModulesCore11AnyArgumentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "EventEmitter",
+            "printedName": "EventEmitter",
+            "usr": "s:15ExpoModulesCore12EventEmitterP",
+            "mangledName": "$s15ExpoModulesCore12EventEmitterP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "QuickLook",
+        "printedName": "QuickLook",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "UniformTypeIdentifiers",
+        "printedName": "UniformTypeIdentifiers",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Darwin",
+        "printedName": "Darwin",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FileSystemBackgroundSessionHandler",
+        "printedName": "FileSystemBackgroundSessionHandler",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "invokeCompletionHandler",
+            "printedName": "invokeCompletionHandler(forSessionIdentifier:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@ExpoFileSystem@objc(cs)FileSystemBackgroundSessionHandler(im)invokeCompletionHandlerForSessionIdentifier:",
+            "mangledName": "$s14ExpoFileSystem0bC24BackgroundSessionHandlerC016invokeCompletionF003forE10IdentifierySS_tF",
+            "moduleName": "ExpoFileSystem",
+            "objc_name": "invokeCompletionHandlerForSessionIdentifier:",
+            "declAttributes": [
+              "Final",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "application",
+            "printedName": "application(_:handleEventsForBackgroundURLSession:completionHandler:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "UIApplication",
+                "printedName": "UIKit.UIApplication",
+                "usr": "c:objc(cs)UIApplication"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "() -> ()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ]
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@ExpoFileSystem@objc(cs)FileSystemBackgroundSessionHandler(im)application:handleEventsForBackgroundURLSession:completionHandler:",
+            "mangledName": "$s14ExpoFileSystem0bC24BackgroundSessionHandlerC11application_015handleEventsForD10URLSession010completionF0ySo13UIApplicationC_SSyyctF",
+            "moduleName": "ExpoFileSystem",
+            "objc_name": "application:handleEventsForBackgroundURLSession:completionHandler:",
+            "declAttributes": [
+              "Final",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FileSystemBackgroundSessionHandler",
+                "printedName": "ExpoFileSystem.FileSystemBackgroundSessionHandler",
+                "usr": "c:@M@ExpoFileSystem@objc(cs)FileSystemBackgroundSessionHandler"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@ExpoFileSystem@objc(cs)FileSystemBackgroundSessionHandler(im)init",
+            "mangledName": "$s14ExpoFileSystem0bC24BackgroundSessionHandlerCACycfc",
+            "moduleName": "ExpoFileSystem",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Preconcurrency",
+              "Custom",
+              "Required"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@ExpoFileSystem@objc(cs)FileSystemBackgroundSessionHandler",
+        "mangledName": "$s14ExpoFileSystem0bC24BackgroundSessionHandlerC",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "Preconcurrency",
+          "Custom",
+          "Final",
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:@M@ExpoModulesCore@objc(cs)EXBaseAppDelegateSubscriber",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ExpoModulesCore.BaseExpoAppDelegateSubscriber",
+          "UIKit.UIResponder",
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "ExpoAppDelegateSubscriberProtocol",
+            "printedName": "ExpoAppDelegateSubscriberProtocol",
+            "usr": "c:@M@ExpoModulesCore@objc(pl)EXAppDelegateSubscriberProtocol",
+            "mangledName": "$s15ExpoModulesCore0A29AppDelegateSubscriberProtocolP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Photos",
+        "printedName": "Photos",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Photos",
+        "printedName": "Photos",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FileSystemLegacyModule",
+        "printedName": "FileSystemLegacyModule",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "definition",
+            "printedName": "definition()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "ModuleDefinition",
+                "printedName": "ExpoModulesCore.ModuleDefinition",
+                "usr": "s:15ExpoModulesCore16ModuleDefinitionC"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "s:14ExpoFileSystem0bC12LegacyModuleC10definition0A11ModulesCore0E10DefinitionCyF",
+            "mangledName": "$s14ExpoFileSystem0bC12LegacyModuleC10definition0A11ModulesCore0E10DefinitionCyF",
+            "moduleName": "ExpoFileSystem",
+            "declAttributes": [
+              "Final",
+              "AccessControl"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(appContext:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FileSystemLegacyModule",
+                "printedName": "ExpoFileSystem.FileSystemLegacyModule",
+                "usr": "s:14ExpoFileSystem0bC12LegacyModuleC"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "AppContext",
+                "printedName": "ExpoModulesCore.AppContext",
+                "usr": "c:@M@ExpoModulesCore@objc(cs)EXAppContext"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:14ExpoFileSystem0bC12LegacyModuleC10appContextAC0A11ModulesCore03AppG0C_tcfc",
+            "mangledName": "$s14ExpoFileSystem0bC12LegacyModuleC10appContextAC0A11ModulesCore03AppG0C_tcfc",
+            "moduleName": "ExpoFileSystem",
+            "overriding": true,
+            "implicit": true,
+            "declAttributes": [
+              "Required"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "s:14ExpoFileSystem0bC12LegacyModuleC",
+        "mangledName": "$s14ExpoFileSystem0bC12LegacyModuleC",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "Final",
+          "AccessControl"
+        ],
+        "superclassUsr": "s:15ExpoModulesCore10BaseModuleC",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ExpoModulesCore.BaseModule"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "AnyModule",
+            "printedName": "AnyModule",
+            "usr": "s:15ExpoModulesCore9AnyModuleP",
+            "mangledName": "$s15ExpoModulesCore9AnyModuleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AnyArgument",
+            "printedName": "AnyArgument",
+            "usr": "s:15ExpoModulesCore11AnyArgumentP",
+            "mangledName": "$s15ExpoModulesCore11AnyArgumentP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "EventEmitter",
+            "printedName": "EventEmitter",
+            "usr": "s:15ExpoModulesCore12EventEmitterP",
+            "mangledName": "$s15ExpoModulesCore12EventEmitterP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "CoreServices",
+        "printedName": "CoreServices",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "ExpoModulesCore",
+        "printedName": "ExpoModulesCore",
+        "declKind": "Import",
+        "moduleName": "ExpoFileSystem"
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/intermediates\/products\/release\/ExpoFileSystem\/Build\/Intermediates.noindex\/expo-file-system.build\/Release-iphoneos\/ExpoFileSystem.build\/DerivedSources\/resource_bundle_accessor.swift",
+      "kind": "StringLiteral",
+      "offset": 295,
+      "length": 33,
+      "value": "\"expo-file-system_ExpoFileSystem\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/intermediates\/products\/release\/ExpoFileSystem\/Build\/Intermediates.noindex\/expo-file-system.build\/Release-iphoneos\/ExpoFileSystem.build\/DerivedSources\/resource_bundle_accessor.swift",
+      "kind": "Array",
+      "offset": 975,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/intermediates\/products\/release\/ExpoFileSystem\/Build\/Intermediates.noindex\/expo-file-system.build\/Release-iphoneos\/ExpoFileSystem.build\/DerivedSources\/resource_bundle_accessor.swift",
+      "kind": "StringLiteral",
+      "offset": 1502,
+      "length": 9,
+      "value": "\".bundle\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/intermediates\/products\/release\/ExpoFileSystem\/Build\/Intermediates.noindex\/expo-file-system.build\/Release-iphoneos\/ExpoFileSystem.build\/DerivedSources\/resource_bundle_accessor.swift",
+      "kind": "StringLiteral",
+      "offset": 1654,
+      "length": 61,
+      "value": "\"unable to find bundle named expo-file-system_ExpoFileSystem\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/BackgroundSessionCompletion.swift",
+      "kind": "BooleanLiteral",
+      "offset": 305,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/BackgroundSessionCompletion.swift",
+      "kind": "BooleanLiteral",
+      "offset": 337,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/BackgroundSessionCompletion.swift",
+      "kind": "Array",
+      "offset": 399,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/BackgroundSessionCompletion.swift",
+      "kind": "Dictionary",
+      "offset": 451,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/BackgroundSessionCompletion.swift",
+      "kind": "Dictionary",
+      "offset": 509,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FilePickingUtils.swift",
+      "kind": "BooleanLiteral",
+      "offset": 887,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownload.swift",
+      "kind": "StringLiteral",
+      "offset": 585,
+      "length": 43,
+      "value": "\"expo.modules.filesystem.DownloadTaskStore\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownload.swift",
+      "kind": "Dictionary",
+      "offset": 686,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownload.swift",
+      "kind": "Dictionary",
+      "offset": 749,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownload.swift",
+      "kind": "FloatLiteral",
+      "offset": 6507,
+      "length": 3,
+      "value": "0.1"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownload.swift",
+      "kind": "IntegerLiteral",
+      "offset": 6562,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "Dictionary",
+      "offset": 1793,
+      "length": 3,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "StringLiteral",
+      "offset": 6490,
+      "length": 25,
+      "value": "\"expo.modules.filesystem\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "StringLiteral",
+      "offset": 6527,
+      "length": 62,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "StringLiteral",
+      "offset": 6547,
+      "length": 1,
+      "value": "\".expo-file-system.network-task.background\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "BooleanLiteral",
+      "offset": 6854,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "BooleanLiteral",
+      "offset": 7193,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "IntegerLiteral",
+      "offset": 11121,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemDownloadTask.swift",
+      "kind": "FloatLiteral",
+      "offset": 11178,
+      "length": 3,
+      "value": "0.1"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFile.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3275,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFile.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3620,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFile.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3896,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFileHandle.swift",
+      "kind": "StringLiteral",
+      "offset": 108,
+      "length": 3,
+      "value": "\"r\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFileHandle.swift",
+      "kind": "StringLiteral",
+      "offset": 150,
+      "length": 4,
+      "value": "\"rw\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFileHandle.swift",
+      "kind": "StringLiteral",
+      "offset": 187,
+      "length": 3,
+      "value": "\"w\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFileHandle.swift",
+      "kind": "StringLiteral",
+      "offset": 245,
+      "length": 4,
+      "value": "\"wa\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFileHandle.swift",
+      "kind": "StringLiteral",
+      "offset": 322,
+      "length": 4,
+      "value": "\"wt\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemFileHandle.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1056,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemModule.swift",
+      "kind": "BooleanLiteral",
+      "offset": 324,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 154,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 191,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 229,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 343,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 418,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1334,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "IntegerLiteral",
+      "offset": 176,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "IntegerLiteral",
+      "offset": 197,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "StringLiteral",
+      "offset": 356,
+      "length": 6,
+      "value": "\"POST\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1103,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1188,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "FloatLiteral",
+      "offset": 1245,
+      "length": 3,
+      "value": "0.1"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "BooleanLiteral",
+      "offset": 3786,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemUploadTask.swift",
+      "kind": "BooleanLiteral",
+      "offset": 7858,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "IntegerLiteral",
+      "offset": 188,
+      "length": 3,
+      "value": "100"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "StringLiteral",
+      "offset": 298,
+      "length": 10,
+      "value": "\"modified\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "StringLiteral",
+      "offset": 337,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "BooleanLiteral",
+      "offset": 373,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "IntegerLiteral",
+      "offset": 416,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "StringLiteral",
+      "offset": 804,
+      "length": 25,
+      "value": "\"expo.filesystem.watcher\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "Array",
+      "offset": 998,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/FileSystemWatcher.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1038,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemBackgroundSessionHandler.swift",
+      "kind": "IntegerLiteral",
+      "offset": 430,
+      "length": 2,
+      "value": "25"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemHelpers.swift",
+      "kind": "StringLiteral",
+      "offset": 132,
+      "length": 7,
+      "value": "\"ph:\/\/\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemHelpers.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1702,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyModule.swift",
+      "kind": "StringLiteral",
+      "offset": 140,
+      "length": 35,
+      "value": "\"expo-file-system.downloadProgress\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyModule.swift",
+      "kind": "StringLiteral",
+      "offset": 212,
+      "length": 33,
+      "value": "\"expo-file-system.uploadProgress\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 142,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 380,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 454,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 896,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 969,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "BooleanLiteral",
+      "offset": 1002,
+      "length": 5,
+      "value": "false"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1510,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1532,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "StringLiteral",
+      "offset": 1589,
+      "length": 6,
+      "value": "\"POST\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "StringLiteral",
+      "offset": 1609,
+      "length": 5,
+      "value": "\"PUT\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "StringLiteral",
+      "offset": 1630,
+      "length": 7,
+      "value": "\"PATCH\""
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1705,
+      "length": 1,
+      "value": "0"
+    },
+    {
+      "filePath": "\/Users\/expo\/workingdir\/build\/packages\/expo-file-system\/.expo-prebuild\/generated\/ExpoFileSystem\/ExpoFileSystem\/Legacy\/FileSystemLegacyRecords.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1726,
+      "length": 1,
+      "value": "1"
+    }
+  ]
+}

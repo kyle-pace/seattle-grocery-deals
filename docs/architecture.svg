@@ -41,7 +41,7 @@
   <rect class="plan" x="1000" y="560" width="260" height="90" rx="10"/><text class="t" x="1018" y="598">Apple Push (APNs)</text><text class="s" x="1018" y="626">and Android delivery</text>
 
   <!-- 5 people -->
-  <rect class="box" x="1320" y="380" width="240" height="260" rx="22" style="fill:#FFE45C"/><text class="t" x="1340" y="418">iPhone app</text><text class="s" x="1340" y="446" style="fill:#141414">Expo, Liquid Glass</text><text class="s" x="1340" y="470" style="fill:#141414">List in Reminders</text><text class="s" x="1340" y="494" style="fill:#141414">Watches, trip plan</text>
+  <rect class="box" x="1320" y="380" width="240" height="260" rx="22" style="fill:#FFE45C"/><text class="t" x="1340" y="418">iPhone app</text><text class="s" x="1340" y="446" style="fill:#141414">SwiftUI, Liquid Glass</text><text class="s" x="1340" y="470" style="fill:#141414">List in Reminders</text><text class="s" x="1340" y="494" style="fill:#141414">Widget, Siri, watches</text>
   <rect class="box" x="1320" y="700" width="240" height="110" rx="10"/><text class="t" x="1340" y="738">Website</text><text class="s" x="1340" y="766">seattlegrocery.deals</text>
   <rect class="box" x="1320" y="190" width="240" height="96" rx="10" style="fill:#E8F0EA"/><text class="t" x="1340" y="228">Reminders</text><text class="s" x="1340" y="256">Shared list, Siri</text>
 

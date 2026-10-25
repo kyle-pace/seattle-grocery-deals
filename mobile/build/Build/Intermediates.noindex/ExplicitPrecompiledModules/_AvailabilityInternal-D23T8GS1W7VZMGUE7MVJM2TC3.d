@@ -1,0 +1,2 @@
+moduledependenciestarget: \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/SDKSettings.json

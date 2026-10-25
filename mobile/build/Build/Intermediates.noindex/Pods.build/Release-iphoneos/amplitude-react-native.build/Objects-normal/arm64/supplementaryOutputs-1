@@ -1,0 +1,12 @@
+{
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/@amplitude/analytics-react-native/ios/AmplitudeReactNative.swift" : {
+    "abi-baseline-json" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude_react_native.abi.json",
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude-react-native-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude-react-native-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude-react-native-primary.dia",
+    "objc-header" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude_react_native-Swift.h",
+    "swiftdoc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude_react_native.swiftdoc",
+    "swiftmodule" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude_react_native.swiftmodule",
+    "swiftsourceinfo" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/amplitude-react-native.build/Objects-normal/arm64/amplitude_react_native.swiftsourceinfo"
+  }
+}

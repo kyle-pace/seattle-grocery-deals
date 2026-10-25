@@ -1,0 +1,19 @@
+moduledependenciestarget: \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/SDKSettings.json \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/_DarwinFoundation1-A1RWDSVKAN53XQ0NPC6V3VCCF.pcm \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/usr/include/DarwinFoundation1.modulemap \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/21/include/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdbool-2GJCBSCV8FPG2AM4SAFLQILPN.pcm \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/_Builtin_stdint-18YMUH5AKUGWERL3DPMS9CDRE.pcm \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreGraphics-6GKFACPDP8XU3ILATAOOD17F8.pcm \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/usr/include/ObjectiveC.modulemap \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-6OW6YUSU79L4R1GXVUU5HY0IZ.pcm \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreVideo-1NH53LQ8SF7YP1943WJGMBY50.pcm \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/IOSurface.framework/Modules/module.modulemap \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/OpenGLES.framework/Modules/module.modulemap \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/Metal.framework/Modules/module.modulemap \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/CoreVideo.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/ImageIO-A4JF7CZNEHDY2OSF9EID1YFKB.pcm \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/System/Library/Frameworks/ImageIO.framework/Modules/module.modulemap

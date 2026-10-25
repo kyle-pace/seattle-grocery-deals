@@ -1,0 +1,6 @@
+framework module ExpoFont {
+    use React
+    header "ExpoFont-Swift.h"
+
+    export *
+}

@@ -1,0 +1,8 @@
+framework module ExpoModulesCore {
+    use React
+    umbrella header "ExpoModulesCore_umbrella.h"
+    header "ExpoModulesCore-Swift.h"
+
+    export *
+    module * { export * }
+}

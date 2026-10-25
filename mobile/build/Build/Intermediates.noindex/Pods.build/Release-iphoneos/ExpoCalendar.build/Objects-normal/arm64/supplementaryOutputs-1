@@ -1,0 +1,12 @@
+{
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-calendar/ios/Records/AlarmRecords.swift" : {
+    "abi-baseline-json" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar.abi.json",
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar-primary.dia",
+    "objc-header" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar-Swift.h",
+    "swiftdoc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar.swiftdoc",
+    "swiftmodule" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar.swiftmodule",
+    "swiftsourceinfo" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoCalendar.build/Objects-normal/arm64/ExpoCalendar.swiftsourceinfo"
+  }
+}

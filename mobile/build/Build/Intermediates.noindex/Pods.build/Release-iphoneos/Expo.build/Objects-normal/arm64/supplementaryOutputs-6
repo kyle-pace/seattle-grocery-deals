@@ -1,0 +1,12 @@
+{
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo/ios/Expo/AppDelegatesLoaderDelegate.swift" : {
+    "abi-baseline-json" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo.abi.json",
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo-primary.dia",
+    "objc-header" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo-Swift.h",
+    "swiftdoc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo.swiftdoc",
+    "swiftmodule" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo.swiftmodule",
+    "swiftsourceinfo" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/Expo.build/Objects-normal/arm64/Expo.swiftsourceinfo"
+  }
+}
