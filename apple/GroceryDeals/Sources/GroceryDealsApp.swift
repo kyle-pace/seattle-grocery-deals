@@ -1,19 +1,29 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct GroceryDealsApp: App {
     @State private var store = FeedStore()
     @State private var list = ListStore()
+    @State private var alerts = AlertsStore()
     @Environment(\.scenePhase) private var phase
+    private let presenter = NotificationPresenter()
 
-    init() { Analytics.start() }
+    init() {
+        Analytics.start()
+        UNUserNotificationCenter.current().delegate = presenter
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(store)
                 .environment(list)
-                .task { await store.refresh() }
+                .environment(alerts)
+                .task {
+                    await store.refresh()
+                    if let feed = store.feed { alerts.checkWatches(feed, storeName: store.storeName) }
+                }
                 // Pick up changes made in Reminders (Siri, a shared list) when coming back.
                 .onChange(of: phase) { _, p in if p == .active { list.reload() } }
         }
@@ -28,6 +38,7 @@ struct RootView: View {
     @State private var choosingReminders = false
     @Environment(FeedStore.self) private var store
     @Environment(ListStore.self) private var list
+    @Environment(AlertsStore.self) private var alerts
 
     var body: some View {
         @Bindable var list = list
@@ -42,6 +53,14 @@ struct RootView: View {
         .tabViewStyle(.sidebarAdaptable)
         .tint(Theme.brand)
         .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
+        // Keep "ends tomorrow" notifications in step with the list and the week.
+        .task(id: "\(store.feed?.week ?? "")|\(list.openItems.map(\.text).joined(separator: ","))|\(alerts.endingSoon)") {
+            let matches = list.openItems.compactMap { item -> (text: String, deal: Deal, store: String)? in
+                let d = item.dealID.flatMap { id in store.items.first { $0.id == id } } ?? matchDeal(item.text, in: store.items)
+                return d.map { (item.text, $0, store.storeName($0.store)) }
+            }
+            await alerts.scheduleEndingSoon(matches)
+        }
         // First add anywhere: ask where the list should live.
         .confirmationDialog("Use your Reminders list?", isPresented: Binding(get: { list.pendingAdd != nil && !choosingReminders }, set: { if !$0 && !choosingReminders { list.pendingAdd = nil } }), titleVisibility: .visible) {
             Button("Use Reminders") {
