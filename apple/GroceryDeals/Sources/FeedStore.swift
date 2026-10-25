@@ -10,7 +10,11 @@ final class FeedStore {
     private(set) var feed: Feed?
     private(set) var loading = false
     var vegetarianOnly: Bool {
-        didSet { UserDefaults.standard.set(vegetarianOnly, forKey: "sgd.vegOnly") }
+        didSet {
+            UserDefaults.standard.set(vegetarianOnly, forKey: "sgd.vegOnly")
+            Analytics.track("Toggled Vegetarian Only", ["on": vegetarianOnly])
+            Analytics.setUser(["veg_only": vegetarianOnly])
+        }
     }
 
     init() {

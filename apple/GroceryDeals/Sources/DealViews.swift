@@ -35,6 +35,35 @@ struct PriceTag: View {
     }
 }
 
+/// "+" adds a deal to the list; the checkmark takes it back off.
+struct AddButton: View {
+    @Environment(FeedStore.self) private var store
+    @Environment(ListStore.self) private var list
+    let deal: Deal
+    var body: some View {
+        let added = list.contains(deal)
+        Button {
+            if added { list.remove(deal: deal) } else { list.request(shortName(deal.name), deal: deal, storeName: store.storeName(deal.store)) }
+        } label: {
+            Image(systemName: added ? "checkmark" : "plus")
+                .font(.system(size: 15, weight: .bold))
+                .frame(width: 36, height: 36)
+                .foregroundStyle(added ? Theme.paper : Theme.ink)
+                .background(Circle().fill(added ? Theme.ink : Theme.surface))
+                .overlay(Circle().strokeBorder(Theme.ink, lineWidth: 2))
+                .frame(width: 44, height: 44)
+        }
+        .buttonStyle(.plain)
+        .sensoryFeedback(.success, trigger: added)
+        .accessibilityLabel(added ? "Remove \(deal.name) from your list" : "Add \(deal.name) to your list")
+    }
+}
+
+/// "Fuyu Persimmon (California), Jumbo" -> "Fuyu Persimmon"
+func shortName(_ name: String) -> String {
+    String(name.split(whereSeparator: { $0 == "," || $0 == "(" }).first ?? Substring(name)).trimmingCharacters(in: .whitespaces)
+}
+
 /// One deal: name, store and price details on the left, the price on the right.
 struct DealRow: View {
     @Environment(FeedStore.self) private var store
@@ -57,11 +86,11 @@ struct DealRow: View {
             }
             Spacer(minLength: 8)
             PriceTag(deal: deal)
+            AddButton(deal: deal)
         }
         .padding(.vertical, 12)
         .overlay(alignment: .bottom) { Rectangle().fill(Theme.line).frame(height: 1) }
         .contentShape(Rectangle())
-        .accessibilityElement(children: .combine)
     }
 
     private var meta: some View {
@@ -91,6 +120,7 @@ struct Badge: View {
 /// The deal sheet: big price, why it's a deal, the same item elsewhere, the store.
 struct DealDetail: View {
     @Environment(FeedStore.self) private var store
+    @Environment(ListStore.self) private var list
     @Environment(\.dismiss) private var dismiss
     let deal: Deal
     var openStore: ((String) -> Void)? = nil
@@ -112,6 +142,14 @@ struct DealDetail: View {
                     if !deal.why.isEmpty { Text(deal.why).font(.body(17)).foregroundStyle(Theme.ink) }
                     if let notes = deal.notes { Text(notes).font(.body(15)).foregroundStyle(Theme.muted) }
 
+                    let added = list.contains(deal)
+                    Button {
+                        if added { list.remove(deal: deal) } else { list.request(shortName(deal.name), deal: deal, storeName: store.storeName(deal.store)) }
+                    } label: {
+                        Label(added ? "On your list (tap to remove)" : "Add to list", systemImage: added ? "checkmark" : "plus")
+                            .font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)
+                    }
+                    .buttonStyle(.glassProminent).tint(Theme.ink).padding(.top, 8)
                     if let openStore {
                         Button { dismiss(); openStore(deal.store) } label: {
                             Text("More at \(store.storeName(deal.store))").font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)
@@ -145,5 +183,6 @@ struct DealDetail: View {
             .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
         }
         .presentationDetents([.medium, .large])
+        .onAppear { Analytics.track("Viewed Deal", Analytics.deal(deal)) }
     }
 }

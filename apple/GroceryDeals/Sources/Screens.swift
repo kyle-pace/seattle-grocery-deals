@@ -59,6 +59,7 @@ struct ThisWeekView: View {
             }
             .navigationTitle("This week")
             .searchable(text: $query, prompt: "Deals and stores")
+            .onSubmit(of: .search) { Analytics.track("Searched", ["query_length": query.count, "results": store.search(query).count, "screen": "this_week"]) }
             .refreshable { await store.refresh() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
         }
@@ -147,7 +148,7 @@ struct StoreDetail: View {
                 Text([s.towns, s.readThisWeek && s.from != nil ? "Sale \(Dates.short(s.from)) to \(Dates.short(s.through))" : ""].filter { !$0.isEmpty }.joined(separator: " · "))
                     .font(.body(15)).foregroundStyle(Theme.muted)
                 if let ad = s.flyer_url.flatMap(URL.init(string:)) {
-                    Button { openURL(ad) } label: {
+                    Button { Analytics.track("Opened Weekly Ad", ["store": s.id]); openURL(ad) } label: {
                         Label("See \(s.name)'s weekly ad", systemImage: "arrow.up.right").font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)
                     }
                     .buttonStyle(.glassProminent).tint(Theme.ink)
@@ -204,20 +205,5 @@ struct Tile: View {
         .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Theme.lineUI, lineWidth: 1.5))
         .padding(.top, 10)
         .accessibilityElement(children: .combine)
-    }
-}
-
-// MARK: Coming in stage 2
-
-struct ComingSoon: View {
-    let title: String
-    let text: String
-    var body: some View {
-        NavigationStack {
-            Page {
-                Text(text).font(.body(17)).foregroundStyle(Theme.muted).padding(.top, 12)
-            }
-            .navigationTitle(title)
-        }
     }
 }

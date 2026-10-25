@@ -19,11 +19,15 @@ Needs Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew inst
 - `Sources/Theme.swift`: Newsprint tokens and fonts (Barlow Condensed, Atkinson Hyperlegible; both scale with Dynamic Type).
 - `Sources/DealViews.swift`: price tag, deal row, deal sheet.
 - `Sources/Screens.swift`: This week (search), Aisles, Stores, store page.
-- `Sources/GroceryDealsApp.swift`: app entry and native tabs (Liquid Glass on iOS 26, sidebar on iPad).
+- `Sources/ListStore.swift`: the grocery list, in the app or in a Reminders list (EventKit); deal items carry price, store and the sale end date as the due date; whole-word matching of list items to deals.
+- `Sources/ListScreens.swift`: List tab, Reminders list picker, Settings (privacy switch).
+- `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website and Expo app: no IP, carrier, vendor ID or city; off switch in Settings.
+- `Sources/GroceryDealsApp.swift`: app entry, native tabs (Liquid Glass on iOS 26, sidebar on iPad), and the "where should your list live?" prompt on the first add.
 
 ## Stages
 
 1. **Done:** shell, live data, This week, Aisles, Stores, deal sheet, share.
-2. List (in app or Reminders via EventKit), trip plan, alerts and price watches, Amplitude (private settings, as in `mobile/`).
+2. **Done:** List (in the app or Reminders via EventKit), + and checkmark on every deal, Amplitude with private settings. (Trip plan dropped.)
+2b. Alerts: Friday reminder, ending soon, price watches.
 3. Widget, Siri and Shortcuts (App Intents).
 4. With the paid Apple account: TestFlight, Universal Links, Firebase push. Then remove `mobile/`.
