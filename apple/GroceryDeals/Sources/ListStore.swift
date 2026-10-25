@@ -7,7 +7,7 @@ import Observation
 /// end date as the due date, so Reminders shows when the deal expires.
 @MainActor @Observable
 final class ListStore {
-    struct Item: Codable, Identifiable, Hashable {
+    struct Item: Codable, Identifiable, Hashable, Sendable {
         var id: String
         var text: String
         var done = false
@@ -29,7 +29,7 @@ final class ListStore {
     var pendingAdd: PendingAdd?
 
     private let events = EKEventStore()
-    private static let dealURL = "grocerydeals://deal/"
+    nonisolated private static let dealURL = "grocerydeals://deal/"
 
     init() {
         if let data = UserDefaults.standard.data(forKey: "sgd.listSource") {
@@ -149,13 +149,25 @@ final class ListStore {
         // The in-app list may have changed from Siri (another ListStore instance).
         if !usesReminders { items = Self.savedAppItems(); return }
         guard case .reminders(let id, _) = source, let list = events.calendar(withIdentifier: id) else { return }
-        let predicate = events.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: [list])
-        events.fetchReminders(matching: predicate) { reminders in
-            let fetched = (reminders ?? []).map { r in
-                Item(id: r.calendarItemIdentifier, text: r.title ?? "", done: false,
-                     dealID: r.url?.absoluteString.hasPrefix(Self.dealURL) == true ? String(r.url!.absoluteString.dropFirst(Self.dealURL.count)) : nil)
+        nonisolated(unsafe) let predicate = events.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: [list])
+        nonisolated(unsafe) let store = events
+        Task { items = await Self.fetchItems(store, predicate) }
+    }
+
+    /// EventKit calls back on a background queue, so this must not be main-actor code
+    /// (Swift 6 stops the app if main-actor code runs off the main thread).
+    nonisolated private static func fetchItems(_ events: EKEventStore, _ predicate: NSPredicate) async -> [Item] {
+        nonisolated(unsafe) let events = events
+        nonisolated(unsafe) let predicate = predicate
+        return await withCheckedContinuation { continuation in
+            events.fetchReminders(matching: predicate) { reminders in
+                let items = (reminders ?? []).map { r in
+                    let url = r.url?.absoluteString ?? ""
+                    return Item(id: r.calendarItemIdentifier, text: r.title ?? "", done: false,
+                                dealID: url.hasPrefix(dealURL) ? String(url.dropFirst(dealURL.count)) : nil)
+                }
+                continuation.resume(returning: items)
             }
-            Task { @MainActor in self.items = fetched }
         }
     }
 
