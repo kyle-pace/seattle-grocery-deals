@@ -243,6 +243,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <meta name="twitter:card" content="summary">`}
 <meta name="theme-color" content="#1d4d33">
 <link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${url("assets/apple-touch-icon.png")}">
 <link rel="preload" href="${url("assets/fonts/atkinson-hyperlegible-next.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${url("assets/fonts/barlow-condensed-700.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset("assets/style.css")}">
@@ -575,7 +576,7 @@ ${s.no_online_flyer ? "" : `<section class="block" aria-labelledby="h-past">
 
 // ---------- persimmon season ----------
 
-const PERSIMMON_SVG = `<svg viewBox="0 0 64 64" width="21" height="21" aria-hidden="true"><ellipse cx="32" cy="38" rx="26" ry="21" fill="#f07c1e"/><ellipse cx="32" cy="40" rx="22" ry="16" fill="#f7932f"/><ellipse cx="22" cy="33" rx="6" ry="4" fill="#ffc27a" opacity=".75"/><path d="M32 17l-11-4 5 8-10 3h11l5 7 5-7h11l-10-3 5-8z" fill="#3f7a2b"/><rect x="30.5" y="10" width="3" height="7" rx="1.5" fill="#5b3a1e"/></svg>`;
+const PERSIMMON_SVG = `<svg viewBox="0 0 64 64" width="21" height="21" aria-hidden="true"><path d="M5 39c0-13 12-19 27-19s27 6 27 19-12 20-27 20S5 52 5 39z" fill="#e2601a"/><path d="M10 41c0-10 10-15 22-15s22 5 22 15-10 15-22 15-22-5-22-15z" fill="#f47f24"/><ellipse cx="20" cy="36" rx="6" ry="3.6" fill="#ffc27a" opacity=".85"/><g transform="translate(32 24) scale(1 .62)" fill="#9cc24a" stroke="#2f5a1f" stroke-width="1.6"><ellipse cx="9" rx="10" ry="5.5" transform="rotate(35)"/><ellipse cx="9" rx="10" ry="5.5" transform="rotate(145)"/><ellipse cx="9" rx="10" ry="5.5" transform="rotate(215)"/><ellipse cx="9" rx="10" ry="5.5" transform="rotate(325)"/></g><rect x="30.3" y="14.5" width="3.4" height="8" rx="1.7" fill="#6b4423"/></svg>`;
 
 function inPersimmonSeason(iso) {
   const md = iso.slice(5);
