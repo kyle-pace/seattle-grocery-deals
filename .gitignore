@@ -3,3 +3,6 @@ dist/
 drafts/
 .DS_Store
 work/
+
+# Old Expo app (removed); keep stray local copies out of git.
+mobile/
