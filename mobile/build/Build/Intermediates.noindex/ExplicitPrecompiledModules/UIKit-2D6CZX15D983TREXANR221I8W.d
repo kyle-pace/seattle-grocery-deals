@@ -1,0 +1,26 @@
+moduledependenciestarget: \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/SDKSettings.json \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-A4GXTXOLW48PGJ92QZ8QN4JAV.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/usr/include/DarwinFoundation1.modulemap \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreFoundation.framework/Modules/module.modulemap \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/UIUtilities-5ZQCOVYWZSKYO2T9NZ7EEXJ42.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/SubFrameworks/UIUtilities.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreGraphics-B3HH1YQDUBRRQQFN1G9WM30XH.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreText-BVWM8J5SO5WDAI62KTB7GMJAF.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreText.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreImage-3SXFPX7E98368LFV6U7MSMMZT.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreImage.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/QuartzCore-B7GYXGAQIN2DC4B96ZJA4AUK8.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/QuartzCore.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreLocation-20Z4HAUFDWOOZWEE4XLA452MM.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreLocation.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreMotion-CAYHLTCPTY34OSTT0MXUYC0YA.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreMotion.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Symbols-2990S288ICNWE8GS5G3RRMJZ6.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/Symbols.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/FileProvider-5OOU8JQNAZS9U3J9PY2DLOSKD.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/FileProvider.framework/Modules/module.modulemap \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/UserNotifications-X2O4RZ6C2E1AUVC9YQTTEO7N.pcm \
+  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/UserNotifications.framework/Modules/module.modulemap

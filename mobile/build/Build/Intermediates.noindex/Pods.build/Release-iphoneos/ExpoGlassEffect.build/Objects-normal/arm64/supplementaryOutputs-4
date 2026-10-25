@@ -1,0 +1,12 @@
+{
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-glass-effect/ios/GlassContainer.swift" : {
+    "abi-baseline-json" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect.abi.json",
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.dia",
+    "objc-header" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-Swift.h",
+    "swiftdoc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect.swiftdoc",
+    "swiftmodule" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect.swiftmodule",
+    "swiftsourceinfo" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect.swiftsourceinfo"
+  }
+}

@@ -1,0 +1,12 @@
+framework module React {
+  umbrella header "React-umbrella.h"
+  header "RCTBridge+Private.h"
+  textual header "RCTComponentViewFactory.h"
+  textual header "RCTComponentViewProtocol.h"
+  textual header "RCTComponentViewRegistry.h"
+  textual header "RCTMountingManager.h"
+  textual header "RCTSurfacePresenter.h"
+  textual header "RCTViewComponentView.h"
+  export *
+  module * { export * }
+}

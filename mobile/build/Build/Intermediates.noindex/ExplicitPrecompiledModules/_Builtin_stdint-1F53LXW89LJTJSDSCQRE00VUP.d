@@ -1,0 +1,4 @@
+moduledependenciestarget: \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/SDKSettings.json \
+  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/_DarwinFoundation2-A2ONBQ2V75BQU6MLGC8IZF5R6.pcm \
+  /Applications/Utilities/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.1.sdk/usr/include/DarwinFoundation2.modulemap

@@ -1,0 +1,16 @@
+{
+  "" : {
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary.dia",
+    "emit-module-dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary-emit-module.dia",
+    "pch" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/ExpoAsset-primary.swiftdeps"
+  },
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo/node_modules/expo-asset/ios/AssetModule.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/AssetModule.o",
+    "llvm-bc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/AssetModule.bc",
+    "object" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoAsset.build/Objects-normal/arm64/AssetModule.o"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "" : {
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.dia",
+    "emit-module-dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary-emit-module.dia",
+    "pch" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/ExpoGlassEffect-primary.swiftdeps"
+  },
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-glass-effect/ios/GlassContainer.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassContainer.o",
+    "llvm-bc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassContainer.bc",
+    "object" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassContainer.o"
+  },
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-glass-effect/ios/GlassEffectModule.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassEffectModule.o",
+    "llvm-bc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassEffectModule.bc",
+    "object" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassEffectModule.o"
+  },
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-glass-effect/ios/GlassStyle.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassStyle.o",
+    "llvm-bc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassStyle.bc",
+    "object" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassStyle.o"
+  },
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-glass-effect/ios/GlassView.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassView.o",
+    "llvm-bc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassView.bc",
+    "object" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoGlassEffect.build/Objects-normal/arm64/GlassView.o"
+  }
+}

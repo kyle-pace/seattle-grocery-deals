@@ -1,0 +1,8 @@
+framework module ExpoModulesWorklets {
+    use React
+    umbrella header "ExpoModulesWorklets_umbrella.h"
+    header "ExpoModulesWorklets-Swift.h"
+
+    export *
+    module * { export * }
+}

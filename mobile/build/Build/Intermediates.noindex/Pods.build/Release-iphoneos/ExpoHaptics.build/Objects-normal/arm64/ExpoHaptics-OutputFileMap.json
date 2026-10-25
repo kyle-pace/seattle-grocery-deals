@@ -1,0 +1,16 @@
+{
+  "" : {
+    "const-values" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary.swiftconstvalues",
+    "dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary.d",
+    "diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary.dia",
+    "emit-module-dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary-emit-module.dia",
+    "pch" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/ExpoHaptics-primary.swiftdeps"
+  },
+  "/Users/kylepace/Developer/seattle-grocery-deals/mobile/node_modules/expo-haptics/ios/HapticsModule.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/HapticsModule.o",
+    "llvm-bc" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/HapticsModule.bc",
+    "object" : "/Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/Pods.build/Release-iphoneos/ExpoHaptics.build/Objects-normal/arm64/HapticsModule.o"
+  }
+}
