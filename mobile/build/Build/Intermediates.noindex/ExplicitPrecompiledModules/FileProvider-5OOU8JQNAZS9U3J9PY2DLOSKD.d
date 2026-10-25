@@ -1,6 +1,0 @@
-moduledependenciestarget: \
-  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/SDKSettings.json \
-  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/Foundation-A4GXTXOLW48PGJ92QZ8QN4JAV.pcm \
-  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
-  /Users/kylepace/Developer/seattle-grocery-deals/mobile/build/Build/Intermediates.noindex/ExplicitPrecompiledModules/CoreGraphics-B3HH1YQDUBRRQQFN1G9WM30XH.pcm \
-  /Users/kylepace/Downloads/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/module.modulemap

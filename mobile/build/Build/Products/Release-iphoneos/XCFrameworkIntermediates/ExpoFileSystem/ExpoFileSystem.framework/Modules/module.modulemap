@@ -1,8 +1,0 @@
-framework module ExpoFileSystem {
-    use React
-    umbrella header "ExpoFileSystem_umbrella.h"
-    header "ExpoFileSystem-Swift.h"
-
-    export *
-    module * { export * }
-}
