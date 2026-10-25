@@ -146,6 +146,8 @@ final class ListStore {
 
     /// Re-read Reminders (Siri or someone sharing the list may have changed it).
     func reload() {
+        // The in-app list may have changed from Siri (another ListStore instance).
+        if !usesReminders { items = Self.savedAppItems(); return }
         guard case .reminders(let id, _) = source, let list = events.calendar(withIdentifier: id) else { return }
         let predicate = events.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: [list])
         events.fetchReminders(matching: predicate) { reminders in

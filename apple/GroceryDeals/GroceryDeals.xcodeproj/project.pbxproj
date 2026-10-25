@@ -17,7 +17,9 @@
 		61EAE784F8205555826D880A /* BarlowCondensed_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */; };
 		63E7488D1AB83A2A0070D918 /* OFL-atkinson-hyperlegible.txt in Resources */ = {isa = PBXBuildFile; fileRef = C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */; };
 		64267422E7D9136407CEA5F4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
+		72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */; };
 		854B754C3F4613A79B2F522A /* AtkinsonHyperlegible_400Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */; };
+		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
 		D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE081C1EE741AEAB7005033E /* ListScreens.swift */; };
 		DC83A9A0DCCAA92A6B57B165 /* OFL-barlow-condensed.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */; };
 		F3B30BA65C172E3190D9F304 /* AtkinsonHyperlegible_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */; };
@@ -30,12 +32,14 @@
 		030270E4AFF9913A0A8A86E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AD16DEF9240A31DF79EA0CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AtkinsonHyperlegible_400Regular.ttf; sourceTree = "<group>"; };
+		16919D4F6B29C60454AF3D0D /* Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.swift; sourceTree = "<group>"; };
 		33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDealsApp.swift; sourceTree = "<group>"; };
 		34300759905B9585BA88F72D /* DealViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealViews.swift; sourceTree = "<group>"; };
 		352F5BB18C8111F694A1DAFE /* ListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStore.swift; sourceTree = "<group>"; };
 		6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GroceryDeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		84F994427923C400F45DB70C /* week.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = week.json; sourceTree = "<group>"; };
+		86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsStore.swift; sourceTree = "<group>"; };
 		8C7685CC51CA8311DC803DA0 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		900666ED70B2F3E6A406669D /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
@@ -62,11 +66,13 @@
 		4F5D7D77730F85828D6884E7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */,
 				A6B30268FA30809DBA50C0E7 /* Analytics.swift */,
 				34300759905B9585BA88F72D /* DealViews.swift */,
 				798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */,
 				33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */,
 				0AD16DEF9240A31DF79EA0CF /* Info.plist */,
+				16919D4F6B29C60454AF3D0D /* Intents.swift */,
 				DE081C1EE741AEAB7005033E /* ListScreens.swift */,
 				352F5BB18C8111F694A1DAFE /* ListStore.swift */,
 				8C7685CC51CA8311DC803DA0 /* Models.swift */,
@@ -197,10 +203,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */,
 				319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */,
 				1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */,
 				5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */,
 				F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */,
+				CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */,
 				D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */,
 				F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */,
 				279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */,
