@@ -22,6 +22,7 @@ targets:
       - Resources
     dependencies:
       - package: AmplitudeSwift
+      - target: DealsWidget
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery.native
@@ -45,3 +46,30 @@ targets:
           - AtkinsonHyperlegible_700Bold.ttf
         UILaunchScreen:
           UIColorName: ""
+  DealsWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Widget
+      - Sources/Models.swift
+      - Sources/Theme.swift
+      - Resources/Fonts
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery.native.widget
+        PRODUCT_NAME: DealsWidget
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Deals
+        SKIP_INSTALL: YES
+    info:
+      path: Widget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        UIAppFonts:
+          - BarlowCondensed_700Bold.ttf
+          - AtkinsonHyperlegible_400Regular.ttf
+          - AtkinsonHyperlegible_700Bold.ttf
