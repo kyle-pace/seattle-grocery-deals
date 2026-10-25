@@ -1,0 +1,40 @@
+# XcodeGen spec. Generate the Xcode project with: xcodegen generate
+name: GroceryDeals
+options:
+  bundleIdPrefix: deals.seattlegrocery
+  deploymentTarget:
+    iOS: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: 9BF66MY8TQ
+    CODE_SIGN_STYLE: Automatic
+targets:
+  GroceryDeals:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+      - Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery.native
+        PRODUCT_NAME: GroceryDeals
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Deals
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+    info:
+      path: Sources/Info.plist
+      properties:
+        UIAppFonts:
+          - BarlowCondensed_700Bold.ttf
+          - AtkinsonHyperlegible_400Regular.ttf
+          - AtkinsonHyperlegible_700Bold.ttf
+        UILaunchScreen:
+          UIColorName: ""
