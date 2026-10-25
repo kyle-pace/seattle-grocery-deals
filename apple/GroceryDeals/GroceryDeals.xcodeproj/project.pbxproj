@@ -11,22 +11,55 @@
 		24B72EE560CFC3050DA2FD19 /* week.json in Resources */ = {isa = PBXBuildFile; fileRef = 84F994427923C400F45DB70C /* week.json */; };
 		279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900666ED70B2F3E6A406669D /* Screens.swift */; };
+		31311B6DE3D8BAC6900486B8 /* AtkinsonHyperlegible_400Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */; };
 		319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B30268FA30809DBA50C0E7 /* Analytics.swift */; };
+		595E97078DA1D8CD786FAB83 /* OFL-barlow-condensed.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */; };
 		5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */; };
+		5B3C48156742D4D87B74A47D /* AtkinsonHyperlegible_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */; };
 		5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030270E4AFF9913A0A8A86E3 /* Assets.xcassets */; };
 		61EAE784F8205555826D880A /* BarlowCondensed_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */; };
 		63E7488D1AB83A2A0070D918 /* OFL-atkinson-hyperlegible.txt in Resources */ = {isa = PBXBuildFile; fileRef = C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */; };
 		64267422E7D9136407CEA5F4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
+		6C1FD574A191F06641676333 /* BarlowCondensed_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */; };
+		6E48E52EA001EF290CC57FB3 /* DealsWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FF981C7805200162BB6BACE8 /* DealsWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */; };
 		854B754C3F4613A79B2F522A /* AtkinsonHyperlegible_400Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */; };
+		9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
+		D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581B0CF13289C4A25A25F8A /* DealsWidget.swift */; };
 		D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE081C1EE741AEAB7005033E /* ListScreens.swift */; };
 		DC83A9A0DCCAA92A6B57B165 /* OFL-barlow-condensed.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */; };
+		DDD206C2E3CFBDC9BC64B26D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		F3B30BA65C172E3190D9F304 /* AtkinsonHyperlegible_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */; };
 		F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352F5BB18C8111F694A1DAFE /* ListStore.swift */; };
 		F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */; };
 		F97602B0684DAA841202FDA2 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 995D521E5B5C312585E6EF90 /* AmplitudeSwift */; };
+		FB275F78B2701566393ECB4E /* OFL-atkinson-hyperlegible.txt in Resources */ = {isa = PBXBuildFile; fileRef = C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		520495FB85A5E04976FF3BA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5D2A15B5007A01FEA358BCC3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C3338F5F1F4248E6BD36D4C6;
+			remoteInfo = DealsWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B1D46FDE9E5C0D42CC8BD851 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6E48E52EA001EF290CC57FB3 /* DealsWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		030270E4AFF9913A0A8A86E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -36,7 +69,9 @@
 		33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDealsApp.swift; sourceTree = "<group>"; };
 		34300759905B9585BA88F72D /* DealViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealViews.swift; sourceTree = "<group>"; };
 		352F5BB18C8111F694A1DAFE /* ListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStore.swift; sourceTree = "<group>"; };
+		4E4E38A37F8FB357DFC488EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GroceryDeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7581B0CF13289C4A25A25F8A /* DealsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsWidget.swift; sourceTree = "<group>"; };
 		798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		84F994427923C400F45DB70C /* week.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = week.json; sourceTree = "<group>"; };
 		86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsStore.swift; sourceTree = "<group>"; };
@@ -49,6 +84,7 @@
 		E5CE2E4258193F86182E0754 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-barlow-condensed.txt"; sourceTree = "<group>"; };
 		E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BarlowCondensed_700Bold.ttf; sourceTree = "<group>"; };
+		FF981C7805200162BB6BACE8 /* DealsWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DealsWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E61624D376C35F18A2C4CEB /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				7581B0CF13289C4A25A25F8A /* DealsWidget.swift */,
+				4E4E38A37F8FB357DFC488EE /* Info.plist */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
 		4F5D7D77730F85828D6884E7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +144,7 @@
 			children = (
 				EDDEB32C30EF772A83CC907E /* Resources */,
 				4F5D7D77730F85828D6884E7 /* Sources */,
+				4E61624D376C35F18A2C4CEB /* Widget */,
 				D8857578EBE926F51C17A868 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,6 +152,7 @@
 		D8857578EBE926F51C17A868 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				FF981C7805200162BB6BACE8 /* DealsWidget.appex */,
 				6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */,
 			);
 			name = Products;
@@ -131,10 +178,12 @@
 				229C4B2928CF83F847C4D85F /* Sources */,
 				B4A4ABF8726FA2827872D707 /* Resources */,
 				7867555CC0D5CB3111535D0D /* Frameworks */,
+				B1D46FDE9E5C0D42CC8BD851 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4FC00FE7D41DE7961791B73E /* PBXTargetDependency */,
 			);
 			name = GroceryDeals;
 			packageProductDependencies = (
@@ -143,6 +192,24 @@
 			productName = GroceryDeals;
 			productReference = 6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C3338F5F1F4248E6BD36D4C6 /* DealsWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEF10DAA339B0349C1E6804 /* Build configuration list for PBXNativeTarget "DealsWidget" */;
+			buildPhases = (
+				349269F6A119B6F0EA70B898 /* Sources */,
+				C510F09F810C116145D65C80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DealsWidget;
+			packageProductDependencies = (
+			);
+			productName = DealsWidget;
+			productReference = FF981C7805200162BB6BACE8 /* DealsWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -154,6 +221,10 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					38B76EF8F9D3A8F64C0F819A = {
+						DevelopmentTeam = 9BF66MY8TQ;
+						ProvisioningStyle = Automatic;
+					};
+					C3338F5F1F4248E6BD36D4C6 = {
 						DevelopmentTeam = 9BF66MY8TQ;
 						ProvisioningStyle = Automatic;
 					};
@@ -177,6 +248,7 @@
 			projectRoot = "";
 			targets = (
 				38B76EF8F9D3A8F64C0F819A /* GroceryDeals */,
+				C3338F5F1F4248E6BD36D4C6 /* DealsWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -193,6 +265,18 @@
 				63E7488D1AB83A2A0070D918 /* OFL-atkinson-hyperlegible.txt in Resources */,
 				DC83A9A0DCCAA92A6B57B165 /* OFL-barlow-condensed.txt in Resources */,
 				24B72EE560CFC3050DA2FD19 /* week.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C510F09F810C116145D65C80 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				31311B6DE3D8BAC6900486B8 /* AtkinsonHyperlegible_400Regular.ttf in Resources */,
+				5B3C48156742D4D87B74A47D /* AtkinsonHyperlegible_700Bold.ttf in Resources */,
+				6C1FD574A191F06641676333 /* BarlowCondensed_700Bold.ttf in Resources */,
+				FB275F78B2701566393ECB4E /* OFL-atkinson-hyperlegible.txt in Resources */,
+				595E97078DA1D8CD786FAB83 /* OFL-barlow-condensed.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +301,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		349269F6A119B6F0EA70B898 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */,
+				DDD206C2E3CFBDC9BC64B26D /* Models.swift in Sources */,
+				9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4FC00FE7D41DE7961791B73E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C3338F5F1F4248E6BD36D4C6 /* DealsWidget */;
+			targetProxy = 520495FB85A5E04976FF3BA3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		190C9117F06C998FCA11F44F /* Release */ = {
@@ -244,6 +346,27 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+		3F2835176AB9F702DE543CC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.native.widget;
+				PRODUCT_NAME = DealsWidget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
 		};
 		4815FB73D42D69D6463DC7FF /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -309,6 +432,27 @@
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
+		};
+		49BBD886BBB69B5E2A1F725D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.native.widget;
+				PRODUCT_NAME = DealsWidget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
 		};
 		4CF1EAB90F29275C80999CAF /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -396,6 +540,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1DEF10DAA339B0349C1E6804 /* Build configuration list for PBXNativeTarget "DealsWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F2835176AB9F702DE543CC9 /* Debug */,
+				49BBD886BBB69B5E2A1F725D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		A57FB7057572A4985F6BE257 /* Build configuration list for PBXNativeTarget "GroceryDeals" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
