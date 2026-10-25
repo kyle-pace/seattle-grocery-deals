@@ -121,6 +121,7 @@ struct Badge: View {
 struct DealDetail: View {
     @Environment(FeedStore.self) private var store
     @Environment(ListStore.self) private var list
+    @Environment(AlertsStore.self) private var alerts
     @Environment(\.dismiss) private var dismiss
     let deal: Deal
     var openStore: ((String) -> Void)? = nil
@@ -150,6 +151,17 @@ struct DealDetail: View {
                             .font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)
                     }
                     .buttonStyle(.glassProminent).tint(Theme.ink).padding(.top, 8)
+                    if unitValue(deal) != nil {
+                        let w = alerts.watching(deal)
+                        Button {
+                            if let w { alerts.unwatch(w) } else { Task { _ = await alerts.allow(); alerts.watch(deal, week: store.feed?.week) } }
+                        } label: {
+                            Label(w.map { "Watching: under \($0.label) (tap to stop)" } ?? "Watch price: alert me if it's cheaper",
+                                  systemImage: w == nil ? "bell" : "bell.fill")
+                                .font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)
+                        }
+                        .buttonStyle(.glass)
+                    }
                     if let openStore {
                         Button { dismiss(); openStore(deal.store) } label: {
                             Text("More at \(store.storeName(deal.store))").font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)

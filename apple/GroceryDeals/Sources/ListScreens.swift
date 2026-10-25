@@ -126,11 +126,42 @@ struct RemindersPicker: View {
 // MARK: Settings
 
 struct SettingsView: View {
+    @Environment(AlertsStore.self) private var alerts
+    @Environment(FeedStore.self) private var store
     @State private var share = !Analytics.isOff
 
     var body: some View {
+        @Bindable var alerts = alerts
         NavigationStack {
             Form {
+                Section {
+                    Toggle(isOn: Binding(get: { alerts.friday }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.friday = on } } })) {
+                        labeled("Friday reminder", "When new deals post, about 10:30 AM")
+                    }
+                    Toggle(isOn: Binding(get: { alerts.endingSoon }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.endingSoon = on } } })) {
+                        labeled("Ending soon", "The day before a list item's sale ends")
+                    }
+                } header: { Text("Notify me") }
+                .tint(Theme.brand)
+
+                Section {
+                    if alerts.watches.isEmpty {
+                        Text("Open any deal and tap \"Watch price\". You'll get an alert when it's cheaper than it is now.")
+                            .font(.body(15)).foregroundStyle(Theme.muted)
+                    }
+                    ForEach(alerts.watches) { w in
+                        let hit = store.feed.flatMap { alerts.hit(w, in: $0.items) }
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(w.name).font(.body(17, bold: true))
+                            Text("Under \(w.label)" + (hit.map { " · now \($0.text) at \(store.storeName($0.store))" } ?? " · not yet"))
+                                .font(.body(14)).foregroundStyle(hit == nil ? Theme.muted : Theme.brand)
+                        }
+                        .swipeActions { Button("Stop watching", role: .destructive) { alerts.unwatch(w) } }
+                    }
+                } header: { Text("Price watches") } footer: {
+                    Text("Watches are checked when the app loads a new week. Push notifications from a server come later.")
+                }
+
                 Section {
                     Toggle(isOn: $share) {
                         VStack(alignment: .leading, spacing: 2) {
@@ -142,14 +173,17 @@ struct SettingsView: View {
                     .tint(Theme.brand)
                     .onChange(of: share) { _, on in Analytics.isOff = !on }
                 } header: { Text("Privacy") }
-                Section {
-                    Text("Friday reminders, ending-soon alerts and price watches are coming in a later stage.")
-                        .font(.body(15)).foregroundStyle(Theme.muted)
-                } header: { Text("Alerts") }
             }
             .scrollContentBackground(.hidden)
             .background(Theme.paper)
             .navigationTitle("Settings")
+        }
+    }
+
+    private func labeled(_ title: String, _ sub: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title).font(.body(17, bold: true))
+            Text(sub).font(.body(14)).foregroundStyle(Theme.muted)
         }
     }
 }
