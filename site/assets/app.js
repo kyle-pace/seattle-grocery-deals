@@ -1,5 +1,5 @@
-// Filters, search and sorting for deal lists, the "Vegetarian only" switch kept in
-// localStorage, the delivery filter on the Stores page, and date-based notices.
+// Filters, search and sorting for deal lists, the "Vegetarian" chip kept in localStorage,
+// the delivery chip on the Stores page, the edition notes, and date-based notices.
 (function () {
   var KEY_VEG = "sgd.vegOnly";
   var root = document.documentElement;
@@ -37,7 +37,7 @@
 
   function apply() {
     root.classList.toggle("veg-on", vegOnly);
-    all("[data-veg-toggle]").forEach(function (b) { b.setAttribute("aria-checked", vegOnly ? "true" : "false"); });
+    all("[data-veg-toggle]").forEach(function (b) { b.setAttribute("aria-pressed", vegOnly ? "true" : "false"); });
     if (!area) { showEnding(); return; }
     var q = query();
     // On the home page, a search swaps the summary sections for the full list.
@@ -58,19 +58,23 @@
       var c = g.querySelector("[data-group-count]");
       if (c) c.textContent = n;
     });
-    // Store tiles on the home page follow the store picker.
-    if (home) all(".tiles li", home).forEach(function (li) {
-      var a = li.querySelector("a[href*='/stores/']");
-      if (!a || !storeSel) return;
-      li.hidden = Boolean(storeSel.value) && a.getAttribute("href").indexOf("/stores/" + storeSel.value + "/") === -1;
+    // Store cards on This week follow the store picker.
+    if (home && storeSel) all("[data-store-card]", home).forEach(function (li) {
+      li.hidden = Boolean(storeSel.value) && li.dataset.storeCard !== storeSel.value;
     });
     var count = scope.querySelector("[data-count]");
     if (count) {
       count.textContent = (q ? shown + (shown === 1 ? " deal matches “" : " deals match “") + search.value.trim() + "”" : "Showing " + shown + (shown === 1 ? " deal" : " deals")) +
         (vegOnly ? ", vegetarian only" : "") + (storeSel && storeSel.value ? ", at " + storeSel.options[storeSel.selectedIndex].text : "") + ".";
     }
+    // With nothing to show, the empty state says it; the count stays for screen readers.
+    if (count) count.classList.toggle("sr-only", shown === 0);
     var empty = scope.querySelector("[data-empty]");
-    if (empty) empty.hidden = shown !== 0;
+    if (empty) {
+      empty.hidden = shown !== 0;
+      var msg = empty.querySelector("[data-empty-msg]");
+      if (msg) msg.textContent = q ? "Nothing matches “" + search.value.trim() + "”. Check back Friday." : empty.dataset.fallback;
+    }
     showEnding();
   }
 
@@ -103,8 +107,8 @@
   // Stores page: only stores that deliver.
   var deliv = document.querySelector("[data-deliv-toggle]");
   if (deliv) deliv.addEventListener("click", function () {
-    var on = deliv.getAttribute("aria-checked") !== "true";
-    deliv.setAttribute("aria-checked", on ? "true" : "false");
+    var on = deliv.getAttribute("aria-pressed") !== "true";
+    deliv.setAttribute("aria-pressed", on ? "true" : "false");
     var tiles = all("[data-store-tiles] > li");
     tiles.forEach(function (li) { li.hidden = on && !li.hasAttribute("data-delivers"); });
     var none = document.querySelector("[data-deliv-empty]");
@@ -115,6 +119,47 @@
   var today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(new Date());
   function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }
   all("[data-expired-after]").forEach(function (el) { el.hidden = !(today > el.dataset.expiredAfter); });
+
+  // "Ends Thursday", "Ends tomorrow", "Ends today" or "Ended" after the edition's dates.
+  var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  all("[data-ends-line]").forEach(function (el) {
+    var d = daysUntil(el.dataset.end);
+    var text = d < 0 ? "Ended" : d === 0 ? "Ends today" : d === 1 ? "Ends tomorrow" : "Ends " + DAYS[new Date(el.dataset.end + "T12:00:00Z").getUTCDay()];
+    el.querySelector("[data-ends-text]").textContent = text;
+    el.hidden = false;
+  });
+
+  // The edition note on This week: "Fresh off the press" once per edition until dismissed,
+  // "Next edition lands Friday" in the last two days, and a sleepy note once sales end.
+  var edition = document.querySelector("[data-edition]");
+  if (edition && edition.dataset.end) {
+    var SEEN = "sgd.seenEdition";
+    var left = daysUntil(edition.dataset.end);
+    var fresh = edition.querySelector("[data-edition-fresh]");
+    var show = left < 0 ? "[data-edition-ended]" : left <= 2 ? "[data-edition-next]" : load(SEEN, "") !== edition.dataset.week ? "[data-edition-fresh]" : null;
+    var card = show && edition.querySelector(show);
+    if (card) card.hidden = false;
+    var dismiss = edition.querySelector("[data-edition-dismiss]");
+    if (dismiss) dismiss.addEventListener("click", function () {
+      save(SEEN, edition.dataset.week);
+      fresh.hidden = true;
+      var next = document.querySelector("#h-best");
+      if (next) { next.setAttribute("tabindex", "-1"); next.focus(); }
+    });
+  }
+
+  // Store pages: the about text shows three lines, with "Read more" when there's more.
+  all("[data-clamp]").forEach(function (p) {
+    var btn = p.parentNode.querySelector("[data-clamp-toggle]");
+    if (!btn || p.scrollHeight <= p.clientHeight + 2) return;
+    btn.hidden = false;
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      p.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.textContent = open ? "Read less" : "Read more";
+    });
+  });
   var ending = document.querySelector("[data-ending]");
   function showEnding() {
     if (!ending) return;
