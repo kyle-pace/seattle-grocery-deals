@@ -44,7 +44,7 @@ export function load(path = CATALOG_PATH) {
 
 // Words that describe a product without changing what it is: "organic", "5 lb bag", "fresh",
 // and cuts ("Atlantic salmon steak" is salmon).
-const QUALIFIER = /^(?:organic|fresh|frozen|large|small|medium|jumbo|extra|select|premium|natural|local|whole|boneless|skinless|bone|skin|in|on|sliced|diced|chopped|bag|pack|package|tray|bunch|ea|each|ct|count|pc|pcs|lb|lbs|oz|fl|kg|g|ml|l|gal|dozen|doz|value|family|club|bulk|assorted|headless|cut|fillet|filet|steak|portion|piece|chunk|point|flat|roll|wing|midjoint|tip|loin|chop|shank|half|jarred|canned|bottle|jar|can|\d+(?:\.\d+)?)$/;
+const QUALIFIER = /^(?:organic|fresh|frozen|large|small|medium|jumbo|extra|select|premium|natural|local|whole|boneless|skinless|bone|skin|in|on|sliced|diced|chopped|bag|pack|package|tray|bunch|ea|each|ct|count|pc|pcs|lb|lbs|oz|fl|kg|g|ml|l|gal|dozen|doz|value|family|club|bulk|assorted|headless|cut|fillet|filet|steak|portion|piece|chunk|point|flat|roll|wing|midjoint|tip|loin|chop|shank|half|jarred|canned|bottle|jar|can|selected|variety|variant|series|size|pk|multi|single|qt|inch|of|to|the|shell|square|fz|live|box|case|regular|light|original|mini|\d+(?:\.\d+)?(?:g|kg|ml|oz|lb|ct|pk)?)$/;
 
 // A word just before a one-word item that makes it a different product: soy milk isn't milk.
 const CHANGES_IT = new Set(["soy", "oat", "almond", "coconut", "rice", "plant", "based", "cashew", "chocolate", "strawberry", "banana", "condensed", "evaporated", "powdered", "flavored", "shrimp", "fish"]);
@@ -68,13 +68,16 @@ export function match(catalog, text) {
     const words = normalize(String(candidate).replace(/\([^)]*\)/g, " ")).split(" ").filter(Boolean);
     let end = words.length;
     while (end > 1 && QUALIFIER.test(words[end - 1])) end--;
-    const head = ` ${words.slice(0, end).join(" ")} `;
     const all = ` ${words.join(" ")} `;
     let best = null;
     for (const t of catalog.terms) {
       const at = all.indexOf(` ${t.term} `);
       if (at < 0) continue;
-      const atHead = head.endsWith(` ${t.term} `) || all.endsWith(` ${t.term} `);
+      // At the head: the term ends where the product name ends, give or take trailing qualifiers.
+      // A term may run into the qualifiers ("beef shank boneless": "shank" is also a cut word),
+      // as long as it starts inside the product name ("salmon steak" is still salmon, not steak).
+      const startWord = all.slice(0, at).trim() ? all.slice(0, at).trim().split(" ").length : 0;
+      const atHead = (startWord < end && startWord + t.words >= end) || all.endsWith(` ${t.term} `);
       const before = all.slice(0, at).trim().split(" ").pop();
       const changed = t.words === 1 && CHANGES_IT.has(before);
       const rest = new Set(words.filter((w) => !t.term.split(" ").includes(w)));
@@ -86,10 +89,14 @@ export function match(catalog, text) {
     }
     return best;
   };
-  const a = read(text);
-  const r = reorder(text);
+  // "Braised croaker with rice cake", "Goat meat w/skin on": the product is what comes before "with".
+  const main = String(text).split(/\s+(?:with\b|w\/)\s*/i)[0] || String(text);
+  const a = read(main);
+  const r = reorder(main);
   const b = r ? read(r) : null;
-  const pick = !a ? b : !b ? a : b.score > a.score ? b : a;
+  // "Popcorn, Butter Lovers or Movie Theater Butter": when the part before the comma names the
+  // product outright, it wins over a flavor or variant after the comma.
+  const pick = !a ? b : !b ? a : (b.strength === "strong" && a.strength === "strong") || b.score >= a.score ? b : a;
   if (!pick) return null;
   const { score, ...result } = pick;
   return result;
