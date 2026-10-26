@@ -75,6 +75,8 @@ struct ThisWeekView: View {
             .settingsButton()
             .refreshable { await store.refresh() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
+            // Simulator screenshots: -deal <name> opens the first deal whose name contains it.
+            .task { if let q = DebugArgs.value("-deal") { selected = store.items.first { $0.name.localizedCaseInsensitiveContains(q) } } }
         }
     }
 }

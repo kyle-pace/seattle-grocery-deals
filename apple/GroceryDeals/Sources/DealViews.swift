@@ -7,11 +7,13 @@ struct PriceTag: View {
     var size: CGFloat = 24
     var relativeTo: Font.TextStyle = .title3
     var savings = false
+    /// Left-aligned, for the deal sheet; rows keep it on the right.
+    var leading = false
 
     var body: some View {
         let cents = !deal.amount.hasPrefix("$")
         let number = cents ? deal.amount : String(deal.amount.dropFirst())
-        VStack(alignment: .trailing, spacing: 3) {
+        VStack(alignment: leading ? .leading : .trailing, spacing: 3) {
             if !deal.lead.isEmpty {
                 Text(deal.lead).font(.app(.caption, .semibold)).foregroundStyle(Palette.muted)
             }
@@ -33,7 +35,7 @@ struct PriceTag: View {
             }
         }
         .monospacedDigit()
-        .multilineTextAlignment(.trailing)
+        .multilineTextAlignment(leading ? .leading : .trailing)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(spoken)
     }
@@ -199,7 +201,7 @@ struct DealDetail: View {
                     Text(([store.storeName(deal.store)] + deal.detail + (deal.ends.map { ["through \(Dates.short($0))"] } ?? [])).joined(separator: " · "))
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     HStack(alignment: .bottom) {
-                        PriceTag(deal: deal, size: 44, relativeTo: .largeTitle)
+                        PriceTag(deal: deal, size: 44, relativeTo: .largeTitle, leading: true)
                         Spacer()
                     }
                     .padding(.top, Space.xs)
@@ -318,7 +320,13 @@ struct DealDetail: View {
             }
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, Space.s)
+        .padding(.top, Space.s)
+        .padding(.bottom, Space.xs)
+        .background {
+            Palette.ground
+                .overlay(alignment: .top) { Rectangle().fill(Palette.divider).frame(height: 1) }
+                .ignoresSafeArea(edges: .bottom)
+        }
     }
 
     private func startWatching() {
