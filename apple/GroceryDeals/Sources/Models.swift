@@ -69,6 +69,16 @@ struct Deal: Codable, Sendable, Identifiable, Hashable {
     let veg: Bool
     let ends: String?
     let notes: String?
+    /// The US average for staples (BLS), when this item has one: "$2.06/lb", 28 (% under).
+    let us: USAverage?
+    /// The lowest price we've listed for this item in past weeks.
+    let lowest: Bool?
+
+    struct USAverage: Codable, Sendable, Hashable {
+        let avg: String
+        let under: Int
+        let period: String?
+    }
 }
 
 enum Dates {
@@ -81,6 +91,12 @@ enum Dates {
     }()
 
     static func date(_ s: String?) -> Date? { s.flatMap { iso.date(from: $0) } }
+
+    /// "2026-09" -> "Sep 2026"
+    static func month(_ s: String) -> String {
+        guard let d = date(s + "-01") else { return s }
+        return d.formatted(.dateTime.month(.abbreviated).year())
+    }
 
     /// "Thu, Oct 29" or "Oct 29"
     static func short(_ s: String?, weekday: Bool = true) -> String {

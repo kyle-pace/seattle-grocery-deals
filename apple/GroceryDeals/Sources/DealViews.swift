@@ -24,10 +24,12 @@ struct PriceTag: View {
             }
             .foregroundStyle(Palette.ink)
             if savings {
-                if let regular = deal.regular {
-                    Text("was \(regular)").font(.app(.footnote)).foregroundStyle(Palette.muted)
+                // Lead with the US average where there is one; otherwise the store's own percent off.
+                if let us = deal.us, us.under > 0 {
+                    USAveragePill(under: us.under)
+                } else if let off = deal.off {
+                    OffPill(percent: off)
                 }
-                if let off = deal.off { OffPill(percent: off) }
             }
         }
         .monospacedDigit()
@@ -38,9 +40,23 @@ struct PriceTag: View {
 
     private var spoken: String {
         var parts = [deal.spoken]
-        if savings, let regular = deal.regular { parts.append("was \(regular)") }
-        if savings, let off = deal.off { parts.append("\(off)% off") }
+        if savings, let us = deal.us, us.under > 0 { parts.append("\(us.under)% under the US average") }
+        else if savings, let off = deal.off { parts.append("\(off)% off") }
         return parts.joined(separator: ", ")
+    }
+}
+
+/// "28% under US avg" in a small blue pill: national prices from the BLS, staples only.
+struct USAveragePill: View {
+    let under: Int
+    var body: some View {
+        Label("\(under)% under US avg", systemImage: "flag")
+            .labelStyle(.titleAndIcon)
+            .font(.app(.footnote, .bold))
+            .foregroundStyle(Palette.text(.info))
+            .padding(.horizontal, 8).padding(.vertical, 2)
+            .background(Palette.fill(.info), in: Capsule())
+            .fixedSize()
     }
 }
 
@@ -155,19 +171,21 @@ struct DealRow: View {
         parts.append(deal.name)
         parts.append(metaParts.joined(separator: ", "))
         parts.append(deal.spoken)
-        if let regular = deal.regular { parts.append("was \(regular)") }
-        if let off = deal.off { parts.append("\(off)% off") }
+        if let us = deal.us, us.under > 0 { parts.append("\(us.under)% under the US average") }
+        else if let off = deal.off { parts.append("\(off)% off") }
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
     }
 }
 
-/// The deal sheet: big price, why it's a deal, the same item elsewhere, the store.
+/// The deal sheet: big price, how it compares, the same item elsewhere, the store. Opens at half
+/// height; Add to list and Watch price stay pinned at the bottom.
 struct DealDetail: View {
     @Environment(FeedStore.self) private var store
     @Environment(ListStore.self) private var list
     @Environment(AlertsStore.self) private var alerts
     @Environment(\.dismiss) private var dismiss
+    @State private var priming = false
     let deal: Deal
     var openStore: ((String) -> Void)? = nil
 
@@ -176,60 +194,33 @@ struct DealDetail: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Space.m) {
                     TierBadge(tier: deal.tier, compact: false)
-                    Text(deal.name).font(.app(.largeTitle)).foregroundStyle(Palette.ink)
+                    Text(deal.name).font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                         .accessibilityAddTraits(.isHeader)
                     Text(([store.storeName(deal.store)] + deal.detail + (deal.ends.map { ["through \(Dates.short($0))"] } ?? [])).joined(separator: " · "))
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                    PriceTag(deal: deal, size: 44, relativeTo: .largeTitle).padding(.top, Space.s)
-                    if deal.regular != nil || deal.off != nil {
-                        HStack(spacing: Space.s) {
-                            if let regular = deal.regular { Text("Regular \(regular)").font(.app(.callout)).foregroundStyle(Palette.muted) }
-                            if let off = deal.off { OffPill(percent: off) }
-                        }
-                        .accessibilityElement(children: .combine)
+                    HStack(alignment: .bottom) {
+                        PriceTag(deal: deal, size: 44, relativeTo: .largeTitle)
+                        Spacer()
                     }
+                    .padding(.top, Space.xs)
+                    comparisons
                     if !deal.why.isEmpty { Text(deal.why).font(.app(.body)).foregroundStyle(Palette.body) }
                     if let notes = deal.notes { Text(notes).font(.app(.subheadline)).foregroundStyle(Palette.muted) }
 
-                    let added = list.contains(deal)
-                    Button { toggle(deal, added: added, list: list, store: store) } label: {
-                        Label(added ? "On your list (tap to remove)" : "Add to list", systemImage: added ? "checkmark" : "plus")
-                            .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(.glassProminent)
-                    .padding(.top, Space.s)
-                    if unitValue(deal) != nil {
-                        let w = alerts.watching(deal)
-                        Button {
-                            if let w {
-                                alerts.unwatch(w)
-                                Announce.say("Stopped watching the price")
-                            } else {
-                                Task {
-                                    _ = await alerts.allow()
-                                    alerts.watch(deal, week: store.feed?.week)
-                                    Announce.say("Watching the price")
-                                }
+                    HStack(spacing: Space.s) {
+                        if let openStore {
+                            Button { dismiss(); openStore(deal.store) } label: {
+                                Label("More at \(store.storeName(deal.store))", systemImage: "storefront")
+                                    .font(.app(.subheadline, .semibold)).frame(maxWidth: .infinity, minHeight: 44)
                             }
-                        } label: {
-                            Label(w.map { "Watching: under \($0.label) (tap to stop)" } ?? "Watch price: alert me if it's cheaper",
-                                  systemImage: w == nil ? "bell" : "bell.fill")
-                                .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                            .buttonStyle(.glass)
+                        }
+                        ShareLink(item: URL(string: "https://seattlegrocery.deals/stores/\(deal.store)/")!,
+                                  message: Text("\(deal.name): \(deal.text) at \(store.storeName(deal.store))")) {
+                            Label("Share", systemImage: "square.and.arrow.up").font(.app(.subheadline, .semibold)).frame(maxWidth: .infinity, minHeight: 44)
                         }
                         .buttonStyle(.glass)
                     }
-                    if let openStore {
-                        Button { dismiss(); openStore(deal.store) } label: {
-                            Label("More at \(store.storeName(deal.store))", systemImage: "storefront")
-                                .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
-                        }
-                        .buttonStyle(.glass)
-                    }
-                    ShareLink(item: URL(string: "https://seattlegrocery.deals/stores/\(deal.store)/")!,
-                              message: Text("\(deal.name): \(deal.text) at \(store.storeName(deal.store))")) {
-                        Label("Share this deal", systemImage: "square.and.arrow.up").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(.glass)
 
                     let others = store.alsoOnSale(deal)
                     if !others.isEmpty {
@@ -252,9 +243,125 @@ struct DealDetail: View {
                 .padding(20)
             }
             .background(Palette.ground)
-            .toolbar { ToolbarItem(placement: .topBarTrailing) { Button("Done") { dismiss() } } }
+            .safeAreaInset(edge: .bottom, spacing: 0) { actions }
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
         }
         .presentationDetents([.medium, .large])
+        .sheet(isPresented: $priming) {
+            AlertPrimer(deal: deal) { allowed in
+                priming = false
+                if allowed { startWatching() }
+            }
+        }
         .onAppear { Analytics.track("Viewed Deal", Analytics.deal(deal)) }
+    }
+
+    /// How this price compares: the US average first, then lowest listed, then the store's own.
+    @ViewBuilder private var comparisons: some View {
+        let us = deal.us.flatMap { $0.under > 0 ? $0 : nil }
+        if us != nil || deal.lowest == true || deal.regular != nil || deal.off != nil {
+            VStack(alignment: .leading, spacing: Space.s) {
+                if let us {
+                    Label {
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text("\(us.under)% under the US average").font(.app(.callout, .bold)).foregroundStyle(Palette.ink)
+                            Text("US average \(us.avg)\(us.period.map { ", \(Dates.month($0))" } ?? ""). National prices, so roughly.")
+                                .font(.app(.footnote)).foregroundStyle(Palette.muted)
+                        }
+                    } icon: { Image(systemName: "flag.fill").foregroundStyle(Palette.mark(.info)) }
+                }
+                if deal.lowest == true {
+                    Label("Lowest we've listed", systemImage: "arrow.down.circle.fill")
+                        .font(.app(.callout, .semibold)).foregroundStyle(Palette.ink)
+                        .symbolRenderingMode(.hierarchical)
+                }
+                if deal.regular != nil || deal.off != nil {
+                    HStack(spacing: Space.s) {
+                        if let regular = deal.regular { Text("Regular \(regular)").font(.app(.footnote)).foregroundStyle(Palette.muted) }
+                        if let off = deal.off { OffPill(percent: off) }
+                    }
+                }
+            }
+            .accessibilityElement(children: .combine)
+        }
+    }
+
+    private var actions: some View {
+        let added = list.contains(deal)
+        let w = alerts.watching(deal)
+        return HStack(spacing: Space.s) {
+            Button { toggle(deal, added: added, list: list, store: store) } label: {
+                Label(added ? "On your list" : "Add to list", systemImage: added ? "checkmark" : "plus")
+                    .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .buttonStyle(.glassProminent)
+            .sensoryFeedback(.success, trigger: added)
+            .accessibilityHint(added ? "Removes it from your list" : "")
+            if unitValue(deal) != nil {
+                Button {
+                    if let w {
+                        alerts.unwatch(w)
+                        Announce.say("Stopped watching the price")
+                    } else {
+                        Task {
+                            if await alerts.needsAsking() { priming = true } else { startWatching() }
+                        }
+                    }
+                } label: {
+                    Label(w == nil ? "Watch price" : "Watching", systemImage: w == nil ? "bell" : "bell.fill")
+                        .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                        .contentTransition(.symbolEffect(.replace))
+                }
+                .buttonStyle(.glass)
+                .accessibilityHint(w.map { "Alerts you under \($0.label). Tap to stop." } ?? "Alerts you if it gets cheaper")
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, Space.s)
+    }
+
+    private func startWatching() {
+        Task {
+            _ = await alerts.allow()
+            alerts.watch(deal, week: store.feed?.week)
+            Announce.say("Watching the price")
+        }
+    }
+}
+
+/// Before the system asks about notifications: what an alert will look like, and a way out.
+struct AlertPrimer: View {
+    let deal: Deal
+    let done: (Bool) -> Void
+    @Environment(FeedStore.self) private var store
+
+    var body: some View {
+        VStack(spacing: Space.l) {
+            Buddy(.persimmon, mood: .happy, size: 72).hiddenWhenTextIsLarge()
+            Text("Get a nudge when it drops").font(.app(.title2, .bold)).foregroundStyle(Palette.ink).multilineTextAlignment(.center)
+            // A sample of the alert, styled like a notification.
+            HStack(alignment: .top, spacing: Space.m) {
+                Image(systemName: "bell.badge.fill").font(.app(.title3)).foregroundStyle(Palette.accent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Price drop: \(shortName(deal.name))").font(.app(.subheadline, .bold)).foregroundStyle(Palette.ink)
+                    Text("Now cheaper than \(deal.text) at \(store.storeName(deal.store)).").font(.app(.subheadline)).foregroundStyle(Palette.body)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(Space.m)
+            .glassEffect(.regular, in: .rect(cornerRadius: Radius.large))
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel("Example alert: price drop on \(shortName(deal.name))")
+            Text("Only for prices you watch, the Friday reminder, and sales ending on your list. Change it anytime in Settings.")
+                .font(.app(.footnote)).foregroundStyle(Palette.muted).multilineTextAlignment(.center)
+            VStack(spacing: Space.s) {
+                Button { done(true) } label: { Text("Turn on alerts").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44) }
+                    .buttonStyle(.glassProminent)
+                Button("Maybe later") { done(false) }.font(.app(.headline)).frame(minHeight: 44).tint(Palette.muted)
+            }
+        }
+        .padding(Space.xl)
+        .presentationDetents([.medium, .large])
     }
 }

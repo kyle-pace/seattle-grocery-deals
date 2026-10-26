@@ -1,4 +1,5 @@
 import SwiftUI
+import WebKit
 
 /// Screen background and side margins shared by every tab.
 private struct Page<Content: View>: View {
@@ -13,71 +14,148 @@ private struct Page<Content: View>: View {
     }
 }
 
-private struct VegToggle: View {
+/// "Vegetarian" as a chip pinned under the title, instead of a full-width switch.
+private struct VegChip: ViewModifier {
     @Environment(FeedStore.self) private var store
-    var body: some View {
+    func body(content: Content) -> some View {
         @Bindable var store = store
-        Toggle(isOn: $store.vegetarianOnly) {
-            Text("Vegetarian only").font(.app(.headline)).foregroundStyle(Palette.ink)
+        content.pinnedChips {
+            FilterChip("Vegetarian", systemImage: "leaf", isOn: store.vegetarianOnly) {
+                store.vegetarianOnly.toggle()
+                Announce.say(store.vegetarianOnly ? "Showing vegetarian deals only" : "Showing all deals")
+            }
+            .sensoryFeedback(.selection, trigger: store.vegetarianOnly)
         }
-        .tint(Palette.accent)
-        .frame(minHeight: 44)
-        .padding(.top, Space.s)
     }
+}
+
+extension View {
+    fileprivate func vegChip() -> some View { modifier(VegChip()) }
 }
 
 // MARK: This week
 
 struct ThisWeekView: View {
     @Environment(FeedStore.self) private var store
-    @State private var query = ""
     @State private var selected: Deal?
     let openStore: (String) -> Void
 
     var body: some View {
         NavigationStack {
             Page {
-                if let feed = store.feed {
-                    Text("\(Dates.short(feed.week, weekday: false)) to \(Dates.short(feed.end, weekday: false)) · \(feed.items.count) deals from \(feed.stores.filter(\.readThisWeek).count) stores")
-                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                    VegToggle()
-                    if query.isEmpty {
-                        let picks = store.topPicks()
-                        SectionHeading(title: "Top picks", note: "\(store.standouts.count) standouts in all")
-                        ForEach(picks) { d in
-                            DealRow(deal: d, showWhy: true) { selected = d }
-                        }
-                        let picked = Set(picks.map(\.id))
-                        SectionHeading(title: "By store", note: "Each store's best")
-                        ForEach(store.rankedStores) { s in
-                            let all = store.deals(atStore: s.id)
-                            let best = all.filter { !picked.contains($0.id) }.prefix(3)
-                            if !best.isEmpty {
-                                StoreSection(s: s, total: all.count, standouts: all.filter { $0.tier == .standout }.count,
-                                             deals: Array(best), select: { selected = $0 }, openStore: openStore)
-                            }
-                        }
-                    } else {
-                        let results = store.search(query)
-                        SectionHeading(title: "\(results.count) found")
-                        ForEach(results.prefix(100)) { d in
-                            DealRow(deal: d) { selected = d }
-                        }
-                        if results.isEmpty {
-                            ContentUnavailableView {
-                                Label("Nothing matches", systemImage: "magnifyingglass")
-                            } description: {
-                                Text("Try a shorter word or a store name.")
-                            }
-                            .padding(.top, Space.l)
+                if store.feed != nil {
+                    EditionBanner()
+                    WatchHits { selected = $0 }
+                    let picks = store.topPicks()
+                    SectionHeading(title: "Top picks", note: "\(store.standouts.count) standouts in all")
+                    ForEach(picks) { d in
+                        DealRow(deal: d, showWhy: true) { selected = d }
+                    }
+                    let picked = Set(picks.map(\.id))
+                    SectionHeading(title: "By store", note: "Each store's best")
+                    ForEach(store.rankedStores) { s in
+                        let all = store.deals(atStore: s.id)
+                        let best = all.filter { !picked.contains($0.id) }.prefix(3)
+                        if !best.isEmpty {
+                            StoreSection(s: s, total: all.count, standouts: all.filter { $0.tier == .standout }.count,
+                                         deals: Array(best), select: { selected = $0 }, openStore: openStore)
                         }
                     }
+                } else if store.loading {
+                    LoadingDeals()
+                } else {
+                    EmptyState(.persimmon, mood: .sad, title: Lines.noFeedTitle, message: Lines.noFeedDetail,
+                               actionTitle: "Try again", actionImage: "arrow.clockwise") { Task { await store.refresh() } }
+                        .padding(.top, Space.xl)
                 }
             }
             .navigationTitle("This week")
-            .searchable(text: $query, prompt: "Deals and stores")
-            .onSubmit(of: .search) { Analytics.track("Searched", ["query_length": query.count, "results": store.search(query).count, "screen": "this_week"]) }
+            .navigationSubtitle(store.editionLine)
+            .vegChip()
+            .settingsButton()
             .refreshable { await store.refresh() }
+            .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
+        }
+    }
+}
+
+// MARK: Search
+
+/// One place to find anything: deals and stores as you type, the aisles before you do.
+struct SearchView: View {
+    enum Scope: String, CaseIterable, Hashable { case all = "All", deals = "Deals", stores = "Stores" }
+    @Environment(FeedStore.self) private var store
+    @Environment(ListStore.self) private var list
+    @State private var query = ""
+    @State private var scope: Scope = .all
+    @State private var selected: Deal?
+    let openStore: (String) -> Void
+
+    var body: some View {
+        NavigationStack {
+            Page {
+                let q = query.trimmingCharacters(in: .whitespaces)
+                if q.isEmpty {
+                    SectionHeading(title: "Aisles")
+                    ForEach(store.feed?.categories ?? []) { c in
+                        let deals = store.deals(inCategory: c.id)
+                        if !deals.isEmpty {
+                            NavigationLink(value: c) {
+                                Tile(title: c.label,
+                                     line: "\(deals.count) deals, \(deals.filter { $0.tier == .standout }.count) standouts",
+                                     top: deals.first.map { "Top: \($0.name) \($0.text)" })
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                } else {
+                    let stores = scope == .deals ? [] : store.searchStores(q)
+                    let deals = scope == .stores ? [] : store.search(q)
+                    if !stores.isEmpty {
+                        SectionHeading(title: "Stores", note: "\(stores.count)")
+                        ForEach(stores) { s in
+                            NavigationLink(value: s) {
+                                Tile(title: s.name, line: "\(store.deals(atStore: s.id).count) deals this week", top: s.towns)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    if !deals.isEmpty {
+                        SectionHeading(title: "Deals", note: "\(deals.count) found")
+                        ForEach(deals.prefix(100)) { d in
+                            DealRow(deal: d) { selected = d }
+                        }
+                    }
+                    if stores.isEmpty && deals.isEmpty {
+                        EmptyState(.persimmon, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
+                                   message: Lines.noResultsDetail(q), actionTitle: "Add to list", actionImage: "plus") {
+                            list.request(q)
+                            Announce.say("Added \(q) to your list")
+                            query = ""
+                        }
+                        .padding(.top, Space.l)
+                    }
+                }
+            }
+            .navigationTitle("Search")
+            .searchable(text: $query, prompt: "Deals, stores, aisles")
+            .searchScopes($scope, activation: .onSearchPresentation) {
+                ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+            }
+            .onSubmit(of: .search) {
+                Analytics.track("Searched", ["query_length": query.count, "results": store.search(query).count, "screen": "search"])
+            }
+            .navigationDestination(for: Category.self) { c in
+                Page {
+                    ForEach(store.deals(inCategory: c.id)) { d in
+                        DealRow(deal: d) { selected = d }
+                    }
+                }
+                .navigationTitle(c.label)
+                .navigationSubtitle("\(store.deals(inCategory: c.id).count) deals")
+                .vegChip()
+            }
+            .navigationDestination(for: Store.self) { StoreDetail(s: $0) }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
         }
     }
@@ -138,44 +216,6 @@ private struct StoreSection: View {
     }
 }
 
-// MARK: Aisles
-
-struct AislesView: View {
-    @Environment(FeedStore.self) private var store
-    @State private var selected: Deal?
-    let openStore: (String) -> Void
-
-    var body: some View {
-        NavigationStack {
-            Page {
-                VegToggle()
-                ForEach(store.feed?.categories ?? []) { c in
-                    let deals = store.deals(inCategory: c.id)
-                    if !deals.isEmpty {
-                        NavigationLink(value: c) {
-                            Tile(title: c.label,
-                                 line: "\(deals.count) deals, \(deals.filter { $0.tier == .standout }.count) standouts",
-                                 top: deals.first.map { "Top: \($0.name) \($0.text)" })
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-            .navigationTitle("Aisles")
-            .navigationDestination(for: Category.self) { c in
-                Page {
-                    VegToggle()
-                    ForEach(store.deals(inCategory: c.id)) { d in
-                        DealRow(deal: d) { selected = d }
-                    }
-                }
-                .navigationTitle(c.label)
-            }
-            .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
-        }
-    }
-}
-
 // MARK: Stores
 
 struct StoresView: View {
@@ -198,54 +238,79 @@ struct StoresView: View {
                 }
             }
             .navigationTitle("Stores")
+            .navigationSubtitle("\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
+            .settingsButton()
             .navigationDestination(for: Store.self) { StoreDetail(s: $0) }
         }
     }
 }
 
 struct StoreDetail: View {
+    enum View2: String, Hashable { case deals = "Deals", flyer = "Weekly ad" }
     @Environment(FeedStore.self) private var store
-    @Environment(\.openURL) private var openURL
     @State private var selected: Deal?
+    @State private var showing: View2 = .deals
+    @State private var aboutOpen = false
     let s: Store
 
     var body: some View {
-        Page {
-            VStack(alignment: .leading, spacing: 10) {
-                Text([s.towns, s.readThisWeek && s.from != nil ? "Sale \(Dates.short(s.from)) to \(Dates.short(s.through))" : ""].filter { !$0.isEmpty }.joined(separator: " · "))
-                    .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                if let ad = s.flyer_url.flatMap(URL.init(string:)) {
-                    Button { Analytics.track("Opened Weekly Ad", ["store": s.id]); openURL(ad) } label: {
-                        Label("See \(s.name)'s weekly ad", systemImage: "arrow.up.right").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(.glassProminent)
-                    .accessibilityHint("Opens the store's website")
-                }
-                Text(s.about).font(.app(.callout)).foregroundStyle(Palette.body)
-                if let delivery = s.delivery {
-                    Card(padding: Space.m) {
-                        Label {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("Delivery").font(.app(.callout, .bold))
-                                Text(delivery).font(.app(.callout))
-                            }
-                        } icon: {
-                            Image(systemName: "box.truck").foregroundStyle(Palette.accent)
+        let ad = s.flyer_url.flatMap(URL.init(string:))
+        Group {
+            if showing == .flyer, let ad {
+                WebView(url: ad)
+                    .onAppear { Analytics.track("Opened Weekly Ad", ["store": s.id]) }
+            } else {
+                Page {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(s.about).font(.app(.callout)).foregroundStyle(Palette.body)
+                            .lineLimit(aboutOpen ? nil : 3)
+                        if !aboutOpen && s.about.count > 140 {
+                            Button("Read more") { withAnimation(.snappy) { aboutOpen = true } }
+                                .font(.app(.callout, .semibold)).tint(Palette.accent).frame(minHeight: 44)
                         }
-                        .foregroundStyle(Palette.ink)
+                        if let delivery = s.delivery {
+                            Card(padding: Space.m) {
+                                Label {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Delivery").font(.app(.callout, .bold))
+                                        Text(delivery).font(.app(.callout))
+                                    }
+                                } icon: {
+                                    Image(systemName: "box.truck").foregroundStyle(Palette.accent)
+                                }
+                                .foregroundStyle(Palette.ink)
+                            }
+                            .accessibilityElement(children: .combine)
+                        }
                     }
-                    .accessibilityElement(children: .combine)
+                    .padding(.top, Space.s)
+                    let deals = store.deals(atStore: s.id)
+                    SectionHeading(title: "This week", note: "\(deals.count) deals")
+                    ForEach(deals) { d in
+                        DealRow(deal: d, showStore: false) { selected = d }
+                    }
+                    if deals.isEmpty {
+                        EmptyState(.persimmon, mood: .sleepy,
+                                   title: s.status == "unreadable" ? "Couldn't read this week's flyer" : "No deals this week",
+                                   message: ad == nil ? nil : "The weekly ad might still have something.")
+                    }
                 }
-                VegToggle()
-            }
-            .padding(.top, Space.s)
-            let deals = store.deals(atStore: s.id)
-            SectionHeading(title: "This week", note: "\(deals.count) deals")
-            ForEach(deals) { d in
-                DealRow(deal: d, showStore: false) { selected = d }
             }
         }
         .navigationTitle(s.name)
+        .navigationSubtitle([s.towns, s.readThisWeek && s.from != nil ? "Sale \(Dates.short(s.from)) to \(Dates.short(s.through))" : ""]
+            .filter { !$0.isEmpty }.joined(separator: " · "))
+        .safeAreaInset(edge: .top, spacing: 0) {
+            if ad != nil {
+                Picker("Show", selection: $showing) {
+                    Text(View2.deals.rawValue).tag(View2.deals)
+                    Text(View2.flyer.rawValue).tag(View2.flyer)
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, Space.l)
+                .padding(.vertical, Space.xs)
+            }
+        }
         .sheet(item: $selected) { DealDetail(deal: $0) }
     }
 }

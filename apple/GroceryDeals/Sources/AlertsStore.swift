@@ -27,6 +27,12 @@ final class AlertsStore {
         watches = (d.data(forKey: "sgd.watches")).flatMap { try? JSONDecoder().decode([Watch].self, from: $0) } ?? []
     }
 
+    /// True until the person has been asked about notifications, so the app can show what an
+    /// alert looks like first.
+    func needsAsking() async -> Bool {
+        await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .notDetermined
+    }
+
     /// Ask once; false if the person said no.
     func allow() async -> Bool {
         let center = UNUserNotificationCenter.current()

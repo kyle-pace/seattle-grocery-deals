@@ -32,10 +32,11 @@ struct GroceryDealsApp: App {
     }
 }
 
-/// Native tabs, so the tab bar is Liquid Glass on iOS 26 and a sidebar on iPad.
+/// Native tabs, so the tab bar is Liquid Glass on iOS 26 and a sidebar on iPad. Search is its
+/// own tab (aisles live there before you type); Settings is the gear in each header.
 struct RootView: View {
-    enum TabID: String, Hashable { case week = "This week", aisles = "Aisles", stores = "Stores", list = "List", settings = "Settings" }
-    @State private var tab: TabID = .week
+    enum TabID: String, Hashable { case week = "This week", stores = "Stores", list = "List", search = "Search" }
+    @State private var tab: TabID = DebugArgs.value("-tab").flatMap(TabID.init(rawValue:)) ?? .week
     @State private var storePath: [Store] = []
     @State private var choosingReminders = false
     @Environment(FeedStore.self) private var store
@@ -45,14 +46,17 @@ struct RootView: View {
     var body: some View {
         @Bindable var list = list
         TabView(selection: $tab) {
-            Tab("This week", systemImage: "house", value: .week) { ThisWeekView(openStore: openStore) }
-            Tab("Aisles", systemImage: "square.grid.2x2", value: .aisles) { AislesView(openStore: openStore) }
+            Tab("This week", systemImage: "newspaper", value: .week) { ThisWeekView(openStore: openStore) }
             Tab("Stores", systemImage: "storefront", value: .stores) { StoresView(path: $storePath) }
             Tab("List", systemImage: "checklist", value: .list) { ListView(openStore: openStore) }
                 .badge(list.openItems.count)
-            Tab("Settings", systemImage: "gearshape", value: .settings) { SettingsView() }
+            Tab(value: .search, role: .search) { SearchView(openStore: openStore) }
         }
         .tabViewStyle(.sidebarAdaptable)
+        .tabBarMinimizeBehavior(.onScrollDown)
+        .listAccessory(show: tab != .list && !list.items.isEmpty) {
+            ListProgressBar(list.title, done: list.items.filter(\.done).count, total: list.items.count) { tab = .list }
+        }
         .tint(Palette.accent)
         .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
         // Keep "ends tomorrow" notifications in step with the list and the week.
@@ -85,5 +89,51 @@ struct RootView: View {
         guard let s = store.store(id) else { return }
         storePath = [s]
         tab = .stores
+    }
+}
+
+/// The gear at the top right of every tab, opening Settings as a sheet.
+private struct SettingsButton: ViewModifier {
+    @State private var showing = false
+    func body(content: Content) -> some View {
+        content
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Settings", systemImage: "gearshape") { showing = true }
+                }
+            }
+            .sheet(isPresented: $showing) { SettingsView() }
+    }
+}
+
+/// The shopping-list bar above the tab bar, only while there's a list (iOS 26.1 and later can
+/// hide it; 26.0 keeps it whenever the list has items).
+private struct ListAccessory<Bar: View>: ViewModifier {
+    let show: Bool
+    let bar: Bar
+    func body(content: Content) -> some View {
+        if #available(iOS 26.1, *) {
+            content.tabViewBottomAccessory(isEnabled: show) { bar }
+        } else {
+            content.tabViewBottomAccessory { bar }
+        }
+    }
+}
+
+extension View {
+    func settingsButton() -> some View { modifier(SettingsButton()) }
+    fileprivate func listAccessory<Bar: View>(show: Bool, @ViewBuilder _ bar: () -> Bar) -> some View {
+        modifier(ListAccessory(show: show, bar: bar()))
+    }
+}
+
+/// Launch arguments for simulator screenshots: -tab "Search".
+enum DebugArgs {
+    static func value(_ flag: String) -> String? {
+        #if DEBUG
+        let args = ProcessInfo.processInfo.arguments
+        if let i = args.firstIndex(of: flag), i + 1 < args.count { return args[i + 1] }
+        #endif
+        return nil
     }
 }

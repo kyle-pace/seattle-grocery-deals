@@ -9,13 +9,15 @@ struct ListView: View {
     @State private var newItem = ""
     @State private var selected: Deal?
     @State private var choosing = false
+    @State private var celebrate = false
+    @AppStorage("sgd.list.byStore") private var byStore = false
     let openStore: (String) -> Void
 
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    Text(list.usesReminders ? "Synced with Reminders. \(onSale) on sale this week." : "Saved in this app. \(onSale) on sale this week.")
+                    Text(list.usesReminders ? "Synced with Reminders." : "Saved in this app.")
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     HStack {
                         TextField("Add an item, like bok choy", text: $newItem)
@@ -26,20 +28,30 @@ struct ListView: View {
                 }
                 .listRowBackground(Palette.surface)
 
-                Section {
-                    ForEach(list.items) { item in
-                        row(item)
-                            .swipeActions { Button("Remove", role: .destructive) { list.remove(item) } }
+                if list.items.isEmpty {
+                    Section {
+                        EmptyState(.persimmon, mood: .sleepy, title: Lines.emptyListTitle, message: Lines.emptyListDetail)
                     }
-                    if list.items.isEmpty {
-                        ContentUnavailableView {
-                            Label("Nothing on your list yet", systemImage: "checklist")
-                        } description: {
-                            Text("Tap + on any deal, or add an item above.")
+                    .listRowBackground(Color.clear)
+                } else if byStore {
+                    ForEach(groups, id: \.title) { g in
+                        Section {
+                            ForEach(g.items) { item in
+                                row(item).swipeActions { Button("Remove", role: .destructive) { list.remove(item) } }
+                            }
+                        } header: {
+                            SectionHeader(g.title, trailing: "\(g.items.filter(\.done).count) of \(g.items.count)")
+                        }
+                        .listRowBackground(Palette.surface)
+                    }
+                } else {
+                    Section {
+                        ForEach(list.items) { item in
+                            row(item).swipeActions { Button("Remove", role: .destructive) { list.remove(item) } }
                         }
                     }
+                    .listRowBackground(Palette.surface)
                 }
-                .listRowBackground(Palette.surface)
 
                 Section {
                     Button(list.usesReminders ? "Change Reminders list" : "Use a Reminders list") { pickReminders() }
@@ -53,6 +65,22 @@ struct ListView: View {
             .scrollContentBackground(.hidden)
             .background(Palette.ground)
             .navigationTitle(list.title)
+            .navigationSubtitle(list.items.isEmpty ? "" : "\(list.openItems.count) to get · \(onSale) on sale")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("Group", systemImage: "line.3.horizontal.decrease") {
+                        Picker("Group", selection: $byStore) {
+                            Label("In the order added", systemImage: "list.bullet").tag(false)
+                            Label("By store", systemImage: "storefront").tag(true)
+                        }
+                    }
+                }
+            }
+            .settingsButton()
+            .celebration($celebrate, style: .paper, message: Lines.tripDone(list.items.count))
+            .onChange(of: list.openItems.count) { old, now in
+                if old > 0 && now == 0 && !list.items.isEmpty { celebrate = true }
+            }
             .refreshable { list.reload() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             .sheet(isPresented: $choosing) { RemindersPicker(prompt: "list_tab") }
@@ -60,6 +88,19 @@ struct ListView: View {
     }
 
     private var onSale: Int { list.openItems.filter { deal(for: $0) != nil }.count }
+
+    /// The list by store: each item under the store whose deal it matches, the rest under "Anywhere".
+    private var groups: [(title: String, items: [ListStore.Item])] {
+        var order: [String] = []
+        var byTitle: [String: [ListStore.Item]] = [:]
+        for item in list.items {
+            let title = deal(for: item).map { store.storeName($0.store) } ?? "Anywhere"
+            if byTitle[title] == nil { order.append(title) }
+            byTitle[title, default: []].append(item)
+        }
+        order.sort { a, b in a == "Anywhere" ? false : b == "Anywhere" ? true : a < b }
+        return order.map { ($0, byTitle[$0]!) }
+    }
 
     private func deal(for item: ListStore.Item) -> Deal? {
         if let id = item.dealID, let d = store.items.first(where: { $0.id == id }) { return d }
@@ -140,6 +181,7 @@ struct RemindersPicker: View {
 // MARK: Settings
 
 struct SettingsView: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(AlertsStore.self) private var alerts
     @Environment(FeedStore.self) private var store
     @State private var share = !Analytics.isOff
@@ -198,6 +240,8 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             .background(Palette.ground)
             .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
         }
     }
 
