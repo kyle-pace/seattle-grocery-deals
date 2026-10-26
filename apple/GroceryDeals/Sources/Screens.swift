@@ -42,9 +42,20 @@ struct ThisWeekView: View {
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     VegToggle()
                     if query.isEmpty {
-                        SectionHeading(title: "Best this week", note: "\(store.standouts.count) standouts")
-                        ForEach(store.standouts.prefix(20)) { d in
+                        let picks = store.topPicks()
+                        SectionHeading(title: "Top picks", note: "\(store.standouts.count) standouts in all")
+                        ForEach(picks) { d in
                             DealRow(deal: d, showWhy: true) { selected = d }
+                        }
+                        let picked = Set(picks.map(\.id))
+                        SectionHeading(title: "By store", note: "Each store's best")
+                        ForEach(store.rankedStores) { s in
+                            let all = store.deals(atStore: s.id)
+                            let best = all.filter { !picked.contains($0.id) }.prefix(3)
+                            if !best.isEmpty {
+                                StoreSection(s: s, total: all.count, standouts: all.filter { $0.tier == .standout }.count,
+                                             deals: Array(best), select: { selected = $0 }, openStore: openStore)
+                            }
                         }
                     } else {
                         let results = store.search(query)
@@ -69,6 +80,61 @@ struct ThisWeekView: View {
             .refreshable { await store.refresh() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
         }
+    }
+}
+
+/// One store on This week, as its own card: the store's name, its best few deals, and a way to
+/// see the rest.
+private struct StoreSection: View {
+    let s: Store
+    let total: Int
+    let standouts: Int
+    let deals: [Deal]
+    let select: (Deal) -> Void
+    let openStore: (String) -> Void
+
+    var body: some View {
+        Card(padding: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                Button { openStore(s.id) } label: {
+                    HStack(alignment: .firstTextBaseline, spacing: Space.s) {
+                        Image(systemName: "storefront").foregroundStyle(Palette.accent).hiddenWhenTextIsLarge()
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(s.name).font(.app(.title3, .bold)).foregroundStyle(Palette.ink)
+                            Text(standouts > 0 ? "\(standouts) standouts, \(total) deals" : "\(total) deals")
+                                .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                        }
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right").font(.app(.subheadline, .semibold)).foregroundStyle(Palette.muted)
+                            .accessibilityHidden(true)
+                    }
+                    .padding(Space.l)
+                    .background(Palette.raised.opacity(0.5))
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isHeader)
+                .accessibilityHint("Opens the store")
+
+                ForEach(deals) { d in
+                    DealRow(deal: d, showStore: false) { select(d) }
+                }
+                .padding(.horizontal, Space.l)
+
+                Button { openStore(s.id) } label: {
+                    Text("See all \(total) at \(s.name)")
+                        .font(.app(.callout, .semibold))
+                        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                }
+                .buttonStyle(.borderless)
+                .tint(Palette.accent)
+                .padding(.horizontal, Space.l)
+                .padding(.vertical, Space.xs)
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: Radius.large))
+        .padding(.top, Space.m)
     }
 }
 
@@ -119,12 +185,7 @@ struct StoresView: View {
     var body: some View {
         NavigationStack(path: $path) {
             Page {
-                let stores = (store.feed?.stores ?? []).sorted {
-                    let a = store.deals(atStore: $0.id).filter { $0.tier == .standout }.count
-                    let b = store.deals(atStore: $1.id).filter { $0.tier == .standout }.count
-                    return a != b ? a > b : store.deals(atStore: $0.id).count > store.deals(atStore: $1.id).count
-                }
-                ForEach(stores) { s in
+                ForEach(store.rankedStores) { s in
                     let deals = store.deals(atStore: s.id)
                     NavigationLink(value: s) {
                         Tile(title: s.name,

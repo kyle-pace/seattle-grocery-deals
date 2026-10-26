@@ -53,6 +53,22 @@ final class FeedStore {
         guard let key = d.key else { return [] }
         return (feed?.items ?? []).filter { $0.key == key && $0.id != d.id }
     }
+    /// The best standouts, at most `perStore` from any one store so no store takes over.
+    func topPicks(_ limit: Int = 10, perStore: Int = 2) -> [Deal] {
+        var taken: [String: Int] = [:]
+        return Array(standouts.filter { d in
+            taken[d.store, default: 0] += 1
+            return taken[d.store]! <= perStore
+        }.prefix(limit))
+    }
+    /// Stores with deals, most standouts first, then most deals.
+    var rankedStores: [Store] {
+        (feed?.stores ?? []).sorted {
+            let a = deals(atStore: $0.id), b = deals(atStore: $1.id)
+            let sa = a.filter { $0.tier == .standout }.count, sb = b.filter { $0.tier == .standout }.count
+            return sa != sb ? sa > sb : a.count > b.count
+        }
+    }
     func search(_ query: String) -> [Deal] {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()
         guard !q.isEmpty else { return [] }

@@ -1,40 +1,59 @@
 import SwiftUI
 
-/// "$4.99/lb" with a smaller dollar sign and unit, and the yellow tag for standouts.
+/// "$4.99/lb" in plain bold type, with a smaller dollar sign and unit. With `savings`, the
+/// regular price and the percent off sit underneath; the percent off is the one bit of color.
 struct PriceTag: View {
-    @Environment(\.dynamicTypeSize) private var typeSize
     let deal: Deal
-    var size: CGFloat = 28
-    var relativeTo: Font.TextStyle = .title2
-    var tagged: Bool { deal.tier == .standout }
+    var size: CGFloat = 24
+    var relativeTo: Font.TextStyle = .title3
+    var savings = false
 
     var body: some View {
         let cents = !deal.amount.hasPrefix("$")
         let number = cents ? deal.amount : String(deal.amount.dropFirst())
-        VStack(alignment: .trailing, spacing: 0) {
+        VStack(alignment: .trailing, spacing: 3) {
             if !deal.lead.isEmpty {
-                Text(deal.lead).font(.app(12, .bold, relativeTo: .caption))
+                Text(deal.lead).font(.app(.caption, .semibold)).foregroundStyle(Palette.muted)
             }
             HStack(alignment: .firstTextBaseline, spacing: 1) {
-                if !cents { Text("$").font(.app(size * 0.6, .bold, relativeTo: relativeTo)) }
-                Text(number).font(.app(size, .heavy, relativeTo: relativeTo))
-                if !deal.unit.isEmpty { Text(deal.unit == "ea" ? " ea" : deal.unit).font(.app(size * 0.55, .bold, relativeTo: relativeTo)) }
+                if !cents { Text("$").font(.app(size * 0.7, .bold, relativeTo: relativeTo)) }
+                Text(number).font(.app(size, .bold, relativeTo: relativeTo))
+                if !deal.unit.isEmpty {
+                    Text(deal.unit == "ea" ? " ea" : deal.unit).font(.app(size * 0.6, .semibold, relativeTo: relativeTo)).foregroundStyle(Palette.muted)
+                }
+            }
+            .foregroundStyle(Palette.ink)
+            if savings {
+                if let regular = deal.regular {
+                    Text("was \(regular)").font(.app(.footnote)).foregroundStyle(Palette.muted)
+                }
+                if let off = deal.off { OffPill(percent: off) }
             }
         }
         .monospacedDigit()
-        .foregroundStyle(tagged ? Theme.onTag : Palette.ink)
-        .padding(.horizontal, tagged ? 8 : 0)
-        .padding(.vertical, tagged ? 3 : 0)
-        .background {
-            if tagged {
-                Rectangle().fill(Theme.tag)
-                    .shadow(color: Palette.ink, radius: 0, x: 3, y: 3)
-            }
-        }
-        // The tilted tag is newsprint flavor; big text reads better straight.
-        .rotationEffect(.degrees(tagged && !typeSize.isAccessibilitySize ? -3 : 0))
+        .multilineTextAlignment(.trailing)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(deal.spoken)
+        .accessibilityLabel(spoken)
+    }
+
+    private var spoken: String {
+        var parts = [deal.spoken]
+        if savings, let regular = deal.regular { parts.append("was \(regular)") }
+        if savings, let off = deal.off { parts.append("\(off)% off") }
+        return parts.joined(separator: ", ")
+    }
+}
+
+/// "55% off" in a small green pill.
+struct OffPill: View {
+    let percent: Int
+    var body: some View {
+        Text("\(percent)% off")
+            .font(.app(.footnote, .bold))
+            .foregroundStyle(Palette.text(.good))
+            .padding(.horizontal, 8).padding(.vertical, 2)
+            .background(Palette.fill(.good), in: Capsule())
+            .fixedSize()
     }
 }
 
@@ -100,7 +119,7 @@ struct DealRow: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    PriceTag(deal: deal)
+                    PriceTag(deal: deal, savings: true)
                 }
                 .contentShape(Rectangle())
             }
@@ -121,14 +140,11 @@ struct DealRow: View {
         var parts: [String] = []
         if showStore { parts.append(store.storeName(deal.store)) }
         parts += deal.detail
-        if let regular = deal.regular { parts.append("was \(regular)") }
         return parts
     }
 
     private var meta: some View {
-        let base = Text(metaParts.joined(separator: " · "))
-        let off = deal.off.map { Text("  \($0)% off").font(.app(.subheadline, .bold)).foregroundStyle(Palette.text(.bad)) }
-        return (off.map { base + $0 } ?? base)
+        Text(metaParts.joined(separator: " · "))
             .font(.app(.subheadline)).foregroundStyle(Palette.muted)
     }
 
@@ -137,8 +153,10 @@ struct DealRow: View {
         var parts: [String] = []
         if deal.tier == .standout { parts.append("Standout") } else if deal.tier == .good { parts.append("Good deal") }
         parts.append(deal.name)
-        parts.append((metaParts + (deal.off.map { ["\($0)% off"] } ?? [])).joined(separator: ", "))
+        parts.append(metaParts.joined(separator: ", "))
         parts.append(deal.spoken)
+        if let regular = deal.regular { parts.append("was \(regular)") }
+        if let off = deal.off { parts.append("\(off)% off") }
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
     }
@@ -162,10 +180,13 @@ struct DealDetail: View {
                         .accessibilityAddTraits(.isHeader)
                     Text(([store.storeName(deal.store)] + deal.detail + (deal.ends.map { ["through \(Dates.short($0))"] } ?? [])).joined(separator: " · "))
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                    PriceTag(deal: deal, size: 52, relativeTo: .largeTitle).padding(.vertical, Space.s)
-                    if let regular = deal.regular {
-                        (Text("Regular \(regular)") + (deal.off.map { Text(", \($0)% off").foregroundStyle(Palette.text(.bad)).bold() } ?? Text("")))
-                            .font(.app(.callout)).foregroundStyle(Palette.ink)
+                    PriceTag(deal: deal, size: 44, relativeTo: .largeTitle).padding(.top, Space.s)
+                    if deal.regular != nil || deal.off != nil {
+                        HStack(spacing: Space.s) {
+                            if let regular = deal.regular { Text("Regular \(regular)").font(.app(.callout)).foregroundStyle(Palette.muted) }
+                            if let off = deal.off { OffPill(percent: off) }
+                        }
+                        .accessibilityElement(children: .combine)
                     }
                     if !deal.why.isEmpty { Text(deal.why).font(.app(.body)).foregroundStyle(Palette.body) }
                     if let notes = deal.notes { Text(notes).font(.app(.subheadline)).foregroundStyle(Palette.muted) }

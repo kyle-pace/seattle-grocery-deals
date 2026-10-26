@@ -57,9 +57,8 @@ struct DealsWidgetView: View {
                         Text(d.name).font(.app(14, .bold, relativeTo: .subheadline)).lineLimit(2)
                         Text(entry.stores[d.store] ?? d.store).font(.app(.caption2)).foregroundStyle(Palette.muted)
                         Spacer(minLength: 0)
-                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.app(26, .heavy, relativeTo: .title)).monospacedDigit()
+                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.app(26, .bold, relativeTo: .title)).monospacedDigit()
                             .minimumScaleFactor(0.7).lineLimit(1)
-                            .padding(.horizontal, 6).background(Theme.tag).foregroundStyle(Theme.onTag)
                     }
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel("\(d.name), \(entry.stores[d.store] ?? d.store), \(d.spoken)")
@@ -70,7 +69,7 @@ struct DealsWidgetView: View {
                             Text(entry.stores[d.store] ?? d.store).font(.app(.caption2)).foregroundStyle(Palette.muted).lineLimit(1)
                         }
                         Spacer()
-                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.app(18, .heavy, relativeTo: .headline)).monospacedDigit()
+                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.app(18, .bold, relativeTo: .headline)).monospacedDigit()
                     }
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel("\(d.name), \(entry.stores[d.store] ?? d.store), \(d.spoken)")

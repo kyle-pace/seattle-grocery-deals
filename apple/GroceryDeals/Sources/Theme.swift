@@ -1,17 +1,8 @@
 // The shared design language for Pantry and Grocery Deals (~/Developer/KitchenUI), visible to
 // every file in the app and the widget. Use `Palette`, `.app(...)` fonts and SwiftUI's own
-// components; this file only adds what is Deals' own.
+// components; this file only adds Deals' own pieces.
 @_exported import KitchenUI
 import SwiftUI
-
-/// Deals' own tokens on top of `Palette`. Content and system chrome both follow light and dark.
-enum Theme {
-    /// The yellow sale tag behind standout prices, the website's signature mark. The same in
-    /// light and dark; black on it is 15:1. Always paired with the "Standout" badge, so it never
-    /// carries meaning by color alone.
-    static let tag = Color(hex: 0xFFE45C)
-    static let onTag = Color(hex: 0x141414)
-}
 
 /// A section heading with an optional count: "BEST THIS WEEK · 18 standouts".
 struct SectionHeading: View {
