@@ -103,14 +103,27 @@ func toggle(_ deal: Deal, added: Bool, list: ListStore, store: FeedStore) {
         list.remove(deal: deal)
         Announce.say("Removed \(name) from your list")
     } else {
+        // Something already on the list as another store's deal ("Japanese Yam" at Viet-Wah
+        // vs "Japanese Sweet Potato" at T&T): swap this deal in rather than add a second line.
+        let same = list.openItems.filter { item in
+            guard let id = item.dealID, id != deal.id, let key = deal.key else { return false }
+            return store.items.first { $0.id == id }?.key == key
+        }
+        for item in same { list.remove(item) }
         list.request(name, deal: deal, storeName: store.storeName(deal.store))
-        Announce.say("Added \(name) to your list")
+        Announce.say(same.isEmpty ? "Added \(name) to your list" : "Swapped in \(name) at \(store.storeName(deal.store))")
     }
 }
 
 /// "Fuyu Persimmon (California), Jumbo" -> "Fuyu Persimmon"
+/// "Yam - Japanese #1" -> "Japanese Yam"
 func shortName(_ name: String) -> String {
-    String(name.split(whereSeparator: { $0 == "," || $0 == "(" }).first ?? Substring(name)).trimmingCharacters(in: .whitespaces)
+    var s = String(name.split(whereSeparator: { $0 == "," || $0 == "(" }).first ?? Substring(name))
+        .replacingOccurrences(of: #"\s*#\s*\d+\b"#, with: "", options: .regularExpression)
+        .trimmingCharacters(in: .whitespaces)
+    let parts = s.components(separatedBy: " - ")
+    if parts.count == 2, !parts[1].isEmpty { s = parts[1] + " " + parts[0].lowercased() }
+    return s.trimmingCharacters(in: .whitespaces)
 }
 
 /// One deal: name, store and price details, the price, and the add button. Tapping the row

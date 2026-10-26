@@ -26,7 +26,7 @@ enum Lines {
         "Add \u{201C}\(q)\u{201D} to your list and it'll show up there when it goes on sale."
     }
     static let emptyListTitle = "Your list is empty"
-    static let emptyListDetail = "Tap + on any deal, or add an item above."
+    static let emptyListDetail = "Tap + on any deal, or add your own with the + below."
     static func tripDone(_ n: Int) -> String { n == 1 ? "Trip done. 1 for 1." : "Trip done. \(n) for \(n)." }
     static let watchesTitle = "Your price watches"
 }

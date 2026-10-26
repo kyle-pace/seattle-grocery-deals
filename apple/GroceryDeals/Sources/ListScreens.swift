@@ -10,6 +10,8 @@ struct ListView: View {
     @State private var selected: Deal?
     @State private var choosing = false
     @State private var celebrate = false
+    @State private var composing = false
+    @FocusState private var typing: Bool
     @AppStorage("sgd.list.byStore") private var byStore = false
     let openStore: (String) -> Void
 
@@ -19,14 +21,23 @@ struct ListView: View {
                 Section {
                     Text(list.usesReminders ? "Synced with Reminders." : "Saved in this app.")
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                    HStack {
-                        TextField("Add an item, like bok choy", text: $newItem)
-                            .font(.app(.body)).submitLabel(.done).onSubmit(add)
-                        Button("Add", action: add).font(.app(.headline)).frame(minHeight: 44)
-                            .disabled(newItem.trimmingCharacters(in: .whitespaces).isEmpty)
-                    }
                 }
                 .listRowBackground(Palette.surface)
+
+                ForEach(duplicates, id: \.key) { d in
+                    Section {
+                        VStack(alignment: .leading, spacing: Space.s) {
+                            Text("\(d.title) is on here \(d.items.count) times")
+                                .font(.app(.headline)).foregroundStyle(Palette.ink)
+                            Text(d.items.map(\.text).joined(separator: ", "))
+                                .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                            Button("Keep the cheapest") { keepCheapest(d.items) }
+                                .font(.app(.headline)).buttonStyle(.glass).frame(minHeight: 44)
+                        }
+                        .padding(.vertical, Space.xs)
+                    }
+                    .listRowBackground(Palette.surface)
+                }
 
                 if list.items.isEmpty {
                     Section {
@@ -76,6 +87,10 @@ struct ListView: View {
                     }
                 }
             }
+            .safeAreaInset(edge: .bottom) { addBar }
+            .onChange(of: typing) { _, now in
+                if !now && newItem.trimmingCharacters(in: .whitespaces).isEmpty { withAnimation(.snappy) { composing = false } }
+            }
             .settingsButton()
             .celebration($celebrate, style: .paper, message: Lines.tripDone(list.items.count))
             .onChange(of: list.openItems.count) { old, now in
@@ -85,6 +100,66 @@ struct ListView: View {
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             .sheet(isPresented: $choosing) { RemindersPicker(prompt: "list_tab") }
         }
+    }
+
+    /// The + sits bottom right, under the thumb. Tapping it opens a field just above the
+    /// keyboard that stays open, so several items go on in a row.
+    @ViewBuilder private var addBar: some View {
+        HStack(spacing: Space.s) {
+            if composing {
+                TextField("Add an item, like bok choy", text: $newItem)
+                    .font(.app(.body)).submitLabel(.done).onSubmit(add)
+                    .focused($typing)
+                    .padding(.horizontal, Space.m).frame(minHeight: 50)
+                    .glassEffect(.regular, in: .capsule)
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
+            } else {
+                Spacer()
+            }
+            Button {
+                if composing && !newItem.trimmingCharacters(in: .whitespaces).isEmpty { add() }
+                else {
+                    withAnimation(.snappy) { composing = true }
+                    typing = true
+                }
+            } label: {
+                Image(systemName: "plus").font(.app(.title2, .bold)).frame(width: 36, height: 36)
+            }
+            .buttonStyle(.glassProminent)
+            .buttonBorderShape(.circle)
+            .accessibilityLabel(composing ? "Add to list" : "Add an item")
+            .sensoryFeedback(.increase, trigger: list.items.count)
+        }
+        .padding(.horizontal, Space.l)
+        .padding(.bottom, Space.s)
+    }
+
+    /// Open items that are the same thing (same item key) from different stores' deals.
+    private var duplicates: [(key: String, title: String, items: [ListStore.Item])] {
+        var order: [String] = []
+        var byKey: [String: [ListStore.Item]] = [:]
+        for item in list.openItems {
+            guard let id = item.dealID, let key = store.items.first(where: { $0.id == id })?.key else { continue }
+            if byKey[key] == nil { order.append(key) }
+            byKey[key, default: []].append(item)
+        }
+        return order.compactMap { key in
+            guard let items = byKey[key], items.count > 1 else { return nil }
+            let title = key.replacingOccurrences(of: "-", with: " ")
+            return (key, title.prefix(1).uppercased() + title.dropFirst(), items)
+        }
+    }
+
+    /// Keeps the line whose deal is cheapest (by unit price when there is one) and removes the rest.
+    private func keepCheapest(_ items: [ListStore.Item]) {
+        func cost(_ item: ListStore.Item) -> Double {
+            guard let d = deal(for: item) else { return .infinity }
+            if let u = d.unit_price, let r = u.range(of: #"\d+(\.\d+)?"#, options: .regularExpression), let v = Double(u[r]) { return v }
+            return d.price
+        }
+        guard let keep = items.min(by: { cost($0) < cost($1) }) else { return }
+        withAnimation { for item in items where item.id != keep.id { list.remove(item) } }
+        Announce.say("Kept \(keep.text)")
     }
 
     private var onSale: Int { list.openItems.filter { deal(for: $0) != nil }.count }
@@ -143,6 +218,7 @@ struct ListView: View {
         guard !t.isEmpty else { return }
         list.request(t)
         newItem = ""
+        typing = true
     }
 
     private func pickReminders() {
