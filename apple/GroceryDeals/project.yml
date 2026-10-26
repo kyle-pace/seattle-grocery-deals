@@ -5,6 +5,8 @@ options:
   deploymentTarget:
     iOS: "26.0"
 packages:
+  KitchenUI:
+    path: ../../../KitchenUI
   AmplitudeSwift:
     url: https://github.com/amplitude/Amplitude-Swift
     majorVersion: 1.0.0
@@ -21,6 +23,7 @@ targets:
       - Sources
       - Resources
     dependencies:
+      - package: KitchenUI
       - package: AmplitudeSwift
       - target: DealsWidget
     settings:
@@ -40,10 +43,6 @@ targets:
     info:
       path: Sources/Info.plist
       properties:
-        UIAppFonts:
-          - BarlowCondensed_700Bold.ttf
-          - AtkinsonHyperlegible_400Regular.ttf
-          - AtkinsonHyperlegible_700Bold.ttf
         UILaunchScreen:
           UIColorName: ""
   DealsWidget:
@@ -53,7 +52,8 @@ targets:
       - Widget
       - Sources/Models.swift
       - Sources/Theme.swift
-      - Resources/Fonts
+    dependencies:
+      - package: KitchenUI
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery.native.widget
@@ -69,7 +69,3 @@ targets:
       properties:
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
-        UIAppFonts:
-          - BarlowCondensed_700Bold.ttf
-          - AtkinsonHyperlegible_400Regular.ttf
-          - AtkinsonHyperlegible_700Bold.ttf

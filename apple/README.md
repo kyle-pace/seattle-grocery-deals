@@ -10,13 +10,13 @@ With the iPhone plugged in, unlocked and trusted, and Developer Mode on:
 apple/install-on-iphone.sh
 ```
 
-Needs Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery.native`, widget `.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
+Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery.native`, widget `.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
 
 ## Code
 
 - `Sources/Models.swift`: the app feed (`/api/week.json`) types.
 - `Sources/FeedStore.swift`: loads the live feed, falls back to the last saved copy, then `Resources/week.json`; Vegetarian only.
-- `Sources/Theme.swift`: Newsprint tokens and fonts (Barlow Condensed, Atkinson Hyperlegible; both scale with Dynamic Type).
+- `Sources/Theme.swift`: brings in KitchenUI, the design language shared with the Pantry app (`~/Developer/KitchenUI`, a local Swift package that must sit next to this repo): Atkinson Hyperlegible Next scaling with Dynamic Type, `Palette` colors for light and dark, and shared components. Deals adds only the yellow sale tag and the tier badges. Accessibility rules: never color alone, 44-point targets, every screen readable at the largest text sizes, VoiceOver labels and actions on every control.
 - `Sources/DealViews.swift`: price tag, deal row, deal sheet.
 - `Sources/Screens.swift`: This week (search), Aisles, Stores, store page.
 - `Sources/ListStore.swift`: the grocery list, in the app or in a Reminders list (EventKit); deal items carry price, store and the sale end date as the due date; whole-word matching of list items to deals.

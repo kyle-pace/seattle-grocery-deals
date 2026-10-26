@@ -11,30 +11,22 @@
 		24B72EE560CFC3050DA2FD19 /* week.json in Resources */ = {isa = PBXBuildFile; fileRef = 84F994427923C400F45DB70C /* week.json */; };
 		279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900666ED70B2F3E6A406669D /* Screens.swift */; };
-		31311B6DE3D8BAC6900486B8 /* AtkinsonHyperlegible_400Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */; };
 		319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B30268FA30809DBA50C0E7 /* Analytics.swift */; };
-		595E97078DA1D8CD786FAB83 /* OFL-barlow-condensed.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */; };
 		5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */; };
-		5B3C48156742D4D87B74A47D /* AtkinsonHyperlegible_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */; };
 		5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030270E4AFF9913A0A8A86E3 /* Assets.xcassets */; };
-		61EAE784F8205555826D880A /* BarlowCondensed_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */; };
-		63E7488D1AB83A2A0070D918 /* OFL-atkinson-hyperlegible.txt in Resources */ = {isa = PBXBuildFile; fileRef = C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */; };
 		64267422E7D9136407CEA5F4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
-		6C1FD574A191F06641676333 /* BarlowCondensed_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */; };
 		6E48E52EA001EF290CC57FB3 /* DealsWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FF981C7805200162BB6BACE8 /* DealsWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */; };
-		854B754C3F4613A79B2F522A /* AtkinsonHyperlegible_400Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */; };
+		8FE0D28ADE1638539D3A5CC1 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 995D521E5B5C312585E6EF90 /* AmplitudeSwift */; };
 		9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
+		CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 91E71391CC336A9B1BC351B8 /* KitchenUI */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
 		D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581B0CF13289C4A25A25F8A /* DealsWidget.swift */; };
 		D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE081C1EE741AEAB7005033E /* ListScreens.swift */; };
-		DC83A9A0DCCAA92A6B57B165 /* OFL-barlow-condensed.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */; };
 		DDD206C2E3CFBDC9BC64B26D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
-		F3B30BA65C172E3190D9F304 /* AtkinsonHyperlegible_700Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */; };
 		F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352F5BB18C8111F694A1DAFE /* ListStore.swift */; };
 		F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */; };
-		F97602B0684DAA841202FDA2 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 995D521E5B5C312585E6EF90 /* AmplitudeSwift */; };
-		FB275F78B2701566393ECB4E /* OFL-atkinson-hyperlegible.txt in Resources */ = {isa = PBXBuildFile; fileRef = C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */; };
+		F97602B0684DAA841202FDA2 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEC89675A65A42ECAA2F31F /* KitchenUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,13 +56,13 @@
 /* Begin PBXFileReference section */
 		030270E4AFF9913A0A8A86E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AD16DEF9240A31DF79EA0CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AtkinsonHyperlegible_400Regular.ttf; sourceTree = "<group>"; };
 		16919D4F6B29C60454AF3D0D /* Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.swift; sourceTree = "<group>"; };
 		33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDealsApp.swift; sourceTree = "<group>"; };
 		34300759905B9585BA88F72D /* DealViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealViews.swift; sourceTree = "<group>"; };
 		352F5BB18C8111F694A1DAFE /* ListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStore.swift; sourceTree = "<group>"; };
 		4E4E38A37F8FB357DFC488EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GroceryDeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73C1108FE82C9173926697E6 /* KitchenUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KitchenUI; path = ../../../KitchenUI; sourceTree = SOURCE_ROOT; };
 		7581B0CF13289C4A25A25F8A /* DealsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsWidget.swift; sourceTree = "<group>"; };
 		798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		84F994427923C400F45DB70C /* week.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = week.json; sourceTree = "<group>"; };
@@ -78,21 +70,26 @@
 		8C7685CC51CA8311DC803DA0 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		900666ED70B2F3E6A406669D /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
-		AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AtkinsonHyperlegible_700Bold.ttf; sourceTree = "<group>"; };
-		C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-atkinson-hyperlegible.txt"; sourceTree = "<group>"; };
 		DE081C1EE741AEAB7005033E /* ListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreens.swift; sourceTree = "<group>"; };
 		E5CE2E4258193F86182E0754 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "OFL-barlow-condensed.txt"; sourceTree = "<group>"; };
-		E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BarlowCondensed_700Bold.ttf; sourceTree = "<group>"; };
 		FF981C7805200162BB6BACE8 /* DealsWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DealsWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		702E5A9970062FEB6503187F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7867555CC0D5CB3111535D0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F97602B0684DAA841202FDA2 /* AmplitudeSwift in Frameworks */,
+				F97602B0684DAA841202FDA2 /* KitchenUI in Frameworks */,
+				8FE0D28ADE1638539D3A5CC1 /* AmplitudeSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,21 +124,18 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		C0D0210B50312CDFE2C24A12 /* Fonts */ = {
+		B7B83A042219DB067DDF5D46 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				0CCE8AD3D7EB4497521B1134 /* AtkinsonHyperlegible_400Regular.ttf */,
-				AB658923C5DC5DFFEE9731D3 /* AtkinsonHyperlegible_700Bold.ttf */,
-				E7F7DFFFBBB69D8D7EBD3559 /* BarlowCondensed_700Bold.ttf */,
-				C4E2F08F618DEAA16E161DEB /* OFL-atkinson-hyperlegible.txt */,
-				E7208F91941ACD0A38E87D9D /* OFL-barlow-condensed.txt */,
+				73C1108FE82C9173926697E6 /* KitchenUI */,
 			);
-			path = Fonts;
+			name = Packages;
 			sourceTree = "<group>";
 		};
 		D51F22F60B64BD340F576851 = {
 			isa = PBXGroup;
 			children = (
+				B7B83A042219DB067DDF5D46 /* Packages */,
 				EDDEB32C30EF772A83CC907E /* Resources */,
 				4F5D7D77730F85828D6884E7 /* Sources */,
 				4E61624D376C35F18A2C4CEB /* Widget */,
@@ -163,7 +157,6 @@
 			children = (
 				030270E4AFF9913A0A8A86E3 /* Assets.xcassets */,
 				84F994427923C400F45DB70C /* week.json */,
-				C0D0210B50312CDFE2C24A12 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -187,6 +180,7 @@
 			);
 			name = GroceryDeals;
 			packageProductDependencies = (
+				6DEC89675A65A42ECAA2F31F /* KitchenUI */,
 				995D521E5B5C312585E6EF90 /* AmplitudeSwift */,
 			);
 			productName = GroceryDeals;
@@ -198,7 +192,7 @@
 			buildConfigurationList = 1DEF10DAA339B0349C1E6804 /* Build configuration list for PBXNativeTarget "DealsWidget" */;
 			buildPhases = (
 				349269F6A119B6F0EA70B898 /* Sources */,
-				C510F09F810C116145D65C80 /* Resources */,
+				702E5A9970062FEB6503187F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -206,6 +200,7 @@
 			);
 			name = DealsWidget;
 			packageProductDependencies = (
+				91E71391CC336A9B1BC351B8 /* KitchenUI */,
 			);
 			productName = DealsWidget;
 			productReference = FF981C7805200162BB6BACE8 /* DealsWidget.appex */;
@@ -241,6 +236,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				91AA2D67D179BDBCF93DB5FB /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
+				96F98812BE4A0E3114E9993B /* XCLocalSwiftPackageReference "../../../KitchenUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D8857578EBE926F51C17A868 /* Products */;
@@ -259,24 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */,
-				854B754C3F4613A79B2F522A /* AtkinsonHyperlegible_400Regular.ttf in Resources */,
-				F3B30BA65C172E3190D9F304 /* AtkinsonHyperlegible_700Bold.ttf in Resources */,
-				61EAE784F8205555826D880A /* BarlowCondensed_700Bold.ttf in Resources */,
-				63E7488D1AB83A2A0070D918 /* OFL-atkinson-hyperlegible.txt in Resources */,
-				DC83A9A0DCCAA92A6B57B165 /* OFL-barlow-condensed.txt in Resources */,
 				24B72EE560CFC3050DA2FD19 /* week.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C510F09F810C116145D65C80 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				31311B6DE3D8BAC6900486B8 /* AtkinsonHyperlegible_400Regular.ttf in Resources */,
-				5B3C48156742D4D87B74A47D /* AtkinsonHyperlegible_700Bold.ttf in Resources */,
-				6C1FD574A191F06641676333 /* BarlowCondensed_700Bold.ttf in Resources */,
-				FB275F78B2701566393ECB4E /* OFL-atkinson-hyperlegible.txt in Resources */,
-				595E97078DA1D8CD786FAB83 /* OFL-barlow-condensed.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -569,6 +548,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		96F98812BE4A0E3114E9993B /* XCLocalSwiftPackageReference "../../../KitchenUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../KitchenUI;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		91AA2D67D179BDBCF93DB5FB /* XCRemoteSwiftPackageReference "Amplitude-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -581,6 +567,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6DEC89675A65A42ECAA2F31F /* KitchenUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KitchenUI;
+		};
+		91E71391CC336A9B1BC351B8 /* KitchenUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KitchenUI;
+		};
 		995D521E5B5C312585E6EF90 /* AmplitudeSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 91AA2D67D179BDBCF93DB5FB /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;

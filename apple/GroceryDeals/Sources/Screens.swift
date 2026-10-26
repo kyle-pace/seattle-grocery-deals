@@ -6,10 +6,10 @@ private struct Page<Content: View>: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0) { content }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 24)
+                .padding(.horizontal, Space.l)
+                .padding(.bottom, Space.xl)
         }
-        .background(Theme.paper)
+        .background(Palette.ground)
     }
 }
 
@@ -18,10 +18,11 @@ private struct VegToggle: View {
     var body: some View {
         @Bindable var store = store
         Toggle(isOn: $store.vegetarianOnly) {
-            Text("Vegetarian only").font(.body(17, bold: true)).foregroundStyle(Theme.ink)
+            Text("Vegetarian only").font(.app(.headline)).foregroundStyle(Palette.ink)
         }
-        .tint(Theme.brand)
-        .padding(.top, 8)
+        .tint(Palette.accent)
+        .frame(minHeight: 44)
+        .padding(.top, Space.s)
     }
 }
 
@@ -38,21 +39,26 @@ struct ThisWeekView: View {
             Page {
                 if let feed = store.feed {
                     Text("\(Dates.short(feed.week, weekday: false)) to \(Dates.short(feed.end, weekday: false)) · \(feed.items.count) deals from \(feed.stores.filter(\.readThisWeek).count) stores")
-                        .font(.body(15)).foregroundStyle(Theme.muted)
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     VegToggle()
                     if query.isEmpty {
                         SectionHeading(title: "Best this week", note: "\(store.standouts.count) standouts")
                         ForEach(store.standouts.prefix(20)) { d in
-                            Button { selected = d } label: { DealRow(deal: d, showWhy: true) }.buttonStyle(.plain)
+                            DealRow(deal: d, showWhy: true) { selected = d }
                         }
                     } else {
                         let results = store.search(query)
                         SectionHeading(title: "\(results.count) found")
                         ForEach(results.prefix(100)) { d in
-                            Button { selected = d } label: { DealRow(deal: d) }.buttonStyle(.plain)
+                            DealRow(deal: d) { selected = d }
                         }
                         if results.isEmpty {
-                            Text("Nothing matches. Try a shorter word or a store name.").font(.body(16)).foregroundStyle(Theme.muted).padding(.top, 16)
+                            ContentUnavailableView {
+                                Label("Nothing matches", systemImage: "magnifyingglass")
+                            } description: {
+                                Text("Try a shorter word or a store name.")
+                            }
+                            .padding(.top, Space.l)
                         }
                     }
                 }
@@ -94,7 +100,7 @@ struct AislesView: View {
                 Page {
                     VegToggle()
                     ForEach(store.deals(inCategory: c.id)) { d in
-                        Button { selected = d } label: { DealRow(deal: d) }.buttonStyle(.plain)
+                        DealRow(deal: d) { selected = d }
                     }
                 }
                 .navigationTitle(c.label)
@@ -146,31 +152,36 @@ struct StoreDetail: View {
         Page {
             VStack(alignment: .leading, spacing: 10) {
                 Text([s.towns, s.readThisWeek && s.from != nil ? "Sale \(Dates.short(s.from)) to \(Dates.short(s.through))" : ""].filter { !$0.isEmpty }.joined(separator: " · "))
-                    .font(.body(15)).foregroundStyle(Theme.muted)
+                    .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                 if let ad = s.flyer_url.flatMap(URL.init(string:)) {
                     Button { Analytics.track("Opened Weekly Ad", ["store": s.id]); openURL(ad) } label: {
-                        Label("See \(s.name)'s weekly ad", systemImage: "arrow.up.right").font(.body(17, bold: true)).frame(maxWidth: .infinity, minHeight: 44)
+                        Label("See \(s.name)'s weekly ad", systemImage: "arrow.up.right").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
                     }
-                    .buttonStyle(.glassProminent).tint(Theme.ink)
+                    .buttonStyle(.glassProminent)
+                    .accessibilityHint("Opens the store's website")
                 }
-                Text(s.about).font(.body(16)).foregroundStyle(Theme.muted)
+                Text(s.about).font(.app(.callout)).foregroundStyle(Palette.body)
                 if let delivery = s.delivery {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Delivery").font(.body(16, bold: true))
-                        Text(delivery).font(.body(16))
+                    Card(padding: Space.m) {
+                        Label {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Delivery").font(.app(.callout, .bold))
+                                Text(delivery).font(.app(.callout))
+                            }
+                        } icon: {
+                            Image(systemName: "box.truck").foregroundStyle(Palette.accent)
+                        }
+                        .foregroundStyle(Palette.ink)
                     }
-                    .foregroundStyle(Theme.ink)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(12)
-                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Theme.lineUI, lineWidth: 1.5))
+                    .accessibilityElement(children: .combine)
                 }
                 VegToggle()
             }
-            .padding(.top, 8)
+            .padding(.top, Space.s)
             let deals = store.deals(atStore: s.id)
             SectionHeading(title: "This week", note: "\(deals.count) deals")
             ForEach(deals) { d in
-                Button { selected = d } label: { DealRow(deal: d, showStore: false) }.buttonStyle(.plain)
+                DealRow(deal: d, showStore: false) { selected = d }
             }
         }
         .navigationTitle(s.name)
@@ -178,7 +189,7 @@ struct StoreDetail: View {
     }
 }
 
-/// A bordered card used for aisles and stores.
+/// A card for an aisle or a store: name, a "Delivers" badge, counts and the top deal.
 struct Tile: View {
     let title: String
     var chip: String? = nil
@@ -186,23 +197,23 @@ struct Tile: View {
     var top: String? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text(title.uppercased()).font(.display(24)).foregroundStyle(Theme.ink)
-                Spacer()
-                Image(systemName: "chevron.right").foregroundStyle(Theme.muted)
+        Card(padding: 14) {
+            VStack(alignment: .leading, spacing: Space.xs) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(title).font(.app(.title3, .bold)).foregroundStyle(Palette.ink)
+                    Spacer()
+                    Image(systemName: "chevron.right").font(.app(.subheadline, .semibold)).foregroundStyle(Palette.muted)
+                        .accessibilityHidden(true)
+                }
+                if let chip {
+                    Badge(chip, tone: .info, compact: true) { Image(systemName: "box.truck").imageScale(.small) }
+                }
+                Text(line).font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                if let top, !top.isEmpty {
+                    Text(top).font(.app(.subheadline)).foregroundStyle(Palette.ink).lineLimitUnlessLarge(2)
+                }
             }
-            if let chip {
-                Text(chip).font(.body(12, bold: true, relativeTo: .caption)).padding(.horizontal, 8).padding(.vertical, 1)
-                    .overlay(Capsule().strokeBorder(Theme.ink, lineWidth: 1.5)).foregroundStyle(Theme.ink)
-            }
-            Text(line).font(.body(15)).foregroundStyle(Theme.muted)
-            if let top, !top.isEmpty { Text(top).font(.body(15)).foregroundStyle(Theme.ink).lineLimit(2) }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(14)
-        .background(Theme.surface, in: RoundedRectangle(cornerRadius: 10))
-        .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Theme.lineUI, lineWidth: 1.5))
         .padding(.top, 10)
         .accessibilityElement(children: .combine)
     }

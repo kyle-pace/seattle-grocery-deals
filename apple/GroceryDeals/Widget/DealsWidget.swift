@@ -44,37 +44,42 @@ struct DealsWidgetView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Text("BEST THIS WEEK").font(.custom("BarlowCondensed-Bold", size: 15)).foregroundStyle(Theme.brand)
+                Text("BEST THIS WEEK").font(.app(13, .heavy, relativeTo: .caption)).tracking(0.6).foregroundStyle(Palette.accent)
                 Spacer()
-                if let week = entry.week { Text(Dates.short(week, weekday: false)).font(.caption2).foregroundStyle(Theme.muted) }
+                if let week = entry.week { Text(Dates.short(week, weekday: false)).font(.app(.caption2)).foregroundStyle(Palette.muted) }
             }
             if entry.deals.isEmpty {
-                Text("Open Deals to load this week's flyers.").font(.caption).foregroundStyle(Theme.muted)
+                Text("Open Deals to load this week's flyers.").font(.app(.caption)).foregroundStyle(Palette.muted)
             }
             ForEach(entry.deals.prefix(family == .systemSmall ? 1 : family == .systemMedium ? 3 : 4)) { d in
                 if family == .systemSmall {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(d.name).font(.custom("AtkinsonHyperlegible-Bold", size: 14)).lineLimit(2)
-                        Text(entry.stores[d.store] ?? d.store).font(.caption2).foregroundStyle(Theme.muted)
+                        Text(d.name).font(.app(14, .bold, relativeTo: .subheadline)).lineLimit(2)
+                        Text(entry.stores[d.store] ?? d.store).font(.app(.caption2)).foregroundStyle(Palette.muted)
                         Spacer(minLength: 0)
-                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.custom("BarlowCondensed-Bold", size: 30))
+                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.app(26, .heavy, relativeTo: .title)).monospacedDigit()
+                            .minimumScaleFactor(0.7).lineLimit(1)
                             .padding(.horizontal, 6).background(Theme.tag).foregroundStyle(Theme.onTag)
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("\(d.name), \(entry.stores[d.store] ?? d.store), \(d.spoken)")
                 } else {
                     HStack(alignment: .firstTextBaseline) {
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(d.name).font(.custom("AtkinsonHyperlegible-Bold", size: 13)).lineLimit(1)
-                            Text(entry.stores[d.store] ?? d.store).font(.caption2).foregroundStyle(Theme.muted).lineLimit(1)
+                            Text(d.name).font(.app(13, .bold, relativeTo: .footnote)).lineLimit(1)
+                            Text(entry.stores[d.store] ?? d.store).font(.app(.caption2)).foregroundStyle(Palette.muted).lineLimit(1)
                         }
                         Spacer()
-                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.custom("BarlowCondensed-Bold", size: 20))
+                        Text(d.amount + (d.unit.isEmpty ? "" : d.unit)).font(.app(18, .heavy, relativeTo: .headline)).monospacedDigit()
                     }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("\(d.name), \(entry.stores[d.store] ?? d.store), \(d.spoken)")
                 }
             }
             Spacer(minLength: 0)
         }
-        .foregroundStyle(Theme.ink)
-        .containerBackground(Theme.paper, for: .widget)
+        .foregroundStyle(Palette.ink)
+        .containerBackground(Palette.ground, for: .widget)
     }
 }
 
@@ -89,5 +94,6 @@ struct DealsWidget: Widget {
 
 @main
 struct DealsWidgets: WidgetBundle {
+    init() { KitchenUI.registerFonts() }
     var body: some Widget { DealsWidget() }
 }

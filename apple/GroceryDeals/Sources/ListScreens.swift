@@ -16,14 +16,15 @@ struct ListView: View {
             List {
                 Section {
                     Text(list.usesReminders ? "Synced with Reminders. \(onSale) on sale this week." : "Saved in this app. \(onSale) on sale this week.")
-                        .font(.body(15)).foregroundStyle(Theme.muted)
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     HStack {
                         TextField("Add an item, like bok choy", text: $newItem)
-                            .font(.body(17)).submitLabel(.done).onSubmit(add)
-                        Button("Add", action: add).font(.body(17, bold: true)).disabled(newItem.trimmingCharacters(in: .whitespaces).isEmpty)
+                            .font(.app(.body)).submitLabel(.done).onSubmit(add)
+                        Button("Add", action: add).font(.app(.headline)).frame(minHeight: 44)
+                            .disabled(newItem.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
                 }
-                .listRowBackground(Theme.surface)
+                .listRowBackground(Palette.surface)
 
                 Section {
                     ForEach(list.items) { item in
@@ -31,11 +32,14 @@ struct ListView: View {
                             .swipeActions { Button("Remove", role: .destructive) { list.remove(item) } }
                     }
                     if list.items.isEmpty {
-                        Text("Nothing on your list yet. Tap + on any deal, or add an item above.")
-                            .font(.body(16)).foregroundStyle(Theme.muted)
+                        ContentUnavailableView {
+                            Label("Nothing on your list yet", systemImage: "checklist")
+                        } description: {
+                            Text("Tap + on any deal, or add an item above.")
+                        }
                     }
                 }
-                .listRowBackground(Theme.surface)
+                .listRowBackground(Palette.surface)
 
                 Section {
                     Button(list.usesReminders ? "Change Reminders list" : "Use a Reminders list") { pickReminders() }
@@ -43,11 +47,11 @@ struct ListView: View {
                         Button("Keep the list in this app instead") { list.useApp(prompt: "list_tab") }
                     }
                 }
-                .font(.body(17, bold: true))
-                .listRowBackground(Theme.surface)
+                .font(.app(.headline))
+                .listRowBackground(Palette.surface)
             }
             .scrollContentBackground(.hidden)
-            .background(Theme.paper)
+            .background(Palette.ground)
             .navigationTitle(list.title)
             .refreshable { list.reload() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
@@ -64,23 +68,33 @@ struct ListView: View {
 
     private func row(_ item: ListStore.Item) -> some View {
         let d = item.done ? nil : deal(for: item)
-        return HStack(spacing: 12) {
-            Button { list.toggle(item) } label: {
+        return HStack(spacing: Space.m) {
+            Button {
+                list.toggle(item)
+                Announce.say(item.done ? "\(item.text), not done" : "\(item.text), done")
+            } label: {
                 Image(systemName: item.done ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 24)).foregroundStyle(item.done ? Theme.brand : Theme.lineUI)
-                    .frame(width: 44, height: 44)
+                    .font(.app(.title2)).foregroundStyle(item.done ? Palette.accent : Palette.muted)
+                    .frame(minWidth: 44, minHeight: 44)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(item.text).accessibilityValue(item.done ? "Done" : "Not done")
-            VStack(alignment: .leading, spacing: 2) {
-                Text(item.text).font(.body(17, bold: true)).strikethrough(item.done).foregroundStyle(item.done ? Theme.muted : Theme.ink)
-                if let d { Text("\(store.storeName(d.store)) · \(d.name)").font(.body(14)).foregroundStyle(Theme.muted).lineLimit(1) }
+            .accessibilityLabel(item.text)
+            .accessibilityValue(item.done ? "Done" : "Not done")
+            .accessibilityHint(item.done ? "Marks it not done" : "Marks it done")
+            AdaptiveStack(spacing: Space.xs) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(item.text).font(.app(.headline)).strikethrough(item.done).foregroundStyle(item.done ? Palette.muted : Palette.ink)
+                    if let d { Text("\(store.storeName(d.store)) · \(d.name)").font(.app(.subheadline)).foregroundStyle(Palette.muted).lineLimitUnlessLarge(1) }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                if let d { PriceTag(deal: d, size: 20, relativeTo: .title3) }
             }
-            Spacer()
-            if let d { PriceTag(deal: d, size: 22) }
+            .contentShape(Rectangle())
+            .onTapGesture { if let d { selected = d } }
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(d == nil ? [] : .isButton)
+            .accessibilityHint(d == nil ? "" : "Opens the deal")
         }
-        .contentShape(Rectangle())
-        .onTapGesture { if let d { selected = d } }
     }
 
     private func add() {
@@ -110,8 +124,8 @@ struct RemindersPicker: View {
                     dismiss()
                 } label: {
                     HStack {
-                        Circle().fill(Color(cgColor: cal.cgColor)).frame(width: 14, height: 14)
-                        Text(cal.title).font(.body(17, bold: true)).foregroundStyle(Theme.ink)
+                        Circle().fill(Color(cgColor: cal.cgColor)).frame(width: 14, height: 14).accessibilityHidden(true)
+                        Text(cal.title).font(.app(.headline)).foregroundStyle(Palette.ink)
                     }
                 }
             }
@@ -142,20 +156,22 @@ struct SettingsView: View {
                         labeled("Ending soon", "The day before a list item's sale ends")
                     }
                 } header: { Text("Notify me") }
-                .tint(Theme.brand)
+                .tint(Palette.accent)
 
                 Section {
                     if alerts.watches.isEmpty {
                         Text("Open any deal and tap \"Watch price\". You'll get an alert when it's cheaper than it is now.")
-                            .font(.body(15)).foregroundStyle(Theme.muted)
+                            .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     }
                     ForEach(alerts.watches) { w in
                         let hit = store.feed.flatMap { alerts.hit(w, in: $0.items) }
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(w.name).font(.body(17, bold: true))
+                            Text(w.name).font(.app(.headline))
                             Text("Under \(w.label)" + (hit.map { " · now \($0.text) at \(store.storeName($0.store))" } ?? " · not yet"))
-                                .font(.body(14)).foregroundStyle(hit == nil ? Theme.muted : Theme.brand)
+                                .font(.app(.subheadline)).foregroundStyle(hit == nil ? Palette.muted : Palette.text(.good))
                         }
+                        .accessibilityElement(children: .combine)
+                        .accessibilityAction(named: "Stop watching") { alerts.unwatch(w) }
                         .swipeActions { Button("Stop watching", role: .destructive) { alerts.unwatch(w) } }
                     }
                 } header: { Text("Price watches") } footer: {
@@ -163,27 +179,32 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    AppearanceSettings()
+                } header: { Text("Display") }
+                .tint(Palette.accent)
+
+                Section {
                     Toggle(isOn: $share) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Share anonymous usage data").font(.body(17, bold: true))
+                            Text("Share anonymous usage data").font(.app(.headline))
                             Text("Which screens and features get used, to improve the app. No name, no IP address, never your list.")
-                                .font(.body(14)).foregroundStyle(Theme.muted)
+                                .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                         }
                     }
-                    .tint(Theme.brand)
+                    .tint(Palette.accent)
                     .onChange(of: share) { _, on in Analytics.isOff = !on }
                 } header: { Text("Privacy") }
             }
             .scrollContentBackground(.hidden)
-            .background(Theme.paper)
+            .background(Palette.ground)
             .navigationTitle("Settings")
         }
     }
 
     private func labeled(_ title: String, _ sub: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.body(17, bold: true))
-            Text(sub).font(.body(14)).foregroundStyle(Theme.muted)
+            Text(title).font(.app(.headline))
+            Text(sub).font(.app(.subheadline)).foregroundStyle(Palette.muted)
         }
     }
 }

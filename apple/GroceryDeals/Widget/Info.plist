@@ -23,11 +23,5 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.widgetkit-extension</string>
 	</dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>BarlowCondensed_700Bold.ttf</string>
-		<string>AtkinsonHyperlegible_400Regular.ttf</string>
-		<string>AtkinsonHyperlegible_700Bold.ttf</string>
-	</array>
 </dict>
 </plist>

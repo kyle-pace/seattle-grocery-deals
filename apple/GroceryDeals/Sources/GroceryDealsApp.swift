@@ -10,6 +10,7 @@ struct GroceryDealsApp: App {
     private let presenter = NotificationPresenter()
 
     init() {
+        KitchenUI.registerFonts()
         Analytics.start()
         UNUserNotificationCenter.current().delegate = presenter
     }
@@ -17,6 +18,7 @@ struct GroceryDealsApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .kitchenAppearance()
                 .environment(store)
                 .environment(list)
                 .environment(alerts)
@@ -51,7 +53,7 @@ struct RootView: View {
             Tab("Settings", systemImage: "gearshape", value: .settings) { SettingsView() }
         }
         .tabViewStyle(.sidebarAdaptable)
-        .tint(Theme.brand)
+        .tint(Palette.accent)
         .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
         // Keep "ends tomorrow" notifications in step with the list and the week.
         .task(id: "\(store.feed?.week ?? "")|\(list.openItems.map(\.text).joined(separator: ","))|\(alerts.endingSoon)") {
