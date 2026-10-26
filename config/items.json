@@ -300,11 +300,19 @@
       ]
     },
     "cod": {
-      "label": "Cod or black cod",
+      "label": "Cod",
       "category": "seafood",
       "staple": true,
       "match": [
         "cod"
+      ]
+    },
+    "sablefish": {
+      "label": "Sablefish (black cod)",
+      "category": "seafood",
+      "match": [
+        "black cod",
+        "sablefish"
       ]
     },
     "mackerel": {

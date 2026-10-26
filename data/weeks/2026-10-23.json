@@ -5727,7 +5727,7 @@
     {
       "store": "met-market",
       "item": "Black Cod Fillet",
-      "item_key": "cod",
+      "item_key": "sablefish",
       "category": "seafood",
       "price": 19.99,
       "quantity": 1,
