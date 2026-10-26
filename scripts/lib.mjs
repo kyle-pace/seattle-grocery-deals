@@ -2,6 +2,7 @@
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { load as loadCatalog, match as matchCatalog } from "../vendor/kitchen-catalog/catalog.mjs";
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const WEEKS_DIR = join(ROOT, "data", "weeks");
@@ -17,7 +18,11 @@ export function loadConfig() {
   const benchmarksFile = readJson(join(ROOT, "config", "benchmarks.json"));
   const site = readJson(join(ROOT, "config", "site.json"));
   const storeById = Object.fromEntries(stores.map((s) => [s.id, s]));
-  return { stores, storeById, criteria, items, benchmarks: benchmarksFile.benchmarks, benchmarksFile, site };
+  const catalog = loadCatalog(join(ROOT, "vendor", "kitchen-catalog", "catalog.json"));
+  // Deals' own item keys -> catalog ids, through the catalog's "also" (older ids).
+  const catalogIdByKey = {};
+  for (const [id, item] of Object.entries(catalog.items)) for (const old of item.also ?? []) catalogIdByKey[old] ??= id;
+  return { stores, storeById, criteria, items, benchmarks: benchmarksFile.benchmarks, benchmarksFile, site, catalog, catalogIdByKey };
 }
 
 export function weekFiles() {
@@ -106,6 +111,26 @@ export function percentOff(price, regular) {
 
 export function isStaple(item, cfg) {
   return Boolean(item.item_key && cfg.items[item.item_key]?.staple);
+}
+
+// The KitchenCatalog item for a deal: by its item key, else a strong match on its name. Cached.
+const catalogCache = new WeakMap();
+export function catalogItem(item, cfg) {
+  if (catalogCache.has(item)) return catalogCache.get(item);
+  const k = item.item_key;
+  const id = k && (cfg.catalog.items[k] ? k : cfg.catalogIdByKey[k]);
+  let found = id ? cfg.catalog.items[id] : null;
+  if (!found) {
+    const m = matchCatalog(cfg.catalog, item.item);
+    found = m?.strength === "strong" ? m.item : null;
+  }
+  catalogCache.set(item, found);
+  return found;
+}
+
+// "everyday", "common" or "specialty": how many people buy it.
+export function popularity(item, cfg) {
+  return catalogItem(item, cfg)?.popularity ?? "common";
 }
 
 export function isPriority(item, cfg) {
@@ -205,7 +230,8 @@ export function analyze(item, { cfg, prior, peers }) {
     us ? 1 - us.ratio : 0,
     below ? r.below_lowest_listed + (1 - v / low.price) : 0,
     cheapest ? r.cheapest_across_stores : 0,
-  ) + (item.highlight ? r.highlight_bonus : 0) + (isPriority(item, cfg) ? r.priority_category_bonus : 0);
+  ) + (item.highlight ? r.highlight_bonus : 0) + (isPriority(item, cfg) ? r.priority_category_bonus : 0)
+    + (r.popularity_bonus?.[popularity(item, cfg)] ?? 0);
 
   return { tier: standout ? "standout" : good ? "good" : "sale", score: strength, tags, us, low: lowOk ? low : null, cheapest };
 }
