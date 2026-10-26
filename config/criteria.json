@@ -20,7 +20,9 @@
     "priority_category_bonus": 0.1,
     "highlight_bonus": 0.3,
     "below_lowest_listed": 0.25,
-    "cheapest_across_stores": 0.12
+    "cheapest_across_stores": 0.12,
+    "popularity_note": "Added to the score by the item's KitchenCatalog popularity, so the deals most people buy come first. Unknown items count as common.",
+    "popularity_bonus": { "everyday": 0.15, "common": 0, "specialty": -0.3 }
   },
   "home": {
     "highlights": 12,

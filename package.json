@@ -12,7 +12,8 @@
     "build": "node scripts/build.mjs",
     "draft": "node scripts/draft-week.mjs",
     "check": "node scripts/validate.mjs && node scripts/build.mjs",
-    "serve": "node scripts/serve.mjs"
+    "serve": "node scripts/serve.mjs",
+    "sync-catalog": "node scripts/sync-catalog.mjs"
   },
   "dependencies": {
     "@amplitude/analytics-browser": "^2.48.1",
