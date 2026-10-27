@@ -32,7 +32,7 @@ It archives with the Xcode it finds (beta first), signs with the Apple ID signed
 - `Sources/ListStore.swift`: the grocery list, in the app or in a Reminders list (EventKit); deal items carry price, store and the sale end date as the due date; whole-word matching of list items to deals.
 - `Sources/ListScreens.swift`: List tab, Reminders list picker, Settings (privacy switch).
 - `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website: no IP, carrier, vendor ID or city. Off until the person says yes in onboarding (Amplitude isn't created before that); the switch in Settings changes the answer.
-- `Sources/Welcome.swift`: first-run onboarding, built on KitchenUI's `Onboarding`: welcome, a four-card tour, then the usage question. Everything but the question can be skipped. Installs that ran 0.1.0 get only the question; anyone who had turned the old switch off is not asked again. Settings has "Show the tour again". Simulator: `-onboarding question` jumps to the question on a fresh install.
+- `Sources/Welcome.swift`: first-run onboarding, built on KitchenUI's `Onboarding`: welcome, a four-card tour, then the usage question. Everything but the question can be skipped. Installs that ran 0.1.0 (sharing by default) skip onboarding and stay opted in; anyone who had turned the old switch off stays off. Settings has "Show the tour again". Simulator: `-onboarding question` jumps to the question on a fresh install.
 - `Sources/GroceryDealsApp.swift`: app entry, native tabs (Liquid Glass on iOS 26, sidebar on iPad), and the "where should your list live?" prompt on the first add.
 
 ## Stages

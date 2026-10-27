@@ -1,16 +1,21 @@
 import SwiftUI
 
 /// First-run onboarding (KitchenUI's `Onboarding`): welcome, a four-card tour, then the usage
-/// question. Everything but the question can be skipped. People who used 0.1.0 before
-/// onboarding existed get only the question.
+/// question. Everything but the question can be skipped. Installs that ran 0.1.0 (analytics on
+/// by default, before onboarding existed) skip it and stay opted in.
 @MainActor
 enum Welcome {
-    /// Where onboarding starts at this launch, or `nil` once the usage question is answered.
-    /// Worked out once, before the first feed loads and saves a week.
+    /// Where onboarding starts at this launch, or `nil` when there's nothing to show. Worked out
+    /// once, in the App's init, before the first feed load saves a week.
     static let start: Onboarding.Start? = {
         guard Analytics.choice == nil else { return nil }
         if DebugArgs.value("-onboarding") == "question" { return .question }
-        return FeedStore.hasSavedWeek ? .question : .welcome
+        if FeedStore.hasSavedWeek {
+            // Already used 0.1.0, which shared by default: keep that, no onboarding.
+            Analytics.setSharing(true)
+            return nil
+        }
+        return .welcome
     }()
 
     static let pages = [
