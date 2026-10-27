@@ -541,7 +541,7 @@
     {
       "store": "lams",
       "item": "Pork Arm Picnic Boneless",
-      "item_key": null,
+      "item_key": "pork-shoulder",
       "category": "meat",
       "price": 2.29,
       "quantity": 1,
@@ -1293,7 +1293,7 @@
     {
       "store": "uwajimaya",
       "item": "Pork Loin Chop",
-      "item_key": "pork-loin",
+      "item_key": "pork-chops",
       "category": "meat",
       "price": 3.99,
       "quantity": 1,
@@ -1333,7 +1333,7 @@
     {
       "store": "uwajimaya",
       "item": "Kokuho Rose Rice",
-      "item_key": null,
+      "item_key": "rice-medium-grain",
       "category": "pantry",
       "price": 19.99,
       "quantity": 1,
@@ -1889,7 +1889,7 @@
     {
       "store": "central-coop",
       "item": "Organic Delicata Squash",
-      "item_key": null,
+      "item_key": "squash-winter",
       "category": "produce",
       "price": 1.69,
       "quantity": 1,
@@ -5745,7 +5745,7 @@
     {
       "store": "met-market",
       "item": "Coava Coffee",
-      "item_key": null,
+      "item_key": "coffee",
       "category": "pantry",
       "price": 14.99,
       "quantity": 1,
@@ -7653,7 +7653,7 @@
     {
       "store": "red-apple",
       "item": "Noosa Finest Yoghurt, Selected Varieties",
-      "item_key": null,
+      "item_key": "yogurt",
       "category": "dairy-eggs",
       "price": 5,
       "quantity": 2,
@@ -8225,7 +8225,7 @@
     {
       "store": "red-apple",
       "item": "Dietz & Watson Black Forest Ham",
-      "item_key": null,
+      "item_key": "ham",
       "category": "prepared",
       "price": 8.48,
       "quantity": 1,
@@ -8479,7 +8479,7 @@
     {
       "store": "red-apple",
       "item": "All Natural Boneless Pork Sirloin Chops, Value Pack",
-      "item_key": null,
+      "item_key": "pork-chops",
       "category": "meat",
       "price": 3.98,
       "quantity": 1,
@@ -8497,7 +8497,7 @@
     {
       "store": "red-apple",
       "item": "Foster Farms Boneless Skinless Chicken Breast, Value Pack",
-      "item_key": null,
+      "item_key": "chicken-breast-boneless",
       "category": "meat",
       "price": 4.98,
       "quantity": 1,
@@ -8685,7 +8685,7 @@
     {
       "store": "red-apple",
       "item": "Smithfield Boneless Ham Steaks",
-      "item_key": null,
+      "item_key": "ham",
       "category": "meat",
       "price": 3.28,
       "quantity": 1,
@@ -9537,7 +9537,7 @@
     {
       "store": "hmart",
       "item": "Pork For Stew",
-      "item_key": null,
+      "item_key": "pork-stew",
       "category": "meat",
       "price": 2.98,
       "quantity": 1,
@@ -9573,7 +9573,7 @@
     {
       "store": "hmart",
       "item": "Pork Belly Thin Sliced",
-      "item_key": "pork-belly",
+      "item_key": "pork-belly-sliced",
       "category": "meat",
       "price": 6.98,
       "quantity": 1,
@@ -9591,7 +9591,7 @@
     {
       "store": "hmart",
       "item": "Pork Belly Skin-On Sliced",
-      "item_key": "pork-belly",
+      "item_key": "pork-belly-sliced",
       "category": "meat",
       "price": 5.98,
       "quantity": 1,
@@ -10761,7 +10761,7 @@
     {
       "store": "tnt",
       "item": "Cooked Shrimp (Frozen, Head-On, 16/20)",
-      "item_key": null,
+      "item_key": "shrimp",
       "category": "seafood",
       "price": 7.96,
       "quantity": 1,
@@ -10823,7 +10823,7 @@
     {
       "store": "tnt",
       "item": "Pork Side Ribs (Fresh, Whole)",
-      "item_key": null,
+      "item_key": "pork-spareribs",
       "category": "meat",
       "price": 3.48,
       "quantity": 1,
@@ -11287,7 +11287,7 @@
     {
       "store": "tnt",
       "item": "Ganlu Pear (China)",
-      "item_key": null,
+      "item_key": "pears",
       "category": "produce",
       "price": 2.88,
       "quantity": 1,
@@ -11565,7 +11565,7 @@
     {
       "store": "tnt",
       "item": "Chicken Leg (Value Pack) (Fresh, Back Attached)",
-      "item_key": null,
+      "item_key": "chicken-leg-quarters",
       "category": "meat",
       "price": 1.28,
       "quantity": 1,
@@ -11623,7 +11623,7 @@
     {
       "store": "tnt",
       "item": "Cherry Blossom Pork Front Foot Cut (Frozen)",
-      "item_key": null,
+      "item_key": "pork-feet",
       "category": "meat",
       "price": 8.88,
       "quantity": 1,
@@ -11667,7 +11667,7 @@
     {
       "store": "tnt",
       "item": "Angus Beef Flat Iron (Fresh)",
-      "item_key": null,
+      "item_key": "beef-steak",
       "category": "meat",
       "price": 11.88,
       "quantity": 1,
@@ -12757,7 +12757,7 @@
     {
       "store": "tnt",
       "item": "Cherry Blossom Pork Back Rib (Fresh)",
-      "item_key": null,
+      "item_key": "pork-baby-back-ribs",
       "category": "meat",
       "price": 7.88,
       "quantity": 1,
@@ -13576,7 +13576,7 @@
     {
       "store": "99-ranch",
       "item": "Gan Lu Pear",
-      "item_key": null,
+      "item_key": "pears",
       "category": "produce",
       "price": 2.99,
       "quantity": 1,
@@ -13594,7 +13594,7 @@
     {
       "store": "99-ranch",
       "item": "Gan Lu Pear, 7.7 lb case",
-      "item_key": null,
+      "item_key": "pears",
       "category": "produce",
       "price": 19.99,
       "quantity": 1,
@@ -13616,7 +13616,7 @@
     {
       "store": "99-ranch",
       "item": "Young Coco",
-      "item_key": null,
+      "item_key": "coconut",
       "category": "produce",
       "price": 1.99,
       "quantity": 1,
@@ -13634,7 +13634,7 @@
     {
       "store": "99-ranch",
       "item": "Young Coco, case of 9",
-      "item_key": null,
+      "item_key": "coconut",
       "category": "produce",
       "price": 16.99,
       "quantity": 1,
@@ -13656,7 +13656,7 @@
     {
       "store": "99-ranch",
       "item": "Berkshire Pork Thin Sliced Belly",
-      "item_key": null,
+      "item_key": "pork-belly-sliced",
       "category": "meat",
       "price": 9.99,
       "quantity": 1,
@@ -13678,7 +13678,7 @@
     {
       "store": "99-ranch",
       "item": "Pork Loin Chop",
-      "item_key": "pork-loin",
+      "item_key": "pork-chops",
       "category": "meat",
       "price": 2.49,
       "quantity": 1,
@@ -13892,7 +13892,7 @@
     {
       "store": "99-ranch",
       "item": "99 Ranch Rice Bran Oil",
-      "item_key": null,
+      "item_key": "cooking-oil",
       "category": "pantry",
       "price": 6.99,
       "quantity": 1,
@@ -16906,7 +16906,7 @@
     {
       "store": "viet-wah",
       "item": "Pork Ham Roast",
-      "item_key": "ham",
+      "item_key": "pork-leg",
       "category": "meat",
       "price": 2.39,
       "quantity": 1,
@@ -16978,7 +16978,7 @@
     {
       "store": "seafood-city",
       "item": "Pork Loin Chop Skin-on",
-      "item_key": "pork-loin",
+      "item_key": "pork-chops",
       "category": "meat",
       "price": 2.49,
       "quantity": 1,
@@ -17017,7 +17017,7 @@
     {
       "store": "seafood-city",
       "item": "Yam Leaves",
-      "item_key": null,
+      "item_key": "greens-asian",
       "category": "produce",
       "price": 3.99,
       "quantity": 1,
@@ -17478,7 +17478,7 @@
     {
       "store": "seafood-city",
       "item": "Cabbage Green",
-      "item_key": null,
+      "item_key": "cabbage-green",
       "category": "produce",
       "price": 1.49,
       "quantity": 1,

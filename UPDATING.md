@@ -62,6 +62,7 @@ Any price that could not be read says `unverified`. Those rows are never used.
 Check against the note:
 - **Flyers:** status, dates and links. The parser guesses status from words like "partly", "stale" and "unreadable". Partly read and stale flyers need a `note`; the draft fills one in from the note's line, so tidy it up.
 - **Item keys:** the "Check by hand" list shows items with no suggested key, or a key whose category disagrees with the note. Keys matter because they power "Compare stores", "Lowest we've listed" and US average comparisons.
+- **Keys from KitchenCatalog:** the draft also reads every name with KitchenCatalog's matcher. When that finds a Deals key the match words missed, or a different one, the line says so and it's listed under `suggested_keys` in the report. Take a suggestion only when the deal compares on price with that key's other listings: same kind of product and the same unit. Leave it `null` for drinks, mixes and ready-made versions (yogurt drinks aren't `yogurt`, liquid egg whites aren't `eggs`), for pre-sliced cuts that have no key of their own (sliced shoulder for shabu isn't `pork-shoulder`), and for specialty versions priced far from the rest (matsutake isn't `mushrooms`).
   - Fix wrong keys. A key is wrong when it would compare unlike things (for example Kurobuta sliced loin against a plain loin roast).
   - Use `null` for one-off items with no fair comparison.
   - Add a key to `config/items.json` for items that will come up again.

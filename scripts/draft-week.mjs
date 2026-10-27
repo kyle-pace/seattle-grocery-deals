@@ -6,6 +6,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, basename } from "node:path";
 import { ROOT, loadConfig, loadWeeks, priorListings, peerPrices, analyze, computeUnitPrice, round2, percentOff, priceText, isFriday } from "./lib.mjs";
+import { match as matchCatalog } from "../vendor/kitchen-catalog/catalog.mjs";
 
 const cfg = loadConfig();
 const notePath = process.argv[2];
@@ -134,6 +135,23 @@ function suggestKey(name) {
   return best?.key ?? null;
 }
 
+// The Deals key KitchenCatalog's matcher reads a name as: a strong match on an
+// ingredient (not a ready-made product), then that item's own id, an older id in
+// its "also", or the nearest parent that is a Deals key. Only a suggestion: on the
+// week of Oct 23 about a third of these didn't compare on price (yogurt drinks as
+// yogurt, egg whites as eggs, sliced shabu pork as shoulder), so a person decides.
+const alsoKey = {};
+for (const [id, it] of Object.entries(cfg.catalog.items)) for (const old of it.also ?? []) if (cfg.items[old]) alsoKey[id] ??= old;
+function catalogKey(name) {
+  const m = matchCatalog(cfg.catalog, name);
+  if (m?.strength !== "strong" || cfg.catalog.items[m.id]?.product) return null;
+  for (let id = m.id, hops = 0; id; id = cfg.catalog.items[id]?.parent, hops++) {
+    const key = cfg.items[id] ? id : alsoKey[id];
+    if (key) return { key, catalog: m.id, via: hops ? "parent" : "id" };
+  }
+  return null;
+}
+
 // ---------- flyers ----------
 
 const flyers = [];
@@ -179,6 +197,7 @@ const C = {
 const CATS = cfg.criteria.categories;
 const items = [];
 const review = [];
+const suggested = [];
 const skipped = [];
 const readStores = new Set(flyers.filter((f) => f.status === "full" || f.status === "partial").map((f) => f.store));
 for (const r of rows.slice(1)) {
@@ -221,8 +240,16 @@ for (const r of rows.slice(1)) {
   d.valid_through = findDates(raw.through)[0] ?? null;
   const notes = [raw.notes, /up to/i.test(raw.regular) ? `Printed as ${raw.regular.trim()}.` : ""].filter(Boolean).join(" ").trim();
   d.notes = notes.slice(0, 200);
-  if (!key) review.push(`${store} "${raw.item}": no item_key suggested`);
-  else if (cfg.items[key].category !== d.category) review.push(`${store} "${raw.item}": key ${key} is ${cfg.items[key].category}, note says ${d.category}; check the key`);
+  const fromCatalog = catalogKey(raw.item);
+  if (!key && fromCatalog) {
+    review.push(`${store} "${raw.item}": no item_key; KitchenCatalog reads it as ${fromCatalog.catalog}, key ${fromCatalog.key}${fromCatalog.via === "parent" ? " (a parent)" : ""}. Use it only if it compares on price with other ${fromCatalog.key} listings`);
+    suggested.push({ store, item: raw.item, suggest: fromCatalog.key, catalog: fromCatalog.catalog, via: fromCatalog.via });
+  } else if (!key) review.push(`${store} "${raw.item}": no item_key suggested`);
+  else if (fromCatalog && fromCatalog.key !== key) {
+    review.push(`${store} "${raw.item}": key ${key}, but KitchenCatalog reads it as ${fromCatalog.catalog}, key ${fromCatalog.key}; pick one`);
+    suggested.push({ store, item: raw.item, current: key, suggest: fromCatalog.key, catalog: fromCatalog.catalog, via: fromCatalog.via });
+  }
+  if (key && cfg.items[key].category !== d.category) review.push(`${store} "${raw.item}": key ${key} is ${cfg.items[key].category}, note says ${d.category}; check the key`);
   items.push(d);
 }
 
@@ -239,7 +266,7 @@ const out = join(ROOT, "drafts", `${week}.json`);
 mkdirSync(join(ROOT, "drafts"), { recursive: true });
 const weekFile = { week, flyers: flyers.filter((f) => f.store).map(({ source_line, ...f }) => (f.note ? f : (delete f.note, f))), items };
 writeFileSync(out, JSON.stringify(weekFile, null, 2) + "\n");
-writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, review, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
+writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, review, suggested_keys: suggested, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
 
 const tiers = { standout: 0, good: 0, sale: 0 };
 for (const r of ranked) tiers[r.a.tier]++;
