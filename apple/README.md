@@ -12,6 +12,16 @@ apple/install-on-iphone.sh
 
 Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery`, widget `deals.seattlegrocery.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
 
+## TestFlight
+
+Commit first, then:
+
+```bash
+apple/testflight.sh            # archive and upload; --dry-run shows the version and build number only
+```
+
+It archives with the Xcode it finds (beta first), signs with the Apple ID signed in to Xcode, and uploads using `apple/ExportOptions.plist`. The build number is the commit count on the branch, so it always goes up and maps to a commit; the version is `MARKETING_VERSION` in `project.yml`. Check processing with `swift ~/Developer/asc-tools/asc.swift builds`, then install from the TestFlight app. App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26.
+
 ## Code
 
 - `Sources/Models.swift`: the app feed (`/api/week.json`) types.
@@ -30,4 +40,4 @@ Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this
 2. **Done:** List (in the app or Reminders via EventKit), + and checkmark on every deal, Amplitude with private settings. (Trip plan dropped.)
 2b. **Done:** alerts (`Sources/AlertsStore.swift`): Friday reminder, ending soon, price watches.
 3. **Done:** Siri and Shortcuts (`Sources/Intents.swift`: "Add to my grocery list in Deals", "What's on sale in Deals") and the Best This Week widget (`Widget/`).
-4. With the paid Apple account: TestFlight, Universal Links, Firebase push. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.
+4. With the paid Apple account: **TestFlight done** (2026-10-26), then Universal Links and Firebase push. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.
