@@ -82,6 +82,8 @@ struct RootView: View {
             Text("Items go into a Reminders list you pick, like a shared Groceries list, with the price and when the sale ends.")
         }
         .sheet(isPresented: $choosingReminders, onDismiss: { list.pendingAdd = nil }) { RemindersPicker(prompt: "first_add") }
+        // The floating dev button (not on App Store builds).
+        .devMenuButton { DealsDevMenu().environment(store).environment(list).environment(alerts) }
         // First run: welcome, tour, then the usage question. Can't be swiped away.
         .fullScreenCover(isPresented: $onboarding) {
             Welcome.view(Welcome.start ?? .question) {
