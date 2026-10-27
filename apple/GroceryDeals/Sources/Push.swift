@@ -38,7 +38,6 @@ final class PushStore {
 
     /// Called at launch and whenever the "New deals are in" switch changes.
     func sync(newDeals: Bool) {
-        print("Push: sync newDeals=\(newDeals) available=\(available)")
         guard available else { return }
         wantsNewDeals = newDeals
         if newDeals {
@@ -50,7 +49,6 @@ final class PushStore {
     }
 
     func didRegister(_ deviceToken: Data) {
-        print("Push: got APNs token")
         Messaging.messaging().apnsToken = deviceToken
         Task { await updateTopics() }
     }
@@ -71,14 +69,10 @@ final class PushStore {
     private func updateTopics() async {
         let messaging = Messaging.messaging()
         // Subscribing needs a registration token, which needs the APNs token first.
-        if !wanted.isEmpty && messaging.apnsToken == nil { print("Push: waiting for the APNs token"); return }
-        if !wanted.isEmpty {
-            do { _ = try await messaging.token(); print("Push: FCM token ok") }
-            catch { print("Push: FCM token failed: \(error)") }
-        }
+        if !wanted.isEmpty && messaging.apnsToken == nil { return }
         var current = Set(UserDefaults.standard.stringArray(forKey: Self.subscribedKey) ?? [])
         for topic in wanted.subtracting(current) {
-            do { try await messaging.subscribe(toTopic: topic); current.insert(topic); print("Push: subscribed to \(topic)") }
+            do { try await messaging.subscribe(toTopic: topic); current.insert(topic) }
             catch { print("Push: couldn't subscribe to \(topic): \(error)") }
         }
         for topic in current.subtracting(wanted) {
