@@ -333,14 +333,15 @@ const leaveOutRes = new WeakMap();
 export function leaveOutReason(cfg, name, category) {
   const LO = cfg.leaveOut;
   if (LO.categories.includes(category)) return `category ${category}`;
+  if (LO.keep_categories?.includes(category)) return null;
   if (!leaveOutRes.has(LO)) {
     const esc = (w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const re = (words) => new RegExp(`(?:^|[^a-z])(${words.map(esc).join("|")})(?:s|es)?(?![a-z])`, "i");
-    leaveOutRes.set(LO, { leave: re(LO.words), keep: re(LO.keep_words) });
+    leaveOutRes.set(LO, { leave: re(LO.words), sweet: re(LO.sweet_bakery_words.words), keep: re(LO.keep_words) });
   }
-  const { leave, keep } = leaveOutRes.get(LO);
+  const { leave, sweet, keep } = leaveOutRes.get(LO);
   if (keep.test(name)) return null;
-  const word = name.match(leave);
+  const word = name.match(leave) ?? (LO.sweet_bakery_words.allowed_in.includes(category) ? null : name.match(sweet));
   if (word) return `name says "${word[1].toLowerCase()}"`;
   const m = matchCatalog(cfg.catalog, name);
   if (m?.strength === "strong" && cfg.catalog.items[m.id]?.product && !LO.catalog_products.keep.includes(m.id)) return `KitchenCatalog reads it as ${m.id}, a ready-made product`;

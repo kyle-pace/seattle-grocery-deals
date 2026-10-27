@@ -32,7 +32,7 @@ For each store in `config/stores.json` with `active: true`, follow its `how_to_r
 - **Flyer images:** download each image with `curl` into `work/` and read it with the Read tool. Read every image in full, zooming in by cropping if text is small (for example with Python and Pillow, if available). Link each image in the flyer line.
 - **Dates:** check the printed dates. If they are not this week, the flyer is `stale`: list it, with no items.
 - **Unsure rows:** if you are not sure how to read a row (a multi-buy that might be per item or for the set, a price partly hidden), either leave it out or keep it with a note starting `CHECK:` while you work, then resolve every `CHECK:` before step 4. The validator rejects any `CHECK:` left in a week file.
-- **Skip snacks and packaged convenience food while reading** (UPDATING.md section 3): snacks and sweets, drinks, and ready-made or heat-and-eat meals. Don't write those rows at all; a page that is all snacks or frozen meals can be passed over. Keep everything else, and when unsure, keep it. Count what you skipped per store for the run log (a rough number is fine).
+- **Skip snacks and packaged convenience food while reading** (UPDATING.md section 3): snacks and frozen desserts, drinks, and ready-made meals such as frozen pizza, burritos, entrees and instant noodles. Dim sum, buns, spring rolls, cereal, granola, soup, creamers, yogurt drinks and bakery items stay. Don't write those rows at all; a page that is all snacks or frozen meals can be passed over. Keep everything else, and when unsure, keep it. Count what you skipped per store for the run log (a rough number is fine).
 - Do not use flyer aggregators such as Flipp or their APIs. Read each store's own site.
 - Spend at most about 15 minutes on any one store. If you cannot read it, mark it `unreadable` or `partial` with a short reason, and move on.
 
@@ -65,7 +65,7 @@ npm run check
 
 Fix every error. Then compare with last week's file and note anything surprising in the pull request:
 
-- total items, and items per store, against last week (more than 40% fewer is worth a line; the week of Oct 30 is the first without snacks and packaged food, so expect about 40% fewer than Oct 23: redrafting Oct 23 this way goes from 860 items to 487, mostly at 99 Ranch, Red Apple, T&T and Smith Brothers);
+- total items, and items per store, against last week (more than 40% fewer is worth a line; the week of Oct 30 is the first without snacks and packaged food, so expect about 35% fewer than Oct 23: redrafting Oct 23 this way goes from 860 items to 538, mostly at 99 Ranch, Red Apple, T&T and Smith Brothers);
 - any item key whose unit price changed by more than 3 times from its last listing (likely a unit or pack mistake: fix it or drop the row);
 - every flyer's dates cover this Friday, or the flyer is marked `stale`.
 
