@@ -1,69 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" font-family="Atkinson Hyperlegible Next, Helvetica Neue, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="Atkinson Hyperlegible Next, Helvetica Neue, Arial, sans-serif" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo2ZWU2Nzg2NS01NjNmLTRhMWUtYmZhNC04NGEwNjIzNDEzMzQAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaJOe+RDlyYMOmreTAU6xauQAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo1ZmM2YjQyMS1kYmNmLTRkMTMtYjZlOC02N2U4OGU4YmYwZGZscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNoWSnnj6hhWUlM2Mgg1HFLvAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg1vO6TfbFzdHaCnptSTO/oRsmVAumZRPHBDLwEcUPbUikZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaO9HjFvJRNh9pG7LTq8htMIAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCDQdLFn8WZijg6GDy0j2rQLEW8bOPJ3Bp/wooS0MBe4GGRuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBjmZmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjZlZTY3ODY1LTU2M2YtNGExZS1iZmE0LTg0YTA2MjM0MTMzNC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjM4Nzk2OWIyLTcxNDctNDIwNC1hMjVjLTM4ZGUxOGQyM2UyY3JjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDW87pN9sXN0doKem1JM7+hGyZUC6ZlE8cEMvARxQ9tSKJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggL5av94x/5qAUimny4sRuvcinpO7AJ4MRdo2TlCtSJbKiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggXLfkxyoyGbgKDiN1m/2BjPql+pcLHw+8nbxyGSKocLF0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQKznUjXX+tPJ6RwMPMN+7Lemtq2fNqSiKTY8RbS1YAYoOD/yHbk/HBQQruwYiX1vXqsUDSTsqZfU6p4UI7lCsIA=</c2pa:manifest></metadata>
   <defs>
-    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#141414"/></marker>
-    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1D4D33"/></marker>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1B1F1D"/></marker>
+    <marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2F6B4F"/></marker>
     <style>
-      .box { fill: #FFFFFF; stroke: #141414; stroke-width: 2.5; }
-      .plan { fill: #FFFFFF; stroke: #141414; stroke-width: 2.5; stroke-dasharray: 9 6; }
-      .t { font-size: 22px; font-weight: 700; fill: #141414; }
-      .s { font-size: 16px; fill: #57534C; }
-      .lane { font-family: Barlow Condensed, Arial Narrow, sans-serif; font-size: 26px; font-weight: 700; letter-spacing: 1px; fill: #141414; }
-      .lab { font-size: 15px; fill: #141414; font-weight: 700; }
-      .ln { stroke: #141414; stroke-width: 2.5; fill: none; }
-      .hot { stroke: #1D4D33; stroke-width: 5; fill: none; }
+      .t { font-size: 22px; font-weight: 700; fill: #1B1F1D; }
+      .s { font-size: 16px; fill: #4A514D; }
+      .k { font-size: 15px; font-weight: 700; letter-spacing: 1.2px; fill: #5E6661; }
+      .lane { font-size: 24px; font-weight: 800; letter-spacing: 1.5px; fill: #1B1F1D; }
+      .lab { font-size: 15px; font-weight: 700; fill: #1B1F1D; }
+      .glab { font-size: 15px; font-weight: 700; fill: #2F6B4F; }
+      .ln { stroke: #1B1F1D; stroke-width: 2.5; fill: none; }
+      .dln { stroke: #1B1F1D; stroke-width: 2.5; fill: none; stroke-dasharray: 8 6; }
+      .hot { stroke: #2F6B4F; stroke-width: 5; fill: none; }
+      .hotd { stroke: #2F6B4F; stroke-width: 5; fill: none; stroke-dasharray: 10 7; }
+      .pill { font-size: 13px; font-weight: 700; letter-spacing: 0.8px; }
     </style>
   </defs>
-  <rect width="1600" height="920" fill="#F7F5F0"/>
-  <text x="40" y="58" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="40" font-weight="700" fill="#141414">SEATTLE GROCERY DEALS: ARCHITECTURE</text>
-  <text x="40" y="88" class="s">Solid boxes are live. Dashed boxes are planned. The green path is the weekly "New deals are in" push.</text>
+  <rect width="1600" height="1000" fill="#F7F5F0"/>
+  <text x="40" y="58" font-size="38" font-weight="800" fill="#1B1F1D" font-family="Barlow Condensed, Arial Narrow, sans-serif">SEATTLE GROCERY DEALS: ARCHITECTURE</text>
+  <text x="40" y="88" class="s">Solid is live, dashed is planned, grey is deferred. The green path is the planned "New deals are in" push. No servers of our own.</text>
 
-  <!-- lanes -->
-  <g class="lane"><text x="40" y="140">1. WEEKLY DATA</text><text x="360" y="140">2. PUBLISH</text><text x="680" y="140">3. BACKEND</text><text x="1000" y="140">4. NOTIFY</text><text x="1320" y="140">5. PEOPLE</text></g>
-  <g stroke="#DDD8CE" stroke-width="2"><path d="M330 120V880M650 120V880M970 120V880M1290 120V880"/></g>
-
-  <!-- 1 weekly data -->
-  <rect class="box" x="40" y="170" width="260" height="96" rx="10"/><text class="t" x="58" y="208">Store flyers</text><text class="s" x="58" y="236">Each store's own site</text>
-  <rect class="box" x="40" y="330" width="260" height="110" rx="10"/><text class="t" x="58" y="368">Friday routine</text><text class="s" x="58" y="396">Claude cloud agent</text><text class="s" x="58" y="420">Fridays 10am Pacific</text>
-  <rect class="box" x="40" y="510" width="260" height="110" rx="10"/><text class="t" x="58" y="548">Pull request</text><text class="s" x="58" y="576">Week file on GitHub</text><text class="s" x="58" y="600">Owner reviews, merges</text>
-
-  <!-- 2 publish -->
-  <rect class="box" x="360" y="510" width="260" height="110" rx="10"/><text class="t" x="378" y="548">GitHub Actions</text><text class="s" x="378" y="576">Validate, analyze,</text><text class="s" x="378" y="600">build, deploy</text>
-  <rect class="box" x="360" y="700" width="260" height="110" rx="10"/><text class="t" x="378" y="738">GitHub Pages</text><text class="s" x="378" y="766">Website</text><text class="s" x="378" y="790">+ /api/week.json</text>
-
-  <!-- 3 backend -->
-  <rect class="plan" x="680" y="330" width="260" height="130" rx="10"/><text class="t" x="698" y="368">API (TypeScript)</text><text class="s" x="698" y="396">publish-week, weeks,</text><text class="s" x="698" y="420">stores, devices,</text><text class="s" x="698" y="444">watches</text>
-  <rect class="plan" x="680" y="530" width="260" height="110" rx="10"/><text class="t" x="698" y="568">Postgres on Neon</text><text class="s" x="698" y="596">deals, devices,</text><text class="s" x="698" y="620">watches, push log</text>
-  <rect class="plan" x="360" y="170" width="260" height="130" rx="10"/><text class="t" x="378" y="208">Amplitude</text><text class="s" x="378" y="236">Events from the app,</text><text class="s" x="378" y="260">the website and</text><text class="s" x="378" y="284">the push job</text>
-
-  <!-- 4 notify -->
-  <rect class="plan" x="1000" y="170" width="260" height="130" rx="10" style="stroke:#1D4D33;stroke-width:4"/><text class="t" x="1018" y="208">Push job</text><text class="s" x="1018" y="236">1. "New deals are in"</text><text class="s" x="1018" y="260">2. Watch hits</text><text class="s" x="1018" y="284">3. Store follows</text>
-  <rect class="plan" x="1000" y="380" width="260" height="110" rx="10"/><text class="t" x="1018" y="418">Firebase Cloud</text><text class="t" x="1018" y="444">Messaging</text><text class="s" x="1018" y="472">Topics + device tokens</text>
-  <rect class="plan" x="1000" y="560" width="260" height="90" rx="10"/><text class="t" x="1018" y="598">Apple Push (APNs)</text><text class="s" x="1018" y="626">and Android delivery</text>
-
-  <!-- 5 people -->
-  <rect class="box" x="1320" y="380" width="240" height="260" rx="22" style="fill:#FFE45C"/><text class="t" x="1340" y="418">iPhone app</text><text class="s" x="1340" y="446" style="fill:#141414">SwiftUI, Liquid Glass</text><text class="s" x="1340" y="470" style="fill:#141414">List in Reminders</text><text class="s" x="1340" y="494" style="fill:#141414">Widget, Siri, watches</text>
-  <rect class="box" x="1320" y="700" width="240" height="110" rx="10"/><text class="t" x="1340" y="738">Website</text><text class="s" x="1340" y="766">seattlegrocery.deals</text>
-  <rect class="box" x="1320" y="190" width="240" height="96" rx="10" style="fill:#E8F0EA"/><text class="t" x="1340" y="228">Reminders</text><text class="s" x="1340" y="256">Shared list, Siri</text>
-
-  <!-- arrows: weekly data -->
-  <path class="ln" d="M170 266V326" marker-end="url(#a)"/>
-  <path class="ln" d="M170 440V506" marker-end="url(#a)"/>
-  <path class="ln" d="M300 565H356" marker-end="url(#a)"/><text class="lab" x="304" y="548">merge</text>
-  <path class="ln" d="M490 620V696" marker-end="url(#a)"/>
-  <path class="ln" d="M620 755H1316" marker-end="url(#a)"/><text class="lab" x="980" y="745">pages + JSON</text>
-  <!-- publish to backend (hot path) -->
-  <path class="hot" d="M560 510V395H676" marker-end="url(#g)"/><text class="lab" x="552" y="460" text-anchor="end" style="fill:#1D4D33">publish week</text>
-  <path class="ln" d="M810 460V526" marker-end="url(#a)"/>
-  <path class="hot" d="M810 330V235H996" marker-end="url(#g)"/><text class="lab" x="830" y="225" style="fill:#1D4D33">new week</text>
-  <path class="hot" d="M1130 300V376" marker-end="url(#g)"/>
-  <path class="hot" d="M1130 490V556" marker-end="url(#g)"/>
-  <path class="hot" d="M1260 605H1316" marker-end="url(#g)"/><text class="lab" x="1268" y="595" style="fill:#1D4D33">push</text>
-  <!-- app to api, app to reminders -->
-  <path class="ln" d="M1320 505H960V445H944" marker-end="url(#a)" style="stroke-dasharray:6 5"/><text class="lab" x="1112" y="528" text-anchor="end">token, watches</text>
-  <path class="ln" d="M1440 380V290" marker-end="url(#a)" marker-start="url(#a)"/>
-  <path class="ln" d="M1320 440H1290V420" style="display:none"/>
-  <!-- feed to app -->
-  <path class="ln" d="M1440 700V534" marker-end="url(#a)" style="display:none"/>
-  <!-- analytics -->
-  
+  <g font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="26" font-weight="700" letter-spacing="1" fill="#141414"><text x="40" y="140">1. WEEKLY DATA</text><text x="360" y="140">2. PUBLISH</text><text x="680" y="140">3. NOTIFY</text><text x="1000" y="140">4. DELIVER</text><text x="1320" y="140">5. PEOPLE</text></g>
+  <g stroke="#DDD8CE" stroke-width="2"><path d="M330 120V970M650 120V970M970 120V970M1290 120V970"/></g>
+  <rect x="40" y="170" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="60" y="210" font-size="22" font-weight="700" fill="#1B1F1D">Store flyers</text>
+  <text class="s" x="60" y="240">Each store's own site,</text>
+  <text class="s" x="60" y="264">12 stores</text>
+  <rect x="40" y="320" width="260" height="140" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="60" y="360" font-size="22" font-weight="700" fill="#1B1F1D">Friday routine</text>
+  <text class="s" x="60" y="390">Claude cloud routine,</text>
+  <text class="s" x="60" y="414">Fridays 10am Pacific.</text>
+  <text class="s" x="60" y="438">Catalog suggests keys</text>
+  <rect x="40" y="480" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="60" y="520" font-size="22" font-weight="700" fill="#1B1F1D">Pull request</text>
+  <text class="s" x="60" y="550">Week file on GitHub;</text>
+  <text class="s" x="60" y="574">owner reviews, merges</text>
+  <path class="ln" d="M170 286V320" marker-end="url(#a)"/>
+  <path class="ln" d="M170 460V480" marker-end="url(#a)"/>
+  <rect x="360" y="170" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="380" y="210" font-size="22" font-weight="700" fill="#1B1F1D">KitchenCatalog</text>
+  <text class="s" x="380" y="240">Shared item ids and</text>
+  <text class="s" x="380" y="264">matching (vendored copy)</text>
+  <rect x="360" y="480" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="380" y="520" font-size="22" font-weight="700" fill="#1B1F1D">GitHub Actions</text>
+  <text class="s" x="380" y="550">Validate, analyze,</text>
+  <text class="s" x="380" y="574">build, deploy</text>
+  <rect x="360" y="780" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="380" y="820" font-size="22" font-weight="700" fill="#1B1F1D">GitHub Pages</text>
+  <text class="s" x="380" y="850">Website +</text>
+  <text class="s" x="380" y="874">/api/week.json (static)</text>
+  <path class="ln" d="M490 274V480" marker-end="url(#a)"/>
+  <text class="lab" x="500" y="380">names, ids,</text>
+  <text class="lab" x="500" y="400">ranking</text>
+  <path class="ln" d="M300 535H360" marker-end="url(#a)"/>
+  <text class="lab" x="304" y="525">merge</text>
+  <path class="ln" d="M490 596V780" marker-end="url(#a)"/>
+  <rect x="680" y="480" width="260" height="140" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5" stroke-dasharray="9 6"/>
+  <text x="700" y="520" font-size="22" font-weight="700" fill="#1B1F1D">Push send step</text>
+  <text class="s" x="700" y="550">In the deploy workflow;</text>
+  <text class="s" x="700" y="574">once a week, guarded by</text>
+  <text class="s" x="700" y="598">a notified/&lt;week&gt; tag</text>
+  <rect x="680" y="660" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5" stroke-dasharray="9 6"/>
+  <text x="700" y="700" font-size="22" font-weight="700" fill="#1B1F1D">Firebase (FCM)</text>
+  <text class="s" x="700" y="730">Topics: new-deals,</text>
+  <text class="s" x="700" y="754">store-&lt;id&gt;</text>
+  <path class="hotd" d="M620 535H680" marker-end="url(#g)"/>
+  <text class="glab" x="626" y="470">new week</text>
+  <path class="hotd" d="M810 616V660" marker-end="url(#g)"/>
+  <rect x="1000" y="170" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="1020" y="210" font-size="22" font-weight="700" fill="#1B1F1D">Amplitude</text>
+  <text class="s" x="1020" y="240">Private analytics for</text>
+  <text class="s" x="1020" y="264">the site and the app</text>
+  <rect x="1195" y="182" width="53" height="24" rx="12" fill="#2F6B4F"/>
+  <text class="pill" x="1221.5" y="199" text-anchor="middle" fill="#FFFFFF">LIVE</text>
+  <rect x="1000" y="320" width="260" height="140" rx="12" fill="#EEEEEA" stroke="#9AA09C" stroke-width="2.5" stroke-dasharray="9 6"/>
+  <text x="1020" y="360" font-size="22" font-weight="700" fill="#7A807C">API + Postgres</text>
+  <text class="s" x="1020" y="390">Deferred: not in any path.</text>
+  <text class="s" x="1020" y="414">Kept as a learning</text>
+  <text class="s" x="1020" y="438">project for later.</text>
+  <rect x="1000" y="660" width="260" height="116" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5" stroke-dasharray="9 6"/>
+  <text x="1020" y="700" font-size="22" font-weight="700" fill="#1B1F1D">Apple Push (APNs)</text>
+  <text class="s" x="1020" y="730">Delivers to phones</text>
+  <text class="s" x="1020" y="754">that subscribed</text>
+  <path class="hotd" d="M940 712H1000" marker-end="url(#g)"/>
+  <rect x="1320" y="170" width="260" height="92" rx="12" fill="#E6EFEA" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="1340" y="210" font-size="22" font-weight="700" fill="#1B1F1D">Reminders</text>
+  <text class="s" x="1340" y="240">Shared list, Siri</text>
+  <rect x="1320" y="300" width="260" height="450" rx="12" fill="#FFE45C" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="1340" y="340" font-size="22" font-weight="700" fill="#1B1F1D">iPhone app</text>
+  <text class="s" x="1340" y="370">SwiftUI, on TestFlight</text>
+  <text class="s" x="1340" y="394">List, watches, widget,</text>
+  <text class="s" x="1340" y="418">Siri, deal sheet</text>
+  <text class="s" x="1340" y="442"></text>
+  <text class="s" x="1340" y="466">Local alerts: watch hits,</text>
+  <text class="s" x="1340" y="490">ending soon</text>
+  <text class="s" x="1340" y="514">Background refresh:</text>
+  <text class="s" x="1340" y="538">planned</text>
+  <rect x="1320" y="840" width="260" height="140" rx="12" fill="#FFFFFF" stroke="#1B1F1D" stroke-width="2.5"/>
+  <text x="1340" y="880" font-size="22" font-weight="700" fill="#1B1F1D">Website</text>
+  <text class="s" x="1340" y="910">seattlegrocery.deals</text>
+  <text class="s" x="1340" y="934">One search box:</text>
+  <text class="s" x="1340" y="958">prototype, not live</text>
+  <path class="ln" d="M1450 248V300" marker-end="url(#a)" marker-start="url(#a)"/>
+  <path class="hotd" d="M1260 712H1320" marker-end="url(#g)"/>
+  <text class="glab" x="1262" y="700">push</text>
+  <path class="ln" d="M620 805H1450V750" marker-end="url(#a)"/>
+  <text class="lab" x="1000" y="826">week.json, fetched on open</text>
+  <path class="ln" d="M620 890H1320" marker-end="url(#a)"/>
+  <text class="lab" x="1000" y="882">pages</text>
 </svg>
