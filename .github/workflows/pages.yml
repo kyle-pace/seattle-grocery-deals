@@ -5,6 +5,11 @@ on:
     branches: [main]
   pull_request:
   workflow_dispatch:
+    inputs:
+      push_topic:
+        description: "Also send a test push to this FCM topic (leave empty to skip)"
+        required: false
+        default: ""
   schedule:
     # Daily rebuild (about 6am Pacific) so previews and freshness notes track today's date.
     - cron: "0 13 * * *"
@@ -45,3 +50,51 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # "New deals are in": after a deploy, send the current week to the FCM topic once.
+  # The notified/<week> tag makes reruns and the daily rebuild safe. A manual run with
+  # push_topic sends a test instead (for example new-deals-test, which only debug builds join).
+  # No stored key: GitHub signs in to Google Cloud as push-sender through Workload Identity
+  # Federation, and that account can only send Cloud Messaging.
+  notify:
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.push_topic != '')
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # push the notified/<week> tag
+      id-token: write # sign in to Google Cloud without a key
+    env:
+      FIREBASE_PROJECT_ID: seattle-grocery-deals-dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: google
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/70205055774/locations/global/workloadIdentityPools/github/providers/seattle-grocery-deals
+          service_account: push-sender@seattle-grocery-deals-dev.iam.gserviceaccount.com
+          token_format: access_token
+      - name: Test send
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          TOPIC: ${{ inputs.push_topic }}
+        run: node scripts/send-push.mjs --force --topic "$TOPIC"
+      - name: New deals are in
+        if: github.event_name == 'push'
+        env:
+          FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+        run: |
+          week=$(ls data/weeks | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.json$' | sort | tail -1 | sed 's/\.json$//')
+          tag="notified/$week"
+          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
+            echo "Already sent for $week ($tag exists)."; exit 0
+          fi
+          out=$(node scripts/send-push.mjs --topic new-deals)
+          echo "$out"
+          if echo "$out" | grep -q "^Sent to"; then
+            git tag "$tag"
+            git push origin "refs/tags/$tag"
+          fi

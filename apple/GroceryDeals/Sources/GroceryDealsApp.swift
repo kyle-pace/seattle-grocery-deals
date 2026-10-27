@@ -3,6 +3,7 @@ import UserNotifications
 
 @main
 struct GroceryDealsApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var store = FeedStore()
     @State private var list = ListStore()
     @State private var alerts = AlertsStore()
@@ -23,6 +24,7 @@ struct GroceryDealsApp: App {
                 .environment(list)
                 .environment(alerts)
                 .task {
+                    PushStore.shared.sync(newDeals: alerts.friday)
                     await store.refresh()
                     if let feed = store.feed { alerts.checkWatches(feed, storeName: store.storeName) }
                 }
@@ -59,6 +61,11 @@ struct RootView: View {
         }
         .tint(Palette.accent)
         .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
+        // A tapped "New deals are in": open This week with the latest week.
+        .onChange(of: PushStore.shared.opens) {
+            tab = .week
+            Task { await store.refresh() }
+        }
         // Keep "ends tomorrow" notifications in step with the list and the week.
         .task(id: "\(store.feed?.week ?? "")|\(list.openItems.map(\.text).joined(separator: ","))|\(alerts.endingSoon)") {
             let matches = list.openItems.compactMap { item -> (text: String, deal: Deal, store: String)? in

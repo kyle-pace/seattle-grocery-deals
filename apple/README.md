@@ -32,6 +32,7 @@ It archives with the Xcode it finds (beta first), signs with the Apple ID signed
 - `Sources/ListStore.swift`: the grocery list, in the app or in a Reminders list (EventKit); deal items carry price, store and the sale end date as the due date; whole-word matching of list items to deals.
 - `Sources/ListScreens.swift`: List tab, Reminders list picker, Settings (privacy switch).
 - `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website: no IP, carrier, vendor ID or city; off switch in Settings.
+- `Sources/Push.swift`: Firebase Cloud Messaging, push only (no Firebase Analytics). Configures Firebase from `Resources/GoogleService-Info-Dev.plist` (and `-Prod` once that project exists), hands the APNs token over, and subscribes to `new-deals` when "New deals are in" is on (plus `new-deals-test` on the dev project). Tapping a push opens This week. Without a config file the app keeps the local Friday reminder.
 - `Sources/GroceryDealsApp.swift`: app entry, native tabs (Liquid Glass on iOS 26, sidebar on iPad), and the "where should your list live?" prompt on the first add.
 
 ## Stages
@@ -40,4 +41,4 @@ It archives with the Xcode it finds (beta first), signs with the Apple ID signed
 2. **Done:** List (in the app or Reminders via EventKit), + and checkmark on every deal, Amplitude with private settings. (Trip plan dropped.)
 2b. **Done:** alerts (`Sources/AlertsStore.swift`): Friday reminder, ending soon, price watches.
 3. **Done:** Siri and Shortcuts (`Sources/Intents.swift`: "Add to my grocery list in Deals", "What's on sale in Deals") and the Best This Week widget (`Widget/`).
-4. With the paid Apple account: **TestFlight done** (2026-10-26), then Universal Links and Firebase push. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.
+4. With the paid Apple account: **TestFlight done** (2026-10-26). **Firebase push wired up** (2026-10-26): dev project `seattle-grocery-deals-dev`, APNs key `62XWUGPJN9`, sent from the deploy workflow. Then Universal Links. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.

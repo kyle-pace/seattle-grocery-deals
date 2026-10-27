@@ -10,6 +10,9 @@ packages:
   AmplitudeSwift:
     url: https://github.com/amplitude/Amplitude-Swift
     majorVersion: 1.0.0
+  Firebase:
+    url: https://github.com/firebase/firebase-ios-sdk
+    majorVersion: 13.1.0
 settings:
   base:
     SWIFT_VERSION: "6.0"
@@ -25,7 +28,15 @@ targets:
     dependencies:
       - package: KitchenUI
       - package: AmplitudeSwift
+      # Push only. Never add FirebaseAnalytics: Amplitude is the analytics tool.
+      - package: Firebase
+        product: FirebaseMessaging
       - target: DealsWidget
+    entitlements:
+      path: Sources/GroceryDeals.entitlements
+      properties:
+        # Xcode switches this to production when it signs for TestFlight and the App Store.
+        aps-environment: development
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery
@@ -48,6 +59,9 @@ targets:
         ITSAppUsesNonExemptEncryption: false
         UILaunchScreen:
           UIColorName: ""
+        UIBackgroundModes: [remote-notification]
+        # Push.swift hands the APNs token to Firebase itself; no app delegate swizzling.
+        FirebaseAppDelegateProxyEnabled: false
   DealsWidget:
     type: app-extension
     platform: iOS

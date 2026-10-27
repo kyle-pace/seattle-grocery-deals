@@ -268,7 +268,11 @@ struct SettingsView: View {
             Form {
                 Section {
                     Toggle(isOn: Binding(get: { alerts.friday }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.friday = on } } })) {
-                        labeled("Friday reminder", "When new deals post, about 10:30 AM")
+                        if PushStore.shared.available {
+                            labeled("New deals are in", "As soon as the new week posts, usually Friday morning")
+                        } else {
+                            labeled("Friday reminder", "When new deals post, about 10:30 AM")
+                        }
                     }
                     Toggle(isOn: Binding(get: { alerts.endingSoon }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.endingSoon = on } } })) {
                         labeled("Ending soon", "The day before a list item's sale ends")
@@ -293,7 +297,7 @@ struct SettingsView: View {
                         .swipeActions { Button("Stop watching", role: .destructive) { alerts.unwatch(w) } }
                     }
                 } header: { Text("Price watches") } footer: {
-                    Text("Watches are checked when the app loads a new week. Push notifications from a server come later.")
+                    Text("Watches are checked on your phone when the app loads a new week, so your prices stay with you.")
                 }
 
                 Section {
