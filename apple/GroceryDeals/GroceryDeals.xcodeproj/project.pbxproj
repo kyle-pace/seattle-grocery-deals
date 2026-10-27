@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08DF113380BEFCF2577DA776 /* DealsDevMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */; };
 		1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34300759905B9585BA88F72D /* DealViews.swift */; };
 		24B72EE560CFC3050DA2FD19 /* week.json in Resources */ = {isa = PBXBuildFile; fileRef = 84F994427923C400F45DB70C /* week.json */; };
 		279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
@@ -60,6 +61,7 @@
 		030270E4AFF9913A0A8A86E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AD16DEF9240A31DF79EA0CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		16919D4F6B29C60454AF3D0D /* Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.swift; sourceTree = "<group>"; };
+		300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsDevMenu.swift; sourceTree = "<group>"; };
 		33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDealsApp.swift; sourceTree = "<group>"; };
 		34300759905B9585BA88F72D /* DealViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealViews.swift; sourceTree = "<group>"; };
 		352F5BB18C8111F694A1DAFE /* ListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStore.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */,
 				A6B30268FA30809DBA50C0E7 /* Analytics.swift */,
+				300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */,
 				34300759905B9585BA88F72D /* DealViews.swift */,
 				798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */,
 				33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */,
@@ -278,6 +281,7 @@
 				72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */,
 				319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */,
 				1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */,
+				08DF113380BEFCF2577DA776 /* DealsDevMenu.swift in Sources */,
 				5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */,
 				F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */,
 				CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */,
