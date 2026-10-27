@@ -317,6 +317,8 @@ struct SettingsView: View {
                 Section {
                     Button("Show the tour again", systemImage: "sparkles.rectangle.stack") { replayingTour = true }
                 }
+
+                DevMenuSection { DealsDevMenu() }
             }
             .scrollContentBackground(.hidden)
             .background(Palette.ground)

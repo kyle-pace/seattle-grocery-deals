@@ -8,6 +8,11 @@ enum Welcome {
     /// Where onboarding starts at this launch, or `nil` when there's nothing to show. Worked out
     /// once, in the App's init, before the first feed load saves a week.
     static let start: Onboarding.Start? = {
+        // "Forget the usage answer" in the dev menu: onboarding from the start, once.
+        if UserDefaults.standard.bool(forKey: forceKey) {
+            UserDefaults.standard.removeObject(forKey: forceKey)
+            return .welcome
+        }
         guard Analytics.choice == nil else { return nil }
         if DebugArgs.value("-onboarding") == "question" { return .question }
         if FeedStore.hasSavedWeek {
@@ -17,6 +22,8 @@ enum Welcome {
         }
         return .welcome
     }()
+
+    static let forceKey = "sgd.dev.showOnboarding"
 
     static let pages = [
         TourPage("week", systemImage: "newspaper", title: "The week's best deals",

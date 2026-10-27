@@ -107,6 +107,20 @@ final class FeedStore {
         return items.filter { $0.name.lowercased().contains(q) || storeName($0.store).lowercased().contains(q) }
     }
 
+    // MARK: dev menu
+
+    /// Where the week on screen came from.
+    var devSource: String {
+        if offline { return "Saved copy (offline)" }
+        return Self.hasSavedWeek ? "Live, saved on this iPhone" : "Bundled with the app"
+    }
+
+    /// Deletes the saved week and shows the bundled one until the next refresh.
+    func devClearSavedWeek() {
+        try? FileManager.default.removeItem(at: Self.cacheURL)
+        feed = Self.bundled()
+    }
+
     // MARK: storage
 
     private static var cacheURL: URL {

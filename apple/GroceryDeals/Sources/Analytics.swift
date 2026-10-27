@@ -54,6 +54,22 @@ enum Analytics {
         ))
     }
 
+    // MARK: dev menu
+
+    static let hasKey = !apiKey.isEmpty
+    static var deviceID: String? { amplitude?.getDeviceId() }
+    static func flush() { amplitude?.flush() }
+
+    /// Forgets the answer and stops sending; the next launch shows onboarding from the start
+    /// (even on a phone that ran 0.1.0, which otherwise skips it).
+    static func forget() {
+        let d = UserDefaults.standard
+        d.removeObject(forKey: choiceKey)
+        d.removeObject(forKey: legacyOffKey)
+        d.set(true, forKey: Welcome.forceKey)
+        amplitude?.optOut = true
+    }
+
     static func track(_ event: String, _ props: [String: Any] = [:]) {
         amplitude?.track(eventType: event, eventProperties: props.isEmpty ? nil : props)
     }
