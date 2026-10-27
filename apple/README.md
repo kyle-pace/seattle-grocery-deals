@@ -10,7 +10,7 @@ With the iPhone plugged in, unlocked and trusted, and Developer Mode on:
 apple/install-on-iphone.sh
 ```
 
-Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery.native`, widget `.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
+Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery`, widget `deals.seattlegrocery.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
 
 ## Code
 
@@ -30,4 +30,4 @@ Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this
 2. **Done:** List (in the app or Reminders via EventKit), + and checkmark on every deal, Amplitude with private settings. (Trip plan dropped.)
 2b. **Done:** alerts (`Sources/AlertsStore.swift`): Friday reminder, ending soon, price watches.
 3. **Done:** Siri and Shortcuts (`Sources/Intents.swift`: "Add to my grocery list in Deals", "What's on sale in Deals") and the Best This Week widget (`Widget/`).
-4. With the paid Apple account: TestFlight, Universal Links, Firebase push, and possibly a final bundle ID before the App Store.
+4. With the paid Apple account: TestFlight, Universal Links, Firebase push. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.

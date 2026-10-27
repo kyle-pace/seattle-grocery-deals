@@ -327,7 +327,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.native;
+				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery;
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -347,7 +347,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.native.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.widget;
 				PRODUCT_NAME = DealsWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -433,7 +433,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.native.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.widget;
 				PRODUCT_NAME = DealsWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -517,7 +517,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.native;
+				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery;
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

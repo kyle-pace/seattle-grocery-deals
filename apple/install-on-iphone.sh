@@ -18,4 +18,4 @@ xcodebuild -project GroceryDeals.xcodeproj -scheme GroceryDeals -configuration R
   -derivedDataPath build -allowProvisioningUpdates -allowProvisioningDeviceRegistration build > build.log 2>&1 \
   || { grep -E "error:" build.log | sort -u | head; echo "Build failed; see apple/GroceryDeals/build.log"; exit 1; }
 xcrun devicectl device install app --device "$DEVICE" build/Build/Products/Release-iphoneos/GroceryDeals.app
-xcrun devicectl device process launch --device "$DEVICE" deals.seattlegrocery.native
+xcrun devicectl device process launch --device "$DEVICE" deals.seattlegrocery
