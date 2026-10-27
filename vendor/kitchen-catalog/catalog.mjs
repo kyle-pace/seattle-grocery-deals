@@ -44,7 +44,7 @@ export function load(path = CATALOG_PATH) {
 
 // Words that describe a product without changing what it is: "organic", "5 lb bag", "fresh",
 // and cuts ("Atlantic salmon steak" is salmon).
-const QUALIFIER = /^(?:organic|fresh|frozen|large|small|medium|jumbo|extra|select|premium|natural|local|whole|boneless|skinless|bone|skin|in|on|sliced|diced|chopped|bag|pack|package|tray|bunch|ea|each|ct|count|pc|pcs|lb|lbs|oz|fl|kg|g|ml|l|gal|dozen|doz|value|family|club|bulk|assorted|headless|cut|fillet|filet|steak|portion|piece|chunk|point|flat|roll|wing|midjoint|tip|loin|chop|shank|half|jarred|canned|bottle|jar|can|selected|variety|variant|series|size|pk|multi|single|qt|inch|of|to|the|shell|square|fz|live|box|case|regular|light|original|mini|\d+(?:\.\d+)?(?:g|kg|ml|oz|lb|ct|pk)?)$/;
+const QUALIFIER = /^(?:organic|fresh|frozen|large|small|medium|jumbo|extra|select|premium|natural|local|whole|boneless|skinless|bone|skin|in|on|sliced|diced|chopped|bag|pack|package|tray|bunch|ea|each|ct|count|pc|pcs|lb|lbs|oz|fl|kg|g|ml|l|gal|dozen|doz|value|family|club|bulk|assorted|headless|cut|fillet|filet|steak|portion|piece|chunk|point|flat|roll|wing|midjoint|tip|loin|chop|shank|half|jarred|canned|bottle|jar|can|selected|variety|variant|series|size|pk|multi|single|qt|inch|of|to|the|shell|square|fz|live|box|case|regular|light|original|mini|roast|firm|soft|up|and|s|h|o|p|d|head|tail|off|peeled|deveined|raw|cooked|\d+(?:\.\d+)?(?:g|kg|ml|oz|lb|ct|pk)?)$/;
 
 // A word just before a one-word item that makes it a different product: soy milk isn't milk.
 const CHANGES_IT = new Set(["soy", "oat", "almond", "coconut", "rice", "plant", "based", "cashew", "chocolate", "strawberry", "banana", "condensed", "evaporated", "powdered", "flavored", "shrimp", "fish"]);
@@ -70,6 +70,7 @@ export function match(catalog, text) {
     while (end > 1 && QUALIFIER.test(words[end - 1])) end--;
     const all = ` ${words.join(" ")} `;
     let best = null;
+    const strongIds = new Set();
     for (const t of catalog.terms) {
       const at = all.indexOf(` ${t.term} `);
       if (at < 0) continue;
@@ -85,18 +86,33 @@ export function match(catalog, text) {
       const overlap = nameWords.filter((w) => rest.has(w)).length;
       const strong = atHead && !changed && (t.words >= 2 || t.isName || end <= 3);
       const score = t.words * 10 + overlap * 3 + (atHead ? 2 : 0) + (t.isName ? 1 : 0) + (strong ? 5 : 0);
+      if (strong) strongIds.add(t.id);
       if (!best || score > best.score) best = { id: t.id, item: catalog.items[t.id], term: t.term, strength: strong ? "strong" : "weak", score };
     }
+    // A longer alias found mid-name ("cosmic crisp" in "Cosmic Crisp Apples") is still a strong match
+    // when another name for the same item is at the head.
+    if (best && best.strength === "weak" && strongIds.has(best.id)) best.strength = "strong";
     return best;
   };
   // "Braised croaker with rice cake", "Goat meat w/skin on": the product is what comes before "with".
-  const main = String(text).split(/\s+(?:with\b|w\/)\s*/i)[0] || String(text);
+  // (Reading the whole name when that part names nothing was tried: it turned "Braised Yellow Croaker
+  // with Rice Cake" into rice cakes.) "Beef short rib for soup": likewise before "for", but only when
+  // that part names something ("Pork for stew" is stew meat, not pork).
+  const beforeWith = String(text).split(/\s+(?:with\b|w\/)\s*/i)[0] || String(text);
+  const beforeFor = beforeWith.split(/\s+for\b\s*/i)[0];
+  const main = beforeFor && beforeFor !== beforeWith && read(beforeFor) ? beforeFor : beforeWith;
   const a = read(main);
   const r = reorder(main);
   const b = r ? read(r) : null;
   // "Popcorn, Butter Lovers or Movie Theater Butter": when the part before the comma names the
   // product outright, it wins over a flavor or variant after the comma.
-  const pick = !a ? b : !b ? a : (b.strength === "strong" && a.strength === "strong") || b.score >= a.score ? b : a;
+  let pick = !a ? b : !b ? a : (b.strength === "strong" && a.strength === "strong") || b.score >= a.score ? b : a;
+  // "Boneless Beef Top Sirloin Steaks, Premium Beef, Value Pack": with more than one comma and no
+  // strong reading yet, the part before the first comma is the product.
+  if (pick?.strength !== "strong" && (main.match(/,/g) || []).length >= 2) {
+    const c = read(main.split(",")[0]);
+    if (c?.strength === "strong") pick = c;
+  }
   if (!pick) return null;
   const { score, ...result } = pick;
   return result;

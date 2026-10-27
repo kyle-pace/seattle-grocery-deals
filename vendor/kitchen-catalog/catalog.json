@@ -461,7 +461,8 @@
    "name": "Beef sirloin steak",
    "section": "meat",
    "aliases": [
-    "sirloin"
+    "sirloin",
+    "top sirloin"
    ],
    "deals": {
     "staple": true,
@@ -2342,7 +2343,8 @@
    "name": "Green Cabbage",
    "section": "produce",
    "aliases": [
-    "cabbage"
+    "cabbage",
+    "cabbage green"
    ],
    "deals": {
     "staple": true
@@ -3779,7 +3781,6 @@
     "pork butt",
     "pork shoulder"
    ],
-   "parent": "pork-stew-meat",
    "deals": {
     "staple": true,
     "benchmark": "pork-other"
@@ -3811,7 +3812,6 @@
    "name": "Pork Stew Meat",
    "section": "meat",
    "aliases": [
-    "boneless pork shoulder",
     "pork for stew",
     "pork stew"
    ],
@@ -5005,6 +5005,7 @@
     "medium-firm tofu",
     "silken tofu",
     "soft tofu",
+    "soy tofu",
     "tofu sheets",
     "tofu slices"
    ],
