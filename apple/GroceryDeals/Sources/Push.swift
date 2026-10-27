@@ -26,10 +26,12 @@ final class PushStore {
     private static let subscribedKey = "sgd.push.topics"
 
     func configure() {
-        guard FirebaseApp.app() == nil, let options = Self.options() else { return }
+        guard FirebaseApp.app() == nil else { return }
+        guard let options = Self.options() else { print("Push: no GoogleService-Info file bundled; using local reminders"); return }
         FirebaseApp.configure(options: options)
         available = true
         devProject = options.projectID?.hasSuffix("-dev") ?? false
+        print("Push: Firebase configured for \(options.projectID ?? "?")")
         // Clear a local Friday reminder left from before push, so it doesn't double up.
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["friday"])
     }
