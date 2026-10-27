@@ -1,0 +1,11 @@
+{
+  "note": "Snacks and packaged convenience food are left out of the weekly runs, so the site is about cooking ingredients: produce, meat, seafood, dairy and eggs, tofu, pantry staples and bread. The Friday reader skips these rows while reading (ROUTINE.md step 2); the draft drops any that slip through and lists them under left_out in the report. Decided 2026-10-26.",
+  "since": "2026-10-30",
+  "categories": ["snacks-drinks", "prepared"],
+  "catalog_products": {
+    "note": "A strong KitchenCatalog match on an item marked product (a ready-made thing, not an ingredient) is left out, except these ids.",
+    "keep": ["plant-based-meat"]
+  },
+  "words": ["pizza", "burrito", "hot pocket", "lunchable", "lunch kit", "snack pack", "frozen meal", "family size meal", "entree", "bowl meal", "ice cream", "i-cream", "gelato", "sorbet", "sorbetto", "frozen yogurt", "ice bar", "popsicle", "mochi ice", "cookie", "brownie", "donut", "doughnut", "donette", "cupcake", "cheesecake", "muffin", "pastry", "pastries", "danish", "croissant", "castella", "swiss roll", "cream bun", "custard bun", "mooncake", "pie", "waffle", "frozen pancake", "cup noodle", "instant noodle", "bowl noodle", "ramen bowl", "mac & cheese", "mac and cheese", "chips", "crisps", "popcorn", "pretzel", "cracker", "puffs", "jerky", "trail mix", "snack", "candy", "gummy", "gummies", "lollipop", "marshmallow", "chocolate bar", "truffle bar", "hi-chew", "hi chew", "pocky", "soda", "sparkling drink", "sparkling water", "spring water", "kombucha", "juice", "energy drink", "cold brew", "milk tea", "bottled tea", "iced tea", "yerba mate", "lemonade", "smoothie", "protein bar", "protein shake", "drink", "creamer", "salad kit", "cereal", "granola", "meal", "kimbap", "custard", "candied", "rice ball", "egg roll", "eggroll", "scone", "shortbread", "yogurt tube", "noodle soup"],
+  "keep_words": ["pizza dough", "pizza flour", "pizza sauce", "pie crust", "pie shell", "pie pumpkin", "lemon juice", "lime juice", "yuzu juice", "calamansi juice", "snack size", "snack slice", "bread crumb", "panko", "chocolate chips", "baking chocolate", "tortilla", "english muffin", "baking chip", "pancake mix", "waffle mix", "scone mix", "baking mix", "almond meal", "corn meal", "flax meal"]
+}

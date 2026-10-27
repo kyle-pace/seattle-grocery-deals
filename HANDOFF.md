@@ -13,6 +13,7 @@ Updated 2026-10-24, evening.
 - **iPhone app (`apple/`, SwiftUI; see `apple/README.md`):** native app replacing the old Expo app (removed 2026-10-24; Apple devices first). Installed on the owner's phone with `apple/install-on-iphone.sh` (Mac, Xcode beta, free Apple ID: 7-day builds, at most 3 free-profile apps on the phone). This week, Aisles, Stores, deal sheet, list in the app or a Reminders list (EventKit), alerts and price watches (local notifications), Siri and Shortcuts, a Best This Week widget, Amplitude with private settings.
 - **Confluence** (owner's personal space, kylepace.atlassian.net): "Seattle Grocery Deals: architecture" (diagram, components, schema, Firebase plan with "New deals are in" as the first push, Amplitude events, build order) and "Recipe + pantry app: product brief". The architecture diagram image points at the `mobile-app` branch; repoint it to `main` after #7 merges.
 - **Ranking by popularity (2026-10-25):** deals people buy most come first. Each deal's popularity (everyday, common, specialty) comes from the shared KitchenCatalog (copy in `vendor/kitchen-catalog/`, refresh with `npm run sync-catalog` after editing `~/Developer/KitchenCatalog`), found by `item_key` or a strong name match; the bonus per level is `ranking.popularity_bonus` in `config/criteria.json`. It changes order only, not tiers. Tag more items in the catalog to improve it.
+- **Snacks and packaged food left out (2026-10-26):** the runs now cover cooking ingredients only. The Friday reader skips snacks, sweets, drinks and ready-made meals (UPDATING.md section 3); `scripts/draft-week.mjs` drops any that slip through, using `config/leave-out.json` (the `snacks-drinks` and `prepared` categories, a word list with keep words, and KitchenCatalog items marked `product`), and lists them under `left_out` in the report. The validator warns on any left in a week file from 2026-10-30. Past weeks are unchanged. Redrafting Oct 23 this way: 860 items to 487.
 - **Issues:** #8 product images (future).
 - **Next:** confirm Reminders works; merge #6 and #7; paid Apple Developer account; then the backend (Neon, API, publish step) and Firebase "New deals are in" push; Amplitude.
 - **A cloud session can't** build or install the iPhone app, read the owner's Obsidian vault, or reach the Mac. Do code, docs, backend and site work there; leave phone builds for the Mac.
@@ -25,6 +26,7 @@ Updated 2026-10-24, evening.
 
 ## Decisions
 
+- **What's listed:** food for cooking. Snacks, drinks, sweets and ready-made meals are left out (2026-10-26); when unsure, keep it.
 - **Scope:** Seattle-area stores only. Specialty grocers the big chains' apps skip: Asian markets, seafood shops, co-ops. No mainstream chains (Grocery Outlet was dropped). No flyer aggregators such as Flipp: every store is read from its own site.
 - **PCC:** its site blocks automated reading (Cloudflare). Do not try to get around the bot check. Options are asking PCC for a feed, reading it by hand, or marking it unreadable.
 - **Design system:** "Newsprint". Tokens live at the top of `site/assets/style.css`.
@@ -71,4 +73,4 @@ Ideas for later: plan-my-trip (fewest stores covering your sale items), in-store
 
 - Never push to `main` or merge without the owner's approval. Branch, open a pull request.
 - Never put the owner's email address on the site.
-- Weekly data: never guess a price; only use regular prices the store printed; food only; no em dashes. `npm run check` must pass.
+- Weekly data: never guess a price; only use regular prices the store printed; food for cooking only (no snacks or packaged convenience food); no em dashes. `npm run check` must pass.

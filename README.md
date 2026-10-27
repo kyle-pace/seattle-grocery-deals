@@ -1,6 +1,6 @@
 # Seattle Grocery Deals
 
-A static site that shows what's on sale in Seattle-area grocery flyers each week: every readable sale item, the standouts, where to shop, and the same item compared across stores, plus links to every store's flyer. A new week is added every Friday.
+A static site that shows what's on sale in Seattle-area grocery flyers each week: every readable sale item for cooking (snacks and packaged convenience food are left out), the standouts, where to shop, and the same item compared across stores, plus links to every store's flyer. A new week is added every Friday.
 
 Live site: https://seattlegrocery.deals/
 
