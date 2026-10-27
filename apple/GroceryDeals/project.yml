@@ -15,6 +15,11 @@ settings:
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: 9BF66MY8TQ
     CODE_SIGN_STYLE: Automatic
+    # Empty for TestFlight and the App Store. apple/install-on-iphone.sh sets them to ".dev",
+    # " Dev" and "Dev" so the phone build is "Deals Dev" with a DEV icon, next to the real app.
+    BUNDLE_ID_SUFFIX: ""
+    APP_NAME_SUFFIX: ""
+    APP_ICON_SUFFIX: ""
 targets:
   GroceryDeals:
     type: application
@@ -28,14 +33,14 @@ targets:
       - target: DealsWidget
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery
+        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
         PRODUCT_NAME: GroceryDeals
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1,2"
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon$(APP_ICON_SUFFIX)
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Deals
+        INFOPLIST_KEY_CFBundleDisplayName: Deals$(APP_NAME_SUFFIX)
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_NSRemindersFullAccessUsageDescription: Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
@@ -59,13 +64,13 @@ targets:
       - package: KitchenUI
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery.widget
+        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery$(BUNDLE_ID_SUFFIX).widget
         PRODUCT_NAME: DealsWidget
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Deals
+        INFOPLIST_KEY_CFBundleDisplayName: Deals$(APP_NAME_SUFFIX)
         SKIP_INSTALL: YES
     info:
       path: Widget/Info.plist

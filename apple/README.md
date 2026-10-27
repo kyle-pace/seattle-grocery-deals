@@ -2,15 +2,18 @@
 
 The iPhone and iPad app (SwiftUI). It replaced an earlier Expo app (decided 2026-10-24: Apple devices first, so widgets, Siri, the Watch and Liquid Glass are native).
 
-## Build and install
+## Build and install on your iPhone
 
-With the iPhone plugged in, unlocked and trusted, and Developer Mode on:
+From anywhere on the Mac: `phone deals` (or `phone` for both apps; see KitchenUI's `tools/phone`). In this repo:
 
 ```bash
-apple/install-on-iphone.sh
+apple/install-on-iphone.sh            # build what's checked out, install, open it
+apple/install-on-iphone.sh --no-open
 ```
 
-Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery`, widget `deals.seattlegrocery.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
+It installs **Deals Dev**: bundle ID `deals.seattlegrocery.dev` (widget `.dev.widget`), the name "Deals Dev" and a DEV icon (`AppIconDev`), so it sits next to the TestFlight or App Store app with its own data. The build settings `BUNDLE_ID_SUFFIX`, `APP_NAME_SUFFIX` and `APP_ICON_SUFFIX` in `project.yml` are empty for everything else.
+
+The phone can be plugged in or paired over Wi-Fi (Xcode, Devices and Simulators, "Connect via network"), unlocked and trusted. Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. Signed with the paid developer account, so a phone build keeps opening for a year.
 
 ## TestFlight
 
