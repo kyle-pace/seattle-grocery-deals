@@ -20,6 +20,7 @@
 		72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */; };
 		8FE0D28ADE1638539D3A5CC1 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 995D521E5B5C312585E6EF90 /* AmplitudeSwift */; };
 		9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
+		BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B9CD189C14496D79B9A60 /* Welcome.swift */; };
 		CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 91E71391CC336A9B1BC351B8 /* KitchenUI */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
 		D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581B0CF13289C4A25A25F8A /* DealsWidget.swift */; };
@@ -74,6 +75,7 @@
 		900666ED70B2F3E6A406669D /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B40DA8A41D719580DE66FCDC /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
+		CB1B9CD189C14496D79B9A60 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		DE081C1EE741AEAB7005033E /* ListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreens.swift; sourceTree = "<group>"; };
 		E5CE2E4258193F86182E0754 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		FF981C7805200162BB6BACE8 /* DealsWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DealsWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 				51539486FC8A1B3336B12EA1 /* Moments.swift */,
 				900666ED70B2F3E6A406669D /* Screens.swift */,
 				E5CE2E4258193F86182E0754 /* Theme.swift */,
+				CB1B9CD189C14496D79B9A60 /* Welcome.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				44B284A97AAE39A18625645A /* Moments.swift in Sources */,
 				2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */,
 				64267422E7D9136407CEA5F4 /* Theme.swift in Sources */,
+				BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
