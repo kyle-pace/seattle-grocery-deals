@@ -320,12 +320,12 @@
 		190C9117F06C998FCA11F44F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon$(APP_ICON_SUFFIX)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -335,7 +335,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -348,14 +348,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX).widget";
 				PRODUCT_NAME = DealsWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -367,6 +367,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ICON_SUFFIX = "";
+				APP_NAME_SUFFIX = "";
+				BUNDLE_ID_SUFFIX = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -434,14 +437,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX).widget";
 				PRODUCT_NAME = DealsWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -453,6 +456,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ICON_SUFFIX = "";
+				APP_NAME_SUFFIX = "";
+				BUNDLE_ID_SUFFIX = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -510,12 +516,12 @@
 		977CB7667F83949494F22440 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon$(APP_ICON_SUFFIX)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -525,7 +531,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
