@@ -112,6 +112,8 @@ final class FeedStore {
     private static var cacheURL: URL {
         URL.applicationSupportDirectory.appending(path: "week.json")
     }
+    /// True once any week has been saved, so the app has been opened before.
+    static var hasSavedWeek: Bool { FileManager.default.fileExists(atPath: cacheURL.path(percentEncoded: false)) }
     private static func cached() -> Feed? {
         try? FileManager.default.createDirectory(at: URL.applicationSupportDirectory, withIntermediateDirectories: true)
         guard let data = try? Data(contentsOf: cacheURL) else { return nil }

@@ -260,7 +260,8 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AlertsStore.self) private var alerts
     @Environment(FeedStore.self) private var store
-    @State private var share = !Analytics.isOff
+    @State private var share = Analytics.isOn
+    @State private var replayingTour = false
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -310,14 +311,19 @@ struct SettingsView: View {
                         }
                     }
                     .tint(Palette.accent)
-                    .onChange(of: share) { _, on in Analytics.isOff = !on }
+                    .onChange(of: share) { _, on in Analytics.setSharing(on) }
                 } header: { Text("Privacy") }
+
+                Section {
+                    Button("Show the tour again", systemImage: "sparkles.rectangle.stack") { replayingTour = true }
+                }
             }
             .scrollContentBackground(.hidden)
             .background(Palette.ground)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
+            .fullScreenCover(isPresented: $replayingTour) { Welcome.view(.tourOnly) { replayingTour = false } }
         }
     }
 

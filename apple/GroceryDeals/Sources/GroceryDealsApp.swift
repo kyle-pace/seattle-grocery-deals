@@ -11,7 +11,8 @@ struct GroceryDealsApp: App {
 
     init() {
         KitchenUI.registerFonts()
-        Analytics.start()
+        _ = Welcome.start          // decide before the first feed load saves a week
+        Analytics.start()          // does nothing until the usage question gets a yes
         UNUserNotificationCenter.current().delegate = presenter
     }
 
@@ -39,6 +40,7 @@ struct RootView: View {
     @State private var tab: TabID = DebugArgs.value("-tab").flatMap(TabID.init(rawValue:)) ?? .week
     @State private var storePath: [Store] = []
     @State private var choosingReminders = false
+    @State private var onboarding = Welcome.start != nil
     @Environment(FeedStore.self) private var store
     @Environment(ListStore.self) private var list
     @Environment(AlertsStore.self) private var alerts
@@ -80,6 +82,13 @@ struct RootView: View {
             Text("Items go into a Reminders list you pick, like a shared Groceries list, with the price and when the sale ends.")
         }
         .sheet(isPresented: $choosingReminders, onDismiss: { list.pendingAdd = nil }) { RemindersPicker(prompt: "first_add") }
+        // First run: welcome, tour, then the usage question. Can't be swiped away.
+        .fullScreenCover(isPresented: $onboarding) {
+            Welcome.view(Welcome.start ?? .question) {
+                onboarding = false
+                Analytics.screen(tab.rawValue)
+            }
+        }
         .alert("Something went wrong", isPresented: Binding(get: { list.lastError != nil }, set: { if !$0 { list.lastError = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(list.lastError ?? "") }
