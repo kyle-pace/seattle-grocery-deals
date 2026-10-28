@@ -51,6 +51,8 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
+        # Lets a search started in iPhone Spotlight continue in the app's Search tab.
+        CoreSpotlightContinuation: true
         UILaunchScreen:
           UIColorName: ""
   DealsWidget:

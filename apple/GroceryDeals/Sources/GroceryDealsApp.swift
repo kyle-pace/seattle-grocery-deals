@@ -33,14 +33,18 @@ struct GroceryDealsApp: App {
     }
 }
 
-/// Native tabs, so the tab bar is Liquid Glass on iOS 26 and a sidebar on iPad. Search is its
-/// own tab (aisles live there before you type); Settings is the gear in each header.
+/// Native tabs, so the tab bar is Liquid Glass on iOS 26 and a sidebar on iPad: This week,
+/// Aisles, Stores and List, with Search as its own glass button at the end of the bar. Search
+/// also reaches into each aisle and store page, Spotlight and Siri (Search.swift). Settings is
+/// the gear in each header.
 struct RootView: View {
-    enum TabID: String, Hashable { case week = "This week", stores = "Stores", list = "List", search = "Search" }
+    enum TabID: String, Hashable { case week = "This week", aisles = "Aisles", stores = "Stores", list = "List", search = "Search" }
     @State private var tab: TabID = DebugArgs.value("-tab").flatMap(TabID.init(rawValue:)) ?? .week
     @State private var storePath: [Store] = []
-    @State private var choosingReminders = false
+    @State private var aislePath: [AisleRoute] = []
+    @State private var spotlightDeal: Deal?
     @State private var onboarding = Welcome.start != nil
+    @State private var router = DealsRouter.shared
     @Environment(FeedStore.self) private var store
     @Environment(ListStore.self) private var list
     @Environment(AlertsStore.self) private var alerts
@@ -49,10 +53,11 @@ struct RootView: View {
         @Bindable var list = list
         TabView(selection: $tab) {
             Tab("This week", systemImage: "newspaper", value: .week) { ThisWeekView(openStore: openStore) }
-            Tab("Stores", systemImage: "storefront", value: .stores) { StoresView(path: $storePath) }
+            Tab("Aisles", systemImage: "square.grid.2x2", value: .aisles) { AislesView(path: $aislePath, openStore: openStore) }
+            Tab("Stores", systemImage: "storefront", value: .stores) { StoresView(path: $storePath, openStore: openStore) }
             Tab("List", systemImage: "checklist", value: .list) { ListView(openStore: openStore) }
                 .badge(list.openItems.count)
-            Tab(value: .search, role: .search) { SearchView(openStore: openStore) }
+            Tab(value: .search, role: .search) { SearchView(router: router, openStore: openStore) }
         }
         .tabViewStyle(.sidebarAdaptable)
         .tabBarMinimizeBehavior(.onScrollDown)
@@ -69,27 +74,28 @@ struct RootView: View {
             }
             await alerts.scheduleEndingSoon(matches)
         }
-        // First add anywhere: ask where the list should live.
-        .confirmationDialog("Use your Reminders list?", isPresented: Binding(get: { list.pendingAdd != nil && !choosingReminders }, set: { if !$0 && !choosingReminders { list.pendingAdd = nil } }), titleVisibility: .visible) {
-            Button("Use Reminders") {
-                choosingReminders = true
-                Task {
-                    if await list.loadRemindersLists() { } else { choosingReminders = false; list.useApp(prompt: "first_add"); list.finishPendingAdd() }
-                }
-            }
-            Button("Keep in this app") { list.useApp(prompt: "first_add"); list.finishPendingAdd() }
-        } message: {
-            Text("Items go into a Reminders list you pick, like a shared Groceries list, with the price and when the sale ends.")
+        // This week's deals in Spotlight, refreshed when the week changes.
+        .task(id: store.feed?.week ?? "") { DealsSpotlight.update(store) }
+        .handlesSpotlight(router)
+        .onChange(of: router.searchRequest) { tab = .search }
+        .onChange(of: router.dealID) { _, id in
+            guard let id else { return }
+            spotlightDeal = store.feed?.items.first { $0.id == id }
+            router.dealID = nil
         }
-        .sheet(isPresented: $choosingReminders, onDismiss: { list.pendingAdd = nil }) { RemindersPicker(prompt: "first_add") }
+        .sheet(item: $spotlightDeal) { DealDetail(deal: $0, openStore: openStore) }
+        // First add anywhere: ask where the list should live, as a half sheet (it was a
+        // confirmation dialog that floated mid-screen, see-through over the deals).
+        .asksWhereListLives(inDealSheet: false)
         // The floating dev button (not on App Store builds).
         .devMenuButton { DealsDevMenu().environment(store).environment(list).environment(alerts) }
-        // First run: welcome, tour, then the usage question. Can't be swiped away.
+        // First run: welcome, your stores, how it works, then the usage question. Can't be swiped away.
         .fullScreenCover(isPresented: $onboarding) {
             Welcome.view(Welcome.start ?? .question) {
                 onboarding = false
                 Analytics.screen(tab.rawValue)
             }
+            .environment(store)
         }
         .alert("Something went wrong", isPresented: Binding(get: { list.lastError != nil }, set: { if !$0 { list.lastError = nil } })) {
             Button("OK", role: .cancel) {}
