@@ -91,7 +91,7 @@ struct FlyerPresenter: ViewModifier {
                 if !store.viewablePages.isEmpty {
                     FlyerViewer(store: store)
                 } else if let url = store.flyerWebURL {
-                    SafariView(url: url).ignoresSafeArea()
+                    SafariView(url: url) { isPresented = false }.ignoresSafeArea()
                 }
             }
             .onChange(of: isPresented) { _, open in
@@ -205,7 +205,7 @@ private struct FlyerPageView: View {
     var body: some View {
         if let url = URL(string: page.url) {
             switch page.kind {
-            case .pdf: PDFPage(url: url)
+            case .pdf: FlyerPDFPage(url: url)
             default: ZoomableRemoteImage(url: url, onTap: onTap)
             }
         } else {
@@ -319,20 +319,22 @@ final class ZoomingImageView: UIScrollView, UIScrollViewDelegate {
             let height = bounds.width * image.size.height / image.size.width
             imageView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)
             contentSize = imageView.frame.size
-            contentOffset = .zero
+            recenter()
+            // Start at the top of a tall page, or in the middle of a short one.
+            contentOffset = CGPoint(x: -contentInset.left, y: -contentInset.top)
         }
-        center()
+        recenter()
     }
 
     /// Short pages sit in the middle of the screen; tall ones start at the top and scroll.
-    private func center() {
+    private func recenter() {
         let y = max(0, (bounds.height - contentSize.height) / 2)
         let x = max(0, (bounds.width - contentSize.width) / 2)
         contentInset = UIEdgeInsets(top: y, left: x, bottom: y, right: x)
     }
 
     func viewForZooming(in scrollView: UIScrollView) -> UIView? { imageView }
-    func scrollViewDidZoom(_ scrollView: UIScrollView) { center() }
+    func scrollViewDidZoom(_ scrollView: UIScrollView) { recenter() }
 
     @objc private func doubleTapped(_ gesture: UITapGestureRecognizer) {
         if zoomScale > minimumZoomScale + 0.01 {
@@ -349,7 +351,7 @@ final class ZoomingImageView: UIScrollView, UIScrollViewDelegate {
 }
 
 /// A PDF flyer, scrolling page after page, zoomable.
-private struct PDFPage: View {
+private struct FlyerPDFPage: View {
     let url: URL
     @State private var document: PDFDocument?
     @State private var failed = false
@@ -398,6 +400,16 @@ private struct PDFKitView: UIViewRepresentable {
 /// the store's page in its own light or dark look instead of a bare web view.
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
+    /// Safari's Done button dismisses from UIKit; this tells SwiftUI so the binding resets.
+    var onDone: () -> Void = {}
+
+    func makeCoordinator() -> Coordinator { Coordinator(onDone: onDone) }
+
+    @MainActor final class Coordinator: NSObject, SFSafariViewControllerDelegate {
+        let onDone: () -> Void
+        init(onDone: @escaping () -> Void) { self.onDone = onDone }
+        func safariViewControllerDidFinish(_ controller: SFSafariViewController) { onDone() }
+    }
 
     func makeUIViewController(context: Context) -> SFSafariViewController {
         let config = SFSafariViewController.Configuration()
@@ -405,6 +417,7 @@ struct SafariView: UIViewControllerRepresentable {
         let vc = SFSafariViewController(url: url, configuration: config)
         vc.preferredControlTintColor = UIColor(Palette.accent)
         vc.dismissButtonStyle = .close
+        vc.delegate = context.coordinator
         return vc
     }
 

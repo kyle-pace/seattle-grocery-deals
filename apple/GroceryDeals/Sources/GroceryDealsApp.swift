@@ -77,7 +77,7 @@ struct RootView: View {
         // This week's deals in Spotlight, refreshed when the week changes.
         .task(id: store.feed?.week ?? "") { DealsSpotlight.update(store) }
         .handlesSpotlight(router)
-        .onChange(of: router.searchRequest) { tab = .search }
+        .onChange(of: router.searchRequest, initial: true) { if router.searchRequest > 0 { tab = .search } }
         .onChange(of: router.dealID) { _, id in
             guard let id else { return }
             spotlightDeal = store.feed?.items.first { $0.id == id }

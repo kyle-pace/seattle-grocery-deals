@@ -63,7 +63,7 @@ struct Store: Codable, Sendable, Identifiable, Hashable {
     var hasFlyer: Bool { !viewablePages.isEmpty || flyerWebURL != nil }
     /// Where to send people when there's nothing to show in the app.
     var flyerWebURL: URL? {
-        ((flyer_pages ?? []).first { $0.kind == .web }?.url ?? flyer_url ?? website).flatMap(URL.init(string:))
+        ((flyer_pages ?? []).first { $0.kind == .web }?.url ?? flyer_url).flatMap(URL.init(string:))
     }
 
     /// "Seattle · Tukwila"

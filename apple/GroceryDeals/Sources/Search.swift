@@ -54,7 +54,10 @@ struct SearchView: View {
             .searchScopes($scope, activation: .onSearchPresentation) {
                 ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
             }
-            .onSubmit(of: .search) { remember(router.searchQuery) }
+            .onSubmit(of: .search) {
+                remember(router.searchQuery)
+                Analytics.track("Searched", ["query_length": router.searchQuery.count, "results": store.search(router.searchQuery).count, "screen": "search"])
+            }
             .navigationDestination(for: Store.self) { StoreDetail(s: $0, openStore: openStore) }
             .navigationDestination(for: AisleRoute.self) { AisleDetail(route: $0, openStore: openStore) }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
@@ -173,7 +176,6 @@ struct SearchView: View {
         guard q.count >= 2 else { return }
         let next = [q] + recents.filter { $0.caseInsensitiveCompare(q) != .orderedSame }
         recentsRaw = next.prefix(8).joined(separator: "\n")
-        Analytics.track("Searched", ["query_length": q.count, "results": store.search(q).count, "screen": "search"])
     }
 }
 
