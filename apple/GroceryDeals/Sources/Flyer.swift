@@ -405,7 +405,7 @@ struct SafariView: UIViewControllerRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(onDone: onDone) }
 
-    @MainActor final class Coordinator: NSObject, SFSafariViewControllerDelegate {
+    @MainActor final class Coordinator: NSObject, @MainActor SFSafariViewControllerDelegate {
         let onDone: () -> Void
         init(onDone: @escaping () -> Void) { self.onDone = onDone }
         func safariViewControllerDidFinish(_ controller: SFSafariViewController) { onDone() }
