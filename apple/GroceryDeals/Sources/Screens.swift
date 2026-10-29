@@ -31,18 +31,26 @@ private struct PinnedBar<Bar: View>: ViewModifier {
     }
 }
 
-/// "Vegetarian" as a chip pinned under the title, instead of a full-width switch.
+/// "Vegetarian" as a leaf button in the toolbar, next to the gear. It used to be a chip pinned
+/// under the title, but on iOS 26 the large title scrolls with the content, so a pinned bar ends
+/// up above the title (the Oct 28 evening recording). A toolbar toggle stays put and in reach.
 private struct VegChip: ViewModifier {
     @Environment(FeedStore.self) private var store
     func body(content: Content) -> some View {
-        @Bindable var store = store
-        content.dealsPinnedBar {
-            ChipRow {
-                FilterChip("Vegetarian", systemImage: "leaf", isOn: store.vegetarianOnly) {
+        content.toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                let on = store.vegetarianOnly
+                Button {
                     store.vegetarianOnly.toggle()
                     Announce.say(store.vegetarianOnly ? "Showing vegetarian deals only" : "Showing all deals")
+                } label: {
+                    Label("Vegetarian only", systemImage: on ? "leaf.fill" : "leaf")
+                        .contentTransition(.symbolEffect(.replace))
                 }
-                .sensoryFeedback(.selection, trigger: store.vegetarianOnly)
+                .tint(on ? Palette.accent : nil)
+                .accessibilityValue(on ? "On" : "Off")
+                .accessibilityAddTraits(on ? .isSelected : [])
+                .sensoryFeedback(.selection, trigger: on)
             }
         }
     }

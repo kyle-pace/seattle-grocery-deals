@@ -8,7 +8,7 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import {
   ROOT, WEEKS_DIR, readJson, loadConfig, weekFiles, isFriday, addDays,
-  computeUnitPrice, round2, percentOff,
+  computeUnitPrice, round2, percentOff, flyerKind,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
@@ -34,6 +34,7 @@ function checkConfig() {
       if (s[k] === undefined) err(w, `missing ${k}`);
     }
     if (!["web-page", "images", "pdf", "catalogue-viewer"].includes(s.flyer_format)) err(w, `unknown flyer_format ${s.flyer_format}`);
+    if (s.web_only_flyer !== undefined && typeof s.web_only_flyer !== "boolean") err(w, "web_only_flyer must be true or false");
     if (s.flyer_url === null && !s.flyer_url_note) err(w, "flyer_url is null, so flyer_url_note must explain why");
     if (typeof s.about !== "string" || s.about.length < 20 || s.about.length > 300) err(w, "about must be 20 to 300 characters");
     if (!Array.isArray(s.locations)) err(w, "locations must be a list (empty for delivery-only)");
@@ -97,6 +98,12 @@ function checkWeek(path) {
     if (f.status === "partial" && !f.note) err(w, "partial flyers need a note saying what was not read");
     if ((f.status === "full" || f.status === "partial") && (!f.valid_from || !f.valid_through)) warn(w, "read flyer has no printed dates");
     if (f.status === "full" && f.valid_through && f.valid_through < week.week) err(w, "valid_through is before the week date; should this be stale?");
+    // The app shows page images and PDFs in its own flyer viewer (from 2026-10-28); a flyer with
+    // only web pages opens in Safari instead. Stores whose specials are only a web page say so.
+    if ((f.status === "full" || f.status === "partial") && week.week >= "2026-10-30" && !cfg.storeById[f.store]?.web_only_flyer
+        && !f.links.some((l) => flyerKind(l.url) !== "web")) {
+      warn(w, "no page image or PDF linked, so the app can only open the store's site; link each page image (UPDATING.md section 7)");
+    }
   }
   for (const s of cfg.stores) {
     if (s.active && !s.no_online_flyer && s.tracked_since <= week.week && !flyerByStore[s.id]) warn(name, `active store ${s.id} has no flyer entry (shown as not checked)`);

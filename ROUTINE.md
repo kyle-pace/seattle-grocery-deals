@@ -29,7 +29,8 @@ In both modes: **never push to `main`, never merge, never close or edit other pu
 For each store in `config/stores.json` with `active: true`, follow its `how_to_read` notes. Skip stores whose notes say they are not part of the weekly routine.
 
 - **Web pages:** fetch the page. If it is empty or clearly needs JavaScript, use the headless browser.
-- **Flyer images:** download each image with `curl` into `work/` and read it with the Read tool. Read every image in full, zooming in by cropping if text is small (for example with Python and Pillow, if available). Link each image in the flyer line.
+- **Flyer images:** download each image with `curl` into `work/` and read it with the Read tool. Read every image in full, zooming in by cropping if text is small (for example with Python and Pillow, if available). Link each image in the flyer line, using the image's own URL.
+- **Flyer pages for the app:** the iPhone app shows each store's page images and PDFs in its own viewer (`flyer_pages` in `/api/week.json`, from these links). For stores whose ad is a web page or a catalogue viewer, look for the page images or PDF behind it (the image URLs in the page, a "Download PDF" link) and link those too, with the web page last. If there are none, the web page alone is fine.
 - **Dates:** check the printed dates. If they are not this week, the flyer is `stale`: list it, with no items.
 - **Unsure rows:** if you are not sure how to read a row (a multi-buy that might be per item or for the set, a price partly hidden), either leave it out or keep it with a note starting `CHECK:` while you work, then resolve every `CHECK:` before step 4. The validator rejects any `CHECK:` left in a week file.
 - Do not use flyer aggregators such as Flipp or their APIs. Read each store's own site.

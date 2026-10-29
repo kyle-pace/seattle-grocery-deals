@@ -232,6 +232,8 @@ struct AisleDetail: View {
         }
         .background(Palette.ground)
         .navigationTitle(title)
+        // Inline, so the pinned store chips sit under the bar instead of over a large title.
+        .navigationBarTitleDisplayMode(.inline)
         .navigationSubtitle(storeFilter == nil ? "\(all.count) deals" : "\(deals.count) of \(all.count) at \(store.storeName(storeFilter!))")
         .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search \(title.lowercased())")
         .dealsPinnedBar {

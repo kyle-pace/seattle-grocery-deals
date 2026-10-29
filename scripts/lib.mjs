@@ -324,3 +324,17 @@ export function isVegetarian(item) {
 export function namesMeat(item) {
   return MEAT.test(item.item.replace(NOT_MEAT, " "));
 }
+
+// What a flyer link points at, for the app's flyer viewer: "image" (a page image), "pdf", or
+// "web" (a page to open in Safari). The iPhone app (Models.swift) uses the same rules when an
+// older feed has no kind.
+const IMAGE_HOSTS = ["cloudinary.com/", "/image/upload/", "squarespace-cdn.com/", "cloudfront.net/", "localexpress.io/img/", "/files/mp/public/"];
+export function flyerKind(url) {
+  let path = url;
+  try { path = new URL(url).pathname; } catch {}
+  path = path.toLowerCase();
+  if (path.endsWith(".pdf")) return "pdf";
+  if ([".jpg", ".jpeg", ".png", ".webp", ".gif"].some((e) => path.endsWith(e))) return "image";
+  if (IMAGE_HOSTS.some((h) => url.includes(h))) return "image";
+  return "web";
+}

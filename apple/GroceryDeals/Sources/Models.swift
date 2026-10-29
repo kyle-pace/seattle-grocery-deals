@@ -39,10 +39,24 @@ struct Store: Codable, Sendable, Identifiable, Hashable {
     struct FlyerPage: Codable, Sendable, Hashable, Identifiable {
         let label: String
         let url: String
+        /// "image", "pdf" or "web", worked out by the site build (`flyerKind` in scripts/lib.mjs).
+        let feedKind: String?
         var id: String { url }
+
+        enum CodingKeys: String, CodingKey { case label, url, feedKind = "kind" }
 
         enum Kind { case image, pdf, web }
         var kind: Kind {
+            switch feedKind {
+            case "image": return .image
+            case "pdf": return .pdf
+            case "web": return .web
+            default: return guessedKind
+            }
+        }
+
+        /// Older feeds have no kind: the same rules as the site build.
+        private var guessedKind: Kind {
             let path = (URL(string: url)?.path ?? url).lowercased()
             if path.hasSuffix(".pdf") { return .pdf }
             if [".jpg", ".jpeg", ".png", ".webp", ".gif"].contains(where: path.hasSuffix) { return .image }
