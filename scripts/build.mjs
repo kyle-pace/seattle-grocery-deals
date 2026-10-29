@@ -795,7 +795,7 @@ function aboutPage() {
   <li>sells something that's hard to find at those chains, such as a cuisine, a specialty like seafood, or co-op produce.</li>
 </ul>
 <h2>What's listed</h2>
-<p>Every sale item that could be read from each flyer. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
+<p>Groceries for cooking: produce, meat, seafood, dairy and eggs, tofu, pantry staples and bread, from every flyer that could be read. Snacks, drinks, frozen desserts and ready-made meals like frozen pizza and instant noodles are left out. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
 <h2 id="vegetarian">Vegetarian</h2>
 <p>The "Vegetarian" filter hides meat, poultry and seafood, and anything made with them, such as fish sauce, broth or pork dumplings. Dairy and eggs stay. It works from each item's category and name, so when a name doesn't make it clear, as with many dumplings and frozen meals, the item is hidden to be safe. It doesn't check for other animal ingredients, like gelatin in a pudding or lard in a pastry, unless the name says so. Check the label if it matters to you.</p>
 <h2 id="how">How deals are highlighted</h2>

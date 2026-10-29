@@ -5,7 +5,7 @@
 // Usage: node scripts/draft-week.mjs "/path/to/All Items 2026-10-23.md"
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, basename } from "node:path";
-import { ROOT, loadConfig, loadWeeks, priorListings, peerPrices, analyze, computeUnitPrice, round2, percentOff, priceText, isFriday } from "./lib.mjs";
+import { ROOT, loadConfig, loadWeeks, priorListings, peerPrices, analyze, computeUnitPrice, round2, percentOff, priceText, isFriday, leaveOutReason } from "./lib.mjs";
 import { match as matchCatalog } from "../vendor/kitchen-catalog/catalog.mjs";
 
 const cfg = loadConfig();
@@ -199,6 +199,7 @@ const items = [];
 const review = [];
 const suggested = [];
 const skipped = [];
+const leftOut = [];
 const readStores = new Set(flyers.filter((f) => f.status === "full" || f.status === "partial").map((f) => f.store));
 for (const r of rows.slice(1)) {
   if (/^\|?\s*:?-{2,}/.test(r.trim().replace(/^\|/, ""))) continue;
@@ -223,6 +224,11 @@ for (const r of rows.slice(1)) {
   const d = { store, item: raw.item.slice(0, 120), item_key: key };
   const noteCat = raw.category.toLowerCase().trim();
   d.category = CATS.includes(noteCat) ? noteCat : (key ? cfg.items[key].category : "other");
+  const leave = leaveOutReason(cfg, raw.item, d.category);
+  if (leave) {
+    leftOut.push({ reason: leave, store, item: raw.item, category: d.category });
+    continue;
+  }
   Object.assign(d, { price: parsed.price, quantity: parsed.quantity, unit: parsed.unit });
   if (parsed.pack) d.pack = parsed.pack;
   // Eggs compare per dozen, so express counted cartons in dozens.
@@ -266,17 +272,18 @@ const out = join(ROOT, "drafts", `${week}.json`);
 mkdirSync(join(ROOT, "drafts"), { recursive: true });
 const weekFile = { week, flyers: flyers.filter((f) => f.store).map(({ source_line, ...f }) => (f.note ? f : (delete f.note, f))), items };
 writeFileSync(out, JSON.stringify(weekFile, null, 2) + "\n");
-writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, review, suggested_keys: suggested, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
+writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, left_out: leftOut, review, suggested_keys: suggested, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
 
 const tiers = { standout: 0, good: 0, sale: 0 };
 for (const r of ranked) tiers[r.a.tier]++;
-console.log(`Week ${week}: ${weekFile.flyers.length} flyers, ${items.length} items (${tiers.standout} standouts, ${tiers.good} good), ${skipped.length} skipped.\n`);
+console.log(`Week ${week}: ${weekFile.flyers.length} flyers, ${items.length} items (${tiers.standout} standouts, ${tiers.good} good), ${skipped.length} skipped, ${leftOut.length} left out as snacks or packaged food.\n`);
 console.log("Top 15 by score (candidates for a highlight reason):");
 for (const { i, a } of ranked.slice(0, 15)) {
   console.log(`  ${a.tier.padEnd(8)} ${i.store.padEnd(14)} ${i.item.slice(0, 42).padEnd(42)} ${priceText(i).padEnd(18)} ${a.tags.map((t) => t.text).join(", ")}`);
 }
 if (review.length) console.log(`\nCheck by hand (${review.length}):\n${review.map((r) => "  " + r).join("\n")}`);
 if (skipped.length) console.log(`\nSkipped (${skipped.length}): ${Object.entries(skipped.reduce((m, s) => ((m[s.reason] = (m[s.reason] ?? 0) + 1), m), {})).map(([k, v]) => `${v} ${k}`).join(", ")}`);
+if (leftOut.length) console.log(`\nLeft out as snacks or packaged food (${leftOut.length}; the reader should have skipped these, see left_out in the report; to keep one, add a word to keep_words in config/leave-out.json):\n${leftOut.map((l) => `  ${l.store} "${l.item}": ${l.reason}`).join("\n")}`);
 const unmatched = flyers.filter((f) => f.unmatched_line);
 if (unmatched.length) console.log(`\nFlyer lines with no known store:\n${unmatched.map((f) => "  " + f.unmatched_line).join("\n")}`);
 console.log(`\nWrote ${out}\nDetails in drafts/${week}.report.json. Validate with: node scripts/validate.mjs ${out}`);

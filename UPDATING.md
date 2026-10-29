@@ -1,6 +1,6 @@
 # Updating: how to make a week's file
 
-Each week gets one file, `data/weeks/YYYY-MM-DD.json`, named for that Friday's Pacific date. It lists every flyer checked and **every readable sale item** from them. The build highlights and ranks the items, so the weekly job is mostly copying and checking, plus a few hand-written reasons.
+Each week gets one file, `data/weeks/YYYY-MM-DD.json`, named for that Friday's Pacific date. It lists every flyer checked and **every readable sale item for cooking** from them (snacks and packaged convenience food are left out, section 3). The build highlights and ranks the items, so the weekly job is mostly copying and checking, plus a few hand-written reasons.
 
 The file must pass `npm run validate` before it is pushed. Pushing to `main` rebuilds and deploys the site.
 
@@ -27,7 +27,7 @@ Any price that could not be read says `unverified`. Those rows are never used.
    ```
    This writes:
    - `drafts/YYYY-MM-DD.json`: a complete week file with every flyer and every readable item.
-   - `drafts/YYYY-MM-DD.report.json`: skipped rows and things to check by hand.
+   - `drafts/YYYY-MM-DD.report.json`: skipped rows, rows left out as snacks or packaged food (`left_out`), and things to check by hand.
 
    It also prints the top items by score and the list of things to check.
 3. Review the draft against the note (section 4).
@@ -48,7 +48,13 @@ Any price that could not be read says `unverified`. Those rows are never used.
 
 ## 3. What goes in
 
-- **Every sale item whose price was read clearly.** Do not filter for "good deals". The site shows everything and highlights the strong ones itself.
+- **Every sale item for cooking whose price was read clearly.** Do not filter for "good deals". The site shows everything and highlights the strong ones itself.
+- **Leave out snacks and packaged convenience food** (decided 2026-10-26). The site is for cooking ingredients. Most things stay; skip only these:
+  - **Snacks and sweets:** chips, crackers, popcorn, candy, chocolate bars, packaged cookies and toaster pastries, snack bars, jerky, ice cream and other frozen desserts.
+  - **Drinks:** soda, juice, bottled tea and coffee, kombucha, energy and protein drinks, drink mixes and powders.
+  - **Ready-made meals:** frozen pizza, burritos, entrees and meals, instant and cup noodles, boxed side mixes, mac and cheese, lunch kits, salad kits, deli salads and sandwiches, kimbap, nuggets, taquitos and similar heat-and-eat appetizers.
+  - **Keep:** all produce, meat and seafood (marinated and seasoned cuts too), eggs, milk and plant milks, cheese, yogurt (yogurt drinks and tubes too), butter, coffee creamers, tofu, everything from the bakery (bread, tortillas, donuts, cakes, pastries, sweet buns), rice, flour and baking mixes, cereal and granola, dried and fresh noodles, oils, vinegars, sauces, condiments, spices, canned basics (coconut milk, beans, tomatoes, fish, meats), soup and broth, coffee beans and ground coffee, tea bags, frozen vegetables, fruit, seafood and meat, frozen dumplings, dim sum, buns, egg tarts and spring rolls, fish balls and fish cakes, kimchi, plant-based meat. (Dim sum, buns, spring rolls, cereal, granola, soup, creamers, yogurt drinks and sweet bakery items were put back in on 2026-10-26.)
+  - When unsure, keep it. The draft drops what slips through (below), and `config/leave-out.json` holds the words and categories it uses.
 - **Never guess a price.** If a number is unclear, leave that item out.
 - **Never invent a regular price or percent off.** Only use what the store printed. An exact printed savings amount counts: the regular price is the sale price plus the savings. "Save up to $X" does not count; put that text in `notes` instead.
 - **Never use anything marked `unverified`.**
@@ -66,6 +72,7 @@ Check against the note:
   - Fix wrong keys. A key is wrong when it would compare unlike things (for example Kurobuta sliced loin against a plain loin roast).
   - Use `null` for one-off items with no fair comparison.
   - Add a key to `config/items.json` for items that will come up again.
+- **Left out:** the draft drops rows in the `snacks-drinks` and `prepared` categories, rows whose name says a snack or ready-made word (sweet bakery words only outside `bakery` and `frozen`), and rows KitchenCatalog reads as a ready-made product other than those kept (`config/leave-out.json`). The `bakery` category is always kept. Each one is listed under `left_out` in the report with the reason. If one belongs (a cooking ingredient caught by a word), add a phrase to `keep_words` and redraft. The validator warns about any snack or packaged item that's still in a week file from 2026-10-30 on.
 - **Prices and units:** spot-check multi-buys ("3/$4"), pack sizes and anything the report lists as skipped for parsing.
 
 ## 5. Highlights
@@ -115,7 +122,7 @@ The settings are in `config/criteria.json`. Every item gets a tier:
 | `store` | Store id. Its flyer entry must be `full` or `partial`. |
 | `item` | The name as printed. You may add the pack size, as in "Shirakiku Sekka Rice, 15 lb". |
 | `item_key` | A key from `config/items.json`, or `null`. |
-| `category` | `produce`, `meat`, `seafood`, `dairy-eggs`, `pantry`, `frozen`, `bakery`, `prepared`, `snacks-drinks` or `other`. |
+| `category` | `produce`, `meat`, `seafood`, `dairy-eggs`, `pantry`, `frozen`, `bakery` or `other`. `prepared` and `snacks-drinks` are no longer used from 2026-10-30 (section 3): sliced deli meat and cheese go in `meat` and `dairy-eggs`, plain milks in `dairy-eggs`, coffee beans and tea bags in `pantry`, tofu in `other`. |
 | `price` | The sale price as printed, for `quantity` units. |
 | `quantity` | `1`, unless it is a multi-buy: for "4 for $5", `price` is `5` and `quantity` is `4`. |
 | `unit` | `lb` per pound, `each` per item, `pack` per package. |

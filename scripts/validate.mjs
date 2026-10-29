@@ -8,7 +8,7 @@ import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import {
   ROOT, WEEKS_DIR, readJson, loadConfig, weekFiles, isFriday, addDays,
-  computeUnitPrice, round2, percentOff, flyerKind,
+  computeUnitPrice, round2, percentOff, leaveOutReason, flyerKind,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
@@ -151,6 +151,8 @@ function checkWeek(path) {
     if (d.vegetarian === true && (d.category === "meat" || d.category === "seafood")) err(w, "vegetarian is true on a meat or seafood item");
     else if (d.vegetarian === true && namesMeat(d)) warn(w, "vegetarian is true but the name mentions meat or fish; check it");
     if (d.member_price && !/member|card|app|loyalty|prime/i.test(d.notes)) warn(w, "member_price is true; say which program in notes");
+    const leave = week.week >= cfg.leaveOut.since && leaveOutReason(cfg, d.item, d.category);
+    if (leave) warn(w, `looks like a snack or packaged food (${leave}); these are left out (config/leave-out.json). Remove it, or add a keep word if it belongs`);
   }
 
   // A week with nothing read would replace the live week with an empty one.

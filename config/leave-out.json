@@ -1,0 +1,17 @@
+{
+  "note": "Snacks and packaged convenience food are left out of the weekly runs, so the site is about cooking ingredients and everyday groceries. The Friday reader skips these rows while reading (ROUTINE.md step 2); the draft drops any that slip through and lists them under left_out in the report. Decided 2026-10-26; the same night, frozen dim sum and buns, spring rolls, cereal and granola, canned soup, coffee creamers, yogurt drinks and sweet bakery items were put back in.",
+  "since": "2026-10-30",
+  "categories": ["snacks-drinks", "prepared"],
+  "keep_categories": ["bakery"],
+  "catalog_products": {
+    "note": "A strong KitchenCatalog match on an item marked product (a ready-made thing, not an ingredient) is left out, except these ids.",
+    "keep": ["plant-based-meat", "dim-sum", "bao", "spring-rolls", "cereal", "granola", "soup", "creamer", "flavored-milk", "cakes", "donuts", "muffins", "pastries"]
+  },
+  "words": ["pizza", "burrito", "hot pocket", "lunchable", "lunch kit", "snack pack", "frozen meal", "family size meal", "entree", "bowl meal", "ice cream", "i-cream", "gelato", "sorbet", "sorbetto", "frozen yogurt", "ice bar", "popsicle", "mochi ice", "waffle", "frozen pancake", "cup noodle", "instant noodle", "bowl noodle", "ramen bowl", "mac & cheese", "mac and cheese", "chips", "crisps", "popcorn", "pretzel", "cracker", "puffs", "jerky", "trail mix", "snack", "candy", "gummy", "gummies", "lollipop", "marshmallow", "chocolate bar", "truffle bar", "hi-chew", "hi chew", "pocky", "soda", "sparkling drink", "sparkling water", "spring water", "kombucha", "juice", "energy drink", "cold brew", "milk tea", "bottled tea", "iced tea", "yerba mate", "lemonade", "protein bar", "protein shake", "drink", "salad kit", "meal", "kimbap", "candied", "rice ball", "noodle soup"],
+  "sweet_bakery_words": {
+    "note": "Sweet bakery words leave an item out only outside these categories, so a donut from the bakery or frozen egg tarts stay while Pop-Tarts and packaged cookies go.",
+    "allowed_in": ["bakery", "frozen"],
+    "words": ["cookie", "brownie", "donut", "doughnut", "donette", "cupcake", "cheesecake", "muffin", "pastry", "pastries", "danish", "croissant", "castella", "swiss roll", "cream bun", "custard bun", "custard", "mooncake", "pie", "scone", "shortbread"]
+  },
+  "keep_words": ["pizza dough", "pizza flour", "pizza sauce", "pie crust", "pie shell", "pie pumpkin", "lemon juice", "lime juice", "yuzu juice", "calamansi juice", "snack size", "snack slice", "bread crumb", "panko", "chocolate chips", "baking chocolate", "tortilla", "english muffin", "baking chip", "pancake mix", "waffle mix", "scone mix", "baking mix", "almond meal", "corn meal", "flax meal", "creamer", "cereal", "granola", "yogurt drink", "drinkable yogurt", "yogurt smoothie", "kefir", "lassi", "egg roll", "eggroll", "lumpia"]
+}
