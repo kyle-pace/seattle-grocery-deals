@@ -101,6 +101,7 @@ final class PushStore {
 final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         PushStore.shared.configure()
+        MessageStore.shared.refresh()
         return true
     }
 
