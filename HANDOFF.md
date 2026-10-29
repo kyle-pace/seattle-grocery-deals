@@ -74,6 +74,6 @@ Ideas for later: plan-my-trip (fewest stores covering your sale items), in-store
 
 ## House rules
 
-- Never push to `main` or merge without the owner's approval. Branch, open a pull request.
+- Pushing straight to `main` is fine (owner's call, 2026-10-28). Use a branch and a pull request for bigger or riskier work the owner should look at first.
 - Never put the owner's email address on the site.
 - Weekly data: never guess a price; only use regular prices the store printed; food for cooking only (no snacks or packaged convenience food); no em dashes. `npm run check` must pass.
