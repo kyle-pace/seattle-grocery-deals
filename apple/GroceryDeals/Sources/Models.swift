@@ -32,6 +32,39 @@ struct Store: Codable, Sendable, Identifiable, Hashable {
     let from: String?
     let through: String?
     let locations: [Location]
+    /// This week's flyer itself: page images, a PDF, or the store's flyer page, with labels.
+    /// Older feeds don't have it; the app falls back to `flyer_url`.
+    let flyer_pages: [FlyerPage]?
+
+    struct FlyerPage: Codable, Sendable, Hashable, Identifiable {
+        let label: String
+        let url: String
+        var id: String { url }
+
+        enum Kind { case image, pdf, web }
+        var kind: Kind {
+            let path = (URL(string: url)?.path ?? url).lowercased()
+            if path.hasSuffix(".pdf") { return .pdf }
+            if [".jpg", ".jpeg", ".png", ".webp", ".gif"].contains(where: path.hasSuffix) { return .image }
+            // Image CDNs that don't always end in an extension.
+            if ["cloudinary.com/", "/image/upload/", "squarespace-cdn.com/", "cloudfront.net/", "localexpress.io/img/", "/files/mp/public/"]
+                .contains(where: url.contains) { return .image }
+            return .web
+        }
+    }
+
+    /// The pages the app's own flyer viewer shows: page images when there are any (Uwajimaya
+    /// posts both images and a PDF of the same ad), otherwise the PDFs.
+    var viewablePages: [FlyerPage] {
+        let pages = flyer_pages ?? []
+        let images = pages.filter { $0.kind == .image }
+        return images.isEmpty ? pages.filter { $0.kind == .pdf } : images
+    }
+    var hasFlyer: Bool { !viewablePages.isEmpty || flyerWebURL != nil }
+    /// Where to send people when there's nothing to show in the app.
+    var flyerWebURL: URL? {
+        ((flyer_pages ?? []).first { $0.kind == .web }?.url ?? flyer_url).flatMap(URL.init(string:))
+    }
 
     /// "Seattle · Tukwila"
     var towns: String {

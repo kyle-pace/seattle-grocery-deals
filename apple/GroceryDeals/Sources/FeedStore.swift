@@ -19,7 +19,17 @@ final class FeedStore {
         }
     }
 
+    /// The stores someone picked in onboarding or Settings. They come first everywhere; no
+    /// store is ever hidden.
+    var favoriteStores: Set<String> {
+        didSet {
+            UserDefaults.standard.set(Array(favoriteStores).sorted(), forKey: "sgd.favoriteStores")
+            Analytics.setUser(["favorite_stores": favoriteStores.count])
+        }
+    }
+
     init() {
+        favoriteStores = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
         vegetarianOnly = UserDefaults.standard.bool(forKey: "sgd.vegOnly")
         feed = Self.cached() ?? Self.bundled()
     }
@@ -88,13 +98,47 @@ final class FeedStore {
             return taken[d.store]! <= perStore
         }.prefix(limit))
     }
-    /// Stores with deals, most standouts first, then most deals.
+    /// Your stores first, then most standouts, then most deals.
     var rankedStores: [Store] {
         (feed?.stores ?? []).sorted {
+            let fa = favoriteStores.contains($0.id), fb = favoriteStores.contains($1.id)
+            if fa != fb { return fa }
             let a = deals(atStore: $0.id), b = deals(atStore: $1.id)
             let sa = a.filter { $0.tier == .standout }.count, sb = b.filter { $0.tier == .standout }.count
             return sa != sb ? sa > sb : a.count > b.count
         }
+    }
+    func isFavorite(_ id: String) -> Bool { favoriteStores.contains(id) }
+    func toggleFavorite(_ id: String) {
+        if favoriteStores.contains(id) { favoriteStores.remove(id) } else { favoriteStores.insert(id) }
+    }
+
+    /// Aisles that have deals this week, in the feed's order.
+    var aisles: [Category] { (feed?.categories ?? []).filter { c in items.contains { $0.category == c.id } } }
+
+    /// What people might be typing: aisles, stores and short deal names that start with (or
+    /// contain) the query, best deals first. For `.searchSuggestions`.
+    func suggestions(_ query: String, limit: Int = 6) -> [String] {
+        let q = query.trimmingCharacters(in: .whitespaces).lowercased()
+        guard q.count >= 2 else { return [] }
+        var seen = Set<String>()
+        var out: [String] = []
+        func offer(_ s: String) {
+            let key = s.lowercased()
+            guard key.contains(q), !seen.contains(key) else { return }
+            seen.insert(key)
+            out.append(s)
+        }
+        for c in aisles where c.label.lowercased().hasPrefix(q) { offer(c.label) }
+        for d in items where shortName(d.name).lowercased().hasPrefix(q) { offer(shortName(d.name)) }
+        for d in items { offer(shortName(d.name)) }
+        return Array(out.prefix(limit))
+    }
+
+    /// A few things worth searching for this week: the top standouts' short names.
+    var popularSearches: [String] {
+        var seen = Set<String>()
+        return topPicks(20, perStore: 3).map { shortName($0.name) }.filter { seen.insert($0.lowercased()).inserted }.prefix(8).map { $0 }
     }
     func searchStores(_ query: String) -> [Store] {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()

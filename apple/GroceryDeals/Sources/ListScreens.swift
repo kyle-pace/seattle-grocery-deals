@@ -10,7 +10,6 @@ struct ListView: View {
     @State private var selected: Deal?
     @State private var choosing = false
     @State private var celebrate = false
-    @State private var composing = false
     @FocusState private var typing: Bool
     @AppStorage("sgd.list.byStore") private var byStore = false
     let openStore: (String) -> Void
@@ -18,12 +17,6 @@ struct ListView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    Text(list.usesReminders ? "Synced with Reminders." : "Saved in this app.")
-                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                }
-                .listRowBackground(Palette.surface)
-
                 ForEach(duplicates, id: \.key) { d in
                     Section {
                         VStack(alignment: .leading, spacing: Space.s) {
@@ -64,33 +57,31 @@ struct ListView: View {
                     .listRowBackground(Palette.surface)
                 }
 
-                Section {
-                    Button(list.usesReminders ? "Change Reminders list" : "Use a Reminders list") { pickReminders() }
-                    if list.usesReminders {
-                        Button("Keep the list in this app instead") { list.useApp(prompt: "list_tab") }
-                    }
-                }
-                .font(.app(.headline))
-                .listRowBackground(Palette.surface)
             }
             .scrollContentBackground(.hidden)
             .background(Palette.ground)
             .navigationTitle(list.title)
-            .navigationSubtitle(list.items.isEmpty ? "" : "\(list.openItems.count) to get · \(onSale) on sale")
+            .navigationSubtitle(([list.usesReminders ? "Synced with Reminders" : "In this app"]
+                + (list.items.isEmpty ? [] : ["\(list.openItems.count) to get", "\(onSale) on sale"])).joined(separator: " · "))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Menu("Group", systemImage: "line.3.horizontal.decrease") {
+                    // Grouping and where the list lives, in one menu (they were a row at the top
+                    // and a row at the bottom of the list).
+                    Menu("List options", systemImage: "line.3.horizontal.decrease") {
                         Picker("Group", selection: $byStore) {
                             Label("In the order added", systemImage: "list.bullet").tag(false)
                             Label("By store", systemImage: "storefront").tag(true)
                         }
+                        Section("Where it lives") {
+                            Button(list.usesReminders ? "Change Reminders list" : "Use a Reminders list", systemImage: "checklist") { pickReminders() }
+                            if list.usesReminders {
+                                Button("Keep it in this app instead", systemImage: "iphone") { list.useApp(prompt: "list_tab") }
+                            }
+                        }
                     }
                 }
             }
-            .safeAreaInset(edge: .bottom) { addBar }
-            .onChange(of: typing) { _, now in
-                if !now && newItem.trimmingCharacters(in: .whitespaces).isEmpty { withAnimation(.snappy) { composing = false } }
-            }
+            .safeAreaBar(edge: .bottom, spacing: 0) { addBar }
             .settingsButton()
             .celebration($celebrate, style: .paper, message: Lines.tripDone(list.items.count))
             .onChange(of: list.openItems.count) { old, now in
@@ -102,36 +93,28 @@ struct ListView: View {
         }
     }
 
-    /// The + sits bottom right, under the thumb. Tapping it opens a field just above the
-    /// keyboard that stays open, so several items go on in a row.
-    @ViewBuilder private var addBar: some View {
+    /// An "Add an item" field that's always there at the bottom, like Reminders' New Reminder,
+    /// instead of a floating + over the glass tab bar. Stays focused so several go on in a row.
+    private var addBar: some View {
         HStack(spacing: Space.s) {
-            if composing {
-                TextField("Add an item, like bok choy", text: $newItem)
-                    .font(.app(.body)).submitLabel(.done).onSubmit(add)
-                    .focused($typing)
-                    .padding(.horizontal, Space.m).frame(minHeight: 50)
-                    .glassEffect(.regular, in: .capsule)
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
-            } else {
-                Spacer()
+            Image(systemName: "plus.circle.fill").font(.app(.title3)).foregroundStyle(Palette.accent)
+                .accessibilityHidden(true)
+            TextField("Add an item, like bok choy", text: $newItem)
+                .font(.app(.body)).submitLabel(.done).onSubmit(add)
+                .focused($typing)
+            if !newItem.trimmingCharacters(in: .whitespaces).isEmpty {
+                Button("Add", action: add)
+                    .font(.app(.headline)).buttonStyle(.glassProminent)
+                    .transition(.scale.combined(with: .opacity))
             }
-            Button {
-                if composing && !newItem.trimmingCharacters(in: .whitespaces).isEmpty { add() }
-                else {
-                    withAnimation(.snappy) { composing = true }
-                    typing = true
-                }
-            } label: {
-                Image(systemName: "plus").font(.app(.title2, .bold)).frame(width: 36, height: 36)
-            }
-            .buttonStyle(.glassProminent)
-            .buttonBorderShape(.circle)
-            .accessibilityLabel(composing ? "Add to list" : "Add an item")
-            .sensoryFeedback(.increase, trigger: list.items.count)
         }
+        .padding(.leading, Space.m).padding(.trailing, Space.xs)
+        .frame(minHeight: 50)
+        .glassEffect(.regular.interactive(), in: .capsule)
         .padding(.horizontal, Space.l)
         .padding(.bottom, Space.s)
+        .animation(.snappy, value: newItem.isEmpty)
+        .sensoryFeedback(.increase, trigger: list.items.count)
     }
 
     /// Open items that are the same thing (same item key) from different stores' deals.
@@ -298,6 +281,17 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink {
+                        YourStoresPicker()
+                    } label: {
+                        LabeledContent("Your stores", value: store.favoriteStores.isEmpty ? "None yet" : "\(store.favoriteStores.count)")
+                            .font(.app(.headline))
+                    }
+                } header: { Text("Shopping") } footer: {
+                    Text("Your stores come first on This week, Aisles and Stores. Every store still shows.")
+                }
+
+                Section {
                     AppearanceSettings()
                 } header: { Text("Display") }
                 .tint(Palette.accent)
@@ -334,5 +328,140 @@ struct SettingsView: View {
             Text(title).font(.app(.headline))
             Text(sub).font(.app(.subheadline)).foregroundStyle(Palette.muted)
         }
+    }
+}
+
+// MARK: Where the list lives
+
+extension View {
+    /// On the first add, asks where the list should live. Attached at the root and inside the
+    /// deal sheet; whichever is on top asks (a sheet can't open from under another sheet).
+    func asksWhereListLives(inDealSheet: Bool) -> some View { modifier(ListHomeAsker(inDealSheet: inDealSheet)) }
+}
+
+private struct ListHomeAsker: ViewModifier {
+    let inDealSheet: Bool
+    @Environment(ListStore.self) private var list
+    @State private var asking = false
+
+    func body(content: Content) -> some View {
+        content
+            .onChange(of: list.pendingAdd != nil) { _, pending in
+                let onTop = inDealSheet == (DealsRouter.shared.openDealSheets > 0)
+                if pending && onTop { asking = true }
+            }
+            .sheet(isPresented: $asking, onDismiss: {
+                // Swiped away without choosing: keep it simple and keep the list here.
+                if list.pendingAdd != nil { list.useApp(prompt: "first_add_dismissed"); list.finishPendingAdd() }
+            }) {
+                ListHomePrimer()
+            }
+    }
+}
+
+/// "Where should your list live?" Two equal choices, then (for Reminders) the list picker in
+/// the same sheet, instead of a second sheet stacked on the first.
+struct ListHomePrimer: View {
+    @Environment(ListStore.self) private var list
+    @Environment(\.dismiss) private var dismiss
+    @State private var picking = false
+    @State private var loading = false
+
+    var body: some View {
+        if picking {
+            RemindersPicker(prompt: "first_add")
+        } else {
+            ScrollView {
+                VStack(spacing: Space.l) {
+                    Buddy(.persimmon, mood: .happy, size: 64).hiddenWhenTextIsLarge()
+                    Text("Where should your list live?")
+                        .font(.app(.title2, .bold)).foregroundStyle(Palette.ink).multilineTextAlignment(.center)
+                        .accessibilityAddTraits(.isHeader)
+                    if let item = list.pendingAdd {
+                        Text("Adding \u{201C}\(item.text)\u{201D}. Pick once; change it anytime from the List tab.")
+                            .font(.app(.subheadline)).foregroundStyle(Palette.muted).multilineTextAlignment(.center)
+                    }
+                    VStack(spacing: Space.s) {
+                        option("A Reminders list", detail: "Share it with your household, add with Siri. The price and sale end go in the notes.",
+                               systemImage: "checklist", busy: loading) {
+                            loading = true
+                            Task {
+                                if await list.loadRemindersLists() {
+                                    withAnimation(.snappy) { picking = true }
+                                } else {
+                                    list.useApp(prompt: "first_add")
+                                    list.finishPendingAdd()
+                                    dismiss()
+                                }
+                                loading = false
+                            }
+                        }
+                        option("Here in Deals", detail: "Simple and private. Nothing leaves your iPhone.", systemImage: "iphone", busy: false) {
+                            list.useApp(prompt: "first_add")
+                            list.finishPendingAdd()
+                            dismiss()
+                        }
+                    }
+                }
+                .padding(Space.xl)
+            }
+            .background(Palette.ground)
+            .presentationDetents([.medium, .large])
+            .presentationBackground(Palette.ground)
+        }
+    }
+
+    private func option(_ title: String, detail: String, systemImage: String, busy: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(alignment: .top, spacing: Space.m) {
+                Image(systemName: systemImage).font(.app(.title3)).foregroundStyle(Palette.accent).frame(width: 32)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title).font(.app(.headline)).foregroundStyle(Palette.ink)
+                    Text(detail).font(.app(.subheadline)).foregroundStyle(Palette.muted).multilineTextAlignment(.leading)
+                }
+                Spacer(minLength: 0)
+                if busy { ProgressView() } else {
+                    Image(systemName: "chevron.right").font(.app(.subheadline, .semibold)).foregroundStyle(Palette.muted)
+                        .accessibilityHidden(true)
+                }
+            }
+            .padding(Space.l)
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: Radius.large))
+            .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Palette.line.opacity(0.7)))
+            .contentShape(RoundedRectangle(cornerRadius: Radius.large))
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Pick your stores: a checklist, the same choice as onboarding's "Where do you shop?".
+struct YourStoresPicker: View {
+    @Environment(FeedStore.self) private var store
+
+    var body: some View {
+        List(store.feed?.stores ?? []) { s in
+            let on = store.isFavorite(s.id)
+            Button { store.toggleFavorite(s.id) } label: {
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                        Text(s.towns).font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                    }
+                    Spacer()
+                    Image(systemName: on ? "heart.fill" : "heart").foregroundStyle(on ? Palette.accent : Palette.muted)
+                }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityAddTraits(on ? .isSelected : [])
+            .listRowBackground(Palette.surface)
+        }
+        .scrollContentBackground(.hidden)
+        .background(Palette.ground)
+        .navigationTitle("Your stores")
+        .sensoryFeedback(.selection, trigger: store.favoriteStores)
     }
 }
