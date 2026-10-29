@@ -171,6 +171,21 @@ final class ListStore {
         }
     }
 
+    // MARK: dev menu
+
+    /// The next add asks "Use your Reminders list?" again. Reminders itself isn't touched.
+    func devForgetSource() {
+        source = nil
+        UserDefaults.standard.removeObject(forKey: "sgd.listSource")
+        items = Self.savedAppItems()
+    }
+
+    /// Empties the in-app list (not a Reminders list).
+    func devClearAppList() {
+        UserDefaults.standard.removeObject(forKey: "sgd.list")
+        if !usesReminders { items = [] }
+    }
+
     // MARK: in-app storage
 
     private func saveAppItems() {

@@ -201,6 +201,7 @@ struct DealDetail: View {
     @Environment(AlertsStore.self) private var alerts
     @Environment(\.dismiss) private var dismiss
     @State private var priming = false
+    @State private var scrolled = false
     let deal: Deal
     var openStore: ((String) -> Void)? = nil
 
@@ -258,10 +259,23 @@ struct DealDetail: View {
                 .padding(20)
             }
             .background(Palette.ground)
-            .safeAreaInset(edge: .bottom, spacing: 0) { actions }
+            // Once the big name scrolls up under the close button, the name moves into the
+            // bar and the hard scroll edge keeps the two from overlapping (the Oct 28 clip).
+            .onScrollGeometryChange(for: Bool.self) { $0.contentOffset.y + $0.contentInsets.top > 56 } action: { _, now in
+                withAnimation(.snappy) { scrolled = now }
+            }
+            .navigationTitle(scrolled ? shortName(deal.name) : "")
+            .navigationBarTitleDisplayMode(.inline)
+            .scrollEdgeEffectStyle(.hard, for: .top)
+            .scrollEdgeEffectStyle(.soft, for: .bottom)
+            .safeAreaBar(edge: .bottom, spacing: 0) { actions }
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
         }
         .presentationDetents([.medium, .large])
+        .presentationBackground(Palette.ground)
+        .asksWhereListLives(inDealSheet: true)
+        .onAppear { DealsRouter.shared.openDealSheets += 1 }
+        .onDisappear { DealsRouter.shared.openDealSheets = max(0, DealsRouter.shared.openDealSheets - 1) }
         .sheet(isPresented: $priming) {
             AlertPrimer(deal: deal) { allowed in
                 priming = false
@@ -335,11 +349,6 @@ struct DealDetail: View {
         .padding(.horizontal, 20)
         .padding(.top, Space.s)
         .padding(.bottom, Space.xs)
-        .background {
-            Palette.ground
-                .overlay(alignment: .top) { Rectangle().fill(Palette.divider).frame(height: 1) }
-                .ignoresSafeArea(edges: .bottom)
-        }
     }
 
     private func startWatching() {
