@@ -165,6 +165,8 @@ struct AisleDetail: View {
     @State private var selected: Deal?
     let route: AisleRoute
     let openStore: (String) -> Void
+    /// False when opened from the Search tab, which already has a search field.
+    var ownSearch = true
 
     private var title: String {
         switch route {
@@ -235,7 +237,7 @@ struct AisleDetail: View {
         // Inline, so the pinned store chips sit under the bar instead of over a large title.
         .navigationBarTitleDisplayMode(.inline)
         .navigationSubtitle(storeFilter == nil ? "\(all.count) deals" : "\(deals.count) of \(all.count) at \(store.storeName(storeFilter!))")
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search \(title.lowercased())")
+        .searchableIf(ownSearch, text: $query, prompt: "Search \(title.lowercased())")
         .dealsPinnedBar {
             ChipRow {
                 FilterChip("All stores", count: all.count, isOn: storeFilter == nil) { storeFilter = nil }

@@ -57,6 +57,15 @@ private struct VegChip: ViewModifier {
 }
 
 extension View {
+    /// A search field in the navigation bar drawer, only when `on`.
+    @ViewBuilder func searchableIf(_ on: Bool, text: Binding<String>, prompt: String) -> some View {
+        if on {
+            searchable(text: text, placement: .navigationBarDrawer(displayMode: .automatic), prompt: prompt)
+        } else {
+            self
+        }
+    }
+
     func dealsPinnedBar<Bar: View>(@ViewBuilder _ bar: () -> Bar) -> some View { modifier(PinnedBar(bar: bar())) }
     func dealsVegChip() -> some View { modifier(VegChip()) }
 }
@@ -217,6 +226,8 @@ struct StoreDetail: View {
     @State private var query = ""
     let s: Store
     var openStore: ((String) -> Void)? = nil
+    /// False when opened from the Search tab, which already has a search field.
+    var ownSearch = true
 
     var body: some View {
         let all = store.deals(atStore: s.id)
@@ -266,7 +277,7 @@ struct StoreDetail: View {
         .navigationTitle(s.name)
         .navigationSubtitle([s.towns, s.readThisWeek && s.from != nil ? "Sale \(Dates.short(s.from)) to \(Dates.short(s.through))" : ""]
             .filter { !$0.isEmpty }.joined(separator: " · "))
-        .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .automatic), prompt: "Search \(s.name)")
+        .searchableIf(ownSearch, text: $query, prompt: "Search \(s.name)")
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button(store.isFavorite(s.id) ? "Remove from your stores" : "Add to your stores",
