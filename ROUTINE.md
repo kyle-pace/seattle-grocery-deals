@@ -2,7 +2,7 @@
 
 A cloud routine runs this every Friday morning, Pacific time. It reads every active store's flyer, writes the week file, and opens a pull request. A person reviews and merges the pull request; merging deploys the site. Nothing here needs a local computer or the Obsidian vault.
 
-Read [UPDATING.md](UPDATING.md) first. Its rules on what goes in (section 3), highlights (section 5) and fields (section 7) all apply. The short version: never guess a price, only use regular prices the store printed, food only, no em dashes.
+Read [UPDATING.md](UPDATING.md) first. Its rules on what goes in (section 3), highlights (section 5) and fields (section 7) all apply. The short version: never guess a price, only use regular prices the store printed, food for cooking only (no snacks or packaged convenience food), no em dashes.
 
 ## Mode
 
@@ -29,9 +29,11 @@ In both modes: **never push to `main`, never merge, never close or edit other pu
 For each store in `config/stores.json` with `active: true`, follow its `how_to_read` notes. Skip stores whose notes say they are not part of the weekly routine.
 
 - **Web pages:** fetch the page. If it is empty or clearly needs JavaScript, use the headless browser.
-- **Flyer images:** download each image with `curl` into `work/` and read it with the Read tool. Read every image in full, zooming in by cropping if text is small (for example with Python and Pillow, if available). Link each image in the flyer line.
+- **Flyer images:** download each image with `curl` into `work/` and read it with the Read tool. Read every image in full, zooming in by cropping if text is small (for example with Python and Pillow, if available). Link each image in the flyer line, using the image's own URL.
+- **Flyer pages for the app:** the iPhone app shows each store's page images and PDFs in its own viewer (`flyer_pages` in `/api/week.json`, from these links). For stores whose ad is a web page or a catalogue viewer, look for the page images or PDF behind it (the image URLs in the page, a "Download PDF" link) and link those too, with the web page last. If there are none, the web page alone is fine.
 - **Dates:** check the printed dates. If they are not this week, the flyer is `stale`: list it, with no items.
 - **Unsure rows:** if you are not sure how to read a row (a multi-buy that might be per item or for the set, a price partly hidden), either leave it out or keep it with a note starting `CHECK:` while you work, then resolve every `CHECK:` before step 4. The validator rejects any `CHECK:` left in a week file.
+- **Skip snacks and packaged convenience food while reading** (UPDATING.md section 3): snacks and frozen desserts, drinks, and ready-made meals such as frozen pizza, burritos, entrees and instant noodles. Dim sum, buns, spring rolls, cereal, granola, soup, creamers, yogurt drinks and bakery items stay. Don't write those rows at all; a page that is all snacks or frozen meals can be passed over. Keep everything else, and when unsure, keep it. Count what you skipped per store for the run log (a rough number is fine).
 - Do not use flyer aggregators such as Flipp or their APIs. Read each store's own site.
 - Spend at most about 15 minutes on any one store. If you cannot read it, mark it `unreadable` or `partial` with a short reason, and move on.
 
@@ -51,6 +53,7 @@ Then work through UPDATING.md sections 4 and 5 on `drafts/YYYY-MM-DD.json`:
 
 - Fix every item in the "Check by hand" list. Add keys to `config/items.json` for items that will come up again; use `null` for one-offs.
 - Look at every skipped row in `drafts/YYYY-MM-DD.report.json`. Fix the note and redraft if a row was skipped only because of formatting.
+- Look at `left_out` in the report: rows the draft dropped as snacks or packaged food that you wrote anyway. If one is a cooking ingredient, add a phrase to `keep_words` in `config/leave-out.json` and redraft; otherwise leave it out.
 - Add 3 to 6 highlights with reasons.
 - Check the vegetarian filter: `node scripts/veg-check.mjs drafts/YYYY-MM-DD.json` lists the items outside meat and seafood that the site would show as vegetarian. Set `vegetarian: false` on any that contain meat, poultry or fish (UPDATING.md section 7).
 
@@ -63,7 +66,7 @@ npm run check
 
 Fix every error. Then compare with last week's file and note anything surprising in the pull request:
 
-- total items, and items per store, against last week (more than 40% fewer is worth a line);
+- total items, and items per store, against last week (more than 40% fewer is worth a line; the week of Oct 30 is the first without snacks and packaged food, so expect about 35% fewer than Oct 23: redrafting Oct 23 this way goes from 860 items to 538, mostly at 99 Ranch, Red Apple, T&T and Smith Brothers);
 - any item key whose unit price changed by more than 3 times from its last listing (likely a unit or pack mistake: fix it or drop the row);
 - every flyer's dates cover this Friday, or the flyer is marked `stale`.
 
@@ -76,7 +79,7 @@ Title: `Week of <Month D>: <N> items from <M> flyers` (prefixed `[Dry run] ` for
 Body:
 
 1. One line: what this is, and for a dry run, "Do not merge."
-2. A table: store, status, items, how it was read (page, images, PDF, browser), and a note for anything not `full`.
+2. A table: store, status, items, rows skipped as snacks or packaged food (rough count), how it was read (page, images, PDF, browser), and a note for anything not `full`.
 3. The highlights.
 4. Anything a reviewer should look at: rows left out because they could not be read clearly, sanity check findings, items the validator warned about.
 5. The run log: what failed and why, including network or browser problems, so the routine can be improved.

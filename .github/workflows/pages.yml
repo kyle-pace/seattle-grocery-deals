@@ -67,6 +67,8 @@ jobs:
       FIREBASE_PROJECT_ID: seattle-grocery-deals-dev
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # to see which files this push changed
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -88,6 +90,11 @@ jobs:
           FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
         run: |
           week=$(ls data/weeks | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.json$' | sort | tail -1 | sed 's/\.json$//')
+          # Only announce when this push brought in that week's file (the Friday PR). Code
+          # merges mid-week deploy too, and must not send "New deals are in".
+          if ! git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- "data/weeks/$week.json" | grep -q .; then
+            echo "This push didn't change data/weeks/$week.json; not announcing."; exit 0
+          fi
           tag="notified/$week"
           if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
             echo "Already sent for $week ($tag exists)."; exit 0

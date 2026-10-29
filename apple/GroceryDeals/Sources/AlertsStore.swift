@@ -123,6 +123,29 @@ final class AlertsStore {
         if changed { save() }
     }
 
+    // MARK: dev menu
+
+    func devRemoveWatches() { watches = []; save() }
+
+    /// Lets every watch alert again for the current week.
+    func devResetWatchAlerts() {
+        for i in watches.indices { watches[i].notifiedWeek = nil }
+        save()
+    }
+
+    /// A sample notification in 5 seconds (lock the phone or go home to see it).
+    func devTestNotification() async -> Bool {
+        guard await allow() else { return false }
+        let content = UNMutableNotificationContent()
+        content.title = "Test from the dev menu"
+        content.body = "Notifications from Deals are working."
+        try? await UNUserNotificationCenter.current().add(UNNotificationRequest(
+            identifier: "dev-test", content: content, trigger: UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)))
+        return true
+    }
+
+    static func devPendingCount() async -> Int { await UNUserNotificationCenter.current().pendingNotificationRequests().count }
+
     private func save() {
         let d = UserDefaults.standard
         d.set(friday, forKey: "sgd.alerts.friday")

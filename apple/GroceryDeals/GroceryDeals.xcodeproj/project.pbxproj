@@ -7,22 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08DF113380BEFCF2577DA776 /* DealsDevMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */; };
 		1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34300759905B9585BA88F72D /* DealViews.swift */; };
 		24B72EE560CFC3050DA2FD19 /* week.json in Resources */ = {isa = PBXBuildFile; fileRef = 84F994427923C400F45DB70C /* week.json */; };
 		279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900666ED70B2F3E6A406669D /* Screens.swift */; };
 		319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B30268FA30809DBA50C0E7 /* Analytics.swift */; };
+		31E0AEDA41356B154BDE22BF /* Aisles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A3B8F3ECEA1275AAF3090 /* Aisles.swift */; };
 		44B284A97AAE39A18625645A /* Moments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51539486FC8A1B3336B12EA1 /* Moments.swift */; };
 		5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */; };
-		5E5F214F5EDC5B27AF9195C5 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = BE555C74D8DBB3947396CE77 /* FirebaseMessaging */; };
 		5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030270E4AFF9913A0A8A86E3 /* Assets.xcassets */; };
 		64267422E7D9136407CEA5F4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
 		6E48E52EA001EF290CC57FB3 /* DealsWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FF981C7805200162BB6BACE8 /* DealsWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */; };
-		7F321984D31A4686A13826EF /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47E0D9D9A3272DED6A7D1E8 /* GoogleService-Info-Dev.plist */; };
-		80E17AC2615817662C8535AE /* Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53827BED375495D006304F00 /* Push.swift */; };
 		8FE0D28ADE1638539D3A5CC1 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 995D521E5B5C312585E6EF90 /* AmplitudeSwift */; };
 		9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
+		98B87E7A494B40032CC179EE /* Flyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4199622464029D424B8C09 /* Flyer.swift */; };
+		98ED1814CAB3F5726E8075A2 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECE3BB430AA4E2AEA88A042 /* Search.swift */; };
+		BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B9CD189C14496D79B9A60 /* Welcome.swift */; };
 		CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 91E71391CC336A9B1BC351B8 /* KitchenUI */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
 		D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581B0CF13289C4A25A25F8A /* DealsWidget.swift */; };
@@ -61,27 +63,29 @@
 /* Begin PBXFileReference section */
 		030270E4AFF9913A0A8A86E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0AD16DEF9240A31DF79EA0CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		158EA5D150749B2D78AAA07F /* GroceryDeals.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GroceryDeals.entitlements; sourceTree = "<group>"; };
 		16919D4F6B29C60454AF3D0D /* Intents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.swift; sourceTree = "<group>"; };
+		1B4A3B8F3ECEA1275AAF3090 /* Aisles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aisles.swift; sourceTree = "<group>"; };
+		2ECE3BB430AA4E2AEA88A042 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsDevMenu.swift; sourceTree = "<group>"; };
 		33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDealsApp.swift; sourceTree = "<group>"; };
 		34300759905B9585BA88F72D /* DealViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealViews.swift; sourceTree = "<group>"; };
 		352F5BB18C8111F694A1DAFE /* ListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStore.swift; sourceTree = "<group>"; };
 		4E4E38A37F8FB357DFC488EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51539486FC8A1B3336B12EA1 /* Moments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moments.swift; sourceTree = "<group>"; };
-		53827BED375495D006304F00 /* Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Push.swift; sourceTree = "<group>"; };
 		6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GroceryDeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C1108FE82C9173926697E6 /* KitchenUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KitchenUI; path = ../../../KitchenUI; sourceTree = SOURCE_ROOT; };
 		7581B0CF13289C4A25A25F8A /* DealsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsWidget.swift; sourceTree = "<group>"; };
 		798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		84F994427923C400F45DB70C /* week.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = week.json; sourceTree = "<group>"; };
 		86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsStore.swift; sourceTree = "<group>"; };
+		8B4199622464029D424B8C09 /* Flyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flyer.swift; sourceTree = "<group>"; };
 		8C7685CC51CA8311DC803DA0 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		900666ED70B2F3E6A406669D /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B40DA8A41D719580DE66FCDC /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
+		CB1B9CD189C14496D79B9A60 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		DE081C1EE741AEAB7005033E /* ListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreens.swift; sourceTree = "<group>"; };
 		E5CE2E4258193F86182E0754 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		F47E0D9D9A3272DED6A7D1E8 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		FF981C7805200162BB6BACE8 /* DealsWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = DealsWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -100,7 +104,6 @@
 			files = (
 				F97602B0684DAA841202FDA2 /* KitchenUI in Frameworks */,
 				8FE0D28ADE1638539D3A5CC1 /* AmplitudeSwift in Frameworks */,
-				5E5F214F5EDC5B27AF9195C5 /* FirebaseMessaging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,11 +122,13 @@
 		4F5D7D77730F85828D6884E7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1B4A3B8F3ECEA1275AAF3090 /* Aisles.swift */,
 				86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */,
 				A6B30268FA30809DBA50C0E7 /* Analytics.swift */,
+				300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */,
 				34300759905B9585BA88F72D /* DealViews.swift */,
 				798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */,
-				158EA5D150749B2D78AAA07F /* GroceryDeals.entitlements */,
+				8B4199622464029D424B8C09 /* Flyer.swift */,
 				33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */,
 				0AD16DEF9240A31DF79EA0CF /* Info.plist */,
 				16919D4F6B29C60454AF3D0D /* Intents.swift */,
@@ -132,9 +137,10 @@
 				352F5BB18C8111F694A1DAFE /* ListStore.swift */,
 				8C7685CC51CA8311DC803DA0 /* Models.swift */,
 				51539486FC8A1B3336B12EA1 /* Moments.swift */,
-				53827BED375495D006304F00 /* Push.swift */,
 				900666ED70B2F3E6A406669D /* Screens.swift */,
+				2ECE3BB430AA4E2AEA88A042 /* Search.swift */,
 				E5CE2E4258193F86182E0754 /* Theme.swift */,
+				CB1B9CD189C14496D79B9A60 /* Welcome.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -171,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				030270E4AFF9913A0A8A86E3 /* Assets.xcassets */,
-				F47E0D9D9A3272DED6A7D1E8 /* GoogleService-Info-Dev.plist */,
 				84F994427923C400F45DB70C /* week.json */,
 			);
 			path = Resources;
@@ -198,7 +203,6 @@
 			packageProductDependencies = (
 				6DEC89675A65A42ECAA2F31F /* KitchenUI */,
 				995D521E5B5C312585E6EF90 /* AmplitudeSwift */,
-				BE555C74D8DBB3947396CE77 /* FirebaseMessaging */,
 			);
 			productName = GroceryDeals;
 			productReference = 6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */;
@@ -253,7 +257,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				91AA2D67D179BDBCF93DB5FB /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
-				0684A84CE696A0F36932BA7E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				96F98812BE4A0E3114E9993B /* XCLocalSwiftPackageReference "../../../KitchenUI" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -273,7 +276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */,
-				7F321984D31A4686A13826EF /* GoogleService-Info-Dev.plist in Resources */,
 				24B72EE560CFC3050DA2FD19 /* week.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,10 +287,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31E0AEDA41356B154BDE22BF /* Aisles.swift in Sources */,
 				72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */,
 				319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */,
 				1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */,
+				08DF113380BEFCF2577DA776 /* DealsDevMenu.swift in Sources */,
 				5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */,
+				98B87E7A494B40032CC179EE /* Flyer.swift in Sources */,
 				F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */,
 				CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */,
 				DE229B66319FFAB6BAEA6D0C /* Lines.swift in Sources */,
@@ -296,9 +301,10 @@
 				F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */,
 				279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */,
 				44B284A97AAE39A18625645A /* Moments.swift in Sources */,
-				80E17AC2615817662C8535AE /* Push.swift in Sources */,
 				2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */,
+				98ED1814CAB3F5726E8075A2 /* Search.swift in Sources */,
 				64267422E7D9136407CEA5F4 /* Theme.swift in Sources */,
+				BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,13 +332,12 @@
 		190C9117F06C998FCA11F44F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Sources/GroceryDeals.entitlements;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon$(APP_ICON_SUFFIX)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -342,7 +347,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -355,14 +360,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX).widget";
 				PRODUCT_NAME = DealsWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -374,6 +379,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ICON_SUFFIX = "";
+				APP_NAME_SUFFIX = "";
+				BUNDLE_ID_SUFFIX = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -441,14 +449,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX).widget";
 				PRODUCT_NAME = DealsWidget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -460,6 +468,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_ICON_SUFFIX = "";
+				APP_NAME_SUFFIX = "";
+				BUNDLE_ID_SUFFIX = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -517,13 +528,12 @@
 		977CB7667F83949494F22440 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Sources/GroceryDeals.entitlements;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon$(APP_ICON_SUFFIX)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Deals;
+				INFOPLIST_KEY_CFBundleDisplayName = "Deals$(APP_NAME_SUFFIX)";
 				INFOPLIST_KEY_NSRemindersFullAccessUsageDescription = "Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -533,7 +543,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = deals.seattlegrocery;
+				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -580,14 +590,6 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0684A84CE696A0F36932BA7E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 13.1.0;
-			};
-		};
 		91AA2D67D179BDBCF93DB5FB /* XCRemoteSwiftPackageReference "Amplitude-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/amplitude/Amplitude-Swift";
@@ -611,11 +613,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 91AA2D67D179BDBCF93DB5FB /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
 			productName = AmplitudeSwift;
-		};
-		BE555C74D8DBB3947396CE77 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0684A84CE696A0F36932BA7E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

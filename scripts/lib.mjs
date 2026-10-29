@@ -17,12 +17,13 @@ export function loadConfig() {
   const items = readJson(join(ROOT, "config", "items.json")).items;
   const benchmarksFile = readJson(join(ROOT, "config", "benchmarks.json"));
   const site = readJson(join(ROOT, "config", "site.json"));
+  const leaveOut = readJson(join(ROOT, "config", "leave-out.json"));
   const storeById = Object.fromEntries(stores.map((s) => [s.id, s]));
   const catalog = loadCatalog(join(ROOT, "vendor", "kitchen-catalog", "catalog.json"));
   // Deals' own item keys -> catalog ids, through the catalog's "also" (older ids).
   const catalogIdByKey = {};
   for (const [id, item] of Object.entries(catalog.items)) for (const old of item.also ?? []) catalogIdByKey[old] ??= id;
-  return { stores, storeById, criteria, items, benchmarks: benchmarksFile.benchmarks, benchmarksFile, site, catalog, catalogIdByKey };
+  return { stores, storeById, criteria, items, benchmarks: benchmarksFile.benchmarks, benchmarksFile, site, leaveOut, catalog, catalogIdByKey };
 }
 
 export function weekFiles() {
@@ -323,4 +324,40 @@ export function isVegetarian(item) {
 // `vegetarian: true` override that may be a mistake.
 export function namesMeat(item) {
   return MEAT.test(item.item.replace(NOT_MEAT, " "));
+}
+
+// Snacks and packaged convenience food are left out of the weekly runs
+// (config/leave-out.json, decided 2026-10-26). The Friday reader skips them while
+// reading; the draft drops any that slip through. Returns a reason, or null to keep.
+const leaveOutRes = new WeakMap();
+export function leaveOutReason(cfg, name, category) {
+  const LO = cfg.leaveOut;
+  if (LO.categories.includes(category)) return `category ${category}`;
+  if (LO.keep_categories?.includes(category)) return null;
+  if (!leaveOutRes.has(LO)) {
+    const esc = (w) => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = (words) => new RegExp(`(?:^|[^a-z])(${words.map(esc).join("|")})(?:s|es)?(?![a-z])`, "i");
+    leaveOutRes.set(LO, { leave: re(LO.words), sweet: re(LO.sweet_bakery_words.words), keep: re(LO.keep_words) });
+  }
+  const { leave, sweet, keep } = leaveOutRes.get(LO);
+  if (keep.test(name)) return null;
+  const word = name.match(leave) ?? (LO.sweet_bakery_words.allowed_in.includes(category) ? null : name.match(sweet));
+  if (word) return `name says "${word[1].toLowerCase()}"`;
+  const m = matchCatalog(cfg.catalog, name);
+  if (m?.strength === "strong" && cfg.catalog.items[m.id]?.product && !LO.catalog_products.keep.includes(m.id)) return `KitchenCatalog reads it as ${m.id}, a ready-made product`;
+  return null;
+}
+
+// What a flyer link points at, for the app's flyer viewer: "image" (a page image), "pdf", or
+// "web" (a page to open in Safari). The iPhone app (Models.swift) uses the same rules when an
+// older feed has no kind.
+const IMAGE_HOSTS = ["cloudinary.com/", "/image/upload/", "squarespace-cdn.com/", "cloudfront.net/", "localexpress.io/img/", "/files/mp/public/"];
+export function flyerKind(url) {
+  let path = url;
+  try { path = new URL(url).pathname; } catch {}
+  path = path.toLowerCase();
+  if (path.endsWith(".pdf")) return "pdf";
+  if ([".jpg", ".jpeg", ".png", ".webp", ".gif"].some((e) => path.endsWith(e))) return "image";
+  if (IMAGE_HOSTS.some((h) => url.includes(h))) return "image";
+  return "web";
 }
