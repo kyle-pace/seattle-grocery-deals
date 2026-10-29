@@ -105,7 +105,7 @@ The settings are in `config/criteria.json`. Every item gets a tier:
 | `store` | Store id from `config/stores.json`. |
 | `status` | `full`: every page, image or category was read. `partial`: some was not read; say what in `note`. `stale`: the printed dates are not this week. `unreadable`: no prices could be read. |
 | `valid_from`, `valid_through` | The printed dates, as `YYYY-MM-DD`, or `null` if none were printed. For a stale flyer, use the old printed dates. |
-| `links` | The exact link to this week's flyer, one per page or image (`Page 1`, `Page 2`, ...). If there is no page-specific link, use the store's flyer page. `[]` only when no link exists. |
+| `links` | The exact link to this week's flyer, one per page or image (`Page 1`, `Page 2`, ...). **Link the page images and PDFs themselves** (the `.jpg`, `.png` or `.pdf` URL, or the image CDN URL), not only the page that shows them: the iPhone app shows them in its own flyer viewer, and a flyer with only web links opens in Safari instead. Put the store's flyer page last, labeled `Flyer page`. If there is no page-specific link, use the store's flyer page. `[]` only when no link exists. The validator warns when a read flyer has no image or PDF, unless the store has `web_only_flyer: true` in `config/stores.json` (its specials are only a web page, like Smith Brothers). |
 | `note` | Optional, up to 300 characters. Required for `partial`. |
 
 ### Items

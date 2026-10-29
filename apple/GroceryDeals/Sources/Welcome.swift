@@ -303,7 +303,7 @@ private struct PreviewStack: View {
                         Text(store.storeName(d.store)).font(.app(.subheadline)).foregroundStyle(Palette.muted)
                     }
                     Spacer(minLength: 0)
-                    PriceTag(deal: d, size: 22, savings: true)
+                    PriceTag(deal: d, size: 22)
                 }
                 .padding(Space.m)
                 .background(Palette.surface, in: RoundedRectangle(cornerRadius: Radius.large))

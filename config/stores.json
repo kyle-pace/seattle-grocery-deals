@@ -280,6 +280,7 @@
     },
     {
       "id": "smith-brothers",
+      "web_only_flyer": true,
       "name": "Smith Brothers Farms",
       "aliases": [
         "Smith Brothers",
