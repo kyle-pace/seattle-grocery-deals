@@ -15,15 +15,24 @@ It installs **Deals Dev**: bundle ID `deals.seattlegrocery.dev` (widget `.dev.wi
 
 The phone can be plugged in or paired over Wi-Fi (Xcode, Devices and Simulators, "Connect via network"), unlocked and trusted. Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. Signed with the paid developer account, so a phone build keeps opening for a year.
 
-## TestFlight
+## TestFlight (Xcode Cloud)
 
-Commit first, then:
+TestFlight builds come from Xcode Cloud, not this Mac. Commit and push, then:
 
 ```bash
-apple/testflight.sh            # archive and upload; --dry-run shows the version and build number only
+apple/testflight.sh            # tag the pushed commit v<version> and push the tag
+apple/testflight.sh --dry-run  # show the version and tag only
 ```
 
-It archives with the Xcode it finds (beta first), signs with the Apple ID signed in to Xcode, and uploads using `apple/ExportOptions.plist`. The build number is the commit count on the branch, so it always goes up and maps to a commit; the version is `MARKETING_VERSION` in `project.yml`. Check processing with `swift ~/Developer/asc-tools/asc.swift builds`, then install from the TestFlight app. App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26.
+Xcode Cloud's **TestFlight** workflow starts on any tag beginning with `v`, so weekly data merges and everyday pushes to `main` never make a TestFlight build. It archives the `GroceryDeals` scheme (Release, so the bundle ID is `deals.seattlegrocery`, never `.dev`) on the latest release Xcode and uploads to App Store Connect for internal testers. The version is `MARKETING_VERSION` in `project.yml`; a second build of the same version is tagged `v<version>-2` and so on. **Xcode Cloud sets the build number** (its own counter), not the commit count the old local script used, so don't upload from this Mac any more: a local upload would collide with those numbers.
+
+How it fits together:
+- `GroceryDeals/ci_scripts/ci_post_clone.sh` clones KitchenUI's `main` next to the repo, where `project.yml` expects the local package (`../../../KitchenUI`). Push KitchenUI changes before tagging.
+- The `GroceryDeals` scheme is shared (committed under `xcshareddata`) because Xcode Cloud only sees shared schemes; it's defined in `project.yml`.
+- Packages resolve from the committed `Package.resolved` (Xcode Cloud turns automatic resolution off), so commit it after changing package versions.
+- Free plan: 25 compute hours a month across all the account's apps.
+
+App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26, uploaded from the Mac.
 
 ## Code
 
