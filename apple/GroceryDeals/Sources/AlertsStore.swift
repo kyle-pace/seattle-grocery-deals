@@ -3,7 +3,8 @@ import Observation
 import UserNotifications
 
 /// Local notifications: a Friday "new deals" reminder, "ends tomorrow" for list items, and
-/// price watches checked when the app loads the week. Server push (Firebase) comes later.
+/// price watches checked when the app loads the week. When Firebase is set up, "New deals are
+/// in" comes as a server push instead of the local Friday reminder (see Push.swift).
 @MainActor @Observable
 final class AlertsStore {
     struct Watch: Codable, Identifiable, Hashable {
@@ -16,7 +17,7 @@ final class AlertsStore {
         var notifiedWeek: String?
     }
 
-    var friday: Bool { didSet { save(); Task { await scheduleFriday() }; Analytics.track("Changed Alert Setting", ["setting": "friday", "on": friday]) } }
+    var friday: Bool { didSet { save(); PushStore.shared.sync(newDeals: friday); Task { await scheduleFriday() }; Analytics.track("Changed Alert Setting", ["setting": "friday", "on": friday]) } }
     var endingSoon: Bool { didSet { save(); Analytics.track("Changed Alert Setting", ["setting": "ending", "on": endingSoon]) } }
     private(set) var watches: [Watch]
 
@@ -46,7 +47,8 @@ final class AlertsStore {
     private func scheduleFriday() async {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: ["friday"])
-        guard friday else { return }
+        // The server push replaces the guess at 10:30 when Firebase is available.
+        guard friday, !PushStore.shared.available else { return }
         let content = UNMutableNotificationContent()
         content.title = "New deals are in"
         content.body = "This week's flyers are up. See what's on sale from your list."
@@ -163,5 +165,13 @@ func unitValue(_ d: Deal) -> (value: Double, per: String)? {
 final class NotificationPresenter: NSObject, UNUserNotificationCenterDelegate, @unchecked Sendable {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
         [.banner, .list]
+    }
+
+    /// Tapping a server push ("kind" and "week" in its data) opens This week.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let info = response.notification.request.content.userInfo
+        guard let kind = info["kind"] as? String else { return }
+        let week = info["week"] as? String
+        await MainActor.run { PushStore.shared.opened(kind: kind, week: week) }
     }
 }
