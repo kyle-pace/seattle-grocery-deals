@@ -6,8 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    # Daily rebuild (about 6am Pacific) so previews and freshness notes track today's date.
-    - cron: "0 13 * * *"
+    # Hourly rebuild: refreshes /api/popular.json (what people are adding, from Amplitude) and
+    # keeps previews and freshness notes on today's date.
+    - cron: "20 * * * *"
 
 permissions:
   contents: read
@@ -30,6 +31,11 @@ jobs:
       - run: npm ci
       - run: npm run validate
       - run: npm run build
+        env:
+          # Read-only use: counts of "Added Deal to List" for /api/popular.json. Without them the
+          # build writes an empty list and the app shows top picks instead.
+          AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
+          AMPLITUDE_SECRET_KEY: ${{ secrets.AMPLITUDE_SECRET_KEY }}
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'
         with:

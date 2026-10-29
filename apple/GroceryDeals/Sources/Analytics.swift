@@ -77,7 +77,7 @@ enum Analytics {
     static func screen(_ name: String) { track("Viewed Screen", ["screen": name]) }
 
     static func deal(_ d: Deal) -> [String: Any] {
-        ["deal_id": d.id, "store": d.store, "category": d.category, "tier": d.tier.rawValue]
+        ["deal_id": d.id, "item_key": d.key ?? "", "store": d.store, "category": d.category, "tier": d.tier.rawValue]
     }
 
     static func setUser(_ props: [String: Any]) { amplitude?.identify(userProperties: props) }

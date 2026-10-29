@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync } from "node:fs"
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { buildSync } from "esbuild";
+import { writePopular } from "./popular.mjs";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
   unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind,
@@ -875,6 +876,7 @@ function appFeed() {
   };
   mkdirSync(join(DIST, "api"), { recursive: true });
   writeFileSync(join(DIST, "api", "week.json"), JSON.stringify(feed));
+  return feed;
 }
 
 rmSync(DIST, { recursive: true, force: true });
@@ -899,6 +901,8 @@ storePages();
 aboutPage();
 persimmonPage();
 dataPages();
-appFeed();
+const feed = appFeed();
+// What people are adding this week (Amplitude, counts only): /api/popular.json for the app.
+await writePopular(feed, DIST);
 notFound();
 console.log(`Built ${weeks.length} week(s), latest ${latest.week}, into dist/ with base ${BASE}`);

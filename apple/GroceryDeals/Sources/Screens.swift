@@ -79,6 +79,14 @@ struct ThisWeekView: View {
                     ForEach(picks) { d in
                         DealRow(deal: d, showWhy: true) { selected = d }
                     }
+                    // What people are adding (Amplitude, counts only), once enough people have.
+                    let adding = store.popularDeals.prefix(3)
+                    if !adding.isEmpty {
+                        SectionHeading(title: "People are adding", note: "this week")
+                        ForEach(adding, id: \.deal.id) { entry in
+                            DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
+                        }
+                    }
                     let picked = Set(picks.map(\.id))
                     SectionHeading(title: "By store", note: "Each store's best")
                     ForEach(store.rankedStores) { s in

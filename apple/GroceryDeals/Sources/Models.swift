@@ -10,6 +10,22 @@ struct Feed: Codable, Sendable {
     let items: [Deal]
 }
 
+/// What people are adding this week (/api/popular.json): deals added by at least
+/// `min_people` different people, most first. Counts only, from Amplitude.
+struct Popular: Codable, Sendable {
+    struct Item: Codable, Sendable, Hashable {
+        let deal_id: String
+        let key: String?
+        let name: String
+        let store: String
+        let people: Int
+    }
+    let week: String
+    let updated: String
+    let min_people: Int
+    let items: [Item]
+}
+
 struct Category: Codable, Sendable, Identifiable, Hashable {
     let id: String
     let label: String
