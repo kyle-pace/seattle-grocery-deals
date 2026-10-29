@@ -46,6 +46,9 @@ struct SearchView: View {
             }
             .navigationTitle("Search")
             .searchable(text: $router.searchQuery, prompt: "Deals, stores, aisles")
+            // Keep the navigation bar (and so the back button) while searching: without this,
+            // tapping a result with the search active pushed a page with no way back.
+            .searchPresentationToolbarBehavior(.avoidHidingContent)
             .searchSuggestions {
                 ForEach(store.suggestions(router.searchQuery), id: \.self) { s in
                     Label(s, systemImage: "magnifyingglass").searchCompletion(s)
@@ -58,8 +61,10 @@ struct SearchView: View {
                 remember(router.searchQuery)
                 Analytics.track("Searched", ["query_length": router.searchQuery.count, "results": store.search(router.searchQuery).count, "screen": "search"])
             }
-            .navigationDestination(for: Store.self) { StoreDetail(s: $0, openStore: openStore) }
-            .navigationDestination(for: AisleRoute.self) { AisleDetail(route: $0, openStore: openStore) }
+            // Pages opened from Search don't add a second search field; the Search tab's own
+            // field is the one search here.
+            .navigationDestination(for: Store.self) { StoreDetail(s: $0, openStore: openStore, ownSearch: false) }
+            .navigationDestination(for: AisleRoute.self) { AisleDetail(route: $0, openStore: openStore, ownSearch: false) }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
         }
     }
