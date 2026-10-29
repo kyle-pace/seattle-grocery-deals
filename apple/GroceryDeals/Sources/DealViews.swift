@@ -148,6 +148,8 @@ struct DealRow: View {
     let deal: Deal
     var showStore = true
     var showWhy = false
+    /// "12 people added this", for What people are adding.
+    var people: Int? = nil
     let open: () -> Void
 
     var body: some View {
@@ -164,6 +166,7 @@ struct DealRow: View {
                         if (deal.us?.under ?? 0) > 0 || deal.off != nil {
                             SavingsPill(deal: deal).padding(.top, 2)
                         }
+                        if let people { PeopleCount(people).padding(.top, 2) }
                         if showWhy, !deal.why.isEmpty {
                             Text(deal.why).font(.app(.subheadline)).foregroundStyle(Palette.body).padding(.top, 2)
                         }
@@ -209,6 +212,7 @@ struct DealRow: View {
         if let us = deal.us, us.under > 0 { parts.append("\(us.under)% under the US average") }
         else if let off = deal.off { parts.append("\(off)% off") }
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
+        if let people { parts.append("\(people) people added this this week") }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
     }
 }

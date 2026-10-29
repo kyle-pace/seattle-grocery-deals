@@ -6,6 +6,10 @@ import Observation
 @MainActor @Observable
 final class FeedStore {
     static let feedURL = URL(string: "https://seattlegrocery.deals/api/week.json")!
+    static let popularURL = URL(string: "https://seattlegrocery.deals/api/popular.json")!
+
+    /// What people are adding this week; empty until enough people have added the same deals.
+    private(set) var popular: [Popular.Item] = []
 
     private(set) var feed: Feed?
     private(set) var loading = false
@@ -37,6 +41,7 @@ final class FeedStore {
     func refresh() async {
         loading = true
         defer { loading = false }
+        Task { await refreshPopular() }
         do {
             let (data, response) = try await URLSession.shared.data(from: Self.feedURL)
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { offline = true; return }
@@ -51,6 +56,19 @@ final class FeedStore {
         } catch {
             // The feed changed shape: keep what we have.
         }
+    }
+
+    /// Fetches /api/popular.json (rebuilt hourly). Quietly keeps the last list on failure.
+    func refreshPopular() async {
+        guard let (data, response) = try? await URLSession.shared.data(from: Self.popularURL),
+              (response as? HTTPURLResponse)?.statusCode == 200,
+              let fresh = try? JSONDecoder().decode(Popular.self, from: data) else { return }
+        popular = fresh.items
+    }
+
+    /// Popular deals that are in this week's feed (and pass the vegetarian filter), with counts.
+    var popularDeals: [(deal: Deal, people: Int)] {
+        popular.compactMap { p in items.first { $0.id == p.deal_id }.map { ($0, p.people) } }
     }
 
     // MARK: the edition
@@ -135,10 +153,12 @@ final class FeedStore {
         return Array(out.prefix(limit))
     }
 
-    /// A few things worth searching for this week: the top standouts' short names.
+    /// A few things worth searching for: what people are adding this week when there's enough
+    /// of it, topped up with the week's top standouts.
     var popularSearches: [String] {
         var seen = Set<String>()
-        return topPicks(20, perStore: 3).map { shortName($0.name) }.filter { seen.insert($0.lowercased()).inserted }.prefix(8).map { $0 }
+        let names = popularDeals.map { shortName($0.deal.name) } + topPicks(20, perStore: 3).map { shortName($0.name) }
+        return names.filter { seen.insert($0.lowercased()).inserted }.prefix(8).map { $0 }
     }
     func searchStores(_ query: String) -> [Store] {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()

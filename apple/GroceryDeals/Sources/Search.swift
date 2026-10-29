@@ -92,6 +92,15 @@ struct SearchView: View {
             }
         }
 
+        // What people are adding this week (Amplitude, counts only), once enough people have.
+        let adding = store.popularDeals.prefix(5)
+        if !adding.isEmpty {
+            SectionHeading(title: "People are adding", note: "this week")
+            ForEach(adding, id: \.deal.id) { entry in
+                DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
+            }
+        }
+
         let popular = store.popularSearches
         if !popular.isEmpty {
             SectionHeading(title: "Popular this week")
@@ -242,5 +251,18 @@ extension View {
             .onContinueUserActivity(CSQueryContinuationActionType) { activity in
                 if let q = activity.userInfo?[CSSearchQueryString] as? String { router.search(q) }
             }
+    }
+}
+
+/// "12 people added this", small and muted, under a popular deal.
+struct PeopleCount: View {
+    let people: Int
+    init(_ people: Int) { self.people = people }
+    var body: some View {
+        Label("\(people) people added this", systemImage: "person.2.fill")
+            .font(.app(.caption, .semibold))
+            .foregroundStyle(Palette.muted)
+            .labelStyle(.titleAndIcon)
+            .accessibilityLabel("\(people) people added this this week")
     }
 }
