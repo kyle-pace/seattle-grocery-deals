@@ -2,15 +2,18 @@
 
 The iPhone and iPad app (SwiftUI). It replaced an earlier Expo app (decided 2026-10-24: Apple devices first, so widgets, Siri, the Watch and Liquid Glass are native).
 
-## Build and install
+## Build and install on your iPhone
 
-With the iPhone plugged in, unlocked and trusted, and Developer Mode on:
+From anywhere on the Mac: `phone deals` (or `phone` for both apps; see KitchenUI's `tools/phone`). In this repo:
 
 ```bash
-apple/install-on-iphone.sh
+apple/install-on-iphone.sh            # build what's checked out, install, open it
+apple/install-on-iphone.sh --no-open
 ```
 
-Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. It installs as **Deals** (`deals.seattlegrocery`, widget `deals.seattlegrocery.widget`). A free Apple ID allows only 3 of your own apps on a phone at once. Free Apple ID builds stop opening after 7 days; rerun the script.
+It installs **Deals Dev**: bundle ID `deals.seattlegrocery.dev` (widget `.dev.widget`), the name "Deals Dev" and a DEV icon (`AppIconDev`), so it sits next to the TestFlight or App Store app with its own data. The build settings `BUNDLE_ID_SUFFIX`, `APP_NAME_SUFFIX` and `APP_ICON_SUFFIX` in `project.yml` are empty for everything else.
+
+The phone can be plugged in or paired over Wi-Fi (Xcode, Devices and Simulators, "Connect via network"), unlocked and trusted. Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. Signed with the paid developer account, so a phone build keeps opening for a year.
 
 ## TestFlight
 
@@ -28,11 +31,16 @@ It archives with the Xcode it finds (beta first), signs with the Apple ID signed
 - `Sources/FeedStore.swift`: loads the live feed, falls back to the last saved copy, then `Resources/week.json`; Vegetarian only.
 - `Sources/Theme.swift`: brings in KitchenUI, the design language shared with the Pantry app (`~/Developer/KitchenUI`, a local Swift package that must sit next to this repo): Atkinson Hyperlegible Next scaling with Dynamic Type, `Palette` colors for light and dark, and shared components. Deals adds only the yellow sale tag and the tier badges. Accessibility rules: never color alone, 44-point targets, every screen readable at the largest text sizes, VoiceOver labels and actions on every control.
 - `Sources/DealViews.swift`: price tag, deal row, deal sheet.
-- `Sources/Screens.swift`: This week (search), Aisles, Stores, store page.
+- `Sources/Screens.swift`: This week, Stores, store page (weekly ad card, search in the store), pinned bars.
+- `Sources/Aisles.swift`: the Aisles tab and one page per aisle (store chips, sort, search).
+- `Sources/Search.swift`: the Search tab, Spotlight indexing of the week's deals, and the router Siri and Spotlight use.
+- `Sources/Flyer.swift`: the full-screen weekly ad viewer (page images, PDFs) and Safari's viewer for page-only stores.
 - `Sources/ListStore.swift`: the grocery list, in the app or in a Reminders list (EventKit); deal items carry price, store and the sale end date as the due date; whole-word matching of list items to deals.
 - `Sources/ListScreens.swift`: List tab, Reminders list picker, Settings (privacy switch).
-- `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website: no IP, carrier, vendor ID or city; off switch in Settings.
-- `Sources/GroceryDealsApp.swift`: app entry, native tabs (Liquid Glass on iOS 26, sidebar on iPad), and the "where should your list live?" prompt on the first add.
+- `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website: no IP, carrier, vendor ID or city. Off until the person says yes in onboarding (Amplitude isn't created before that); the switch in Settings changes the answer.
+- `Sources/Welcome.swift`: first-run onboarding, built on KitchenUI's `Onboarding`: welcome, a four-card tour, then the usage question. Everything but the question can be skipped. Installs that ran 0.1.0 (sharing by default) skip onboarding and stay opted in; anyone who had turned the old switch off stays off. Settings has "Show the tour again". Simulator: `-onboarding question` jumps to the question on a fresh install.
+- `Sources/DealsDevMenu.swift`: Settings, Developer (Debug, development and TestFlight builds only): onboarding and analytics tools from KitchenUI, plus reload or drop the saved week, ask where the list lives again, empty the in-app list, test notification, re-check or remove price watches, reset everything.
+- `Sources/GroceryDealsApp.swift`: app entry, native tabs (Liquid Glass on iOS 26, sidebar on iPad), and Spotlight hand-off. The "where should your list live?" half sheet is in `ListScreens.swift`.
 
 ## Stages
 

@@ -6,7 +6,7 @@ import { createHash } from "node:crypto";
 import { buildSync } from "esbuild";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
-  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian,
+  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
@@ -853,6 +853,9 @@ function appFeed() {
     stores: cfg.stores.filter((s) => s.active && !s.no_online_flyer).map((s) => {
       const f = latest.flyers.find((x) => x.store === s.id);
       return { id: s.id, name: s.name, about: s.about, website: s.website ?? null, flyer_url: s.flyer_url ?? f?.links?.[0]?.url ?? null,
+        // The flyer itself (page images, PDFs, flyer pages), so the app can show it in its own
+        // viewer instead of loading the store's home page in a web view.
+        flyer_pages: s.no_online_flyer ? [] : (f?.links ?? []).map((l) => ({ label: l.label, url: l.url, kind: flyerKind(l.url) })),
         delivery: s.delivery ?? null, status: f?.status ?? null, from: f?.valid_from ?? null, through: f?.valid_through ?? null,
         locations: s.locations.map((l) => ({ label: l.label, address: l.address, lat: l.lat, lon: l.lon })) };
     }),

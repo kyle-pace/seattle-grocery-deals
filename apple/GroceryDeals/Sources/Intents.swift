@@ -41,6 +41,24 @@ struct BestDealsIntent: AppIntent {
     }
 }
 
+/// "Search Deals for pork belly": opens the app on the Search tab with that search.
+struct SearchDealsIntent: AppIntent {
+    static let title: LocalizedStringResource = "Search Deals"
+    static let description = IntentDescription("Opens Deals and searches this week's deals, stores and aisles.")
+    static let openAppWhenRun = true
+
+    @Parameter(title: "Search for", requestValueDialog: "What are you looking for?")
+    var query: String
+
+    static var parameterSummary: some ParameterSummary { Summary("Search Deals for \(\.$query)") }
+
+    @MainActor
+    func perform() async throws -> some IntentResult {
+        DealsRouter.shared.search(query.trimmingCharacters(in: .whitespacesAndNewlines))
+        return .result()
+    }
+}
+
 struct DealsShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(intent: AddToListIntent(), phrases: [
@@ -51,5 +69,9 @@ struct DealsShortcuts: AppShortcutsProvider {
             "What's on sale in \(.applicationName)",
             "Best deals in \(.applicationName)",
         ], shortTitle: "Best Deals", systemImageName: "tag")
+        AppShortcut(intent: SearchDealsIntent(), phrases: [
+            "Search \(.applicationName)",
+            "Find a deal in \(.applicationName)",
+        ], shortTitle: "Search Deals", systemImageName: "magnifyingglass")
     }
 }
