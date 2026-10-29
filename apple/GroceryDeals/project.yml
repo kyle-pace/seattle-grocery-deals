@@ -23,6 +23,16 @@ settings:
     BUNDLE_ID_SUFFIX: ""
     APP_NAME_SUFFIX: ""
     APP_ICON_SUFFIX: ""
+schemes:
+  # Shared (committed) so Xcode Cloud can build it.
+  GroceryDeals:
+    build:
+      targets:
+        GroceryDeals: all
+    run:
+      config: Debug
+    archive:
+      config: Release
 targets:
   GroceryDeals:
     type: application
