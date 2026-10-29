@@ -17,6 +17,11 @@ struct ListView: View {
     var body: some View {
         NavigationStack {
             List {
+                if MessageStore.shared.card(for: "list") != nil {
+                    MessageCard(place: "list")
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
+                        .listRowBackground(Color.clear)
+                }
                 ForEach(duplicates, id: \.key) { d in
                     Section {
                         VStack(alignment: .leading, spacing: Space.s) {

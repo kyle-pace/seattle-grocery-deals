@@ -11,6 +11,8 @@ import UniformTypeIdentifiers
 final class DealsRouter {
     static let shared = DealsRouter()
     var searchQuery = ""
+    /// A tab to switch to ("week", "aisles", "stores", "list", "search"), from an in-app message.
+    var tabRequest: String?
     /// Bumped to ask the root view to switch to the Search tab.
     var searchRequest = 0
     /// A deal to open as a sheet (from Spotlight).

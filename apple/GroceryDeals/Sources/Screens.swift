@@ -80,6 +80,7 @@ struct ThisWeekView: View {
     var body: some View {
         NavigationStack {
             Page {
+                MessageCard(place: "week")
                 if store.feed != nil {
                     EditionBanner()
                     WatchHits { selected = $0 }
@@ -191,6 +192,7 @@ struct StoresView: View {
     var body: some View {
         NavigationStack(path: $path) {
             Page {
+                MessageCard(place: "stores")
                 let mine = store.rankedStores.filter { store.isFavorite($0.id) }
                 if !mine.isEmpty {
                     SectionHeading(title: "Your stores", note: "\(mine.count)")

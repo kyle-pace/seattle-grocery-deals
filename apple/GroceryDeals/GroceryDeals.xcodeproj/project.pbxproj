@@ -27,6 +27,8 @@
 		9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
 		98B87E7A494B40032CC179EE /* Flyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4199622464029D424B8C09 /* Flyer.swift */; };
 		98ED1814CAB3F5726E8075A2 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECE3BB430AA4E2AEA88A042 /* Search.swift */; };
+		AFEA23B455ED3D816F0A195A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8FD9277FD1B4926AFB0E64 /* Messages.swift */; };
+		B8190E6162641899C00C0B7F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = E91339D213554CB89C434FE8 /* FirebaseRemoteConfig */; };
 		BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B9CD189C14496D79B9A60 /* Welcome.swift */; };
 		CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 91E71391CC336A9B1BC351B8 /* KitchenUI */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
@@ -89,6 +91,7 @@
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B40DA8A41D719580DE66FCDC /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		CB1B9CD189C14496D79B9A60 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
+		CC8FD9277FD1B4926AFB0E64 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		DE081C1EE741AEAB7005033E /* ListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreens.swift; sourceTree = "<group>"; };
 		E5CE2E4258193F86182E0754 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F47E0D9D9A3272DED6A7D1E8 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 				F97602B0684DAA841202FDA2 /* KitchenUI in Frameworks */,
 				8FE0D28ADE1638539D3A5CC1 /* AmplitudeSwift in Frameworks */,
 				5E5F214F5EDC5B27AF9195C5 /* FirebaseMessaging in Frameworks */,
+				B8190E6162641899C00C0B7F /* FirebaseRemoteConfig in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +147,7 @@
 				B40DA8A41D719580DE66FCDC /* Lines.swift */,
 				DE081C1EE741AEAB7005033E /* ListScreens.swift */,
 				352F5BB18C8111F694A1DAFE /* ListStore.swift */,
+				CC8FD9277FD1B4926AFB0E64 /* Messages.swift */,
 				8C7685CC51CA8311DC803DA0 /* Models.swift */,
 				51539486FC8A1B3336B12EA1 /* Moments.swift */,
 				53827BED375495D006304F00 /* Push.swift */,
@@ -214,6 +219,7 @@
 				6DEC89675A65A42ECAA2F31F /* KitchenUI */,
 				995D521E5B5C312585E6EF90 /* AmplitudeSwift */,
 				BE555C74D8DBB3947396CE77 /* FirebaseMessaging */,
+				E91339D213554CB89C434FE8 /* FirebaseRemoteConfig */,
 			);
 			productName = GroceryDeals;
 			productReference = 6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */;
@@ -312,6 +318,7 @@
 				DE229B66319FFAB6BAEA6D0C /* Lines.swift in Sources */,
 				D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */,
 				F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */,
+				AFEA23B455ED3D816F0A195A /* Messages.swift in Sources */,
 				279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */,
 				44B284A97AAE39A18625645A /* Moments.swift in Sources */,
 				80E17AC2615817662C8535AE /* Push.swift in Sources */,
@@ -642,6 +649,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0684A84CE696A0F36932BA7E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		E91339D213554CB89C434FE8 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0684A84CE696A0F36932BA7E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

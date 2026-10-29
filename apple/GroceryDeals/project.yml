@@ -46,6 +46,9 @@ targets:
       # Push only. Never add FirebaseAnalytics: Amplitude is the analytics tool.
       - package: Firebase
         product: FirebaseMessaging
+      # In-app messages (Sources/Messages.swift). Still no FirebaseAnalytics.
+      - package: Firebase
+        product: FirebaseRemoteConfig
       - target: DealsWidget
     entitlements:
       path: Sources/GroceryDeals.entitlements

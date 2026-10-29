@@ -33,6 +33,7 @@ struct AislesView: View {
         NavigationStack(path: $path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
+                    MessageCard(place: "aisles")
                     if store.feed == nil {
                         LoadingDeals()
                     } else {

@@ -30,7 +30,12 @@ struct GroceryDealsApp: App {
                     if let feed = store.feed { alerts.checkWatches(feed, storeName: store.storeName) }
                 }
                 // Pick up changes made in Reminders (Siri, a shared list) when coming back.
-                .onChange(of: phase) { _, p in if p == .active { list.reload() } }
+                .onChange(of: phase) { _, p in
+                    if p == .active {
+                        list.reload()
+                        MessageStore.shared.refresh()
+                    }
+                }
         }
     }
 }
@@ -91,6 +96,14 @@ struct RootView: View {
             router.dealID = nil
         }
         .sheet(item: $spotlightDeal) { DealDetail(deal: $0, openStore: openStore) }
+        // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
+        .onChange(of: router.tabRequest) { _, name in
+            guard let name else { return }
+            let tabs: [String: TabID] = ["week": .week, "aisles": .aisles, "stores": .stores, "list": .list, "search": .search]
+            if let t = tabs[name.lowercased()] { tab = t }
+            router.tabRequest = nil
+        }
+        .inAppMessageSheet(enabled: !onboarding)
         // First add anywhere: ask where the list should live, as a half sheet (it was a
         // confirmation dialog that floated mid-screen, see-through over the deals).
         .asksWhereListLives(inDealSheet: false)
