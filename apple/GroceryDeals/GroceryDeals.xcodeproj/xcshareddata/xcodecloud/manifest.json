@@ -1,0 +1,9 @@
+{
+  "id" : "686d7551-8b56-4f31-be6d-9641107abe58",
+  "targets" : [
+    {
+      "id" : "b7d68953-f344-4d94-98c4-e11cd08d6d61",
+      "name" : "GroceryDeals"
+    }
+  ]
+}
