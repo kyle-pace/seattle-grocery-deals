@@ -112,8 +112,8 @@
       "flyer_format": "web-page",
       "representative_location": "Seattle-area stores (one shared ad)",
       "how_to_read": [
-        "Check the sales section from the homepage. If it shows no items, mark the flyer unreadable.",
-        "The site is behind a Cloudflare bot check that blocks both curl and headless browsers. Do not try to get around it. Mark the flyer unreadable with that reason."
+        "Not part of the weekly routine (skipped at the owner's request, 2026-10-29). Do not try to read it and leave it out of the All Items note.",
+        "Why: the site is behind a Cloudflare bot check that blocks both curl and headless browsers. Do not try to get around it."
       ],
       "about": "A member-owned natural foods co-op with stores across the Seattle area, strong on organic produce and local products. Anyone can shop.",
       "locations": [

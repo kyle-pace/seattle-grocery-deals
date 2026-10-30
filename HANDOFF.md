@@ -31,7 +31,7 @@ Updated 2026-10-24, evening.
 
 - **What's listed:** food for cooking. Snacks, drinks, sweets and ready-made meals are left out (2026-10-26); when unsure, keep it.
 - **Scope:** Seattle-area stores only. Specialty grocers the big chains' apps skip: Asian markets, seafood shops, co-ops. No mainstream chains (Grocery Outlet was dropped). No flyer aggregators such as Flipp: every store is read from its own site.
-- **PCC:** its site blocks automated reading (Cloudflare). Do not try to get around the bot check. Options are asking PCC for a feed, reading it by hand, or marking it unreadable.
+- **PCC:** its site blocks automated reading (Cloudflare). Do not try to get around the bot check. Options are asking PCC for a feed, reading it by hand, or marking it unreadable. Since 2026-10-29 the Friday routine skips PCC entirely (owner's call); it stays on the site's store list.
 - **Design system:** "Newsprint". Tokens live at the top of `site/assets/style.css`.
   - Colors: evergreen header `#1d4d33`, cream paper `#f7f5f0`, ink `#141414`, muted `#57534c`, yellow standout tag `#ffe45c`, red for "% off" `#b3261e`. Dark mode is defined there too.
   - Type: Barlow Condensed 700 for prices and headings, Atkinson Hyperlegible Next for everything else. Both self-hosted, because the privacy notice says fonts come from the site.
