@@ -950,6 +950,47 @@
         "thin-sliced pork loin",
         "thin sliced pork loin"
       ]
+    },
+    "coconut-milk": {
+      "label": "Coconut milk",
+      "category": "pantry",
+      "staple": false,
+      "match": [
+        "coconut milk",
+        "coconut cream"
+      ]
+    },
+    "broccoli": {
+      "label": "Broccoli",
+      "category": "produce",
+      "staple": false,
+      "match": [
+        "broccoli"
+      ]
+    },
+    "mushrooms-enoki": {
+      "label": "Enoki mushrooms",
+      "category": "produce",
+      "staple": false,
+      "match": [
+        "enoki"
+      ]
+    },
+    "scallops": {
+      "label": "Scallops",
+      "category": "seafood",
+      "staple": false,
+      "match": [
+        "scallop"
+      ]
+    },
+    "oxtail": {
+      "label": "Oxtail",
+      "category": "meat",
+      "staple": false,
+      "match": [
+        "oxtail"
+      ]
     }
   }
 }

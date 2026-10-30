@@ -417,9 +417,9 @@
       "flyer_format": "catalogue-viewer",
       "representative_location": "Beacon Hill (Hilltop) store flyer",
       "how_to_read": [
-        "Find this week's catalogue on redpepper.digital and link each page read.",
+        "Open https://app.redpepper.digital/a10/publications/home/4821 and take the \"Hilltop Red Apple Weekly Ad\" catalogue (ignore Live Well Naturally and other publications). Its page images are on d16fzx5hhs0dp6.cloudfront.net, named like .../catalogue-NNNN/Hilltop_Red_Apple_Market<number>_001.jpeg; try page numbers until one is missing (6 pages on 2026-10-30). Link each page read.",
         "No regular prices are printed. Use US average prices for staples, labeled approximate.",
-        "redpepper.digital cannot be browsed from the cloud session. The catalogue page images are on d16fzx5hhs0dp6.cloudfront.net; this week's were found only from last week's links. If no current catalogue can be found, mark the flyer unreadable and say so."
+        "Since about 2026-10-30 redpepper.digital redirects to a login page from the cloud session, and the cloud session cannot reach the cloudfront images either. A desktop browser still shows the catalogue page and its images. If neither works, mark the flyer unreadable and say so."
       ],
       "about": "Independent neighborhood markets that share the Red Apple name. This site uses the Beacon Hill (Hilltop) store's flyer; other Red Apple stores may have different prices.",
       "locations": [
@@ -457,7 +457,7 @@
       "active": true,
       "tracked_since": "2026-09-18",
       "website": "https://www.hmart.com",
-      "flyer_url": "https://www.hmart.com/weekly-ads",
+      "flyer_url": "https://www.hmartus.com/weekly-sale-wa",
       "sale_period": {
         "starts": "fri",
         "ends": "thu",
@@ -467,9 +467,9 @@
       "flyer_format": "images",
       "representative_location": "Washington flyer (Lynnwood, Federal Way, Bellevue and other WA stores)",
       "how_to_read": [
-        "Pick the Washington flyer. It does not apply to the small 2nd and Pine or University District stores.",
-        "Check whether meat and produce prices have a shorter Friday to Monday window and use that as their valid-through date.",
-        "hmart.com does not link the Washington flyer. It is an image on images.squarespace-cdn.com; this week's was found only from last week's link. If no current WA flyer can be found, mark the flyer unreadable and say so."
+        "Open https://www.hmartus.com/weekly-sale-wa (the Pacific Northwest H Mart site, not hmart.com). Use the image whose name ends \"WA HMart Weekly_eng.jpg\" (English, about 2500 x 1814); ignore the Korean and Oregon images. It is on images.squarespace-cdn.com; open it without \"?format=\" to get full size.",
+        "It does not apply to the small 2nd and Pine or University District stores.",
+        "Produce and meat run Friday to Monday only (\"4 days\"): use that Monday as their valid-through date."
       ],
       "about": "A Korean-American supermarket chain with a big produce section, thin-sliced meats for Korean barbecue, and banchan. The Washington flyer covers the larger stores.",
       "locations": [
@@ -546,8 +546,8 @@
       "representative_location": "Bellevue (Factoria) store, Washington flyer",
       "how_to_read": [
         "Use the .us site. tntsupermarket.com is the Canadian site and shows Ontario prices.",
-        "The item list loads as you scroll, so read it one category at a time. A single read catches only a fraction of the items.",
-        "The site blocks curl (Akamai 403) and headless browsers. A non-headless browser on a virtual display (xvfb) loads it, and the eight flyer page images can then be downloaded from that session."
+        "The flyer page lists this week's Washington page images under /media/rewards_store_flyer/images/ (named like us-washington-wsp_p1-MMDDYY_2.jpg, plus a rewards member page and a Filipino and Vietnamese page). They print sale prices, multi-buy single prices and member prices, not regular prices. Live seafood and some meat run only 4 days.",
+        "The site blocks curl (Akamai 403) and headless browsers, and fetching the images through a cloud browser session is refused as bot-check circumvention. A desktop browser opens the flyer page and the images normally. Do not try to get around the block; if no desktop browser is available, mark it unreadable."
       ],
       "about": "A Canadian Asian supermarket chain with Washington stores in Bellevue and Lynnwood, known for its seafood counter, bakery and hot food.",
       "delivery": "Delivers groceries directly from its Washington stores. Check their site for the delivery area and how to order.",
@@ -795,7 +795,7 @@
       "active": true,
       "tracked_since": "2026-10-30",
       "website": "https://www.seafoodcity.com",
-      "flyer_url": "https://seafoodcity.com/?marketId=314",
+      "flyer_url": "https://seafoodcity.com/seattle",
       "flyer_url_note": "The Tukwila store's page. Its Weekly Sale section loads with JavaScript; use View All to see every item.",
       "sale_period": {
         "starts": "varies",
@@ -806,9 +806,8 @@
       "flyer_format": "web-page",
       "representative_location": "Tukwila (Southcenter) store",
       "how_to_read": [
-        "Open the Tukwila store page, then View All under Weekly Sale, and read the rendered list.",
-        "Confirm on the first read whether regular prices are printed and which days the sale runs, and update this entry.",
-        "The Seattle weekly ad at https://seafoodcity.com/weekly-ads is one poster image on cdn.localexpress.io, with printed dates and WAS prices."
+        "Open https://seafoodcity.com/weekly-ads and choose Seattle (https://seafoodcity.com/seattle). The weekly ad is one 1080 x 1920 poster image on cdn.localexpress.io, with printed dates (Thursday to Wednesday) and WAS prices.",
+        "The site renders only with JavaScript and returns 403 to headless browsers. A desktop browser shows it normally. Do not try to get around the block; if no desktop browser is available, mark it unreadable."
       ],
       "about": "A Filipino supermarket chain. The Tukwila store at Westfield Southcenter has a seafood market, Filipino groceries and food stalls.",
       "locations": [
