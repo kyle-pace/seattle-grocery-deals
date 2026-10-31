@@ -57,9 +57,11 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
 
-  # "New deals are in": after a deploy, send the current week to the FCM topic once.
-  # The notified/<week> tag makes reruns and the daily rebuild safe. A manual run with
-  # push_topic sends a test instead (for example new-deals-test, which only debug builds join).
+  # "New deals are in": after a deploy, tell the people who picked a store when that store's
+  # new flyer goes live (scripts/new-flyers.mjs finds them; send-push.mjs sends to store-<id>
+  # and to new-deals, which people with no stores picked are on). A notified/<store>/<date>
+  # tag per flyer makes reruns and the hourly rebuild safe. A manual run with push_topic sends
+  # a test instead (for example new-deals-test, which only debug builds join).
   # No stored key: GitHub signs in to Google Cloud as push-sender through Workload Identity
   # Federation, and that account can only send Cloud Messaging.
   notify:
@@ -67,14 +69,14 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     permissions:
-      contents: write # push the notified/<week> tag
+      contents: write # push the notified/... tags
       id-token: write # sign in to Google Cloud without a key
     env:
       FIREBASE_PROJECT_ID: seattle-grocery-deals-dev
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # to see which files this push changed
+          fetch-depth: 0 # to compare with the commit before this push
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -95,19 +97,23 @@ jobs:
         env:
           FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
         run: |
-          week=$(ls data/weeks | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.json$' | sort | tail -1 | sed 's/\.json$//')
-          # Only announce when this push brought in that week's file (the Friday PR). Code
-          # merges mid-week deploy too, and must not send "New deals are in".
-          if ! git diff --name-only "${{ github.event.before }}" "${{ github.sha }}" -- "data/weeks/$week.json" | grep -q .; then
-            echo "This push didn't change data/weeks/$week.json; not announcing."; exit 0
-          fi
-          tag="notified/$week"
-          if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
-            echo "Already sent for $week ($tag exists)."; exit 0
-          fi
-          out=$(node scripts/send-push.mjs --topic new-deals)
+          # Stores whose flyer changed in this push, as store@start-date. Code-only merges
+          # change no flyer, so they send nothing.
+          found=$(node scripts/new-flyers.mjs "${{ github.event.before }}")
+          stores=""; tags=""
+          for s in $found; do
+            tag="notified/${s%@*}/${s#*@}"
+            if git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null; then
+              echo "Already announced: $tag"
+            else
+              stores="$stores,${s%@*}"; tags="$tags $tag"
+            fi
+          done
+          stores="${stores#,}"
+          if [ -z "$stores" ]; then echo "No new flyers in this push; not announcing."; exit 0; fi
+          out=$(node scripts/send-push.mjs --stores "$stores")
           echo "$out"
           if echo "$out" | grep -q "^Sent to"; then
-            git tag "$tag"
-            git push origin "refs/tags/$tag"
+            for tag in $tags; do git tag "$tag"; done
+            git push origin $(for tag in $tags; do echo "refs/tags/$tag"; done)
           fi

@@ -5,8 +5,10 @@ import UIKit
 import UserNotifications
 
 /// Server push through Firebase Cloud Messaging topics. The phone subscribes itself; GitHub
-/// Actions sends "New deals are in" to `new-deals` when a new week goes live. No device tokens
-/// are stored anywhere of ours, and Firebase Analytics is never added (Amplitude is the tool).
+/// Actions sends "New deals are in" when a store's new flyer goes live, to `store-<id>` (people
+/// who picked that store in "Your stores") and to `new-deals` (people who haven't picked any,
+/// who hear about every store). No device tokens are stored anywhere of ours, and Firebase
+/// Analytics is never added (Amplitude is the tool).
 ///
 /// Firebase is only set up when a config file is bundled: `GoogleService-Info-Dev.plist` for
 /// Debug builds, `GoogleService-Info-Prod.plist` for Release (falling back to Dev until the
@@ -21,6 +23,8 @@ final class PushStore {
     private(set) var opens = 0
 
     private var wantsNewDeals = false
+    /// The stores picked in onboarding or Settings, mirrored from FeedStore.
+    private var stores: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
     /// Phones on the dev Firebase project (Kyle's, for now) also join the test topic.
     private var devProject = false
     private static let subscribedKey = "sgd.push.topics"
@@ -48,6 +52,13 @@ final class PushStore {
         Task { await updateTopics() }
     }
 
+    /// Called when "Your stores" changes, so pushes follow the picked stores.
+    func storesChanged(_ ids: Set<String>) {
+        stores = ids
+        guard available else { return }
+        Task { await updateTopics() }
+    }
+
     func didRegister(_ deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
         Task { await updateTopics() }
@@ -63,7 +74,10 @@ final class PushStore {
     /// builds Release, so this goes by project, not by Debug or Release.)
     private var wanted: Set<String> {
         guard wantsNewDeals else { return [] }
-        return devProject ? ["new-deals", "new-deals-test"] : ["new-deals"]
+        // Picked stores get their own topics; no picks means every store (new-deals).
+        var topics: Set<String> = stores.isEmpty ? ["new-deals"] : Set(stores.map { "store-\($0)" })
+        if devProject { topics.insert("new-deals-test") }
+        return topics
     }
 
     private func updateTopics() async {

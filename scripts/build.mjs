@@ -74,11 +74,6 @@ const tierBadge = (tier) => tier === "standout" ? badge("warn", "star", "Standou
 const emptyState = ({ mood = "sad", title, msg = "", link = null, attrs = "" }) => `<div class="empty-state"${attrs ? " " + attrs : ""}>${buddy(mood, 88)}<p class="empty-title">${esc(title)}</p>${msg ? `<p class="empty-msg"${attrs.includes("data-empty") ? " data-empty-msg" : ""}>${esc(msg)}</p>` : ""}${link ? `<p><a class="go" href="${link[0]}">${esc(link[1])}</a></p>` : ""}</div>`;
 
 // "Oct 23 to 29", or "Oct 30 to Nov 5" across months.
-function rangeText(from, to) {
-  if (!from || !to) return from ? fmtDate(from, { weekday: false }) : "";
-  return from.slice(0, 7) === to.slice(0, 7) ? `${fmtDate(from, { weekday: false })} to ${Number(to.slice(8))}` : `${fmtDate(from, { weekday: false })} to ${fmtDate(to, { weekday: false })}`;
-}
-
 // ---------- analysis ----------
 
 function analyzeWeek(week) {
@@ -91,16 +86,35 @@ function analyzeWeek(week) {
 }
 const analyzed = new Map(weeks.map((w) => [w.week, analyzeWeek(w)]));
 
-// The end date most of a week's flyers share, for "Oct 23 to Oct 29".
-function weekEnd(week) {
+// When this week's deals end, by number of deals: "most" is the date the most deals still on
+// sale run through (a tie goes to the later date), and "some" the earliest earlier date that at
+// least a tenth of them end on. Stores start their sales on different days (Wednesday,
+// Thursday, Friday) and are updated as each new flyer comes out, so there is no single end.
+function endsSummary(week) {
+  const through = Object.fromEntries(week.flyers.map((f) => [f.store, f.valid_through]));
   const n = {};
-  for (const f of week.flyers) if (f.valid_through) n[f.valid_through] = (n[f.valid_through] ?? 0) + 1;
-  return Object.entries(n).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? null;
+  let total = 0;
+  for (const i of week.items) {
+    const d = i.valid_through ?? through[i.store];
+    if (!d || d < TODAY) continue;
+    n[d] = (n[d] ?? 0) + 1;
+    total++;
+  }
+  const dates = Object.entries(n).sort((a, b) => b[1] - a[1] || b[0].localeCompare(a[0]));
+  const most = dates[0]?.[0] ?? null;
+  const some = Object.entries(n).filter(([d, c]) => most && d < most && c >= total / 10).map(([d]) => d).sort()[0] ?? null;
+  return { most, some };
+}
+// The latest day a store's flyer started (not in the future): when the deals last changed.
+function updatedOn(week) {
+  return week.flyers.filter((f) => (f.status === "full" || f.status === "partial") && f.valid_from && f.valid_from <= TODAY)
+    .map((f) => f.valid_from).sort().pop() ?? week.week;
 }
 
-// The date most of this edition's sales end, and each store's flyer end. Rows only say
-// "through" when a deal ends on a different day.
-const EDITION_END = weekEnd(latest);
+// The date most of this edition's sales run through, and each store's flyer end. Rows only
+// say "through" when a deal ends on a different day.
+const ENDS = endsSummary(latest);
+const EDITION_END = ENDS.most;
 
 // ---------- deal rows ----------
 
@@ -384,7 +398,7 @@ function homePage() {
 
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
-  <p class="page-sub">${esc(rangeText(latest.week, end))} &middot; ${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))}${end ? `<span data-ends-line data-end="${end}" hidden> &middot; <span data-ends-text></span></span>` : ""}</p>
+  <p class="page-sub">Updated ${esc(fmtDate(updatedOn(latest), { weekday: false }))} &middot; ${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))}${end ? `<span data-ends-line data-end="${end}"${ENDS.some ? ` data-some="${ENDS.some}"` : ""} hidden> &middot; <span data-ends-text></span></span>` : ""}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
 <div class="wrap" data-filterable>
@@ -809,7 +823,9 @@ function notFound() {
 function appFeed() {
   const items = analyzed.get(latest.week);
   const feed = {
-    week: latest.week, end: weekEnd(latest), generated: TODAY,
+    // end: the date most deals run through (older app versions show "Ends <day>" from it).
+    // ends.some: an earlier date a good share of deals end on. updated: the latest flyer start.
+    week: latest.week, end: ENDS.most, ends: ENDS, updated: updatedOn(latest), generated: TODAY,
     categories: CATS.filter((c) => items.some((i) => i.category === c)).map((c) => ({ id: c, label: CATEGORY_LABELS[c] })),
     stores: cfg.stores.filter((s) => s.active && !s.no_online_flyer).map((s) => {
       const f = latest.flyers.find((x) => x.store === s.id);

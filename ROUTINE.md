@@ -1,17 +1,39 @@
-# The Friday routine
+# The flyer routine
 
-A cloud routine runs this every Friday morning, Pacific time. It reads every active store's flyer, writes the week file, and opens a pull request. A person reviews and merges the pull request; merging deploys the site. Nothing here needs a local computer or the Obsidian vault.
+Since 2026-10-31 the site updates each store as soon as its new flyer comes out. A GitHub Action (`.github/workflows/watch-flyers.yml`, every 30 minutes) checks each store's flyer page and, when one changes, starts this routine with a message like `Stores: lams, hmart`. The routine reads just those stores and publishes them straight to `main` (**MODE: update**, below). A weekly run without a message sweeps for anything the watcher missed. Nothing here needs a local computer or the Obsidian vault.
+
+The full-week modes further down (`live` and `dry-run`) still work for reading every store at once, but they are no longer scheduled.
 
 Read [UPDATING.md](UPDATING.md) first. Its rules on what goes in (section 3), highlights (section 5) and fields (section 7) all apply. The short version: never guess a price, only use regular prices the store printed, food for cooking only (no snacks or packaged convenience food), no em dashes.
 
-## Mode
+## MODE: update (the normal run)
+
+The message that started the run has a line `Stores: <ids>` (store ids from `config/stores.json`). A run with no such line (the weekly sweep) means: every active store whose watch entry is not `desktop`, but read only the ones whose flyer page shows a newer flyer than the live one, or whose live flyer has ended.
+
+Pushing to `main` is allowed in this mode (owner's call, 2026-10-30): updates go live without review unless a check below flags something.
+
+1. **Set up.** Start from an up-to-date `main`. `npm ci`. Check the network by fetching one of the stores' flyer pages; if every store host is refused, stop and say so. Read stores one at a time in this session, no subagents (see the usage note in step 1 of the full-week steps).
+2. **Week.** `node scripts/apply-store.mjs --week` prints the week the update belongs to (the most recent Friday in Seattle). Call it `W`.
+3. **Is it new?** For each store, open its flyer as its `how_to_read` notes say, and compare the printed dates and the flyer links with its entry in `data/weeks/W.json` (or the latest week file if `W.json` doesn't exist yet). If it's the flyer already live, skip the store and say so in the final message. A store whose watch entry says `desktop` can't be read from the cloud: skip it and say so.
+4. **Read.** For each new flyer, read it in full exactly as in step 2 of the full-week steps (every page, skip snacks and packaged convenience food, never guess a price, link every page image). Write only the updated stores into `/tmp/updates/All Items W.md`, in the All Items format (a `## Flyers` line per store and the `## Items` rows). Keep it out of the repo.
+5. **Draft and review.** `npm run draft -- "/tmp/updates/All Items W.md"`, then work through UPDATING.md sections 4 and 5 on `drafts/W.json` for those stores only: fix the "Check by hand" list and suggested keys, look at skipped rows and `left_out`, set `vegetarian: false` where needed (`node scripts/veg-check.mjs drafts/W.json`). Highlights are optional in an update.
+6. **Apply.** `node scripts/apply-store.mjs drafts/W.json "/tmp/updates/All Items W.md"`. It starts `W.json` by carrying the last week forward if needed, swaps in the stores' flyers and items, updates `notes/all-items/All Items W.md`, and prints checks into `drafts/W.flags.json`.
+7. **Check.** `npm run check` must show 0 errors.
+8. **Publish.**
+   - No flags: commit `data/weeks/W.json`, `notes/all-items/All Items W.md` and any config changes on `main` with a message like `Lam's: new flyer Nov 6 to 12 (41 items)`, and push. The deploy announces the new flyers to people who picked those stores.
+   - Any flag: push a branch `update/<store>-W` instead, open a pull request with the flags at the top, and don't merge it.
+9. **Final message:** per store, what was read (dates, items) or why it was skipped, the flags if any, and whether it went to `main` or a pull request.
+
+If a store's `watch` pattern stopped matching (the watcher reports an error for it), or its flyer moved, fix the store's `watch` entry and `how_to_read` notes in the same commit.
+
+## Full-week modes
 
 The prompt that starts the run says `MODE: live` or `MODE: dry-run`.
 
 - **live:** branch `week/YYYY-MM-DD`, a normal pull request.
 - **dry-run:** branch `dry-run/YYYY-MM-DD-<HHMM>`, a **draft** pull request whose title starts with `[Dry run]` and whose body says not to merge it. If a week file for that date already exists, overwrite it anyway, so the pull request diff compares this run against the existing file.
 
-In both modes: **never push to `main`, never merge, never close or edit other pull requests.**
+In both full-week modes: **never push to `main`, never merge, never close or edit other pull requests.**
 
 ## Steps
 
@@ -85,3 +107,24 @@ Body:
 5. The run log: what failed and why, including network or browser problems, so the routine can be improved.
 
 If something blocks the pull request (no network, the repo cannot be pushed), finish what you can and put the run log in the final message of the session instead.
+
+## Routine setup
+
+The routine lives at claude.ai/code/routines ("Seattle Grocery Deals: flyer updates"), with this repository attached and push access. It has two triggers:
+
+- **API**, for the watcher. Its URL and token are the repo secrets `ROUTINE_FIRE_URL` and `ROUTINE_FIRE_TOKEN` (Settings > Secrets and variables > Actions). Generating a new token revokes the old one, so update the secret too.
+- **Schedule**, Saturdays mid-afternoon Pacific, for the sweep.
+
+Its prompt:
+
+```
+MODE: update
+
+You are running the Seattle Grocery Deals flyer update. Start from an up-to-date main. Read ROUTINE.md (the "MODE: update" section and the full-week steps it refers to) and UPDATING.md in full, then follow MODE: update exactly.
+
+Which stores: if this run was started with a message containing a line "Stores: <ids>" (sent by the flyer watcher), update those stores. If there is no such line (the weekly Saturday sweep), check every active store whose watch entry is not "desktop" and update only those whose flyer page shows a newer flyer than the live one, or whose live flyer has ended.
+
+Publishing: push to main when apply-store.mjs reports no flags; otherwise push a branch update/<store>-<week> and open a pull request with the flags at the top, and don't merge it. Never touch other branches or pull requests, never force-push. Read stores one at a time in this session, no subagents. Never use em dashes.
+
+Final message: per store, what was read (dates, item count) or why it was skipped, any flags, and whether it went to main or a pull request.
+```

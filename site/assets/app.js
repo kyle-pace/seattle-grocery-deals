@@ -120,11 +120,22 @@
   function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }
   all("[data-expired-after]").forEach(function (el) { el.hidden = !(today > el.dataset.expiredAfter); });
 
-  // "Ends Thursday", "Ends tomorrow", "Ends today" or "Ended" after the edition's dates.
+  // "Most run through Thursday, some end Tuesday": stores' sales end on different days, so
+  // the header says when most deals end (data-end) and an earlier day a good share end on
+  // (data-some). Words are relative to today in Seattle.
   var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  function dayWord(iso) {
+    var d = daysUntil(iso);
+    return d === 0 ? "today" : d === 1 ? "tomorrow" : DAYS[new Date(iso + "T12:00:00Z").getUTCDay()];
+  }
   all("[data-ends-line]").forEach(function (el) {
-    var d = daysUntil(el.dataset.end);
-    var text = d < 0 ? "Ended" : d === 0 ? "Ends today" : d === 1 ? "Ends tomorrow" : "Ends " + DAYS[new Date(el.dataset.end + "T12:00:00Z").getUTCDay()];
+    var most = el.dataset.end, some = el.dataset.some;
+    var text;
+    if (daysUntil(most) < 0) text = "Most have ended";
+    else {
+      text = daysUntil(most) === 0 ? "Most end today" : "Most run through " + dayWord(most);
+      if (some && daysUntil(some) >= 0 && some < most) text += ", some end " + dayWord(some);
+    }
     el.querySelector("[data-ends-text]").textContent = text;
     el.hidden = false;
   });
