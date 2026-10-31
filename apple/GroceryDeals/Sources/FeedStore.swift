@@ -34,7 +34,21 @@ final class FeedStore {
         }
     }
 
+    /// Seasons someone hid from This week ("Hide for this season"), as "<id>@<last day>", so a
+    /// hidden card comes back next year. Kept on this iPhone only.
+    var hiddenSeasons: Set<String> {
+        didSet { UserDefaults.standard.set(Array(hiddenSeasons).sorted(), forKey: "sgd.hiddenSeasons") }
+    }
+
+    /// Dev menu: 0 shows the feed's seasons, 1 and 2 show that many sample seasons made from this
+    /// week's deals, so the card and screen can be tried any time of year.
+    var devSampleSeasons: Int {
+        didSet { UserDefaults.standard.set(devSampleSeasons, forKey: "sgd.dev.sampleSeasons") }
+    }
+
     init() {
+        hiddenSeasons = Set(UserDefaults.standard.stringArray(forKey: "sgd.hiddenSeasons") ?? [])
+        devSampleSeasons = UserDefaults.standard.integer(forKey: "sgd.dev.sampleSeasons")
         favoriteStores = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
         vegetarianOnly = UserDefaults.standard.bool(forKey: "sgd.vegOnly")
         feed = Self.cached() ?? Self.bundled()

@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // The site's app feed (/api/week.json), written by scripts/build.mjs (appFeed()).
 struct Feed: Codable, Sendable {
@@ -18,6 +19,115 @@ struct Feed: Codable, Sendable {
     let categories: [Category]
     let stores: [Store]
     let items: [Deal]
+    /// Seasonal items on this week (persimmons first), for the This week card and the season
+    /// screen. Missing in feeds built before 2026-10-31. Read one by one, so a season this
+    /// version can't read is skipped instead of losing the whole week.
+    let seasons: LossyList<Season>?
+}
+
+/// A list that skips entries it can't decode, for parts of the feed that may grow new shapes.
+struct LossyList<Element: Codable & Sendable>: Codable, Sendable {
+    var items: [Element]
+    init(_ items: [Element]) { self.items = items }
+    init(from decoder: Decoder) throws {
+        var c = try decoder.unkeyedContainer()
+        var out: [Element] = []
+        while !c.isAtEnd {
+            if let e = try? c.decode(Element.self) { out.append(e); continue }
+            // Step past the bad entry. The container only moves on a successful decode, so an
+            // entry that's neither an object nor null would loop forever: stop there instead.
+            if (try? c.decode(Skip.self)) != nil { continue }
+            if (try? c.decodeNil()) == true { continue }
+            break
+        }
+        items = out
+    }
+    func encode(to encoder: Encoder) throws {
+        var c = encoder.unkeyedContainer()
+        try c.encode(contentsOf: items)
+    }
+    private struct Skip: Decodable {}
+}
+
+/// A seasonal item that's on this week (scripts/build.mjs, seasonFeed()). What's in season and
+/// the facts come from KitchenCatalog's seasons.json; the deals are this week's, by id.
+struct Season: Codable, Sendable, Identifiable, Hashable {
+    struct Tint: Codable, Sendable, Hashable {
+        let light: String
+        let dark: String
+    }
+    struct LogEntry: Codable, Sendable, Hashable, Identifiable {
+        let week: String
+        let value: Double
+        /// "$1.28/lb", or "about $3.41/lb" for a per-each price.
+        let text: String
+        let store: String
+        let about: Bool
+        var id: String { week }
+    }
+    /// The web page's lines, filled in ("The best Fuyu deal in this week's flyers").
+    struct Copy: Codable, Sendable, Hashable {
+        let kicker: String?
+        let none_title: String?
+        let none_line: String?
+        let also_title: String?
+        let others_title: String?
+        let others_note: String?
+        let log_title: String?
+        let log_note: String?
+        let facts_title: String?
+    }
+
+    let id: String
+    /// "Persimmons"
+    let label: String
+    /// "Persimmon season"
+    let name: String
+    /// "persimmons", for sentences.
+    let item: String
+    /// The kind to look for ("Fuyu"), if there is one.
+    let star: String?
+    /// A KitchenUI buddy name; nil (or one this version doesn't draw) shows a leaf.
+    let buddy: String?
+    /// The web page, for Share.
+    let url: String
+    /// The season's last day, "2027-01-15": hiding a card lasts until then.
+    let ends: String
+    let tint: Tint
+    /// This week's deals by id: the cheapest of the star kind, the rest of it, other kinds.
+    let best: String?
+    let also: [String]
+    let other: [String]
+    /// Stores with any of it on sale.
+    let stores: Int
+    /// Per-each prices in the comparison unit, by deal id: "$3.41/lb".
+    let about: [String: String]?
+    /// About how many for $10, and how that was worked out.
+    let per_10: Int?
+    let per_10_note: String?
+    let log: [LogEntry]
+    /// Words that mean this item, for Search ("fuyu", "hachiya").
+    let words: [String]?
+    let tagline: String?
+    /// With **bold** lead words.
+    let facts: [String]
+    /// The share line: "PERSIMMON ALERT!!! Fuyu at $1.28/lb at T&T Supermarket"
+    let share: String?
+    let copy: Copy?
+
+    var kind: Buddy.Kind? { Buddy.Kind(name: buddy) }
+    /// A line from `copy`, or nil when the feed left it empty, so the app's own wording shows.
+    func line(_ key: KeyPath<Copy, String?>) -> String? {
+        guard let text = copy?[keyPath: key], !text.isEmpty else { return nil }
+        return text
+    }
+    var starLabel: String { star ?? item }
+    var color: Color { Color(light: Self.hex(tint.light) ?? 0x2F6B4F, dark: Self.hex(tint.dark) ?? 0x7CC4A0) }
+    var webURL: URL? { URL(string: url) }
+
+    static func hex(_ s: String) -> UInt32? {
+        UInt32(s.trimmingCharacters(in: CharacterSet(charactersIn: "#")), radix: 16)
+    }
 }
 
 /// What people are adding this week (/api/popular.json): deals added by at least

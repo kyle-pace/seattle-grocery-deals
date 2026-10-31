@@ -50,6 +50,7 @@ struct RootView: View {
     @State private var storePath: [Store] = []
     @State private var aislePath: [AisleRoute] = []
     @State private var spotlightDeal: Deal?
+    @State private var openSeason: Season?
     @State private var onboarding = Welcome.start != nil
     @State private var router = DealsRouter.shared
     @Environment(FeedStore.self) private var store
@@ -96,6 +97,15 @@ struct RootView: View {
             router.dealID = nil
         }
         .sheet(item: $spotlightDeal) { DealDetail(deal: $0, openStore: openStore) }
+        // A season screen, from a This week card, Search or Spotlight (Seasons.swift).
+        .onChange(of: router.seasonID) { _, id in
+            guard let id else { return }
+            openSeason = store.season(id)
+            router.seasonID = nil
+        }
+        .sheet(item: $openSeason) { SeasonScreen(season: $0, openStore: openStore) }
+        // Simulator screenshots: -season <id> opens that season's screen at launch.
+        .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
         .onChange(of: router.tabRequest) { _, name in
             guard let name else { return }

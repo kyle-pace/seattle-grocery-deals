@@ -84,6 +84,8 @@ struct ThisWeekView: View {
                 if store.feed != nil {
                     EditionBanner()
                     WatchHits { selected = $0 }
+                    // Persimmon season and friends: one card, or a row to swipe (Seasons.swift).
+                    SeasonCards()
                     let picks = store.topPicks()
                     SectionHeading(title: "Top picks", note: "\(store.standouts.count) standouts in all")
                     ForEach(picks) { d in
@@ -119,6 +121,8 @@ struct ThisWeekView: View {
             .navigationSubtitle(store.editionLine)
             .dealsVegChip()
             .settingsButton()
+            // A hidden season's buddy, to find its card again (Seasons.swift).
+            .seasonToolbarButtons()
             .refreshable { await store.refresh() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             // Simulator screenshots: -deal <name> opens the first deal whose name contains it.

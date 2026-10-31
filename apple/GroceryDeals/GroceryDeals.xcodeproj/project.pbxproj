@@ -36,6 +36,7 @@
 		D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE081C1EE741AEAB7005033E /* ListScreens.swift */; };
 		DDD206C2E3CFBDC9BC64B26D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		DE229B66319FFAB6BAEA6D0C /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40DA8A41D719580DE66FCDC /* Lines.swift */; };
+		F2BEA78981A7C51A2BC1FE64 /* Seasons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */; };
 		F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352F5BB18C8111F694A1DAFE /* ListStore.swift */; };
 		F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */; };
 		F97602B0684DAA841202FDA2 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEC89675A65A42ECAA2F31F /* KitchenUI */; };
@@ -90,6 +91,7 @@
 		900666ED70B2F3E6A406669D /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B40DA8A41D719580DE66FCDC /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
+		BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seasons.swift; sourceTree = "<group>"; };
 		CB1B9CD189C14496D79B9A60 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		CC8FD9277FD1B4926AFB0E64 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		DE081C1EE741AEAB7005033E /* ListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreens.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				53827BED375495D006304F00 /* Push.swift */,
 				900666ED70B2F3E6A406669D /* Screens.swift */,
 				2ECE3BB430AA4E2AEA88A042 /* Search.swift */,
+				BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */,
 				E5CE2E4258193F86182E0754 /* Theme.swift */,
 				CB1B9CD189C14496D79B9A60 /* Welcome.swift */,
 			);
@@ -324,6 +327,7 @@
 				80E17AC2615817662C8535AE /* Push.swift in Sources */,
 				2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */,
 				98ED1814CAB3F5726E8075A2 /* Search.swift in Sources */,
+				F2BEA78981A7C51A2BC1FE64 /* Seasons.swift in Sources */,
 				64267422E7D9136407CEA5F4 /* Theme.swift in Sources */,
 				BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */,
 			);
