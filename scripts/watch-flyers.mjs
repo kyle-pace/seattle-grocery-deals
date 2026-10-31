@@ -59,14 +59,22 @@ async function rendered(url, click) {
     const { chromium } = await import("playwright");
     browser = await chromium.launch();
   }
-  const page = await browser.newPage({ userAgent: UA });
+  const page = await browser.newPage({ userAgent: UA, viewport: { width: 1280, height: 1600 } });
+  // Also keep every address the page loads (images included), so a poster that is set as a
+  // background or swapped in by script still counts, whatever the page's markup looks like.
+  const loaded = [];
+  page.on("request", (r) => loaded.push(r.url()));
   try {
     await page.goto(url, { waitUntil: "networkidle", timeout: 45_000 });
     if (click) {
-      await page.getByText(click, { exact: false }).first().click({ timeout: 10_000 });
+      const button = page.getByRole("button", { name: click });
+      const target = (await button.count()) ? button.first() : page.getByText(click, { exact: false }).first();
+      await target.click({ timeout: 10_000 }).catch((e) => console.log(`  (click on "${click}" failed: ${e.message.split("\n")[0]})`));
+      await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
       await page.waitForTimeout(2500);
     }
-    return { html: await page.content(), text: await page.evaluate(() => document.body.innerText) };
+    const html = `${await page.content()}\n${loaded.join("\n")}`;
+    return { html, text: await page.evaluate(() => document.body.innerText) };
   } finally {
     await page.close();
   }
