@@ -121,6 +121,8 @@ struct ThisWeekView: View {
             .navigationSubtitle(store.editionLine)
             .dealsVegChip()
             .settingsButton()
+            // A hidden season's buddy, to find its card again (Seasons.swift).
+            .seasonToolbarButtons()
             .refreshable { await store.refresh() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             // Simulator screenshots: -deal <name> opens the first deal whose name contains it.

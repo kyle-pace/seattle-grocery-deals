@@ -31,10 +31,24 @@ extension FeedStore {
     func bestDeal(_ s: Season) -> Deal? { deal(s.best) }
     func deals(_ ids: [String]) -> [Deal] { ids.compactMap { deal($0) } }
 
-    /// "Hide for this season": until the season's last day, then it comes back next year.
+    /// "Hide for this season": until the season's last day, then it comes back next year. A
+    /// small buddy stays in This week's top bar meanwhile, so it can be found again.
     func hideSeason(_ s: Season) {
         hiddenSeasons.insert(Self.hideKey(s))
         Analytics.track("Hid Season Card", ["season": s.id])
+    }
+
+    /// "Show on This week again", from the season screen or the dev menu.
+    func unhideSeason(_ s: Season) {
+        hiddenSeasons.remove(Self.hideKey(s))
+        Analytics.track("Showed Season Card Again", ["season": s.id])
+    }
+
+    func isHidden(_ s: Season) -> Bool { hiddenSeasons.contains(Self.hideKey(s)) }
+
+    /// Seasons on sale this week whose card was hidden: each gets a small buddy in the top bar.
+    var hiddenSeasonsOnSale: [Season] {
+        allSeasons.filter { bestDeal($0) != nil && isHidden($0) }
     }
 
     static func hideKey(_ s: Season) -> String { "\(s.id)@\(s.ends)" }
@@ -43,7 +57,8 @@ extension FeedStore {
     func seasons(matching query: String) -> [Season] {
         let q = query.trimmingCharacters(in: .whitespaces).lowercased()
         guard q.count >= 3 else { return [] }
-        return seasons.filter { s in
+        // Hidden cards still turn up when someone searches for them.
+        return allSeasons.filter { bestDeal($0) != nil }.filter { s in
             ([s.label, s.item, s.star ?? "", s.name] + (s.words ?? [])).map { $0.lowercased() }
                 .contains { !$0.isEmpty && ($0.hasPrefix(q) || q.contains($0)) }
         }
@@ -134,7 +149,8 @@ struct SeasonCardButton: View {
                 Analytics.track("Tapped Season Card", ["season": season.id, "place": place, "store": best.store])
                 DealsRouter.shared.openSeason(season.id)
             } label: {
-                SeasonCard(season.kind, eyebrow: season.name, title: headline(best), detail: detail(best), tint: season.color, hop: hop, fillHeight: fill)
+                SeasonCard(season.kind, eyebrow: season.name, title: headline(best), detail: detail(best), tint: season.color, hop: hop,
+                           fillHeight: fill, closable: closable)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(spoken(best))
@@ -144,8 +160,9 @@ struct SeasonCardButton: View {
                 if let url = season.webURL {
                     ShareLink(item: url, message: Text(season.share ?? season.name)) { Label("Share", systemImage: "square.and.arrow.up") }
                 }
-                Button("Hide for this season", systemImage: "eye.slash") { hide() }
+                if closable { Button("Hide for this season", systemImage: "eye.slash") { hide() } }
             }
+            .modifier(CloseIf(on: closable) { hide() })
             .onAppear {
                 let key = "\(place):\(season.id)"
                 guard !Self.seen.contains(key) else { return }
@@ -176,10 +193,49 @@ struct SeasonCardButton: View {
         return parts.joined(separator: ". ")
     }
 
+    /// Only This week's card can be hidden; Search shows it whether hidden or not.
+    private var closable: Bool { place == "week" }
+
     private func hide() {
         withAnimation(.snappy) { store.hideSeason(season) }
-        Announce.say("Hidden until next \(season.name.lowercased())")
+        Announce.say("Hidden. The \(season.kind?.name ?? "leaf") at the top of This week brings it back.")
     }
+}
+
+/// The card's X, only where the card can be hidden.
+private struct CloseIf: ViewModifier {
+    let on: Bool
+    let action: () -> Void
+    func body(content: Content) -> some View {
+        if on { content.seasonCardClose(action: action) } else { content }
+    }
+}
+
+/// A small buddy in This week's top bar for each season whose card is hidden, so it can be found
+/// again. Opens the season screen, which can put the card back.
+struct SeasonToolbarButtons: ViewModifier {
+    @Environment(FeedStore.self) private var store
+
+    func body(content: Content) -> some View {
+        content.toolbar {
+            ForEach(store.hiddenSeasonsOnSale.prefix(2)) { s in
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        Analytics.track("Tapped Season Button", ["season": s.id, "place": "toolbar"])
+                        DealsRouter.shared.openSeason(s.id)
+                    } label: {
+                        Label { Text(s.name) } icon: { SeasonToolbarMark(s.kind, tint: s.color) }
+                    }
+                    .labelStyle(.iconOnly)
+                    .accessibilityHint("Opens \(s.name.lowercased())")
+                }
+            }
+        }
+    }
+}
+
+extension View {
+    func seasonToolbarButtons() -> some View { modifier(SeasonToolbarButtons()) }
 }
 
 // MARK: Season screen
@@ -288,8 +344,23 @@ struct SeasonScreen: View {
         }
     }
 
-    /// "Tap the persimmon for more", at the bottom.
-    private var more: some View {
+    /// "Show on This week again", when the card was hidden, then "Tap the persimmon for more".
+    @ViewBuilder private var more: some View {
+        if store.isHidden(season) {
+            Button {
+                withAnimation(.snappy) { store.unhideSeason(season) }
+                Announce.say("Back on This week")
+            } label: {
+                Label("Show on This week again", systemImage: "eye")
+                    .font(.app(.subheadline, .semibold)).frame(maxWidth: .infinity, minHeight: 44)
+            }
+            .buttonStyle(.glass)
+            .padding(.top, Space.xl)
+        }
+        tapForMore
+    }
+
+    private var tapForMore: some View {
         let one = season.kind == nil ? "leaf" : String(season.item.dropLast(season.item.hasSuffix("s") ? 1 : 0))
         return Button { dropMore() } label: {
             Label("Tap the \(one) for more", systemImage: "hand.tap")
