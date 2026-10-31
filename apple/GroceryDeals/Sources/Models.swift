@@ -33,7 +33,12 @@ struct LossyList<Element: Codable & Sendable>: Codable, Sendable {
         var c = try decoder.unkeyedContainer()
         var out: [Element] = []
         while !c.isAtEnd {
-            if let e = try? c.decode(Element.self) { out.append(e) } else { _ = try? c.decode(Skip.self) }
+            if let e = try? c.decode(Element.self) { out.append(e); continue }
+            // Step past the bad entry. The container only moves on a successful decode, so an
+            // entry that's neither an object nor null would loop forever: stop there instead.
+            if (try? c.decode(Skip.self)) != nil { continue }
+            if (try? c.decodeNil()) == true { continue }
+            break
         }
         items = out
     }
@@ -111,6 +116,11 @@ struct Season: Codable, Sendable, Identifiable, Hashable {
     let copy: Copy?
 
     var kind: Buddy.Kind? { Buddy.Kind(name: buddy) }
+    /// A line from `copy`, or nil when the feed left it empty, so the app's own wording shows.
+    func line(_ key: KeyPath<Copy, String?>) -> String? {
+        guard let text = copy?[keyPath: key], !text.isEmpty else { return nil }
+        return text
+    }
     var starLabel: String { star ?? item }
     var color: Color { Color(light: Self.hex(tint.light) ?? 0x2F6B4F, dark: Self.hex(tint.dark) ?? 0x7CC4A0) }
     var webURL: URL? { URL(string: url) }

@@ -43,7 +43,7 @@ struct DealsDevMenu: View {
                     Text("One").tag(1)
                     Text("Two (a row of cards)").tag(2)
                 }
-                DevAction("Open the first season", detail: "The season screen, as if you tapped the card.") {
+                DevAction("Open the first season", detail: "The season screen, as if you tapped the card. From the floating dev button; Settings is in the way otherwise.") {
                     if let s = store.allSeasons.first { DealsRouter.shared.openSeason(s.id); done("Opening \(s.name).") } else { done("No season this week. Turn on a sample.") }
                 }
                 DevAction("Show hidden seasons again", detail: "\(store.hiddenSeasons.count) hidden with \u{201C}Hide for this season\u{201D}.") {

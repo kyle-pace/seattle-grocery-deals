@@ -98,7 +98,8 @@ struct SeasonCards: View {
         } else if seasons.count > 1 {
             SectionHeading(title: "In season", note: "\(seasons.count) items")
             ScrollView(.horizontal) {
-                HStack(alignment: .top, spacing: Space.m) {
+                // Lazy, so a card off to the right isn't counted as seen (or hops) until it scrolls in.
+                LazyHStack(alignment: .top, spacing: Space.m) {
                     ForEach(seasons) { s in
                         SeasonCardButton(season: s, fill: true)
                             .containerRelativeFrame(.horizontal) { width, _ in width * 0.86 }
@@ -133,8 +134,7 @@ struct SeasonCardButton: View {
                 Analytics.track("Tapped Season Card", ["season": season.id, "place": place, "store": best.store])
                 DealsRouter.shared.openSeason(season.id)
             } label: {
-                SeasonCard(season.kind, eyebrow: season.name, title: headline(best), detail: detail(best), tint: season.color, hop: hop)
-                    .frame(maxHeight: fill ? .infinity : nil, alignment: .top)
+                SeasonCard(season.kind, eyebrow: season.name, title: headline(best), detail: detail(best), tint: season.color, hop: hop, fillHeight: fill)
             }
             .buttonStyle(.plain)
             .accessibilityLabel(spoken(best))
@@ -203,29 +203,10 @@ struct SeasonScreen: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     hero
-                    let also = store.deals(season.also)
-                    if !also.isEmpty {
-                        SectionHeading(title: season.copy?.also_title ?? "Also on sale", note: "\(also.count)")
-                        ForEach(also) { d in row(d) }
-                    }
-                    let other = store.deals(season.other)
-                    if !other.isEmpty {
-                        SectionHeading(title: season.copy?.others_title ?? "Other \(season.item)", note: "\(other.count)")
-                        if let note = season.copy?.others_note, !note.isEmpty {
-                            Text(note).font(.app(.subheadline)).foregroundStyle(Palette.body).padding(.bottom, Space.xs)
-                        }
-                        ForEach(other) { d in row(d) }
-                    }
+                    lists
                     if season.log.count > 1 { priceLog }
                     if !season.facts.isEmpty { facts }
-                    Button { dropMore() } label: {
-                        Label("Tap the \(season.kind == nil ? "leaf" : season.item.replacingOccurrences(of: #"s$"#, with: "", options: .regularExpression)) for more", systemImage: "hand.tap")
-                            .font(.app(.footnote)).foregroundStyle(Palette.muted)
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.top, Space.xl)
-                    .accessibilityHidden(true)
+                    more
                 }
                 .padding(.horizontal, Space.l)
                 .padding(.bottom, Space.xl)
@@ -242,10 +223,10 @@ struct SeasonScreen: View {
                 ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } }
                 if let url = season.webURL {
                     ToolbarItem(placement: .primaryAction) {
+                        // No share event: ShareLink doesn't say whether anything was sent.
                         ShareLink(item: url, message: Text(season.share ?? season.name)) {
                             Label("Share", systemImage: "square.and.arrow.up")
                         }
-                        .simultaneousGesture(TapGesture().onEnded { Analytics.track("Shared Season", ["season": season.id]) })
                     }
                 }
             }
@@ -260,10 +241,45 @@ struct SeasonScreen: View {
             }
         }
         .presentationBackground(Palette.ground)
+        // A first add from here asks where the list lives over this sheet, like the deal sheet.
+        .asksWhereListLives(inDealSheet: true)
+        .onAppear { DealsRouter.shared.openDealSheets += 1 }
+        .onDisappear { DealsRouter.shared.openDealSheets = max(0, DealsRouter.shared.openDealSheets - 1) }
         .onAppear {
             Analytics.track("Viewed Season", ["season": season.id])
             Task { try? await Task.sleep(for: .milliseconds(450)); dropMore() }
         }
+    }
+
+    // MARK: deals
+
+    @ViewBuilder private var lists: some View {
+        let also = store.deals(season.also)
+        if !also.isEmpty {
+            SectionHeading(title: season.line(\.also_title) ?? "Also on sale", note: "\(also.count)")
+            ForEach(also) { d in row(d) }
+        }
+        let other = store.deals(season.other)
+        if !other.isEmpty {
+            SectionHeading(title: season.line(\.others_title) ?? "Other \(season.item)", note: "\(other.count)")
+            if let note = season.line(\.others_note) {
+                Text(note).font(.app(.subheadline)).foregroundStyle(Palette.body).padding(.bottom, Space.xs)
+            }
+            ForEach(other) { d in row(d) }
+        }
+    }
+
+    /// "Tap the persimmon for more", at the bottom.
+    private var more: some View {
+        let one = season.kind == nil ? "leaf" : String(season.item.dropLast(season.item.hasSuffix("s") ? 1 : 0))
+        return Button { dropMore() } label: {
+            Label("Tap the \(one) for more", systemImage: "hand.tap")
+                .font(.app(.footnote)).foregroundStyle(Palette.muted)
+                .frame(maxWidth: .infinity, minHeight: 44)
+        }
+        .buttonStyle(.plain)
+        .padding(.top, Space.xl)
+        .accessibilityHidden(true)
     }
 
     // MARK: hero
@@ -281,7 +297,7 @@ struct SeasonScreen: View {
             .padding(.top, Space.l)
 
             if let best {
-                Text((season.copy?.kicker ?? "The best \(season.starLabel) deal this week").uppercased())
+                Text((season.line(\.kicker) ?? "The best \(season.starLabel) deal this week").uppercased())
                     .font(.app(.caption, .bold)).tracking(0.8)
                     .foregroundStyle(Palette.muted)
                     .multilineTextAlignment(.center)
@@ -292,6 +308,8 @@ struct SeasonScreen: View {
                     Text("at \(store.storeName(best.store))\(best.ends.map { ", through \(Dates.short($0))" } ?? "")")
                         .font(.app(.title3, .semibold)).foregroundStyle(Palette.ink)
                         .multilineTextAlignment(.center)
+                        .frame(minHeight: 44)
+                        .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
                 .disabled(openStore == nil)
@@ -311,9 +329,9 @@ struct SeasonScreen: View {
                 }
                 actions(best).padding(.top, Space.s)
             } else {
-                Text(season.copy?.none_title ?? "No \(season.starLabel) on sale this week.")
+                Text(season.line(\.none_title) ?? "No \(season.starLabel) on sale this week.")
                     .font(.app(.title2, .heavy)).foregroundStyle(Palette.ink).multilineTextAlignment(.center)
-                Text(season.copy?.none_line ?? "Check back Friday.")
+                Text(season.line(\.none_line) ?? "Check back Friday.")
                     .font(.app(.body)).foregroundStyle(Palette.muted).multilineTextAlignment(.center)
             }
         }
@@ -369,8 +387,8 @@ struct SeasonScreen: View {
     private var priceLog: some View {
         let top = max(season.log.map(\.value).max() ?? 1, 0.01)
         return VStack(alignment: .leading, spacing: Space.s) {
-            SectionHeading(title: season.copy?.log_title ?? "The price log")
-            if let note = season.copy?.log_note { Text(note).font(.app(.subheadline)).foregroundStyle(Palette.body) }
+            SectionHeading(title: season.line(\.log_title) ?? "The price log")
+            if let note = season.line(\.log_note) { Text(note).font(.app(.subheadline)).foregroundStyle(Palette.body) }
             ForEach(season.log.reversed()) { e in
                 HStack(alignment: .center, spacing: Space.s) {
                     Text(Dates.short(e.week, weekday: false))
@@ -396,7 +414,7 @@ struct SeasonScreen: View {
 
     private var facts: some View {
         VStack(alignment: .leading, spacing: Space.s) {
-            SectionHeading(title: season.copy?.facts_title ?? "\(season.label) facts")
+            SectionHeading(title: season.line(\.facts_title) ?? "\(season.label) facts")
             VStack(alignment: .leading, spacing: Space.s) {
                 ForEach(season.facts, id: \.self) { f in
                     HStack(alignment: .firstTextBaseline, spacing: Space.s) {
