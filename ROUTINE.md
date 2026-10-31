@@ -107,3 +107,24 @@ Body:
 5. The run log: what failed and why, including network or browser problems, so the routine can be improved.
 
 If something blocks the pull request (no network, the repo cannot be pushed), finish what you can and put the run log in the final message of the session instead.
+
+## Routine setup
+
+The routine lives at claude.ai/code/routines ("Seattle Grocery Deals: flyer updates"), with this repository attached and push access. It has two triggers:
+
+- **API**, for the watcher. Its URL and token are the repo secrets `ROUTINE_FIRE_URL` and `ROUTINE_FIRE_TOKEN` (Settings > Secrets and variables > Actions). Generating a new token revokes the old one, so update the secret too.
+- **Schedule**, Saturdays mid-afternoon Pacific, for the sweep.
+
+Its prompt:
+
+```
+MODE: update
+
+You are running the Seattle Grocery Deals flyer update. Start from an up-to-date main. Read ROUTINE.md (the "MODE: update" section and the full-week steps it refers to) and UPDATING.md in full, then follow MODE: update exactly.
+
+Which stores: if this run was started with a message containing a line "Stores: <ids>" (sent by the flyer watcher), update those stores. If there is no such line (the weekly Saturday sweep), check every active store whose watch entry is not "desktop" and update only those whose flyer page shows a newer flyer than the live one, or whose live flyer has ended.
+
+Publishing: push to main when apply-store.mjs reports no flags; otherwise push a branch update/<store>-<week> and open a pull request with the flags at the top, and don't merge it. Never touch other branches or pull requests, never force-push. Read stores one at a time in this session, no subagents. Never use em dashes.
+
+Final message: per store, what was read (dates, item count) or why it was skipped, any flags, and whether it went to main or a pull request.
+```
