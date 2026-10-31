@@ -29,6 +29,8 @@ final class FeedStore {
         didSet {
             UserDefaults.standard.set(Array(favoriteStores).sorted(), forKey: "sgd.favoriteStores")
             Analytics.setUser(["favorite_stores": favoriteStores.count])
+            // "New deals are in" follows the stores someone picked.
+            PushStore.shared.storesChanged(favoriteStores)
         }
     }
 
@@ -80,17 +82,37 @@ final class FeedStore {
         return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: end)).day ?? 0) + 1
     }
 
-    /// "Oct 24 to 30 · 860 deals · Ends Thursday" for the This week header.
+    /// "Updated Oct 30 · 576 deals · Most run through Thursday, some end Tuesday" for the This
+    /// week header. Stores' sales end on different days, and each store is updated when its
+    /// next flyer comes out.
     var editionLine: String {
         guard let feed else { return "" }
-        var parts = ["\(Dates.short(feed.week, weekday: false)) to \(Dates.short(feed.end, weekday: false))", "\(items.count) deals"]
-        if let left = daysLeft {
-            if left <= 0 { parts.append("Ended") }
-            else if left == 1 { parts.append("Ends today") }
-            else if left == 2 { parts.append("Ends tomorrow") }
-            else if let end = Dates.date(feed.end) { parts.append("Ends \(end.formatted(.dateTime.weekday(.wide)))") }
+        var parts = ["Updated \(Dates.short(feed.updated ?? feed.week, weekday: false))", "\(items.count) deals"]
+        let most = feed.ends?.most ?? feed.end
+        if let left = Self.daysUntil(most) {
+            if left <= 0 { parts.append("Most have ended") }
+            else {
+                var text = left == 1 ? "Most end today" : "Most run through \(Self.dayWord(most, left: left))"
+                if let some = feed.ends?.some, let s = Self.daysUntil(some), s >= 1, let m = most, some < m {
+                    text += ", some end \(Self.dayWord(some, left: s))"
+                }
+                parts.append(text)
+            }
         }
         return parts.joined(separator: " · ")
+    }
+
+    /// Days until a date's sales end, counting today: 1 means today, 0 means it ended.
+    private static func daysUntil(_ iso: String?) -> Int? {
+        guard let date = Dates.date(iso) else { return nil }
+        let cal = Calendar.current
+        return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: date)).day ?? 0) + 1
+    }
+
+    private static func dayWord(_ iso: String?, left: Int) -> String {
+        if left == 1 { return "today" }
+        if left == 2 { return "tomorrow" }
+        return Dates.date(iso)?.formatted(.dateTime.weekday(.wide)) ?? ""
     }
 
     // MARK: lookups

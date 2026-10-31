@@ -25,6 +25,10 @@
         "One image is the Seattle store only; the other covers both the Seattle and Tukwila stores. Items only on the combined image get a note saying they may only be at Tukwila.",
         "Every item is while supplies last."
       ],
+      "watch": {
+        "url": "https://www.lamsseafood.com/specials/",
+        "match": "wp-content/uploads/\\d{4}/\\d{2}/\\d+_\\d+_\\d+_n\\.(?:jpe?g|png|webp)"
+      },
       "about": "An Asian grocery in the Chinatown–International District with a big fresh seafood counter, inexpensive meat and Asian produce. A second store is in Tukwila.",
       "delivery": "Delivers groceries directly. Ask the store about the delivery area and how to order.",
       "locations": [
@@ -67,6 +71,10 @@
         "Most items print a regular price or an exact \"save $X\" amount. \"Save up to\" amounts are not exact and do not count as a printed regular price.",
         "Plain curl gets a Cloudflare 403 on the page itself. Load the weekly-specials page in the headless browser to find the links; the PDF and page images it links download fine with curl."
       ],
+      "watch": {
+        "url": "https://www.uwajimaya.com/weekly-specials/",
+        "match": "wp-content/uploads/\\d{4}/\\d{2}/WeeklyAd-[\\d.]+\\.pdf"
+      },
       "about": "A Pacific Northwest Asian supermarket founded in 1928, best known for Japanese groceries, a seafood counter and a food hall.",
       "locations": [
         {
@@ -260,6 +268,11 @@
         "Web page listing of fresh deals with regular prices.",
         "The page often keeps showing old dates for weeks. If the printed dates are not this week, mark the flyer stale and use no items from it."
       ],
+      "watch": {
+        "url": "https://www.centralcoop.coop/freshdeals",
+        "text": "SALES FOR [\\d.]+\\s*[-–]\\s*[\\d.]+",
+        "match": "/s/[^\"'\\s<>]+\\.pdf"
+      },
       "about": "A member-owned co-op on East Madison Street in Seattle, with a second store in Tacoma. Organic and local produce and bulk foods.",
       "locations": [
         {
@@ -303,6 +316,10 @@
         "The cycle dates are printed at the top (\"Enjoy these deals 10/17 to 10/30\").",
         "In the headless browser, waiting for the network to go idle times out. Wait for the page load, then scroll to the bottom before reading."
       ],
+      "watch": {
+        "url": "https://www.smithbrothersfarms.com/on-special",
+        "text": "Enjoy these deals\\s+\\d{1,2}/\\d{1,2}\\s+to\\s+\\d{1,2}/\\d{1,2}"
+      },
       "about": "A Kent dairy that delivers milk, eggs and groceries to homes around Puget Sound. Not a store: sales run in two-week cycles.",
       "delivery": "Home delivery is how they sell: groceries come with your milk order.",
       "locations": []
@@ -329,6 +346,10 @@
         "Read the ad in sections, not one screenshot, so nothing is missed.",
         "Printed \"Prices effective\" date range at the top."
       ],
+      "watch": {
+        "url": "https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
+        "match": "Weekly-Savings-\\d{6}-PG-\\d+"
+      },
       "about": "A Seattle-area specialty grocery known for prepared foods, wine, and premium meat and produce.",
       "locations": [
         {
@@ -421,6 +442,10 @@
         "No regular prices are printed. Use US average prices for staples, labeled approximate.",
         "Since about 2026-10-30 redpepper.digital redirects to a login page from the cloud session, and the cloud session cannot reach the cloudfront images either. A desktop browser still shows the catalogue page and its images. If neither works, mark the flyer unreadable and say so."
       ],
+      "watch": {
+        "url": "https://app.redpepper.digital/a10/publications/home/4821",
+        "desktop": true
+      },
       "about": "Independent neighborhood markets that share the Red Apple name. This site uses the Beacon Hill (Hilltop) store's flyer; other Red Apple stores may have different prices.",
       "locations": [
         {
@@ -471,6 +496,10 @@
         "It does not apply to the small 2nd and Pine or University District stores.",
         "Produce and meat run Friday to Monday only (\"4 days\"): use that Monday as their valid-through date."
       ],
+      "watch": {
+        "url": "https://www.hmartus.com/weekly-sale-wa",
+        "match": "images\\.squarespace-cdn\\.com/content/v1/[^\"'\\s?]+WA\\+HMart\\+Weekly[^\"'\\s?]*"
+      },
       "about": "A Korean-American supermarket chain with a big produce section, thin-sliced meats for Korean barbecue, and banchan. The Washington flyer covers the larger stores.",
       "locations": [
         {
@@ -549,6 +578,10 @@
         "The flyer page lists this week's Washington page images under /media/rewards_store_flyer/images/ (named like us-washington-wsp_p1-MMDDYY_2.jpg, plus a rewards member page and a Filipino and Vietnamese page). They print sale prices, multi-buy single prices and member prices, not regular prices. Live seafood and some meat run only 4 days.",
         "The site blocks curl (Akamai 403) and headless browsers, and fetching the images through a cloud browser session is refused as bot-check circumvention. A desktop browser opens the flyer page and the images normally. Do not try to get around the block; if no desktop browser is available, mark it unreadable."
       ],
+      "watch": {
+        "url": "https://www.tntsupermarket.us/eng/store-flyer",
+        "desktop": true
+      },
       "about": "A Canadian Asian supermarket chain with Washington stores in Bellevue and Lynnwood, known for its seafood counter, bakery and hot food.",
       "delivery": "Delivers groceries directly from its Washington stores. Check their site for the delivery area and how to order.",
       "locations": [
@@ -731,6 +764,10 @@
         "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are.",
         "The Kent store's ad is server-rendered: fetch https://www.99ranch.com/stores/promotions/1791 with curl and read storeActivities from the __NEXT_DATA__ JSON. Each entry is a dated ad image on img.awsprod.99ranch.com. No browser needed."
       ],
+      "watch": {
+        "url": "https://www.99ranch.com/stores/promotions/1791",
+        "match": "img\\.awsprod\\.99ranch\\.com/[0-9a-f]{32}\\.(?:jpe?g|png|webp)"
+      },
       "about": "A large Chinese and Taiwanese-American supermarket chain. The nearest stores are in Kent and Edmonds.",
       "locations": [
         {
@@ -774,6 +811,10 @@
         "Confirm on the first read whether regular prices are printed, and update prints_regular_prices if they are.",
         "The PDF link appears only after clicking Download PDF in a browser; after that, curl can fetch it."
       ],
+      "watch": {
+        "url": "https://www.vietwah.com/blog",
+        "match": "single-post/weekly-ad-[a-z0-9-]+"
+      },
       "about": "A Vietnamese and pan-Asian supermarket. Its original Chinatown–International District store closed in 2022; today's store is in Renton.",
       "locations": [
         {
@@ -809,6 +850,10 @@
         "Open https://seafoodcity.com/weekly-ads and choose Seattle (https://seafoodcity.com/seattle). The weekly ad is one 1080 x 1920 poster image on cdn.localexpress.io, with printed dates (Thursday to Wednesday) and WAS prices.",
         "The site renders only with JavaScript and returns 403 to headless browsers. A desktop browser shows it normally. Do not try to get around the block; if no desktop browser is available, mark it unreadable."
       ],
+      "watch": {
+        "url": "https://seafoodcity.com/seattle",
+        "desktop": true
+      },
       "about": "A Filipino supermarket chain. The Tukwila store at Westfield Southcenter has a seafood market, Filipino groceries and food stalls.",
       "locations": [
         {
@@ -847,6 +892,12 @@
         "Confirm on the first read whether regular prices are printed.",
         "The weekly specials posters are on the homepage behind store tabs (Bellevue, Seattle, Tukwila); click the Seattle tab in the headless browser. The Seattle poster can be very large (about 50 MB); download it with curl and crop it with ImageMagick."
       ],
+      "watch": {
+        "url": "https://asianfamilymkt.com/",
+        "render": true,
+        "click": "Seattle Store",
+        "match": "base44\\.app/api/apps/[^\"'\\s)]+\\.(?:png|jpe?g|webp)"
+      },
       "about": "An Asian supermarket with stores on Aurora Avenue North in Seattle, in Bellevue and in Tukwila. Each store posts its own weekly poster.",
       "locations": [
         {

@@ -2,8 +2,18 @@ import Foundation
 
 // The site's app feed (/api/week.json), written by scripts/build.mjs (appFeed()).
 struct Feed: Codable, Sendable {
+    /// When the deals end: `most` is the date most of them run through, `some` an earlier date
+    /// a good share end on. Stores' sales start on different days, so there's no single end.
+    struct Ends: Codable, Sendable {
+        let most: String?
+        let some: String?
+    }
     let week: String
     let end: String?
+    /// Missing in feeds built before 2026-10-31; `end` is the fallback.
+    let ends: Ends?
+    /// The latest day a store's flyer started: when the deals last changed.
+    let updated: String?
     let generated: String
     let categories: [Category]
     let stores: [Store]

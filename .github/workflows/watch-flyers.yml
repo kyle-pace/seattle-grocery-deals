@@ -1,0 +1,72 @@
+name: Watch for new flyers
+
+# Every 30 minutes, check each store's flyer page (scripts/watch-flyers.mjs). When a store
+# posts a new flyer, start the Claude update routine for it, which reads the flyer and
+# publishes it. The fingerprints live on the flyer-watch branch (state.json), so this never
+# pushes to main and never triggers a deploy by itself.
+#
+# Secrets: ROUTINE_FIRE_URL and ROUTINE_FIRE_TOKEN, from the update routine's API trigger at
+# claude.ai/code/routines. Without them the job only reports what it would start.
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only report; don't start the routine or save state"
+        type: boolean
+        default: false
+      only:
+        description: "Comma-separated store ids to check (empty for all)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write # push state.json to the flyer-watch branch
+
+concurrency:
+  group: watch-flyers
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Get the saved fingerprints
+        run: |
+          if git ls-remote --exit-code --heads origin flyer-watch >/dev/null; then
+            git fetch --depth 1 origin flyer-watch
+            git worktree add ../state FETCH_HEAD
+          else
+            mkdir -p ../state && cd ../state && git init -q && git checkout -q -b flyer-watch
+          fi
+      - name: Install a browser (for pages that need JavaScript)
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check the flyer pages
+        env:
+          ROUTINE_FIRE_URL: ${{ secrets.ROUTINE_FIRE_URL }}
+          ROUTINE_FIRE_TOKEN: ${{ secrets.ROUTINE_FIRE_TOKEN }}
+        run: |
+          extra=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then extra="--dry-run"; fi
+          if [ -n "${{ inputs.only }}" ]; then extra="$extra --only ${{ inputs.only }}"; fi
+          node scripts/watch-flyers.mjs --state ../state/state.json $extra
+      - name: Save the fingerprints
+        if: always() && inputs.dry_run != true
+        run: |
+          cd ../state
+          [ -f state.json ] || exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json
+          git diff --cached --quiet && exit 0
+          git commit -q -m "Flyer check $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -q "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" HEAD:flyer-watch
