@@ -110,7 +110,7 @@ If something blocks the pull request (no network, the repo cannot be pushed), fi
 
 ## Routine setup
 
-The routine is a Claude Code scheduled task ("Seattle Grocery Deals: flyer updates", made from the Code tab > Scheduled > New task, not a chat scheduled task), with this repository selected. Triggers:
+The routine is a Claude Code scheduled task ("Seattle Grocery Deals: flyer update", made from the Code tab > Scheduled > New task, not a chat scheduled task), with this repository selected. Triggers:
 
 - **API**, for the watcher. Its Fire URL and token are the repo secrets `ROUTINE_FIRE_URL` and `ROUTINE_FIRE_TOKEN` (Settings > Secrets and variables > Actions). Regenerating the token revokes the old one, so update the secret too.
 - **Schedule** (optional), Saturdays mid-afternoon Pacific, for the sweep.
