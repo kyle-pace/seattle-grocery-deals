@@ -115,6 +115,8 @@ The routine is a Claude Code scheduled task ("Seattle Grocery Deals: flyer updat
 - **API**, for the watcher. Its Fire URL and token are the repo secrets `ROUTINE_FIRE_URL` and `ROUTINE_FIRE_TOKEN` (Settings > Secrets and variables > Actions). Regenerating the token revokes the old one, so update the secret too.
 - **Schedule** (optional), Saturdays mid-afternoon Pacific, for the sweep.
 
+Its cloud environment needs network access to the store sites: the Default environment only allows package registries, and the first sweep stopped on 403s. It runs with **Full** network access (set 2026-10-31 in the task's Edit dialog > Advanced settings > Cloud environment).
+
 The watcher's message arrives in a `<routine-fire-payload>` block, which Claude treats as data unless the prompt says to use it; the prompt below does.
 
 Its prompt:
