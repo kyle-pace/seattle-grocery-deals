@@ -199,55 +199,74 @@ struct SeasonScreen: View {
     @State private var priming = false
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    hero
-                    lists
-                    if season.log.count > 1 { priceLog }
-                    if !season.facts.isEmpty { facts }
-                    more
-                }
-                .padding(.horizontal, Space.l)
-                .padding(.bottom, Space.xl)
+        NavigationStack { page }
+            .presentationBackground(Palette.ground)
+            // A first add from here asks where the list lives over this sheet, like the deal sheet.
+            .asksWhereListLives(inDealSheet: true)
+            .onAppear {
+                DealsRouter.shared.openDealSheets += 1
+                Analytics.track("Viewed Season", ["season": season.id])
+                Task { try? await Task.sleep(for: .milliseconds(450)); dropMore() }
             }
-            .background {
-                LinearGradient(colors: [season.color.opacity(0.16), Palette.ground], startPoint: .top, endPoint: .center)
-                    .background(Palette.ground)
-                    .ignoresSafeArea()
-            }
+            .onDisappear { DealsRouter.shared.openDealSheets = max(0, DealsRouter.shared.openDealSheets - 1) }
+    }
+
+    private var page: some View {
+        scroll
+            .background { backdrop }
             .fallingBuddies(season.kind, trigger: drops)
             .navigationTitle(season.name)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } }
-                if let url = season.webURL {
-                    ToolbarItem(placement: .primaryAction) {
-                        // No share event: ShareLink doesn't say whether anything was sent.
-                        ShareLink(item: url, message: Text(season.share ?? season.name)) {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                    }
-                }
+            .toolbar { toolbarItems }
+            .sheet(item: $selected) { deal in dealSheet(deal) }
+            .sheet(isPresented: $priming) { primer }
+    }
+
+    private var scroll: some View {
+        ScrollView(.vertical) {
+            VStack(alignment: .leading, spacing: 0) {
+                hero
+                lists
+                if season.log.count > 1 { priceLog }
+                if !season.facts.isEmpty { facts }
+                more
             }
-            .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore == nil ? nil : openStoreClosing) }
-            .sheet(isPresented: $priming) {
-                if let best = store.bestDeal(season) {
-                    AlertPrimer(deal: best) { allowed in
-                        priming = false
-                        if allowed { startWatching(best) }
-                    }
+            .padding(.horizontal, Space.l)
+            .padding(.bottom, Space.xl)
+        }
+    }
+
+    private var backdrop: some View {
+        LinearGradient(colors: [season.color.opacity(0.16), Palette.ground], startPoint: .top, endPoint: .center)
+            .background(Palette.ground)
+            .ignoresSafeArea()
+    }
+
+    @ToolbarContentBuilder private var toolbarItems: some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button(role: .close) { dismiss() }
+        }
+        ToolbarItem(placement: .primaryAction) {
+            // No share event: ShareLink doesn't say whether anything was sent.
+            if let url = season.webURL {
+                ShareLink(item: url, message: Text(season.share ?? season.name)) {
+                    Label("Share", systemImage: "square.and.arrow.up")
                 }
             }
         }
-        .presentationBackground(Palette.ground)
-        // A first add from here asks where the list lives over this sheet, like the deal sheet.
-        .asksWhereListLives(inDealSheet: true)
-        .onAppear { DealsRouter.shared.openDealSheets += 1 }
-        .onDisappear { DealsRouter.shared.openDealSheets = max(0, DealsRouter.shared.openDealSheets - 1) }
-        .onAppear {
-            Analytics.track("Viewed Season", ["season": season.id])
-            Task { try? await Task.sleep(for: .milliseconds(450)); dropMore() }
+    }
+
+    private func dealSheet(_ deal: Deal) -> some View {
+        let open: ((String) -> Void)? = openStore == nil ? nil : { id in openStoreClosing(id) }
+        return DealDetail(deal: deal, openStore: open)
+    }
+
+    @ViewBuilder private var primer: some View {
+        if let best = store.bestDeal(season) {
+            AlertPrimer(deal: best) { allowed in
+                priming = false
+                if allowed { startWatching(best) }
+            }
         }
     }
 
