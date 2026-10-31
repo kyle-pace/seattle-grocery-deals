@@ -1,0 +1,82 @@
+{
+  "stores": {
+    "lams": {
+      "fingerprint": "a7ee2a0397c70795",
+      "matches": [
+        "wp-content/uploads/2019/06/863849665_1557323726200763_8065119104016335185_n.jpg",
+        "wp-content/uploads/2019/06/876048683_1667291678332899_2317216661969943180_n.jpg",
+        "wp-content/uploads/2025/04/869471680_1837396980918149_3165310108411255510_n.jpg"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "uwajimaya": {
+      "fingerprint": "0b21f1a3f0b20b2f",
+      "matches": [
+        "wp-content/uploads/2026/10/WeeklyAd-10.28.26.pdf"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "central-coop": {
+      "fingerprint": "5c66f8803321c705",
+      "matches": [
+        "/s/Coop_Deals_2026_Oct_Flyer_West_B.pdf",
+        "SALES FOR 10.28.26 - 11.03.26"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "smith-brothers": {
+      "fingerprint": "53391fe28c12aa75",
+      "matches": [
+        "Enjoy these deals 10/17 to 10/30"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "met-market": {
+      "fingerprint": "9822dce03c9a673f",
+      "matches": [
+        "Weekly-Savings-102826-PG-1",
+        "Weekly-Savings-102826-PG-2",
+        "Weekly-Savings-102826-PG-3",
+        "Weekly-Savings-102826-PG-4",
+        "Weekly-Savings-102826-PG-5"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "hmart": {
+      "fingerprint": "6319cd577075c33a",
+      "matches": [
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793308871660-FE9E3VSBK9HXNGIKNOY9/103026+WA+HMart+Weekly.jpg",
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793308876620-K71TR2U7T9O0IFPEN40X/103026+WA+HMart+Weekly_eng.jpg"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "99-ranch": {
+      "fingerprint": "4a7b3d518f4451f0",
+      "matches": [
+        "img.awsprod.99ranch.com/30a54d217c944c6380d21e3356d8dba1.jpeg",
+        "img.awsprod.99ranch.com/3e46a578db76420eb8672bac712305a1.jpeg",
+        "img.awsprod.99ranch.com/532a939ee3b74617bdb61af49f7abbe4.jpeg",
+        "img.awsprod.99ranch.com/83c6ca34b734406690d70303f9b46976.jpeg",
+        "img.awsprod.99ranch.com/8fddbcc3d72d46c69608a7425ee79202.jpeg",
+        "img.awsprod.99ranch.com/a59aebe24dcc4a1ebf2d7fe449f31044.jpeg",
+        "img.awsprod.99ranch.com/a742b70e1972462680a4627a75e6d41c.jpeg",
+        "img.awsprod.99ranch.com/b5f0245eb81843b7b4f9fb04b9f566f2.jpeg",
+        "img.awsprod.99ranch.com/d10857b1336b43feab891846d8ee9665.jpeg",
+        "img.awsprod.99ranch.com/ddd274045a624ab38f48c742e024ac61.jpeg"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "viet-wah": {
+      "fingerprint": "1e8abec2d90f3c6c",
+      "matches": [
+        "single-post/weekly-ad-oct-23-29-2026",
+        "single-post/weekly-ad-oct-30-nov-5-2026"
+      ],
+      "seen_at": "2026-10-31T18:28:16.768Z"
+    },
+    "asian-family-market": {
+      "error": "the pattern matched nothing (page layout may have changed)",
+      "error_at": "2026-10-31T18:28:16.768Z"
+    }
+  }
+}
