@@ -35,6 +35,25 @@ struct DealsDevMenu: View {
             } header: { Text("This week") }
 
             Section {
+                @Bindable var store = store
+                LabeledContent("In the feed", value: (store.feed?.seasons?.items ?? []).map(\.label).joined(separator: ", ").nilIfEmpty ?? "None")
+                LabeledContent("Showing", value: store.seasons.map(\.label).joined(separator: ", ").nilIfEmpty ?? "None")
+                Picker("Sample seasons", selection: $store.devSampleSeasons) {
+                    Text("Off (the feed's)").tag(0)
+                    Text("One").tag(1)
+                    Text("Two (a row of cards)").tag(2)
+                }
+                DevAction("Open the first season", detail: "The season screen, as if you tapped the card.") {
+                    if let s = store.allSeasons.first { DealsRouter.shared.openSeason(s.id); done("Opening \(s.name).") } else { done("No season this week. Turn on a sample.") }
+                }
+                DevAction("Show hidden seasons again", detail: "\(store.hiddenSeasons.count) hidden with \u{201C}Hide for this season\u{201D}.") {
+                    store.hiddenSeasons = []; done("Hidden seasons are back.")
+                }
+            } header: { Text("Seasons") } footer: {
+                Text("Samples are made from this week's produce, so the card, the row of cards and the season screen can be tried any time of year.")
+            }
+
+            Section {
                 LabeledContent("Lives in", value: list.usesReminders ? "Reminders: \(list.title)" : "This app")
                 LabeledContent("Items", value: "\(list.items.count) (\(list.openItems.count) open)")
                 DevAction("Ask where the list lives again", detail: "The next add shows the Reminders question. Reminders isn't changed.") {
@@ -77,4 +96,8 @@ struct DealsDevMenu: View {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UserDefaults.standard.set(true, forKey: Welcome.forceKey)
     }
+}
+
+private extension String {
+    var nilIfEmpty: String? { isEmpty ? nil : self }
 }

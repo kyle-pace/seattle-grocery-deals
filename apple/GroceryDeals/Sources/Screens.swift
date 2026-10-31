@@ -84,6 +84,8 @@ struct ThisWeekView: View {
                 if store.feed != nil {
                     EditionBanner()
                     WatchHits { selected = $0 }
+                    // Persimmon season and friends: one card, or a row to swipe (Seasons.swift).
+                    SeasonCards()
                     let picks = store.topPicks()
                     SectionHeading(title: "Top picks", note: "\(store.standouts.count) standouts in all")
                     ForEach(picks) { d in

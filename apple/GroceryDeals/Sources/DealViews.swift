@@ -150,6 +150,8 @@ struct DealRow: View {
     var showWhy = false
     /// "12 people added this", for What people are adding.
     var people: Int? = nil
+    /// A short extra line after the details, like "about $3.41/lb" on the season screen.
+    var note: String? = nil
     let open: () -> Void
 
     var body: some View {
@@ -194,6 +196,7 @@ struct DealRow: View {
         var parts: [String] = []
         if showStore { parts.append(store.storeName(deal.store)) }
         parts += deal.detail
+        if let note { parts.append(note) }
         return parts
     }
 

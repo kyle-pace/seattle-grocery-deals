@@ -20,6 +20,10 @@ final class DealsRouter {
     /// How many deal sheets are open, so the "where should your list live?" question opens
     /// from the top one.
     var openDealSheets = 0
+    /// A season screen to open (a This week card, Search, Spotlight).
+    var seasonID: String?
+
+    func openSeason(_ id: String) { seasonID = id }
 
     func search(_ query: String) {
         searchQuery = query
@@ -146,6 +150,8 @@ struct SearchView: View {
         let deals = scope == .stores ? [] : store.search(q)
         let byAisle = Dictionary(grouping: deals, by: \.category)
 
+        // "pers", "fuyu", "hachiya": the season card first.
+        if scope != .stores { SeasonSearchCards(query: q) }
         if !aisles.isEmpty {
             SectionHeading(title: "Aisles")
             ForEach(aisles) { c in
@@ -220,7 +226,7 @@ enum DealsSpotlight {
                   detail: ([store.storeName(d.store)] + (d.ends.map { ["through \(Dates.short($0))"] } ?? [])).joined(separator: " · "),
                   keywords: [d.name, store.storeName(d.store), store.label(forCategory: d.category)],
                   expires: Dates.date(d.ends ?? feed.end).map { $0.addingTimeInterval(86_400) })
-        }
+        } + seasonEntries(store)
         Task.detached(priority: .utility) { await index(Array(entries)) }
     }
 
@@ -245,7 +251,10 @@ extension View {
     func handlesSpotlight(_ router: DealsRouter) -> some View {
         self
             .onContinueUserActivity(CSSearchableItemActionType) { activity in
-                if let id = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
+                if let id = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String, id.hasPrefix("season:") {
+                    router.openSeason(String(id.dropFirst("season:".count)))
+                    Analytics.track("Opened From Spotlight", ["kind": "season"])
+                } else if let id = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String {
                     router.dealID = id
                     Analytics.track("Opened From Spotlight")
                 }
