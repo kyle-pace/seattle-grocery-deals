@@ -104,6 +104,8 @@ struct RootView: View {
             router.seasonID = nil
         }
         .sheet(item: $openSeason) { SeasonScreen(season: $0, openStore: openStore) }
+        // Simulator screenshots: -season <id> opens that season's screen at launch.
+        .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
         .onChange(of: router.tabRequest) { _, name in
             guard let name else { return }
