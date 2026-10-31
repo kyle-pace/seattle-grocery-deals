@@ -40,3 +40,19 @@ export function buddy(mood = "neutral", size = 64, cls = "") {
 
 // The buddy's fruit without a face, for the menu icon and the falling persimmons.
 export const PERSIMMON_SVG = `<svg viewBox="0 0 100 100" width="21" height="21" aria-hidden="true"><rect class="bd-fruit" x="7" y="25" width="86" height="70" rx="34"/><ellipse class="bd-shine" cx="28" cy="40" rx="8" ry="5" transform="rotate(-30 28 40)"/><rect class="bd-stem" x="47.75" y="17.5" width="4.5" height="9" rx="2.25"/><g class="bd-leaf" transform="translate(50 27) scale(1.25 .42)">${[45, 135, 225, 315].map((a) => `<ellipse cx="9" rx="10.5" ry="5.5" transform="rotate(${a})"/>`).join("")}</g></svg>`;
+
+// A plain leaf in a circle, for seasonal items without a character yet (KitchenUI's SeasonMark).
+// Sits low in the box like the persimmon's fruit, so it lines up with the buddy wherever it stands in.
+export const LEAF_SVG = `<svg viewBox="0 0 100 100" width="21" height="21" aria-hidden="true"><circle cx="50" cy="60" r="36" fill="var(--season-soft, #e3efe7)"/><path d="M34 77C34 55 48 44 67 44c0 20-11 34-31 34" fill="var(--season, #1d4d33)"/><path d="M34 79c6-11 14-19 23-25" fill="none" stroke="var(--surface, #fff)" stroke-width="3.5" stroke-linecap="round"/></svg>`;
+
+// Each season's fruit without a face (falling, the menu icon), by its KitchenUI Buddy name.
+export const FRUIT_SVG = { persimmon: PERSIMMON_SVG };
+
+/** The season's buddy with a mood, or the leaf when it has no character yet. */
+export function seasonBuddy(kind, mood = "happy", size = 64, cls = "") {
+  if (kind === "persimmon") return buddy(mood, size, cls);
+  return LEAF_SVG.replace(' width="21" height="21"', ` width="${size}" height="${size}" class="buddy season-leaf${cls ? " " + cls : ""}"`);
+}
+
+/** The season's small icon: its fruit, or the leaf. */
+export const seasonIcon = (kind) => FRUIT_SVG[kind] ?? LEAF_SVG;

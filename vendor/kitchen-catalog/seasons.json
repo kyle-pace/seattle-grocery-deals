@@ -1,0 +1,24 @@
+{
+  "about": "What's in season in the Seattle area, shared by Grocery Deals (site and app) and Maitake. One entry per seasonal item. `items` are catalog ids (children count too), `words` are extra words that mark a flyer line or pantry name as this item, `from` and `to` are month-day and can wrap the new year (both days count). `buddy` names a KitchenUI Buddy.Kind, or is missing for items without a character yet. `star` is the kind to look for, if there is one. Facts use **bold** for a lead word and are shown on the site page and in both apps. Ids never change. Presentation that only the site uses (colors, page copy, the share image) lives in Grocery Deals' config/seasons.json under the same id.",
+  "version": 1,
+  "seasons": [
+    {
+      "id": "persimmons",
+      "label": "Persimmons",
+      "items": ["persimmons"],
+      "words": ["persimmon", "fuyu", "hachiya", "hoshigaki", "gotgam"],
+      "from": "09-15",
+      "to": "01-15",
+      "buddy": "persimmon",
+      "star": { "label": "Fuyu", "words": ["fuyu"] },
+      "tagline": "Fuyu are at their best now. Eat them crisp like an apple, skin and all.",
+      "facts": [
+        "**Fuyu** are the squat, tomato-shaped ones. Eat them crisp like an apple, skin and all.",
+        "**Hachiya** are the acorn-shaped ones. Wait until they are soft as a water balloon, or they will make your whole mouth go dry.",
+        "Fuyu keep for a week or two on the counter and longer in the fridge.",
+        "Slice one sideways and you may find a little star in the middle.",
+        "Dried persimmons are called hoshigaki in Japan and gotgam in Korea."
+      ]
+    }
+  ]
+}

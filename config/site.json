@@ -4,10 +4,6 @@
   "base_path": "/",
   "repo_url": "https://github.com/kyle-pace/seattle-grocery-deals",
   "suggest_store_url": "https://github.com/kyle-pace/seattle-grocery-deals/issues/new?title=Store+suggestion",
-  "persimmon_season": {
-    "from": "09-15",
-    "to": "01-15"
-  },
   "origin": "https://seattlegrocery.deals",
   "amplitude_api_key": "209f961ae2c60b11c922363aa094ed0a"
 }

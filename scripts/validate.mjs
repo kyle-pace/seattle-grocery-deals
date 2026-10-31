@@ -2,7 +2,7 @@
 // schema and the cross checks below, and scans repo text for em dashes.
 // Usage: node scripts/validate.mjs [path/to/week.json ...]
 // Exits 1 on any error. Warnings do not fail.
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { join, basename, relative, resolve } from "node:path";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
@@ -10,6 +10,7 @@ import {
   ROOT, WEEKS_DIR, readJson, loadConfig, weekFiles, isFriday, addDays,
   computeUnitPrice, round2, percentOff, leaveOutReason, flyerKind, collapseVariants,
 } from "./lib.mjs";
+import { FRUIT_SVG } from "./buddy.mjs";
 
 const cfg = loadConfig();
 const errors = [];
@@ -50,6 +51,42 @@ function checkConfig() {
     const w = `config/items.json ${key}`;
     if (!cfg.criteria.categories.includes(item.category)) err(w, `unknown category ${item.category}`);
     if (item.benchmark && !cfg.benchmarks[item.benchmark]) err(w, `unknown benchmark ${item.benchmark}`);
+  }
+  checkSeasons();
+}
+
+// Seasonal items: KitchenCatalog's calendar (vendor copy) and this site's config/seasons.json.
+function checkSeasons() {
+  const calendar = readJson(join(ROOT, "vendor", "kitchen-catalog", "seasons.json")).seasons;
+  const site = readJson(join(ROOT, "config", "seasons.json")).seasons;
+  const ids = new Set();
+  const md = /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+  for (const s of calendar) {
+    const w = `vendor/kitchen-catalog/seasons.json ${s.id}`;
+    if (ids.has(s.id)) err(w, "season id used twice");
+    ids.add(s.id);
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(s.id)) err(w, "id must be lowercase words joined by hyphens (it's the page address)");
+    if (!md.test(s.from) || !md.test(s.to)) err(w, "from and to must be MM-DD");
+    for (const item of s.items ?? []) if (!cfg.catalog.items[item]) err(w, `item ${item} isn't in the catalog`);
+    if (s.buddy && !FRUIT_SVG[s.buddy]) warn(w, `the site has no "${s.buddy}" character yet (scripts/buddy.mjs), so the page shows a leaf`);
+  }
+  const placeholders = new Set(["label", "item", "star", "price", "store", "stores_have", "each_oz"]);
+  const hex = /^#[0-9a-f]{6}$/i;
+  for (const [id, look] of Object.entries(site)) {
+    const w = `config/seasons.json ${id}`;
+    if (!ids.has(id)) err(w, "no season with this id in KitchenCatalog's seasons.json (run npm run sync-catalog?)");
+    if (look.each_oz != null && !(look.each_oz > 0)) err(w, "each_oz must be a weight in ounces");
+    for (const mode of ["light", "dark"]) {
+      const c = look.colors?.[mode];
+      if (!look.colors) break;
+      if (!c) { err(w, `colors needs ${mode}`); continue; }
+      for (const k of ["main", "text", "soft", "ink"]) if (!hex.test(c[k] ?? "")) err(w, `colors.${mode}.${k} must be a #rrggbb color`);
+      if (!Array.isArray(c.bg) || c.bg.length !== 2 || !c.bg.every((x) => hex.test(x))) err(w, `colors.${mode}.bg must be two #rrggbb colors`);
+    }
+    if (look.og_image && !existsSync(join(ROOT, "site", look.og_image))) err(w, `og_image ${look.og_image} isn't in site/`);
+    for (const [k, text] of Object.entries(look.copy ?? {})) {
+      for (const [, name] of String(text).matchAll(/\{(\w+)\}/g)) if (!placeholders.has(name)) err(w, `copy.${k} uses an unknown {${name}}`);
+    }
   }
 }
 

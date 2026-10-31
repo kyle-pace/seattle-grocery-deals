@@ -97,10 +97,10 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 .topnav a, .head-about { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.9375rem; padding: 0 0.85rem; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
 .topnav a:hover, .head-about:hover { color: var(--ink); background: var(--raised); }
 .topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
-.nav-persim { margin-left: 0.2rem; }
-.nav-persim svg { width: 1.4rem; height: 1.4rem; transition: transform 0.2s; }
-.nav-persim:hover svg, .nav-persim:focus-visible svg { transform: rotate(-15deg) scale(1.2); }
-@media (prefers-reduced-motion: reduce) { .nav-persim svg { transition: none; } }
+.nav-season { margin-left: 0.2rem; }
+.nav-season svg { width: 1.4rem; height: 1.4rem; transition: transform 0.2s; }
+.nav-season:hover svg, .nav-season:focus-visible svg { transform: rotate(-15deg) scale(1.2); }
+@media (prefers-reduced-motion: reduce) { .nav-season svg { transition: none; } }
 /* the app's tab bar, on phones */
 .tabbar { position: fixed; inset: auto 0 0 0; z-index: 30; display: grid; grid-template-columns: repeat(4, 1fr); background: color-mix(in srgb, var(--ground) 88%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-top: 1px solid var(--line); padding: 0.25rem 0.25rem env(safe-area-inset-bottom); }
 .tabbar a { display: grid; justify-items: center; align-content: center; gap: 0.15rem; min-height: 3.25rem; text-decoration: none; font-size: 0.6875rem; font-weight: 600; color: var(--muted); border-radius: var(--r-m); }
@@ -358,54 +358,53 @@ tr.best td { font-weight: 700; }
 .site-foot nav a:hover { text-decoration: underline; }
 .site-foot p { margin: 0.25rem 0 0; }
 
-/* persimmon season */
-body.persimmon { --persim: #f07c1e; --persim-text: #a14a00; --persim-soft: #ffe3c6; --persim-ink: #4a1f00; background: linear-gradient(#fff4e3, #ffe0bd) fixed; overflow-x: hidden; }
-@media (prefers-color-scheme: dark) { body.persimmon { --persim-text: #ffa45c; --persim-soft: #3a2412; --persim-ink: #ffd2a1; background: linear-gradient(#1c130c, #2a180b) fixed; } }
-.persim-sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-.persim-page { position: relative; z-index: 1; }
-body.persimmon main, body.persimmon .site-foot { position: relative; z-index: 1; }
-.faller { position: absolute; top: -12vh; animation: persim-fall var(--dur, 10s) linear infinite; opacity: 0.9; filter: drop-shadow(0 3px 4px rgb(0 0 0 / 0.15)); }
+/* seasonal items (persimmons first): colors come from config/seasons.json, set per page in a <style> in the head */
+body.season { overflow-x: hidden; }
+.season-sky { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.season-page { position: relative; z-index: 1; }
+body.season main, body.season .site-foot { position: relative; z-index: 1; }
+.faller { position: absolute; top: -12vh; animation: season-fall var(--dur, 10s) linear infinite; opacity: 0.9; filter: drop-shadow(0 3px 4px rgb(0 0 0 / 0.15)); }
 .faller.burst { animation-iteration-count: 1; animation-duration: calc(var(--dur, 10s) * 0.5); }
 .faller svg { width: 100%; height: 100%; }
-@keyframes persim-fall {
+@keyframes season-fall {
   0% { transform: translate(0, 0) rotate(0); }
   50% { transform: translate(var(--sway, 0), 60vh) rotate(calc(var(--spin, 360deg) / 2)); }
   100% { transform: translate(0, 125vh) rotate(var(--spin, 360deg)); }
 }
-.persim-eyebrow { margin: 1.5rem 0 0; font-weight: 600; color: var(--persim-text); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
-.persim-title { font-size: clamp(2.2rem, 8vw, 4.2rem); margin: 0.2rem 0 1.25rem; transform: rotate(-1deg); }
-.persim-title span { color: var(--persim-text); display: inline-block; animation: persim-wobble 3s ease-in-out infinite; }
-@keyframes persim-wobble { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg) translateY(-2px); } }
-.persim-hero { position: relative; text-align: center; background: var(--surface); border: 3px solid var(--persim); border-radius: 28px; padding: 2rem 1.25rem 1.75rem; box-shadow: 0 12px 0 -4px var(--persim-soft), var(--shadow); }
-.persim-mascot { width: clamp(7rem, 22vw, 10rem); margin: -4.5rem auto 0.25rem; cursor: pointer; animation: persim-float 4s ease-in-out infinite; }
-.persim-mascot svg { width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.18)); }
-.persim-mascot.boing { animation: persim-boing 0.6s cubic-bezier(.3,1.6,.5,1); }
-.persim-mascot.sad { transform: rotate(8deg); animation: none; }
-@keyframes persim-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8px) rotate(4deg); } }
-@keyframes persim-boing { 0% { transform: scale(1); } 30% { transform: scale(1.25, 0.8); } 60% { transform: scale(0.9, 1.15) translateY(-14px); } 100% { transform: scale(1); } }
-.persim-kicker { margin: 0; font-weight: 700; color: var(--persim-text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; }
-.persim-price { font-size: clamp(3rem, 14vw, 6rem); font-weight: 800; line-height: 1; margin: 0.4rem 0; color: var(--persim-ink); letter-spacing: -0.03em; }
-.persim-where { font-size: 1.35rem; font-weight: 600; margin: 0.2rem 0; }
-.persim-item { margin: 0.2rem 0; color: var(--muted); }
-.persim-math { margin: 0.9rem auto 0; max-width: 32rem; background: var(--persim-soft); color: var(--persim-ink); border-radius: 12px; padding: 0.6rem 0.9rem; }
-.persim-math .muted { display: block; font-size: 0.85rem; color: inherit; opacity: 0.75; }
-.persim-list { list-style: none; padding: 0; margin: 0; background: var(--surface); border-radius: 14px; border: 1px solid var(--line); }
-.persim-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0.9rem; border-bottom: 1px dashed var(--line); }
-.persim-list li:last-child { border-bottom: 0; }
-.persim-list a { font-size: 0.88rem; margin-left: 0.3rem; }
-.persim-log { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
-.persim-log li { display: grid; grid-template-columns: 4.5rem 1fr 8rem; gap: 0.6rem; align-items: center; font-size: 0.9rem; }
+.season-eyebrow { margin: 1.5rem 0 0; font-weight: 600; color: var(--season-text); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+.season-title { font-size: clamp(2.2rem, 8vw, 4.2rem); margin: 0.2rem 0 1.25rem; transform: rotate(-1deg); }
+.season-title span { color: var(--season-text); display: inline-block; animation: season-wobble 3s ease-in-out infinite; }
+@keyframes season-wobble { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg) translateY(-2px); } }
+.season-hero { position: relative; text-align: center; background: var(--surface); border: 3px solid var(--season); border-radius: 28px; padding: 2rem 1.25rem 1.75rem; box-shadow: 0 12px 0 -4px var(--season-soft), var(--shadow); }
+.season-mascot { width: clamp(7rem, 22vw, 10rem); margin: -4.5rem auto 0.25rem; cursor: pointer; animation: season-float 4s ease-in-out infinite; }
+.season-mascot svg { width: 100%; height: auto; filter: drop-shadow(0 8px 10px rgb(0 0 0 / 0.18)); }
+.season-mascot.boing { animation: season-boing 0.6s cubic-bezier(.3,1.6,.5,1); }
+.season-mascot.sad { transform: rotate(8deg); animation: none; }
+@keyframes season-float { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8px) rotate(4deg); } }
+@keyframes season-boing { 0% { transform: scale(1); } 30% { transform: scale(1.25, 0.8); } 60% { transform: scale(0.9, 1.15) translateY(-14px); } 100% { transform: scale(1); } }
+.season-kicker { margin: 0; font-weight: 700; color: var(--season-text); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; }
+.season-price { font-size: clamp(3rem, 14vw, 6rem); font-weight: 800; line-height: 1; margin: 0.4rem 0; color: var(--season-ink); letter-spacing: -0.03em; }
+.season-where { font-size: 1.35rem; font-weight: 600; margin: 0.2rem 0; }
+.season-item { margin: 0.2rem 0; color: var(--muted); }
+.season-math { margin: 0.9rem auto 0; max-width: 32rem; background: var(--season-soft); color: var(--season-ink); border-radius: 12px; padding: 0.6rem 0.9rem; }
+.season-math .muted { display: block; font-size: 0.85rem; color: inherit; opacity: 0.75; }
+.season-list { list-style: none; padding: 0; margin: 0; background: var(--surface); border-radius: 14px; border: 1px solid var(--line); }
+.season-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0.9rem; border-bottom: 1px dashed var(--line); }
+.season-list li:last-child { border-bottom: 0; }
+.season-list a { font-size: 0.88rem; margin-left: 0.3rem; }
+.season-log { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
+.season-log li { display: grid; grid-template-columns: 4.5rem 1fr 8rem; gap: 0.6rem; align-items: center; font-size: 0.9rem; }
 .pl-bar { position: relative; height: 1.6rem; }
-.pl-bar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--persim); border-radius: 999px; }
+.pl-bar::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--season); border-radius: 999px; }
 .pl-bar span { position: relative; padding-left: 0.6rem; line-height: 1.6rem; font-weight: 700; color: #fff; }
 .pl-store { color: var(--muted); }
-@media (max-width: 30rem) { .persim-log li { grid-template-columns: 3.8rem 1fr; } .pl-store { grid-column: 2; margin-top: -0.3rem; } }
-.persim-facts ul { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 0.8rem 1rem 0.8rem 2rem; margin: 0; }
-.persim-facts li { margin: 0.3rem 0; }
-.persim-foot { text-align: center; margin-top: 2rem; color: var(--muted); }
-@media (prefers-reduced-motion: reduce) { .persim-title span, .persim-mascot { animation: none; } }
-.persim-title { font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
-body.persimmon .site-head { position: relative; z-index: 2; }
+@media (max-width: 30rem) { .season-log li { grid-template-columns: 3.8rem 1fr; } .pl-store { grid-column: 2; margin-top: -0.3rem; } }
+.season-facts ul { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 0.8rem 1rem 0.8rem 2rem; margin: 0; }
+.season-facts li { margin: 0.3rem 0; }
+.season-foot { text-align: center; margin-top: 2rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .season-title span, .season-mascot { animation: none; } }
+.season-title { font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+body.season .site-head { position: relative; z-index: 2; }
 
 /* inline text button (About: analytics opt-out) */
 .linkish { background: none; border: 0; padding: 0; min-height: 44px; font: inherit; font-weight: 600; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }

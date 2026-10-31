@@ -5,7 +5,8 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { buildSync } from "esbuild";
 import { writePopular } from "./popular.mjs";
-import { buddy, PERSIMMON_SVG } from "./buddy.mjs";
+import { buddy, seasonBuddy, seasonIcon } from "./buddy.mjs";
+import { loadSeasons, seasonOn, seasonDeals, seasonLog, seasonEnd, fill } from "./seasons.mjs";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
   unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind,
@@ -68,7 +69,7 @@ const ic = (name) => `<svg class="ic ic-${name}" viewBox="0 0 16 16" aria-hidden
 const badge = (tone, icon, text) => `<span class="badge tone-${tone}">${icon ? ic(icon) : ""}${esc(text)}</span>`;
 const tierBadge = (tier) => tier === "standout" ? badge("warn", "star", "Standout") : tier === "good" ? badge("neutral", "halfStar", "Good deal") : "";
 
-// The persimmon buddy lives in buddy.mjs, shared with scripts/persimmon-og.mjs.
+// The persimmon buddy lives in buddy.mjs, shared with scripts/season-og.mjs.
 
 // A friendly empty screen: the buddy, a headline, a line, and at most one way forward.
 const emptyState = ({ mood = "sad", title, msg = "", link = null, attrs = "" }) => `<div class="empty-state"${attrs ? " " + attrs : ""}>${buddy(mood, 88)}<p class="empty-title">${esc(title)}</p>${msg ? `<p class="empty-msg"${attrs.includes("data-empty") ? " data-empty-msg" : ""}>${esc(msg)}</p>` : ""}${link ? `<p><a class="go" href="${link[0]}">${esc(link[1])}</a></p>` : ""}</div>`;
@@ -279,11 +280,11 @@ const ICONS = {
 const MAIN_NAV = [["", "This week"], ["departments/", "Departments"], ["stores/", "Stores"], ["compare/", "Compare"]];
 
 // section: which menu item this page belongs to ("" is This week).
-function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null }) {
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "" }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
   const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}</a>`).join("")
-    + (PERSIMMON_SEASON ? `<a class="nav-persim" href="${url("persimmons/")}" aria-label="Persimmons" title="Persimmons"${cur("persimmons/")}>${PERSIMMON_SVG}</a>` : "");
+    + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
   const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span></a>`).join("");
   return `<!doctype html>
 <html lang="en">
@@ -313,7 +314,8 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <script>try{if(JSON.parse(localStorage.getItem("sgd.vegOnly")))document.documentElement.classList.add("veg-on")}catch(e){}</script>
 <script src="${asset("assets/app.js")}" defer></script>
 <script type="module" src="${ANALYTICS_SRC}"></script>${extraScript ? `
-<script src="${asset(extraScript)}" defer></script>` : ""}${map ? `
+<script src="${asset(extraScript)}" defer></script>` : ""}${head ? `
+${head}` : ""}${map ? `
 <link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
 <script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
 <script src="${asset("assets/map.js")}" defer></script>` : ""}
@@ -331,7 +333,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("about/")}">About and privacy</a>${PERSIMMON_SEASON ? `<a href="${url("persimmons/")}">Persimmons</a>` : ""}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("about/")}">About and privacy</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -388,8 +390,6 @@ function homePage() {
   const hlVeg = topPicks(vegStandouts);
   const best = standouts.filter((i) => hlAll.includes(i) || hlVeg.includes(i));
   const read = latest.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
-  const persim = PERSIMMON_SEASON ? items.filter((i) => isPersimmon(i) && isFuyu(i) && i.unit_price).sort(byPerLb) : [];
-  const persimStores = new Set(items.filter(isPersimmon).map((i) => i.store)).size;
   const soonPool = items.filter((i) => i.valid_through).slice(0, 60);
   const shops = [...new Set(items.map((i) => i.store))]
     .map((id) => ({ s: cfg.storeById[id], n: items.filter((i) => i.store === id && i.a.tier === "standout").length, c: items.filter((i) => i.store === id).length }))
@@ -427,15 +427,7 @@ ${soonPool.length ? `<section class="block ending" data-ending hidden aria-label
   <div class="sec-h"><h2 id="h-end">Ending soon</h2><p>Last chance</p></div>
   <ul class="mini">${soonPool.map((i) => `<li data-ends="${i.valid_through}" data-veg="${isVegetarian(i) ? 1 : 0}" data-store="${esc(i.store)}" hidden><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span> <span class="mini-price">${esc(priceText(i))} <span class="badge tone-warn ends-when" data-ends-label></span></span></li>`).join("")}</ul>
 </section>` : ""}
-${persim.length ? `<section class="card story" aria-labelledby="h-story">
-  ${buddy("happy", 72)}
-  <div>
-  <p class="kicker">In season</p>
-  <h2 id="h-story">Persimmon season</h2>
-  <p>Fuyu persimmons are at their best now, and ${plural(persimStores, "store")} ${persimStores === 1 ? "has" : "have"} them on sale. The cheapest is ${esc(storeName(persim[0].store))} at ${esc(priceText(persim[0]))}. Eat them crisp like an apple, skin and all.</p>
-  <p><a class="go" href="${url("persimmons/")}">Where to buy persimmons this week</a></p>
-  </div>
-</section>` : ""}
+${seasonStories()}
 <section class="block" aria-labelledby="h-where">
   <div class="sec-h"><h2 id="h-where">By store</h2><p>Each store's best</p></div>
   <ul class="store-cards">${shops.map((s) => storeCard(s, items, hlAll, hlVeg)).join("\n")}</ul>
@@ -681,80 +673,123 @@ ${s.no_online_flyer ? "" : `<section class="block" aria-labelledby="h-past">
   }
 }
 
-// ---------- persimmon season ----------
+// ---------- seasonal items ----------
+// What's in season comes from KitchenCatalog (vendor/kitchen-catalog/seasons.json), how it looks
+// from config/seasons.json. Every season gets a page at /<slug>/ all year (shared links keep
+// working); the menu icon, footer link, home story and the app's card only show while it's on.
 
-
-function inPersimmonSeason(iso) {
-  const md = iso.slice(5);
-  const { from, to } = cfg.site.persimmon_season;
-  return from <= to ? md >= from && md <= to : md >= from || md <= to;
+const SEASONS = loadSeasons(ROOT);
+const SEASONS_NOW = SEASONS.filter((s) => seasonOn(s, latest.week));
+const seasonWeek = (s, week) => seasonDeals(s, cfg, analyzed.get(week));
+// Things a season's copy can say, for fill().
+function seasonVars(s, d) {
+  return { label: s.label, item: s.item, star: s.starLabel, each_oz: s.each_oz ?? "",
+    price: d.best ? priceText(d.best) : "", store: d.best ? storeName(d.best.store) : "", stores_have: `${plural(d.stores, "store")} ${d.stores === 1 ? "has" : "have"}` };
 }
-const PERSIMMON_SEASON = inPersimmonSeason(latest.week);
-const isFuyu = (i) => /fuyu/i.test(i.item);
-const isPersimmon = (i) => i.item_key === "persimmons" || /persimmon/i.test(i.item);
-// A Fuyu weighs about 7 oz, so per-each prices are compared as an estimated price per pound.
-const PERSIM_LB = 7 / 16;
-const persimPerLb = (i) => i.unit_price.per === "lb" ? i.unit_price.value : i.unit_price.per === "each" ? i.unit_price.value / PERSIM_LB : Infinity;
-const byPerLb = (a, b) => persimPerLb(a) - persimPerLb(b);
+// "$3.41/lb" for a per-each price, in the season's comparison unit.
+const seasonAbout = (s, i) => `${money(seasonValue(s, i))}${PER_LABEL[s.compare_per] ?? "/" + s.compare_per}`;
+function seasonValue(s, i) {
+  const up = i.unit_price;
+  if (up.per === s.compare_per) return up.value;
+  if (up.per === "each" && s.compare_per === "lb" && s.each_oz) return up.value / (s.each_oz / 16);
+  if (up.per === "lb" && s.compare_per === "each" && s.each_oz) return up.value * (s.each_oz / 16);
+  return Infinity;
+}
+// The page's colors, light and dark, as CSS custom properties on body.season.
+function seasonStyle(s) {
+  const vars = (c) => `--season:${c.main};--season-text:${c.text};--season-soft:${c.soft};--season-ink:${c.ink};background:linear-gradient(${c.bg[0]}, ${c.bg[1]}) fixed`;
+  return `<style>body.season{${vars(s.colors.light)}}@media (prefers-color-scheme: dark){body.season{${vars(s.colors.dark)}}}</style>`;
+}
 
-function persimmonPage() {
-  const items = analyzed.get(latest.week).filter(isPersimmon).filter((i) => i.unit_price);
-  const fuyu = items.filter(isFuyu).sort(byPerLb);
-  const others = items.filter((i) => !isFuyu(i)).sort(byPerLb);
-  const best = fuyu[0];
-  const per10 = best && isFinite(persimPerLb(best)) ? Math.floor(10 / (persimPerLb(best) * PERSIM_LB)) : null;
-
-  const log = [...weeks].reverse().map((w) => {
-    const f = analyzed.get(w.week).filter((i) => isPersimmon(i) && isFuyu(i) && i.unit_price).sort(byPerLb)[0];
-    return f ? { week: w.week, f } : null;
-  }).filter(Boolean);
-  const maxLog = Math.max(...log.map((l) => persimPerLb(l.f)), 1);
+function seasonPage(s) {
+  const d = seasonWeek(s, latest.week);
+  const v = seasonVars(s, d);
+  const best = d.best;
+  const on = seasonOn(s, latest.week);
+  const log = seasonLog(s, cfg, [...weeks].reverse().map((w) => ({ week: w.week, items: analyzed.get(w.week) })));
+  const maxLog = Math.max(...log.map((l) => l.value), 1);
+  const unit = PER_LABEL[s.compare_per] ?? "/" + s.compare_per;
 
   const hero = best
-    ? `<section class="persim-hero" aria-labelledby="best-h">
-  <div class="persim-mascot" data-bounce>${buddy("happy", 160)}</div>
-  <p class="persim-kicker">The best Fuyu deal in this week's flyers</p>
-  <h2 id="best-h" class="persim-price">${esc(priceText(best))}</h2>
-  <p class="persim-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
-  <p class="persim-item">${esc(best.item)}</p>
+    ? `<section class="season-hero" aria-labelledby="best-h">
+  <div class="season-mascot" data-bounce>${seasonBuddy(s.buddy, "happy", 160)}</div>
+  <p class="season-kicker">${esc(fill(s.copy.kicker, v))}</p>
+  <h2 id="best-h" class="season-price">${esc(priceText(best))}</h2>
+  <p class="season-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
+  <p class="season-item">${esc(best.item)}</p>
   ${best.valid_through ? `<p class="notice" data-expired-after="${best.valid_through}" hidden>This deal ended ${esc(fmtDate(best.valid_through))}. New flyers come in on Friday.</p>` : ""}
-  ${per10 ? `<p class="persim-math">That's about <strong>${per10} persimmons for $10</strong>.<span class="muted"> Roughly, at 7 oz a persimmon.</span></p>` : ""}
+  ${d.perTen ? `<p class="season-math">That's about <strong>${d.perTen} ${esc(s.item)} for $10</strong>.<span class="muted"> ${esc(fill(s.copy.per_10_note, v))}</span></p>` : ""}
   ${best.notes ? `<p class="muted">${esc(best.notes)}</p>` : ""}
 </section>`
-    : `<section class="persim-hero">
-  <div class="persim-mascot sad" data-bounce>${buddy("sad", 160)}</div>
-  <h2 class="persim-price">No Fuyu on sale this week.</h2>
-  <p class="persim-where">Stay strong. Check back Friday.</p>
+    : `<section class="season-hero">
+  <div class="season-mascot sad" data-bounce>${seasonBuddy(s.buddy, "sad", 160)}</div>
+  <h2 class="season-price">${esc(fill(s.copy.none_title, v))}</h2>
+  <p class="season-where">${esc(fill(s.copy.none_line, v))}</p>
 </section>`;
 
-  const runners = fuyu.slice(1);
-  const body = `<div class="persim-sky" data-persim-sky aria-hidden="true"></div>
-<div class="persim-page">
-<p class="persim-eyebrow">It is persimmon season${PERSIMMON_SEASON ? "" : " (or it was)"}. Week of ${esc(fmtDate(latest.week, { weekday: false, year: true }))}.</p>
-<h1 class="persim-title">Where to buy <span>persimmons</span> this week</h1>
+  const runners = d.star.slice(1);
+  const row = (i, about) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}${about && i.unit_price.per !== s.compare_per && isFinite(seasonValue(s, i)) ? `<span class="muted small"> (about ${esc(seasonAbout(s, i))})</span>` : ""}</strong></li>`;
+  const body = `<div class="season-sky" data-season-sky aria-hidden="true"></div>
+<div class="season-page">
+<p class="season-eyebrow">${esc(fill(on ? s.copy.eyebrow : s.copy.eyebrow_after, v))}. Week of ${esc(fmtDate(latest.week, { weekday: false, year: true }))}.</p>
+<h1 class="season-title">Where to buy <span>${esc(s.item)}</span> this week</h1>
 ${hero}
-${runners.length ? `<section><h2>Also on sale</h2><ul class="persim-list">${runners.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}${i.unit_price.per === "each" ? `<span class="muted small"> (about ${esc(money(persimPerLb(i)))}/lb)</span>` : ""}</strong></li>`).join("")}</ul></section>` : ""}
-${others.length ? `<section><h2>Other persimmons</h2><p class="sub">The flyer didn't say which kind. Could be Fuyu, could be Hachiya. Ask before you bite.</p><ul class="persim-list">${others.map((i) => `<li><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span><strong>${esc(priceText(i))}</strong></li>`).join("")}</ul></section>` : ""}
-${log.length ? `<section><h2>The persimmon price log</h2><p class="sub">The best Fuyu deal in the flyers each week.</p>
-<ol class="persim-log">${log.map((l) => `<li><span class="pl-week">${esc(fmtDate(l.week, { weekday: false }))}</span><span class="pl-bar" style="--w:${Math.round((persimPerLb(l.f) / maxLog) * 100)}%"><span>${l.f.unit_price.per === "lb" ? "" : "about "}${esc(money(persimPerLb(l.f)))}/lb</span></span><span class="pl-store">${esc(storeName(l.f.store))}</span></li>`).join("")}</ol></section>` : ""}
-<section class="persim-facts"><h2>Persimmon facts, for the persimmon-curious</h2>
+${runners.length ? `<section><h2>${esc(fill(s.copy.also_title, v))}</h2><ul class="season-list">${runners.map((i) => row(i, true)).join("")}</ul></section>` : ""}
+${d.others.length ? `<section><h2>${esc(fill(s.copy.others_title, v))}</h2>${s.copy.others_note ? `<p class="sub">${esc(fill(s.copy.others_note, v))}</p>` : ""}<ul class="season-list">${d.others.map((i) => row(i, false)).join("")}</ul></section>` : ""}
+${log.length ? `<section><h2>${esc(fill(s.copy.log_title, v))}</h2><p class="sub">${esc(fill(s.copy.log_note, v))}</p>
+<ol class="season-log">${log.map((l) => `<li><span class="pl-week">${esc(fmtDate(l.week, { weekday: false }))}</span><span class="pl-bar" style="--w:${Math.round((l.value / maxLog) * 100)}%"><span>${l.about ? "about " : ""}${esc(money(l.value))}${unit}</span></span><span class="pl-store">${esc(storeName(l.deal.store))}</span></li>`).join("")}</ol></section>` : ""}
+${s.facts.length ? `<section class="season-facts"><h2>${esc(fill(s.copy.facts_title, v))}</h2>
 <ul>
-  <li><strong>Fuyu</strong> are the squat, tomato-shaped ones. Eat them crisp like an apple, skin and all.</li>
-  <li><strong>Hachiya</strong> are the acorn-shaped ones. Wait until they are soft as a water balloon, or they will make your whole mouth go dry.</li>
-  <li>Fuyu keep for a week or two on the counter and longer in the fridge.</li>
-  <li>Slice one sideways and you may find a little star in the middle.</li>
-  <li>Dried persimmons are called hoshigaki in Japan and gotgam in Korea.</li>
-</ul></section>
-<p class="persim-foot">Click anywhere for more persimmons. <a href="${url()}">Back to all the deals</a></p>
+${s.facts.map((f) => `  <li>${esc(f).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")}</li>`).join("\n")}
+</ul></section>` : ""}
+<p class="season-foot">${esc(fill(s.copy.foot, v))} <a href="${url()}">Back to all the deals</a></p>
 </div>
-<template data-persim-svg>${PERSIMMON_SVG}</template>`;
+<template data-season-svg>${seasonIcon(s.buddy)}</template>`;
   const live = best && (!best.valid_through || best.valid_through >= TODAY);
-  const desc = live
-    ? `This is not a drill. The best Fuyu deal in this week's flyers: ${priceText(best)} at ${storeName(best.store)}. Go. Go now.`
-    : "No Fuyu on sale this week. We are devastated. Check back Friday.";
-  const ogTitle = live ? `PERSIMMON ALERT!!! Fuyu at ${priceText(best)} at ${storeName(best.store)}` : "BUY PERSIMMONS NOW!!! (this is not a drill)";
-  write("persimmons/", page({ title: "Where to buy persimmons this week", path: "persimmons/", body, description: desc,
-    image: "assets/img/persimmons-og.gif", imageAlt: "The persimmon buddy hopping while persimmons fall. Persimmon season: where to buy Fuyu in Seattle this week.", ogTitle, extraScript: "assets/persimmons.js", bodyClass: "persimmon" }));
+  write(`${s.slug}/`, page({ title: `Where to buy ${s.item} this week`, path: `${s.slug}/`, body,
+    description: fill(live ? s.copy.share_text : s.copy.share_text_none, v),
+    ogTitle: fill(live ? s.copy.share_title : s.copy.share_title_none, v),
+    image: s.og_image, imageAlt: s.og_alt ?? "", extraScript: "assets/seasons.js", bodyClass: `season season-${s.id}`, head: seasonStyle(s) }));
+}
+
+// The home page's "In season" story for each season that's on and has its star kind on sale.
+function seasonStories() {
+  return SEASONS_NOW.map((s) => {
+    const d = seasonWeek(s, latest.week);
+    if (!d.best) return "";
+    return `<section class="card story" aria-labelledby="h-story-${s.id}">
+  ${seasonBuddy(s.buddy, "happy", 72)}
+  <div>
+  <p class="kicker">In season</p>
+  <h2 id="h-story-${s.id}">${esc(fill(s.copy.name, seasonVars(s, d)))}</h2>
+  <p>${esc(fill(s.copy.story, seasonVars(s, d)))}</p>
+  <p><a class="go" href="${url(`${s.slug}/`)}">Where to buy ${esc(s.item)} this week</a></p>
+  </div>
+</section>`;
+  }).join("\n");
+}
+
+// What the app needs for each season that's on: deals by id (the app reuses its rows and sheet),
+// the price log and the copy. Listed even with nothing on sale (best: null), so the app decides.
+function seasonFeed(feedIds) {
+  return SEASONS_NOW.map((s) => {
+    const d = seasonWeek(s, latest.week);
+    const v = seasonVars(s, d);
+    const id = (i) => feedIds.get(i);
+    const log = seasonLog(s, cfg, weeks.map((w) => ({ week: w.week, items: analyzed.get(w.week) }))).slice(-12);
+    const unit = PER_LABEL[s.compare_per] ?? "/" + s.compare_per;
+    const about = Object.fromEntries([...d.star, ...d.others].filter((i) => i.unit_price.per !== s.compare_per && isFinite(seasonValue(s, i))).map((i) => [id(i), seasonAbout(s, i)]));
+    return {
+      id: s.id, label: s.label, name: fill(s.copy.name, v), item: s.item, star: s.star?.label ?? null, buddy: s.buddy ?? null,
+      url: `${cfg.site.origin}${cfg.site.base_path}${s.slug}/`, from: s.from, to: s.to, ends: seasonEnd(s, latest.week),
+      tint: { light: s.colors.light.main, dark: s.colors.dark.main },
+      best: d.best ? id(d.best) : null, also: d.star.slice(1).map(id), other: d.others.map(id), stores: d.stores,
+      about, compare_per: s.compare_per, per_10: d.perTen, per_10_note: d.perTen ? fill(s.copy.per_10_note, v) : null,
+      log: log.map((l) => ({ week: l.week, value: Math.round(l.value * 100) / 100, text: `${l.about ? "about " : ""}${money(l.value)}${unit}`, store: l.deal.store, about: l.about })),
+      words: s.words, tagline: s.tagline ?? null, facts: s.facts,
+      share: fill(d.best ? s.copy.share_title : s.copy.share_title_none, v),
+    };
+  });
 }
 
 function aboutPage() {
@@ -822,6 +857,7 @@ function notFound() {
 // A ready-to-use feed for the mobile app: this week's deals with the analysis done.
 function appFeed() {
   const items = analyzed.get(latest.week);
+  const feedIds = new Map(items.map((i, rank) => [i, `${i.store}-${rank}`]));
   const feed = {
     // end: the date most deals run through (older app versions show "Ends <day>" from it).
     // ends.some: an earlier date a good share of deals end on. updated: the latest flyer start.
@@ -849,6 +885,9 @@ function appFeed() {
         why: i.highlight?.reason ?? i.a.tags.filter((t) => t.kind !== "pct").map((t) => t.text).join(". "),
         veg: isVegetarian(i), ends: i.valid_through, notes: i.notes ?? null };
     }),
+    // Seasonal items on this week (persimmons first): the This week card and season screen.
+    // Missing in feeds built before 2026-10-31; older apps ignore it.
+    seasons: seasonFeed(feedIds),
   };
   mkdirSync(join(DIST, "api"), { recursive: true });
   writeFileSync(join(DIST, "api", "week.json"), JSON.stringify(feed));
@@ -875,7 +914,7 @@ comparePage();
 weekPages();
 storePages();
 aboutPage();
-persimmonPage();
+for (const s of SEASONS) seasonPage(s);
 dataPages();
 const feed = appFeed();
 // What people are adding this week (Amplitude, counts only): /api/popular.json for the app.

@@ -1,7 +1,7 @@
-// Falling persimmons. Click anywhere for more. Off when the visitor prefers reduced motion.
+// A season page's falling fruit (persimmons first). Click anywhere for more. Off when the visitor prefers reduced motion.
 (function () {
-  var sky = document.querySelector("[data-persim-sky]");
-  var tpl = document.querySelector("[data-persim-svg]");
+  var sky = document.querySelector("[data-season-sky]");
+  var tpl = document.querySelector("[data-season-svg]");
   if (!sky || !tpl) return;
   var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 

@@ -1,0 +1,50 @@
+{
+  "about": "How the site and app present each seasonal item. What's in season, when, which catalog items and words count, the star kind, the tagline and the facts come from KitchenCatalog's seasons.json (vendor/kitchen-catalog/seasons.json, refresh with npm run sync-catalog). Entries here are keyed by the same id and are all optional: an item in season with no entry here still gets a page, a home story and an app card, with plain copy and the site's green. compare_per: the unit prices are ranked in ('lb', 'each' and so on); each_oz: what one weighs, so per-each prices rank against per-pound ones and the page can say 'about 17 for $10'. colors: the page and app card tint, in light and dark (main is the accent, text is AA on the page background, soft is a pale fill, ink is the big price, bg is the page gradient). Copy placeholders: {label} (Persimmons), {item} (persimmons), {star} (Fuyu, or the label when there's no star), {price} ($1.28/lb), {store} (T&T Supermarket), {stores_have} (3 stores have). og_image: a share image under site/assets/ (made by scripts/season-og.mjs), or leave it out for the site's default.",
+  "seasons": {
+    "persimmons": {
+      "compare_per": "lb",
+      "each_oz": 7,
+      "colors": {
+        "light": {
+          "main": "#f07c1e",
+          "text": "#a14a00",
+          "soft": "#ffe3c6",
+          "ink": "#4a1f00",
+          "bg": [
+            "#fff4e3",
+            "#ffe0bd"
+          ]
+        },
+        "dark": {
+          "main": "#f07c1e",
+          "text": "#ffa45c",
+          "soft": "#3a2412",
+          "ink": "#ffd2a1",
+          "bg": [
+            "#1c130c",
+            "#2a180b"
+          ]
+        }
+      },
+      "og_image": "assets/img/persimmons-og.gif",
+      "og_alt": "The persimmon buddy hopping while persimmons fall. Persimmon season: where to buy Fuyu in Seattle this week.",
+      "copy": {
+        "name": "Persimmon season",
+        "eyebrow": "It is persimmon season",
+        "eyebrow_after": "It is persimmon season (or it was)",
+        "none_title": "No Fuyu on sale this week.",
+        "none_line": "Stay strong. Check back Friday.",
+        "others_note": "The flyer didn't say which kind. Could be Fuyu, could be Hachiya. Ask before you bite.",
+        "facts_title": "Persimmon facts, for the persimmon-curious",
+        "story": "Fuyu persimmons are at their best now, and {stores_have} them on sale. The cheapest is {store} at {price}. Eat them crisp like an apple, skin and all.",
+        "share_title": "PERSIMMON ALERT!!! Fuyu at {price} at {store}",
+        "share_title_none": "BUY PERSIMMONS NOW!!! (this is not a drill)",
+        "share_text": "This is not a drill. The best Fuyu deal in this week's flyers: {price} at {store}. Go. Go now.",
+        "share_text_none": "No Fuyu on sale this week. We are devastated. Check back Friday.",
+        "log_title": "The persimmon price log",
+        "per_10_note": "Roughly, at {each_oz} oz a persimmon.",
+        "foot": "Click anywhere for more persimmons."
+      }
+    }
+  }
+}
