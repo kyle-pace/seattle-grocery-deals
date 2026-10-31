@@ -5,7 +5,7 @@
 // Usage: node scripts/draft-week.mjs "/path/to/All Items 2026-10-23.md"
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join, basename } from "node:path";
-import { ROOT, loadConfig, loadWeeks, priorListings, peerPrices, analyze, computeUnitPrice, round2, percentOff, priceText, isFriday, leaveOutReason } from "./lib.mjs";
+import { ROOT, loadConfig, loadWeeks, priorListings, peerPrices, analyze, computeUnitPrice, round2, percentOff, priceText, isFriday, leaveOutReason, collapseVariants } from "./lib.mjs";
 import { match as matchCatalog } from "../vendor/kitchen-catalog/catalog.mjs";
 
 const cfg = loadConfig();
@@ -259,6 +259,12 @@ for (const r of rows.slice(1)) {
   items.push(d);
 }
 
+// ---------- one row per product line ----------
+
+// Flavors and varieties sold at one price become one row (collapseVariants in lib.mjs).
+const { items: collapsed, merged: variants } = collapseVariants(items, cfg.storeById);
+items.splice(0, items.length, ...collapsed);
+
 // ---------- rank, to help pick highlights ----------
 
 const allWeeks = loadWeeks().map((w) => w.data);
@@ -272,7 +278,7 @@ const out = join(ROOT, "drafts", `${week}.json`);
 mkdirSync(join(ROOT, "drafts"), { recursive: true });
 const weekFile = { week, flyers: flyers.filter((f) => f.store).map(({ source_line, ...f }) => (f.note ? f : (delete f.note, f))), items };
 writeFileSync(out, JSON.stringify(weekFile, null, 2) + "\n");
-writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, left_out: leftOut, review, suggested_keys: suggested, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
+writeFileSync(join(ROOT, "drafts", `${week}.report.json`), JSON.stringify({ skipped, left_out: leftOut, merged_variants: variants, review, suggested_keys: suggested, unmatched_flyer_lines: flyers.filter((f) => f.unmatched_line).map((f) => f.unmatched_line) }, null, 2) + "\n");
 
 const tiers = { standout: 0, good: 0, sale: 0 };
 for (const r of ranked) tiers[r.a.tier]++;
@@ -284,6 +290,7 @@ for (const { i, a } of ranked.slice(0, 15)) {
 if (review.length) console.log(`\nCheck by hand (${review.length}):\n${review.map((r) => "  " + r).join("\n")}`);
 if (skipped.length) console.log(`\nSkipped (${skipped.length}): ${Object.entries(skipped.reduce((m, s) => ((m[s.reason] = (m[s.reason] ?? 0) + 1), m), {})).map(([k, v]) => `${v} ${k}`).join(", ")}`);
 if (leftOut.length) console.log(`\nLeft out as snacks or packaged food (${leftOut.length}; the reader should have skipped these, see left_out in the report; to keep one, add a word to keep_words in config/leave-out.json):\n${leftOut.map((l) => `  ${l.store} "${l.item}": ${l.reason}`).join("\n")}`);
+if (variants.length) console.log(`\nFlavors and varieties joined into one row (${variants.length}; check the names read well, see merged_variants in the report):\n${variants.map((v) => `  ${v.store} "${v.item}" from ${v.from.length} rows`).join("\n")}`);
 const unmatched = flyers.filter((f) => f.unmatched_line);
 if (unmatched.length) console.log(`\nFlyer lines with no known store:\n${unmatched.map((f) => "  " + f.unmatched_line).join("\n")}`);
 console.log(`\nWrote ${out}\nDetails in drafts/${week}.report.json. Validate with: node scripts/validate.mjs ${out}`);

@@ -62,6 +62,7 @@ Any price that could not be read says `unverified`. Those rows are never used.
 - **Member, loyalty-card, app-only and Prime prices:** set `member_price: true` and name the program in `notes`.
 - **No items from a stale or unreadable flyer.** Its flyer entry still goes in.
 - Food only.
+- **One row per deal, not per flavor** (2026-10-31). When the flyer prints one price for a product line and lists the flavors or varieties (Zoi Honey, Lemon Cream and Raspberry Cream Greek Yogurt, all $1.29), the note can list them as printed; the draft joins rows from the same store with the same deal (price, pack, unit price, regular price, dates, category, key and notes) whose names start with the same brand into one row, such as "Zoi Greek Yogurt, Honey / Lemon Cream / Raspberry Cream". It leaves names that already hold a list ("," or "/"), names that share only a generic first word (Organic, Fresh, Pork) and a store's own label (Metropolitan Market salad and soup aren't one product). Different sizes or prices stay separate rows.
 
 ## 4. Reviewing the draft
 
@@ -73,6 +74,7 @@ Check against the note:
   - Use `null` for one-off items with no fair comparison.
   - Add a key to `config/items.json` for items that will come up again.
 - **Left out:** the draft drops rows in the `snacks-drinks` and `prepared` categories, rows whose name says a snack or ready-made word (sweet bakery words only outside `bakery` and `frozen`), and rows KitchenCatalog reads as a ready-made product other than those kept (`config/leave-out.json`). The `bakery` category is always kept. Each one is listed under `left_out` in the report with the reason. If one belongs (a cooking ingredient caught by a word), add a phrase to `keep_words` and redraft. The validator warns about any snack or packaged item that's still in a week file from 2026-10-30 on.
+- **Joined flavors:** the draft lists each row it made from flavors under `merged_variants` in the report. Check the names read well, and split any that aren't really one product line. The validator warns about flavor rows still listed separately in a week file from 2026-10-30 on.
 - **Prices and units:** spot-check multi-buys ("3/$4"), pack sizes and anything the report lists as skipped for parsing.
 
 ## 5. Highlights

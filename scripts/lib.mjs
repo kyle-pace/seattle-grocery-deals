@@ -237,6 +237,76 @@ export function analyze(item, { cfg, prior, peers }) {
   return { tier: standout ? "standout" : good ? "good" : "sale", score: strength, tags, us, low: lowOk ? low : null, cheapest };
 }
 
+// ---------- flavors and varieties ----------
+
+// Flyers often print one price for a product line and list each flavor or variety
+// (Zoi Honey, Lemon Cream, Raspberry Cream and Strawberry Cream Greek Yogurt, all $1.29).
+// Listed one per row they read as duplicates, so rows from the same store with the same
+// deal (price, pack, unit price, regular price, dates, category, item key, notes) whose
+// names share a brand at the start become one row:
+//   "Zoi Greek Yogurt, Honey / Lemon Cream / Raspberry Cream / Strawberry Cream"
+// Names already holding a list ("," or "/") are left alone, and so are names whose shared
+// start is only a generic word (Organic, Fresh, Pork), since that isn't one product line.
+const GENERIC_START = new Set([
+  "organic", "fresh", "frozen", "natural", "all", "local", "wild", "farmed", "live", "whole", "jumbo", "large", "small", "baby", "premium",
+  "boneless", "bone-in", "sliced", "ground", "raw", "cooked", "red", "green", "yellow", "white", "black", "sweet", "hot", "mini", "extra",
+  "pork", "beef", "chicken", "lamb", "turkey", "duck", "fish", "shrimp", "salmon", "the", "new", "select", "selected", "assorted", "imported",
+]);
+const dealKey = (i) => JSON.stringify([i.store, i.price, i.quantity, i.unit, i.pack ?? null, i.unit_price ?? null, i.regular_price, i.percent_off,
+  i.member_price, i.valid_through, i.category, i.item_key, (i.notes ?? "").trim(), i.vegetarian ?? null]);
+const nameWords = (s) => s.trim().split(/\s+/);
+const fold = (s) => s.toLowerCase().replace(/[’']/g, "'");
+const sameWord = (a, b) => fold(a) === fold(b);
+
+function mergeNames(names, storeName) {
+  const ws = names.map(nameWords);
+  const min = Math.min(...ws.map((w) => w.length));
+  let p = 0;
+  while (p < min && ws.every((w) => sameWord(w[p], ws[0][p]))) p++;
+  let s = 0;
+  while (s < min - p && ws.every((w) => sameWord(w[w.length - 1 - s], ws[0][ws[0].length - 1 - s]))) s++;
+  if (!p || GENERIC_START.has(ws[0][0].toLowerCase())) return null;
+  // A store's own label (Metropolitan Market Wild Rice Salad, ... Spiced Butternut Squash) covers
+  // unrelated foods, so the store's name alone isn't a product line.
+  if (storeName && sameWord(ws[0].slice(0, p).join(" "), storeName)) return null;
+  const variants = ws.map((w) => w.slice(p, w.length - s).join(" "));
+  if (variants.some((v) => !v)) return null; // one name is the other plus extra words; not a flavor list
+  const unique = [...new Set(variants)];
+  if (unique.length < 2) return null;
+  const base = [...ws[0].slice(0, p), ...ws[0].slice(ws[0].length - s)].join(" ");
+  const full = s ? `${base}, ${unique.join(" / ")}` : `${ws[0].slice(0, p).join(" ")} ${unique.join(" / ")}`;
+  return full.length <= 120 ? full : `${base}, selected varieties`;
+}
+
+// Returns { items, merged }: items with variety rows collapsed (order kept, at the first
+// row of each group) and the groups that were merged, for reports. Pass cfg.storeById so
+// store-brand rows aren't merged on the store's name alone.
+export function collapseVariants(items, storeById = {}) {
+  const groups = new Map();
+  items.forEach((it, idx) => {
+    if (/[,/]/.test(it.item)) return;
+    const brand = nameWords(it.item)[0].toLowerCase();
+    const k = `${dealKey(it)}|${brand}`;
+    (groups.get(k) ?? groups.set(k, []).get(k)).push(idx);
+  });
+  const replace = new Map();
+  const drop = new Set();
+  const merged = [];
+  for (const idxs of groups.values()) {
+    if (idxs.length < 2) continue;
+    const rows = idxs.map((n) => items[n]);
+    const name = mergeNames(rows.map((r) => r.item), storeById[rows[0].store]?.name);
+    if (!name) continue;
+    const out = { ...rows[0], item: name };
+    const hl = rows.find((r) => r.highlight)?.highlight;
+    if (hl) out.highlight = hl;
+    replace.set(idxs[0], out);
+    idxs.slice(1).forEach((n) => drop.add(n));
+    merged.push({ store: out.store, item: name, from: rows.map((r) => r.item) });
+  }
+  return { items: items.flatMap((it, n) => (drop.has(n) ? [] : [replace.get(n) ?? it])), merged };
+}
+
 // ---------- formatting ----------
 
 export function money(n) {

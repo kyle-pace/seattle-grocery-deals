@@ -2571,7 +2571,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Carso’s Pasta Co. BBQ Chicken Wings",
+      "item": "Carso’s Pasta Co. Chicken Wings, BBQ / Buffalo",
       "item_key": null,
       "category": "meat",
       "price": 14.99,
@@ -2593,51 +2593,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Carso’s Pasta Co. Buffalo Chicken Wings",
-      "item_key": null,
-      "category": "meat",
-      "price": 14.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 14.99,
-        "per": "lb"
-      },
-      "regular_price": 15.99,
-      "percent_off": 6,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Carlton Farms Applewood Sliced Bacon",
-      "item_key": "bacon",
-      "category": "meat",
-      "price": 10.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 10.99,
-        "per": "lb"
-      },
-      "regular_price": 12.99,
-      "percent_off": 15,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Carlton Farms Premium Smoked Pepper Bacon",
+      "item": "Carlton Farms Bacon, Applewood Sliced / Premium Smoked Pepper",
       "item_key": "bacon",
       "category": "meat",
       "price": 10.99,
@@ -2769,29 +2725,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Fisher Cranberry Orange Scone Mix",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 7.99,
-        "per": "lb"
-      },
-      "regular_price": 6.99,
-      "percent_off": 14,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Fisher Blueberry Scone Mix",
+      "item": "Fisher Scone Mix, Cranberry Orange / Blueberry",
       "item_key": null,
       "category": "pantry",
       "price": 5.99,
@@ -2831,73 +2765,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Earthbound Farm Organic Baby Spinach",
-      "item_key": null,
-      "category": "produce",
-      "price": 4.74,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 15.17,
-        "per": "lb"
-      },
-      "regular_price": 4.99,
-      "percent_off": 5,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Earthbound Farm Organic Baby Arugula",
-      "item_key": null,
-      "category": "produce",
-      "price": 4.74,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 15.17,
-        "per": "lb"
-      },
-      "regular_price": 4.99,
-      "percent_off": 5,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Earthbound Farm Organic Spring Mix",
-      "item_key": null,
-      "category": "produce",
-      "price": 4.74,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 15.17,
-        "per": "lb"
-      },
-      "regular_price": 4.99,
-      "percent_off": 5,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Earthbound Farm Organic Power Greens",
+      "item": "Earthbound Farm Organic Baby Spinach / Baby Arugula / Spring Mix / Power Greens",
       "item_key": null,
       "category": "produce",
       "price": 4.74,
@@ -2941,51 +2809,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Tillamook Farmstyle Medium Cheddar Cheese Slices",
-      "item_key": "cheese-other",
-      "category": "dairy-eggs",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 7.98,
-        "per": "lb"
-      },
-      "regular_price": 4.99,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Tillamook Farmstyle Pepper Jack Cheese Slices",
-      "item_key": "cheese-other",
-      "category": "dairy-eggs",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 7.98,
-        "per": "lb"
-      },
-      "regular_price": 4.99,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Tillamook Farmstyle Swiss Cheese Slices",
+      "item": "Tillamook Farmstyle Cheese Slices, Medium Cheddar / Pepper Jack / Swiss",
       "item_key": "cheese-other",
       "category": "dairy-eggs",
       "price": 3.99,
@@ -3095,7 +2919,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Stumptown Hair Bender Whole Bean Coffee",
+      "item": "Stumptown Whole Bean Coffee, Hair Bender / Organic Holler Mtn. / Organic French Roast / Decaf Trapper Creek",
       "item_key": "coffee",
       "category": "pantry",
       "price": 15.99,
@@ -3117,7 +2941,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Stumptown Organic Holler Mtn. Whole Bean Coffee",
+      "item": "Nossa Familia Whole Bean Coffee, Organic Camila’s / Full Cycle / Organic Augusta's",
       "item_key": "coffee",
       "category": "pantry",
       "price": 15.99,
@@ -3139,139 +2963,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Stumptown Organic French Roast Whole Bean Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 21.32,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Stumptown Decaf Trapper Creek Whole Bean Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 21.32,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Nossa Familia Organic Camila’s Whole Bean Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 21.32,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Nossa Familia Full Cycle Whole Bean Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 21.32,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Nossa Familia Organic Augusta's Whole Bean Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 21.32,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Smith Brothers Dark Roast Whole Bean Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 12.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 17.32,
-        "per": "lb"
-      },
-      "regular_price": 14.99,
-      "percent_off": 13,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Smith Brothers Dark Roast Ground Coffee",
+      "item": "Smith Brothers Dark Roast Coffee, Whole Bean / Ground",
       "item_key": "coffee",
       "category": "pantry",
       "price": 12.99,
@@ -3315,7 +3007,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Stonyfield Organic Low Fat Strawberry Yogurt Tubes",
+      "item": "Stonyfield Organic Low Fat Yogurt Tubes, Strawberry / Cherry & Berry",
       "item_key": null,
       "category": "dairy-eggs",
       "price": 7.99,
@@ -3337,95 +3029,7 @@
     },
     {
       "store": "smith-brothers",
-      "item": "Stonyfield Organic Low Fat Cherry & Berry Yogurt Tubes",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 7.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "ct"
-      },
-      "unit_price": {
-        "value": 1,
-        "per": "each"
-      },
-      "regular_price": 8.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Zoi Strawberry Cream Greek Yogurt",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 1.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 6,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.44,
-        "per": "lb"
-      },
-      "regular_price": 1.79,
-      "percent_off": 28,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Zoi Honey Greek Yogurt",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 1.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 6,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.44,
-        "per": "lb"
-      },
-      "regular_price": 1.79,
-      "percent_off": 28,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Zoi Lemon Cream Greek Yogurt",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 1.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 6,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.44,
-        "per": "lb"
-      },
-      "regular_price": 1.79,
-      "percent_off": 28,
-      "member_price": false,
-      "valid_through": "2026-10-30",
-      "notes": "Home delivery add-on"
-    },
-    {
-      "store": "smith-brothers",
-      "item": "Zoi Raspberry Cream Greek Yogurt",
+      "item": "Zoi Greek Yogurt, Strawberry Cream / Honey / Lemon Cream / Raspberry Cream",
       "item_key": "yogurt",
       "category": "dairy-eggs",
       "price": 1.29,
@@ -6085,29 +5689,7 @@
     },
     {
       "store": "99-ranch",
-      "item": "Wu-Mu Chinese Noodle Series",
-      "item_key": null,
-      "category": "pantry",
-      "price": 4.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 2.5,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 1.72,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-12",
-      "notes": "Dough, Noodles & More, Oct 30 to Nov 12"
-    },
-    {
-      "store": "99-ranch",
-      "item": "Wu-Mu Chow Mein",
+      "item": "Wu-Mu Chinese Noodle Series / Chow Mein",
       "item_key": null,
       "category": "pantry",
       "price": 4.29,
