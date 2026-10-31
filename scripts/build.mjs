@@ -788,6 +788,9 @@ function seasonFeed(feedIds) {
       log: log.map((l) => ({ week: l.week, value: Math.round(l.value * 100) / 100, text: `${l.about ? "about " : ""}${money(l.value)}${unit}`, store: l.deal.store, about: l.about })),
       words: s.words, tagline: s.tagline ?? null, facts: s.facts,
       share: fill(d.best ? s.copy.share_title : s.copy.share_title_none, v),
+      // The page's lines, filled in, so the app's season screen reads like the web page.
+      copy: Object.fromEntries(["kicker", "none_title", "none_line", "also_title", "others_title", "others_note", "log_title", "log_note", "facts_title", "foot"]
+        .map((k) => [k, fill(s.copy[k] ?? "", v)])),
     };
   });
 }
