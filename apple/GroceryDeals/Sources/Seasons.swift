@@ -224,9 +224,11 @@ struct SeasonToolbarButtons: ViewModifier {
                         Analytics.track("Tapped Season Button", ["season": s.id, "place": "toolbar"])
                         DealsRouter.shared.openSeason(s.id)
                     } label: {
-                        Label { Text(s.name) } icon: { SeasonToolbarMark(s.kind, tint: s.color) }
+                        // The buddy itself, not a Label: the top bar shows a Label's title
+                        // instead of an icon that isn't an Image.
+                        SeasonToolbarMark(s.kind, tint: s.color)
                     }
-                    .labelStyle(.iconOnly)
+                    .accessibilityLabel(s.name)
                     .accessibilityHint("Opens \(s.name.lowercased())")
                 }
             }
