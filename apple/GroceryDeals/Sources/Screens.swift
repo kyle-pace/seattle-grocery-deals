@@ -219,7 +219,9 @@ struct StoresView: View {
                  chip: s.delivery == nil ? nil : "Delivers",
                  favorite: store.isFavorite(s.id),
                  line: deals.isEmpty ? (s.status == "unreadable" ? "Flyer couldn't be read this week" : "No deals this week")
-                                     : "\(deals.count) deals, \(deals.filter { $0.tier == .standout }.count) standouts",
+                                     // Standouts first, the same order as This week's store cards and the site.
+                                     : { let st = deals.filter { $0.tier == .standout }.count
+                                         return st > 0 ? "\(st) standouts, \(deals.count) deals" : "\(deals.count) deals" }(),
                  top: s.towns)
         }
         .buttonStyle(.plain)
