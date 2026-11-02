@@ -76,7 +76,7 @@
     },
     "asian-family-market": {
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-02T09:54:49.588Z",
+      "error_at": "2026-11-02T20:17:26.108Z",
       "debug": {
         "final_url": "https://asianfamilymkt.com/",
         "title": "Asian Family Market",
@@ -98,9 +98,9 @@
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/TeamImage",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/StoreQuickLink",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/ContactInfo",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png",
           "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
-          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png"
+          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png"
         ]
       }
     }
