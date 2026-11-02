@@ -232,7 +232,7 @@ struct StoresView: View {
     }
 }
 
-/// A store's page: its weekly ad as a card at the top (opening the full-screen flyer), what
+/// A store's page: its weekly ad as a card at the top (a link out to the store's own flyer page), what
 /// it's like, and all of its deals, with a search field for just this store.
 struct StoreDetail: View {
     @Environment(FeedStore.self) private var store

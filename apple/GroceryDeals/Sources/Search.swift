@@ -51,7 +51,9 @@ struct SearchView: View {
                 if q.isEmpty { landing } else { results(q) }
             }
             .navigationTitle("Search")
-            .searchable(text: $router.searchQuery, prompt: "Deals, stores, aisles")
+            // Always show the field: in the default spot it hid under the title until you
+            // pulled down, which made the Search tab look like it had no search box.
+            .searchable(text: $router.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Deals, stores, aisles")
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)

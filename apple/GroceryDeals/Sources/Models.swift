@@ -203,18 +203,13 @@ struct Store: Codable, Sendable, Identifiable, Hashable {
         }
     }
 
-    /// The pages the app's own flyer viewer shows: page images when there are any (Uwajimaya
-    /// posts both images and a PDF of the same ad), otherwise the PDFs.
-    var viewablePages: [FlyerPage] {
+    /// Where the weekly ad lives: the store's own flyer page when there is one, otherwise the
+    /// first flyer link (an image or PDF on the store's site). The app only links out to it.
+    var flyerLinkURL: URL? {
         let pages = flyer_pages ?? []
-        let images = pages.filter { $0.kind == .image }
-        return images.isEmpty ? pages.filter { $0.kind == .pdf } : images
+        return ((pages.first { $0.kind == .web }?.url ?? flyer_url) ?? pages.first?.url).flatMap(URL.init(string:))
     }
-    var hasFlyer: Bool { !viewablePages.isEmpty || flyerWebURL != nil }
-    /// Where to send people when there's nothing to show in the app.
-    var flyerWebURL: URL? {
-        ((flyer_pages ?? []).first { $0.kind == .web }?.url ?? flyer_url).flatMap(URL.init(string:))
-    }
+    var hasFlyer: Bool { flyerLinkURL != nil }
 
     /// "Seattle · Tukwila"
     var towns: String {
