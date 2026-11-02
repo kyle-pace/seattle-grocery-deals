@@ -39,6 +39,7 @@ Updated 2026-10-31.
   - Colors: evergreen header `#1d4d33`, cream paper `#f7f5f0`, ink `#141414`, muted `#57534c`, yellow standout tag `#ffe45c`, red for "% off" `#b3261e`. Dark mode is defined there too.
   - Type: Barlow Condensed 700 for prices and headings, Atkinson Hyperlegible Next for everything else. Both self-hosted, because the privacy notice says fonts come from the site.
   - Color carries meaning only (yellow = standout, red = discount). Rainbow and queer flair are saved for the app icon, not the interface.
+  - Phone tab bar (2026-11-01): a floating Liquid Glass dock like the iOS 26 app. Capsule of tabs with a lens behind the current one (it slides between pages with a cross-document view transition), a round search button that opens This week's search, and it shrinks to the current tab on scroll down. Solid surfaces with Reduce Transparency, more contrast, or no backdrop-filter support.
   - Accessibility is a requirement: AA contrast in light and dark, 44px tap targets, prices read as "per pound" to screen readers, visible focus.
 - **Removed in the redesign:** the "my stores" dialog and the category and tier filters. Bring "my stores" back if people miss it.
 - **Parked:** a store "spotlight" card to encourage shopping at a store going through a hard time. Removed for now at the owner's request; the owner writes any such text.

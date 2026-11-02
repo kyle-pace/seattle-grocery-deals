@@ -187,7 +187,55 @@
     ending.hidden = shown === 0;
   }
 
+  // ?q= opens This week with a search already typed (the apps link here as a fallback).
+  try {
+    var preset = new URLSearchParams(location.search).get("q");
+    if (search && preset) search.value = preset;
+  } catch (e) {}
+
   apply();
+})();
+
+// Phone tab bar: shrinks to the current tab on scroll down, like the app's
+// tabBarMinimizeBehavior(.onScrollDown). Scrolling up, getting near the top, or tapping it
+// brings it back; keyboard focus opens it through :focus-within in the CSS.
+(function () {
+  var dock = document.querySelector("[data-dock]");
+  if (!dock) return;
+  var bar = dock.querySelector(".tabbar");
+  var canMin = Boolean(bar && bar.querySelector('[aria-current="page"]'));
+  var lastY = window.scrollY, ticking = false;
+  function setMin(on) {
+    if (on && canMin) dock.setAttribute("data-min", "");
+    else dock.removeAttribute("data-min");
+  }
+  function onScroll() {
+    ticking = false;
+    var y = window.scrollY, dy = y - lastY;
+    if (y < 80) { setMin(false); lastY = y; return; }
+    if (Math.abs(dy) < 12) return;
+    setMin(dy > 0);
+    lastY = y;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  if (bar) bar.addEventListener("click", function (e) {
+    if (!dock.hasAttribute("data-min")) return;
+    e.preventDefault();
+    setMin(false);
+    lastY = window.scrollY;
+  });
+
+  // Search: on This week, go straight to the search box; elsewhere the link opens This week at #search.
+  var field = document.querySelector("[data-home]") && document.querySelector("[data-search]");
+  function toField() {
+    field.focus({ preventScroll: true });
+    field.scrollIntoView({ block: "center" });
+  }
+  var btn = dock.querySelector("[data-dock-search]");
+  if (btn && field) btn.addEventListener("click", function (e) { e.preventDefault(); toField(); });
+  if (field && location.hash === "#search") toField();
 })();
 
 // About page: turn Amplitude off (or back on) in this browser.

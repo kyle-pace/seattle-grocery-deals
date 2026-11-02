@@ -304,7 +304,9 @@ function page({ title, path, section = path, body, wrap = true, description, map
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
   const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}</a>`).join("")
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
-  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span></a>`).join("");
+  // Phone tab bar, after the app's iOS 26 Liquid Glass bar: the current tab carries the
+  // lens (it slides between pages with a view transition), search is its own round button.
+  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${p === section ? `<span class="tab-lens" aria-hidden="true"></span>` : ""}${ICONS[p]}<span class="tab-label">${label}</span></a>`).join("");
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -357,7 +359,10 @@ ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
   <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("about/")}">About and privacy</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
-<nav class="tabbar" aria-label="Main">${tabs}</nav>
+<div class="dock" data-dock>
+  <nav class="tabbar" aria-label="Main">${tabs}</nav>
+  <a class="dock-search" href="${url()}#search" data-dock-search aria-label="Search deals"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5"/></svg></a>
+</div>
 ${DISPLAY_PANEL}
 </body>
 </html>
