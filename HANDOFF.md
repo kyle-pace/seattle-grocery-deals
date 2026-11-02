@@ -6,7 +6,9 @@ Keep the "Where we left off" section current. Work happens on a branch per task 
 
 ## Where we left off
 
-Updated 2026-10-31.
+Updated 2026-11-01.
+
+- **Polish pass (2026-11-01, branch `polish-pass` here, in KitchenUI and in Maitake):** the Deals app and the site take a persimmon accent (`Palette.use(.persimmon)`, `--accent #b04418` light / `#f5a06a` dark, all pairs at WCAG AA); Maitake keeps the herb green, so the two apps share neutrals, tones and type and differ only in accent. New `/apps/` page for the iPhone app, marked coming soon (Apple's badge, not a link; screenshots from `site/assets/img/app/` when present), linked from the footer and About. The app's welcome names the stores it covers. The validator now skips `work/` and build folders. Review the accent on the live site before merging if it feels like too much of a change.
 
 - **Pull requests waiting for the owner:** #6 (this handoff file, `design/` mockups, product images plan) and #7 (`mobile-app` branch: the iPhone app, `/api/week.json` feed, `docs/architecture.svg`). Read both branches if they aren't merged yet.
 - **Site:** redesign live (#5), "Vegetarian only" live (#4). Deals update per store as flyers come out (see below).
@@ -35,9 +37,9 @@ Updated 2026-10-31.
 - **Scope:** Seattle-area stores only. Specialty grocers the big chains' apps skip: Asian markets, seafood shops, co-ops. No mainstream chains (Grocery Outlet was dropped). No flyer aggregators such as Flipp: every store is read from its own site.
 - **PCC:** its site blocks automated reading (Cloudflare). Do not try to get around the bot check. Options are asking PCC for a feed, reading it by hand, or marking it unreadable. Since 2026-10-29 the Friday routine skips PCC entirely (owner's call); it stays on the site's store list.
 - **Design system:** "Newsprint". Tokens live at the top of `site/assets/style.css`.
-  - Colors: evergreen header `#1d4d33`, cream paper `#f7f5f0`, ink `#141414`, muted `#57534c`, yellow standout tag `#ffe45c`, red for "% off" `#b3261e`. Dark mode is defined there too.
-  - Type: Barlow Condensed 700 for prices and headings, Atkinson Hyperlegible Next for everything else. Both self-hosted, because the privacy notice says fonts come from the site.
-  - Color carries meaning only (yellow = standout, red = discount). Rainbow and queer flair are saved for the app icon, not the interface.
+  - Colors (since the KitchenUI redesign): the shared neutrals (ground `#f4f4f1`, ink `#1b1f1d`, muted `#5e6661`), the persimmon accent `#b04418` (dark `#f5a06a`, 2026-11-01), and the tones that always pair a shape with a word: warn for Standout, good (green) for "% off", info for "under US avg". Dark mode is defined there too. The older evergreen/yellow-tag scheme is gone.
+  - Type: Atkinson Hyperlegible Next for everything, self-hosted, because the privacy notice says fonts come from the site. (Barlow Condensed was dropped with the KitchenUI redesign.)
+  - Color carries meaning only, and never alone: every tone pairs a shape or word with its fill. Rainbow and queer flair are saved for the app icon, not the interface.
   - Accessibility is a requirement: AA contrast in light and dark, 44px tap targets, prices read as "per pound" to screen readers, visible focus.
 - **Removed in the redesign:** the "my stores" dialog and the category and tier filters. Bring "my stores" back if people miss it.
 - **Parked:** a store "spotlight" card to encourage shopping at a store going through a hard time. Removed for now at the owner's request; the owner writes any such text.

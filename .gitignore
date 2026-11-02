@@ -6,3 +6,6 @@ work/
 
 # Old Expo app (removed); keep stray local copies out of git.
 mobile/
+
+# simulator builds from polish passes
+apple/GroceryDeals/build-sim/
