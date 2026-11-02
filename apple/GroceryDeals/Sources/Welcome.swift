@@ -195,9 +195,9 @@ struct DealsOnboarding: View {
                         .padding(.horizontal, Space.m).frame(minHeight: 40)
                         .glassEffect(.regular, in: .capsule)
                 }
-                HowRow(title: "Flip through the flyer", detail: "Every store's weekly ad, right in the app. Pinch to zoom.") {
-                    FlyerThumb(page: store.rankedStores.compactMap { $0.viewablePages.first { $0.kind == .image } }.first,
-                               size: CGSize(width: 48, height: 62))
+                HowRow(title: "Check the weekly ad", detail: "Every store page links to its weekly ad on the store's own site.") {
+                    Image(systemName: "newspaper").font(.app(.title3, .semibold)).foregroundStyle(Palette.ink)
+                        .frame(width: 48, height: 48).glassEffect(.regular, in: .circle)
                 }
                 HowRow(title: "Search from anywhere", detail: "Aisles, stores and deals. This week's deals show up in iPhone search, too.") {
                     Image(systemName: "magnifyingglass").font(.app(.title3, .semibold)).foregroundStyle(Palette.ink)

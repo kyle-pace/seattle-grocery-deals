@@ -29,5 +29,4 @@ enum Lines {
     static let emptyListDetail = "Tap + on any deal, or type your own in the field below."
     static func tripDone(_ n: Int) -> String { n == 1 ? "Trip done. 1 for 1." : "Trip done. \(n) for \(n)." }
     static let watchesTitle = "Your price watches"
-    static let flyerLoading = ["Unfolding the flyer…", "Smoothing out the pages…", "Fetching this week's ad…"]
 }
