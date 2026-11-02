@@ -1,6 +1,6 @@
 // Builds the static site into dist/. Usage: node scripts/build.mjs
 // Set BASE_PATH=/ to build for a local server at the root.
-import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, rmSync, cpSync, readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { buildSync } from "esbuild";
@@ -63,6 +63,12 @@ const ICON_PATHS = {
   search: `<circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4l4 4"/>`,
   close: `<path d="M4 4l8 8M12 4l-8 8"/>`,
   ad: `<path d="M3 1.8h7.2l2.8 2.8v9.6H3zM10 1.8v3h3M5.5 7.5h5M5.5 10h5"/>`,
+  // the Apps page
+  newspaper: `<path d="M2.5 3h9v10h-9zM11.5 6h2v6a1 1 0 0 1-2 0M4.5 5.5h3v3h-3zM9.5 5.5v3M4.5 10.5h5"/>`,
+  grid: `<rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/>`,
+  list: `<path d="M5.5 4h8M5.5 8h8M5.5 12h8"/><circle cx="2.8" cy="4" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="8" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="12" r=".9" fill="currentColor" stroke="none"/>`,
+  bell: `<path d="M4 11V7.2a4 4 0 0 1 8 0V11l1.2 1.5H2.8zM6.6 14a1.5 1.5 0 0 0 2.8 0"/>`,
+  widget: `<rect x="2.5" y="2.5" width="11" height="11" rx="2.5"/><path d="M5.5 6h5M5.5 8.5h3M5.5 11h4"/>`,
 };
 const ic = (name) => `<svg class="ic ic-${name}" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICON_PATHS[name]}</svg>`;
 // A shape and a word for a state, never color alone. Tones: good, warn, bad, neutral, info.
@@ -333,7 +339,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("about/")}">About and privacy</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("apps/")}">iPhone app</a><a href="${url("about/")}">About and privacy</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -799,6 +805,7 @@ function aboutPage() {
   const c = cfg.criteria;
   const body = `<div class="page-h"><h1>About</h1></div>
 <p>Every Friday this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
+<p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("apps/")}">about the app</a>.</p>
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
 <p>A store is included when it:</p>
@@ -841,6 +848,54 @@ function aboutPage() {
 <p>Your "Vegetarian" choice and the analytics setting are saved only in your browser and are never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body }));
+}
+
+// The iPhone app, before it's on the App Store. The badge is Apple's own, unchanged and not a
+// link (there's no store page yet); "Coming soon" sits beside it in plain text so nobody,
+// sighted or not, takes it for a download. Screenshots come from site/assets/img/app/ when
+// they exist (simulator captures), so the page builds either way.
+function appsPage() {
+  const shots = [
+    ["week", "This week: top picks, then each store's best"],
+    ["aisles", "Aisles: produce, seafood, meat and the rest, across every store"],
+    ["deal", "A deal: the price, how it compares, and the same item at other stores"],
+    ["list", "The list: in the app, or a Reminders list you share"],
+  ].filter(([id]) => existsSync(join(ROOT, "site", "assets", "img", "app", `${id}.png`)));
+  const features = [
+    ["newspaper", "This week", "The same deals as this site, with top picks first and each store's best below. Pull to refresh when a flyer updates."],
+    ["grid", "Aisles and search", "Browse by aisle, or search across stores. This week's deals show up in iPhone search too."],
+    ["storefront", "Your stores", "Pick the stores you actually shop at and they come first everywhere. Every store stays in the app, with its weekly ad to flip through."],
+    ["list", "A list that knows the sale", "Tap + on a deal and it goes on your list with the price, the store and the day the sale ends. Keep the list in the app, or in a Reminders list you already share."],
+    ["bell", "Alerts you choose", "A nudge when new deals are in, the day before a list item's sale ends, and when an item you're watching gets cheaper. Each one is off until you turn it on."],
+    ["leaf", "Vegetarian", "The same switch as the site: hide meat, poultry and seafood, and anything made with them."],
+    ["widget", "Widget, Siri and Shortcuts", "Best This Week on your Home Screen. Ask Siri what's on sale, or add something to your list without opening the app."],
+  ];
+  const body = `<div class="page-h"><h1>The iPhone app</h1>
+<p class="page-sub">Seattle Grocery Deals, in your pocket. iPhone only for now.</p></div>
+<div class="card app-hero">
+  ${buddy("happy", 96, "bd-hop")}
+  <div class="app-hero-text">
+    <p class="app-hero-lede">The week's sales at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, with a list that fills itself and alerts you pick.</p>
+    <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
+  </div>
+</div>
+${shots.length ? `<section class="block" aria-labelledby="h-shots">
+  <div class="sec-h"><h2 id="h-shots">A look inside</h2></div>
+  <ul class="app-shots">${shots.map(([id, caption]) => `<li><figure><img src="${url(`assets/img/app/${id}.png`)}" alt="" width="1206" height="2622" loading="lazy"><figcaption>${esc(caption)}</figcaption></figure></li>`).join("")}</ul>
+</section>` : ""}
+<section class="block" aria-labelledby="h-does">
+  <div class="sec-h"><h2 id="h-does">What it does</h2></div>
+  <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h3>${esc(title)}</h3><p>${esc(text)}</p></div></li>`).join("")}</ul>
+</section>
+<section class="block" aria-labelledby="h-priv">
+  <div class="sec-h"><h2 id="h-priv">Private by design</h2></div>
+  <p>No account. Your list and your stores stay on your iPhone, or in your own Reminders. Price watches are checked on the phone. The app asks once whether to share anonymous usage, nothing is sent before you answer, and no is a fine answer. More in <a href="${url("about/")}#privacy">About</a>.</p>
+</section>
+<section class="block" aria-labelledby="h-now">
+  <div class="sec-h"><h2 id="h-now">In the meantime</h2></div>
+  <p>Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
+</section>`;
+  write("apps/", page({ title: "iPhone app", path: "apps/", section: "about/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that fills itself, and alerts you choose. Coming soon." }));
 }
 
 function dataPages() {
@@ -917,6 +972,7 @@ comparePage();
 weekPages();
 storePages();
 aboutPage();
+appsPage();
 for (const s of SEASONS) seasonPage(s);
 dataPages();
 const feed = appFeed();
