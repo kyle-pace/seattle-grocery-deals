@@ -31,7 +31,8 @@ concurrency:
 
 jobs:
   watch:
-    runs-on: ubuntu-latest
+    # Pinned: Playwright's browser install supports 24.04; ubuntu-latest is moving to 26.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
@@ -47,8 +48,11 @@ jobs:
             mkdir -p ../state && cd ../state && git init -q && git checkout -q -b flyer-watch
           fi
       - name: Install a browser (for pages that need JavaScript)
+        # Only stores with "render" need it; if it fails, those stores report an error and the
+        # rest are still checked.
+        continue-on-error: true
         run: |
-          npm install --no-save --no-package-lock playwright@1.56.1
+          npm install --no-save --no-package-lock playwright@latest
           npx playwright install --with-deps chromium
       - name: Check the flyer pages
         env:

@@ -6,12 +6,22 @@
   if (!el || !dataEl || !window.L) return;
   var data = JSON.parse(dataEl.textContent);
 
-  var dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  var css = getComputedStyle(document.documentElement);
-  var green = css.getPropertyValue("--green").trim() || "#1d4d3a";
-  var tomato = css.getPropertyValue("--tomato").trim() || "#d9442b";
-  var muted = css.getPropertyValue("--muted").trim() || "#5d6b64";
-  var surface = css.getPropertyValue("--surface").trim() || "#ffffff";
+  // Dark tiles follow the page's theme: the display settings choice, else the device.
+  var theme = document.documentElement.getAttribute("data-theme");
+  var dark = theme ? theme === "dark" : window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  // Colors are light-dark() pairs in style.css; resolve them through a probe element.
+  var probe = document.createElement("span");
+  probe.hidden = true;
+  document.body.appendChild(probe);
+  function color(name, fallback) {
+    probe.style.color = "var(" + name + ")";
+    return getComputedStyle(probe).color || fallback;
+  }
+  var green = color("--green", "#1d4d3a");
+  var tomato = color("--tomato", "#d9442b");
+  var muted = color("--muted", "#5d6b64");
+  var surface = color("--surface", "#ffffff");
+  probe.remove();
 
   var map = L.map(el, { scrollWheelZoom: false, zoomControl: true });
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {

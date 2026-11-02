@@ -59,14 +59,34 @@ async function rendered(url, click) {
     const { chromium } = await import("playwright");
     browser = await chromium.launch();
   }
-  const page = await browser.newPage({ userAgent: UA });
+  const page = await browser.newPage({ userAgent: UA, viewport: { width: 1280, height: 1600 } });
+  // Also keep every address the page loads (images included), so a poster that is set as a
+  // background or swapped in by script still counts, whatever the page's markup looks like.
+  const loaded = [];
+  page.on("request", (r) => loaded.push(r.url()));
+  let clicked = null;
   try {
     await page.goto(url, { waitUntil: "networkidle", timeout: 45_000 });
     if (click) {
-      await page.getByText(click, { exact: false }).first().click({ timeout: 10_000 });
+      const button = page.getByRole("button", { name: click });
+      const target = (await button.count()) ? button.first() : page.getByText(click, { exact: false }).first();
+      clicked = await target.click({ timeout: 10_000 }).then(() => "ok", (e) => {
+        const why = e.message.split("\n")[0];
+        console.log(`  (click on "${click}" failed: ${why})`);
+        return `failed: ${why}`.slice(0, 120);
+      });
+      await page.waitForLoadState("networkidle", { timeout: 15_000 }).catch(() => {});
       await page.waitForTimeout(2500);
     }
-    return { html: await page.content(), text: await page.evaluate(() => document.body.innerText) };
+    const html = `${await page.content()}\n${loaded.join("\n")}`;
+    const text = await page.evaluate(() => document.body.innerText);
+    // What the page looked like, kept in state.json only when the pattern matches nothing, so a
+    // broken pattern can be fixed from what the watcher actually saw.
+    const seen = [...new Set(loaded.map((u) => u.split("?")[0]))]
+      .filter((u) => /\.(?:png|jpe?g|webp|gif|pdf)$|base44|\/api\/|upload|storage|media/i.test(u)).slice(0, 40);
+    const debug = { final_url: page.url(), title: await page.title(), clicked, requests: loaded.length,
+      text_start: text.replace(/\s+/g, " ").trim().slice(0, 300), urls: seen };
+    return { html, text, debug };
   } finally {
     await page.close();
   }
@@ -95,18 +115,20 @@ for (const s of stores) {
   const prev = state.stores[s.id] ?? {};
   if (w.desktop) { report.push(`${s.id}: desktop only, skipped`); continue; }
   let found;
+  let page;
   try {
-    const page = w.render ? await rendered(w.url, w.click) : await fetched(w.url);
+    page = w.render ? await rendered(w.url, w.click) : await fetched(w.url);
     found = matches(w, page);
     if (!found.length) throw new Error("the pattern matched nothing (page layout may have changed)");
   } catch (e) {
     state.stores[s.id] = { ...prev, error: String(e.message ?? e).slice(0, 200), error_at: nowIso };
+    if (page?.debug) state.stores[s.id].debug = page.debug;
     report.push(`${s.id}: ERROR ${e.message ?? e}`);
     continue;
   }
   const fingerprint = createHash("sha256").update(found.join("\n")).digest("hex").slice(0, 16);
   const entry = { ...prev, fingerprint, matches: found.slice(0, 20) };
-  delete entry.error; delete entry.error_at;
+  delete entry.error; delete entry.error_at; delete entry.debug;
 
   if (!prev.fingerprint) {
     entry.seen_at = nowIso;

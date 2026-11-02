@@ -286,6 +286,25 @@ const ICONS = {
 const MAIN_NAV = [["", "This week"], ["departments/", "Departments"], ["stores/", "Stores"], ["compare/", "Compare"]];
 
 // section: which menu item this page belongs to ("" is This week).
+// Display settings panel on every page (assets/display.js, styles at the end of style.css).
+// The first option in each group is the default.
+const DISPLAY_SETTINGS = [
+  ["theme", "Theme", [["auto", "System"], ["light", "Light"], ["dark", "Dark"]]],
+  ["text", "Text size", [["default", "Default"], ["large", "Large"], ["larger", "Larger"]]],
+  ["contrast", "Contrast", [["auto", "System"], ["default", "Standard"], ["more", "More"]]],
+  ["font", "Font", [["default", "Hyperlegible"], ["system", "Device font"]]],
+  ["spacing", "Spacing", [["default", "Default"], ["wide", "Wide"]]],
+  ["motion", "Motion", [["auto", "System"], ["reduce", "Reduce"]]],
+  ["links", "Links", [["default", "Default"], ["underline", "Underline all"]]],
+];
+const DISPLAY_PANEL = `<button class="dp-toggle" type="button" popovertarget="display-panel" aria-label="Display and accessibility settings"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><circle cx="12" cy="4.5" r="2" fill="currentColor"/><path d="M4 8.5c2.6.8 5.3 1.2 8 1.2s5.4-.4 8-1.2M12 9.7v5m0 0-3.5 6.8M12 14.7l3.5 6.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+<div id="display-panel" class="dp-panel" popover role="dialog" aria-labelledby="display-panel-title">
+  <div class="dp-head"><h2 id="display-panel-title">Display settings</h2><button type="button" class="dp-close" popovertarget="display-panel" popovertargetaction="hide" aria-label="Close display settings"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+  <form class="dp-options">${DISPLAY_SETTINGS.map(([key, label, options]) => `<fieldset><legend>${label}</legend><div class="dp-seg">${options.map(([value, text], i) => `<label><input type="radio" name="${key}" value="${value}"${i === 0 ? " checked" : ""}><span>${text}</span></label>`).join("")}</div></fieldset>`).join("")}</form>
+  <div class="dp-foot"><button type="button" class="dp-reset">Reset</button></div>
+  <p class="dp-note">Saved in this browser only.</p>
+</div>`;
+
 function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "" }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
@@ -318,7 +337,9 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <link rel="preload" href="${url("assets/fonts/atkinson-hyperlegible-next.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset("assets/style.css")}">
 <script>try{if(JSON.parse(localStorage.getItem("sgd.vegOnly")))document.documentElement.classList.add("veg-on")}catch(e){}</script>
+<script>try{var d=JSON.parse(localStorage.getItem("sgd.display")||"{}");for(var k in d)document.documentElement.setAttribute("data-"+k,d[k])}catch(e){}</script>
 <script src="${asset("assets/app.js")}" defer></script>
+<script src="${asset("assets/display.js")}" defer></script>
 <script type="module" src="${ANALYTICS_SRC}"></script>${extraScript ? `
 <script src="${asset(extraScript)}" defer></script>` : ""}${head ? `
 ${head}` : ""}${map ? `
@@ -343,6 +364,7 @@ ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
+${DISPLAY_PANEL}
 </body>
 </html>
 `;
@@ -703,8 +725,13 @@ function seasonValue(s, i) {
 }
 // The page's colors, light and dark, as CSS custom properties on body.season.
 function seasonStyle(s) {
-  const vars = (c) => `--season:${c.main};--season-text:${c.text};--season-soft:${c.soft};--season-ink:${c.ink};background:linear-gradient(${c.bg[0]}, ${c.bg[1]}) fixed`;
-  return `<style>body.season{${vars(s.colors.light)}}@media (prefers-color-scheme: dark){body.season{${vars(s.colors.dark)}}}</style>`;
+  // light-dark() pairs, so the display settings' Light and Dark themes apply here too.
+  const ld = (k, i) => {
+    const l = i === undefined ? s.colors.light[k] : s.colors.light[k][i];
+    const d = i === undefined ? s.colors.dark[k] : s.colors.dark[k][i];
+    return `light-dark(${l}, ${d})`;
+  };
+  return `<style>body.season{--season:${ld("main")};--season-text:${ld("text")};--season-soft:${ld("soft")};--season-ink:${ld("ink")};background:linear-gradient(${ld("bg", 0)}, ${ld("bg", 1)}) fixed}</style>`;
 }
 
 function seasonPage(s) {
@@ -796,7 +823,7 @@ function seasonFeed(feedIds) {
       share: fill(d.best ? s.copy.share_title : s.copy.share_title_none, v),
       // The page's lines, filled in, so the app's season screen reads like the web page.
       copy: Object.fromEntries(["kicker", "none_title", "none_line", "also_title", "others_title", "others_note", "log_title", "log_note", "facts_title", "foot"]
-        .map((k) => [k, fill(s.copy[k] ?? "", v)])),
+        .map((k) => [k, s.copy[k] ? fill(s.copy[k], v) : null])),
     };
   });
 }
