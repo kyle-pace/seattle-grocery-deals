@@ -203,7 +203,7 @@
   var dock = document.querySelector("[data-dock]");
   if (!dock) return;
   var bar = dock.querySelector(".tabbar");
-  var canMin = Boolean(bar && bar.querySelector('[aria-current="page"]'));
+  var canMin = Boolean(bar && bar.querySelector(".on"));
   var lastY = window.scrollY, ticking = false;
   function setMin(on) {
     if (on && canMin) dock.setAttribute("data-min", "");

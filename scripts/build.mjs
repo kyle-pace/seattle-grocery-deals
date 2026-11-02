@@ -306,7 +306,10 @@ function page({ title, path, section = path, body, wrap = true, description, map
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
   // Phone tab bar, after the app's iOS 26 Liquid Glass bar: the current tab carries the
   // lens (it slides between pages with a view transition), search is its own round button.
-  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${p === section ? `<span class="tab-lens" aria-hidden="true"></span>` : ""}${ICONS[p]}<span class="tab-label">${label}</span></a>`).join("");
+  // Pages outside the four tabs (About, season pages) sit under This week in the bar, so it
+  // can still shrink to a tab; aria-current stays only on a real match.
+  const onTab = MAIN_NAV.some(([p]) => p === section) ? section : "";
+  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${p === onTab ? ' class="on"' : ""}${cur(p)}>${p === onTab ? `<span class="tab-lens" aria-hidden="true"></span>` : ""}${ICONS[p]}<span class="tab-label">${label}</span></a>`).join("");
   return `<!doctype html>
 <html lang="en">
 <head>
