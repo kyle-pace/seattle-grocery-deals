@@ -47,7 +47,7 @@ private struct VegChip: ViewModifier {
                     Label("Vegetarian only", systemImage: on ? "leaf.fill" : "leaf")
                         .contentTransition(.symbolEffect(.replace))
                 }
-                .tint(on ? Palette.accent : nil)
+                .tint(on ? Palette.mark(.good) : nil)   // the leaf stays green whatever the app's accent
                 .accessibilityValue(on ? "On" : "Off")
                 .accessibilityAddTraits(on ? .isSelected : [])
                 .sensoryFeedback(.selection, trigger: on)

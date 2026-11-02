@@ -112,7 +112,7 @@ struct DealsOnboarding: View {
                         Text("Welcome to Deals").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                             .accessibilityAddTraits(.isHeader)
                             .accessibilityFocused($titleFocused)
-                        Text("The best sales at Seattle's specialty grocers, every Friday.")
+                        Text("This week's sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip.")
                             .font(.app(.callout)).foregroundStyle(Palette.body)
                     }
                     Spacer(minLength: 0)

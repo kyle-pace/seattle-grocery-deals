@@ -308,7 +308,7 @@ struct SettingsView: View {
                 Section {
                     Toggle(isOn: $share) {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Share anonymous usage data").font(.app(.headline))
+                            Text("Share anonymous usage").font(.app(.headline))
                             Text("Which screens and features get used, to improve the app. No name, no IP address, never your list.")
                                 .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                         }

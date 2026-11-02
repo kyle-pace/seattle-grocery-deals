@@ -12,6 +12,7 @@ struct GroceryDealsApp: App {
 
     init() {
         KitchenUI.registerFonts()
+        Palette.use(.persimmon)    // Deals' accent: the persimmon from its icon (Maitake keeps the green)
         _ = Welcome.start          // decide before the first feed load saves a week
         Analytics.start()          // does nothing until the usage question gets a yes
         UNUserNotificationCenter.current().delegate = presenter
