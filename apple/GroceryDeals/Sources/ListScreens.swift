@@ -296,6 +296,10 @@ struct SettingsView: View {
                         LabeledContent("Your stores", value: store.favoriteStores.isEmpty ? "None yet" : "\(store.favoriteStores.count)")
                             .font(.app(.headline))
                     }
+                    Toggle(isOn: Binding(get: { store.vegetarianOnly }, set: { store.vegetarianOnly = $0 })) {
+                        labeled("Vegetarian deals only", "Hides meat and seafood everywhere in the app")
+                    }
+                    .tint(Palette.mark(.good))   // the leaf's green, whatever the app's accent
                 } header: { Text("Shopping") } footer: {
                     Text("Your stores come first on This week, Aisles and Stores. Every store still shows.")
                 }

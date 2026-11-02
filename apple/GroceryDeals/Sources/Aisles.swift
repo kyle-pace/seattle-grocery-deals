@@ -61,7 +61,6 @@ struct AislesView: View {
             .background(Palette.ground)
             .navigationTitle("Aisles")
             .navigationSubtitle("\(store.items.count) deals in \(store.aisles.count) aisles")
-            .dealsVegChip()
             .settingsButton()
             .refreshable { await store.refresh() }
             .navigationDestination(for: AisleRoute.self) { route in

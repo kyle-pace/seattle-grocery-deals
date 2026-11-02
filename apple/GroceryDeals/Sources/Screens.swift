@@ -31,31 +31,6 @@ private struct PinnedBar<Bar: View>: ViewModifier {
     }
 }
 
-/// "Vegetarian" as a leaf button in the toolbar, next to the gear. It used to be a chip pinned
-/// under the title, but on iOS 26 the large title scrolls with the content, so a pinned bar ends
-/// up above the title (the Oct 28 evening recording). A toolbar toggle stays put and in reach.
-private struct VegChip: ViewModifier {
-    @Environment(FeedStore.self) private var store
-    func body(content: Content) -> some View {
-        content.toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                let on = store.vegetarianOnly
-                Button {
-                    store.vegetarianOnly.toggle()
-                    Announce.say(store.vegetarianOnly ? "Showing vegetarian deals only" : "Showing all deals")
-                } label: {
-                    Label("Vegetarian only", systemImage: on ? "leaf.fill" : "leaf")
-                        .contentTransition(.symbolEffect(.replace))
-                }
-                .tint(on ? Palette.mark(.good) : nil)   // the leaf stays green whatever the app's accent
-                .accessibilityValue(on ? "On" : "Off")
-                .accessibilityAddTraits(on ? .isSelected : [])
-                .sensoryFeedback(.selection, trigger: on)
-            }
-        }
-    }
-}
-
 extension View {
     /// A search field in the navigation bar drawer, only when `on`.
     @ViewBuilder func searchableIf(_ on: Bool, text: Binding<String>, prompt: String) -> some View {
@@ -67,7 +42,6 @@ extension View {
     }
 
     func dealsPinnedBar<Bar: View>(@ViewBuilder _ bar: () -> Bar) -> some View { modifier(PinnedBar(bar: bar())) }
-    func dealsVegChip() -> some View { modifier(VegChip()) }
 }
 
 // MARK: This week
@@ -119,7 +93,6 @@ struct ThisWeekView: View {
             }
             .navigationTitle("This week")
             .navigationSubtitle(store.editionLine)
-            .dealsVegChip()
             .settingsButton()
             // A hidden season's buddy, to find its card again (Seasons.swift).
             .seasonToolbarButtons()
