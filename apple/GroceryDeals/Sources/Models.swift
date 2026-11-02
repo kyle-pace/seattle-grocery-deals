@@ -207,7 +207,10 @@ struct Store: Codable, Sendable, Identifiable, Hashable {
     /// first flyer link (an image or PDF on the store's site). The app only links out to it.
     var flyerLinkURL: URL? {
         let pages = flyer_pages ?? []
-        return ((pages.first { $0.kind == .web }?.url ?? flyer_url) ?? pages.first?.url).flatMap(URL.init(string:))
+        let url = ((pages.first { $0.kind == .web }?.url ?? flyer_url) ?? pages.first?.url).flatMap(URL.init(string:))
+        // Safari's viewer only opens web addresses (anything else crashes it).
+        guard let url, ["http", "https"].contains(url.scheme?.lowercased() ?? "") else { return nil }
+        return url
     }
     var hasFlyer: Bool { flyerLinkURL != nil }
 
