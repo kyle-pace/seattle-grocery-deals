@@ -858,6 +858,7 @@ function appsPage() {
   const shots = [
     ["week", "This week: top picks, then each store's best"],
     ["aisles", "Aisles: produce, seafood, meat and the rest, across every store"],
+    ["stores", "Stores: the ones with the most standouts first, with each flyer to flip through"],
     ["deal", "A deal: the price, how it compares, and the same item at other stores"],
     ["list", "The list: in the app, or a Reminders list you share"],
   ].filter(([id]) => existsSync(join(ROOT, "site", "assets", "img", "app", `${id}.png`)));
@@ -881,7 +882,7 @@ function appsPage() {
 </div>
 ${shots.length ? `<section class="block" aria-labelledby="h-shots">
   <div class="sec-h"><h2 id="h-shots">A look inside</h2></div>
-  <ul class="app-shots">${shots.map(([id, caption]) => `<li><figure><img src="${url(`assets/img/app/${id}.png`)}" alt="" width="1206" height="2622" loading="lazy"><figcaption>${esc(caption)}</figcaption></figure></li>`).join("")}</ul>
+  <ul class="app-shots">${shots.map(([id, caption]) => `<li><figure><img src="${url(`assets/img/app/${id}.png`)}" alt="" width="603" height="1311" loading="lazy"><figcaption>${esc(caption)}</figcaption></figure></li>`).join("")}</ul>
 </section>` : ""}
 <section class="block" aria-labelledby="h-does">
   <div class="sec-h"><h2 id="h-does">What it does</h2></div>
