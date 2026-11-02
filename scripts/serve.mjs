@@ -7,7 +7,8 @@ import { ROOT } from "./lib.mjs";
 
 execFileSync(process.execPath, [join(ROOT, "scripts", "build.mjs")], { stdio: "inherit", env: { ...process.env, BASE_PATH: "/" } });
 const DIST = join(ROOT, "dist");
-const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json" };
+const TYPES = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json",
+  ".svg": "image/svg+xml", ".png": "image/png", ".gif": "image/gif", ".woff2": "font/woff2" };
 const port = Number(process.env.PORT ?? 8080);
 createServer((req, res) => {
   let p = join(DIST, decodeURIComponent(new URL(req.url, "http://x").pathname));

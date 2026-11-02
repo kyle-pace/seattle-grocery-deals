@@ -214,7 +214,8 @@ function checkWeek(path) {
 
 function scanText(dir) {
   for (const entry of readdirSync(dir)) {
-    if ([".git", "node_modules", "dist", "drafts", "fonts", "leaflet"].includes(entry)) continue;
+    // work/ and build/ hold checkouts and derived data (gitignored), not the site's text.
+    if ([".git", "node_modules", "dist", "drafts", "fonts", "leaflet", "work", "build", "build-sim", "build-test"].includes(entry)) continue;
     const p = join(dir, entry);
     if (statSync(p).isDirectory()) scanText(p);
     else if (/\.(md|json|mjs|js|css|html|yml|txt)$/.test(entry)) {
