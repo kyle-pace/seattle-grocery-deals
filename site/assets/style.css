@@ -1,6 +1,7 @@
 /* Seattle Grocery Deals, in the Deals app's look (KitchenUI): Atkinson Hyperlegible Next only,
-   quiet neutral ground, white cards, one green accent, and tones that always pair a shape
-   with a word. Values mirror KitchenUI's Palette.swift, Type.swift and Components.swift. */
+   quiet neutral ground, white cards, one persimmon accent (Palette.Accent.persimmon, the fruit
+   on the icon; Maitake keeps the green), and tones that always pair a shape with a word.
+   Values mirror KitchenUI's Palette.swift, Type.swift and Components.swift. */
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
   src: url("fonts/atkinson-hyperlegible-next.woff2") format("woff2");
@@ -18,7 +19,7 @@
   --muted: #5e6661;
   --line: #d5d7d1;
   --divider: #ecece8;
-  --accent: #2f6b4f;
+  --accent: #b04418;
   --on-accent: #ffffff;
   --focus: #2c639a;
   /* tones: fill behind text, text on the fill, and a stronger mark */
@@ -49,8 +50,8 @@
     --muted: #a3aba6;
     --line: #3a3f3c;
     --divider: #2a2e2b;
-    --accent: #7cc4a0;
-    --on-accent: #0e1f17;
+    --accent: #f5a06a;
+    --on-accent: #2a1208;
     --focus: #8dbce8;
     --good-fill: #1c3529; --good-text: #a6dcbf; --good-mark: #7cc4a0;
     --warn-fill: #3a2e12; --warn-text: #f2c66d; --warn-mark: #e8b44f;
@@ -96,7 +97,8 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 .topnav { display: none; align-items: center; gap: 0.15rem; }
 .topnav a, .head-about { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.9375rem; padding: 0 0.85rem; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
 .topnav a:hover, .head-about:hover { color: var(--ink); background: var(--raised); }
-.topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+/* 8%, not more: the accent text on this wash stays at 4.6:1 in light mode (12% dipped to 4.4:1) */
+.topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .nav-season { margin-left: 0.2rem; }
 .nav-season svg { width: 1.4rem; height: 1.4rem; transition: transform 0.2s; }
 .nav-season:hover svg, .nav-season:focus-visible svg { transform: rotate(-15deg) scale(1.2); }
