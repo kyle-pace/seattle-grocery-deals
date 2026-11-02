@@ -80,87 +80,16 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 .nav-season svg { width: 1.4rem; height: 1.4rem; transition: transform 0.2s; }
 .nav-season:hover svg, .nav-season:focus-visible svg { transform: rotate(-15deg) scale(1.2); }
 @media (prefers-reduced-motion: reduce) { .nav-season svg { transition: none; } }
-/* The app's tab bar, on phones: a floating Liquid Glass capsule plus a round search button,
-   like the iOS 26 app. Scrolling down shrinks it to the current tab (app.js sets data-min);
-   scrolling up, tapping it or focusing it brings it back. Solid newsprint when glass isn't
-   supported, with Reduce Transparency, or with more contrast. */
-:root {
-  --glass-fill: light-dark(rgb(250 250 248 / 0.98), rgb(30 34 31 / 0.98));
-  --glass-rim: light-dark(rgb(255 255 255 / 0.85), rgb(255 255 255 / 0.14));
-  --glass-edge: light-dark(rgb(27 31 29 / 0.08), rgb(0 0 0 / 0.5));
-  --glass-sheen: light-dark(rgb(255 255 255 / 0.55), rgb(255 255 255 / 0.07));
-  --glass-lens: light-dark(rgb(27 31 29 / 0.08), rgb(255 255 255 / 0.13));
-  --glass-shadow: 0 10px 30px rgb(0 0 0 / 0.14), 0 2px 6px rgb(0 0 0 / 0.08);
-  --dock-h: 3.875rem;
-  --dock-gap: 0.75rem;
-  --dock-bottom: max(0.375rem, calc(env(safe-area-inset-bottom, 0px) - 0.75rem));
-  --spring: cubic-bezier(0.34, 1.45, 0.5, 1);
-}
-.dock { position: fixed; z-index: 30; left: var(--dock-gap); right: var(--dock-gap); bottom: var(--dock-bottom); display: flex; align-items: center; gap: 0.625rem; pointer-events: none; view-transition-name: dock; }
-.tabbar, .dock-search { position: relative; isolation: isolate; height: var(--dock-h); border-radius: 999px; background: var(--glass-fill); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); box-shadow: inset 0 1px 0 var(--glass-rim), inset 0 0 0 1px var(--glass-edge), var(--glass-shadow); pointer-events: auto; }
-/* the sheen across the top half of the glass */
-.tabbar::before, .dock-search::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: linear-gradient(to bottom, var(--glass-sheen), transparent 55%); pointer-events: none; }
-.tabbar { flex: 1 1 0; min-width: 0; display: flex; padding: 0.25rem; overflow: hidden; }
-.tabbar a { position: relative; flex: 1 1 0; min-width: 0; display: grid; justify-items: center; align-content: center; gap: 0.1rem; border-radius: 999px; text-decoration: none; font-size: 0.6875rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink); -webkit-tap-highlight-color: transparent; }
-.tabbar a:focus-visible, .dock-search:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
-.tabbar svg, .dock-search svg { position: relative; width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
-.tab-label { position: relative; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.tabbar a.on { color: var(--accent); }
-.tabbar a.on svg { fill: color-mix(in srgb, var(--accent) 18%, transparent); }
-.tab-lens { position: absolute; inset: 0; border-radius: inherit; background: var(--glass-lens); box-shadow: inset 0 1px 0 light-dark(rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.08)); view-transition-name: tab-lens; }
-.dock-search { flex: none; margin-left: auto; width: var(--dock-h); display: grid; place-items: center; color: var(--ink); -webkit-tap-highlight-color: transparent; }
-body { padding-bottom: calc(var(--dock-h) + var(--dock-bottom) + 1rem); }
-
-/* shrunk on scroll down: only the current tab, as a circle */
-.dock[data-min] .tabbar:not(:focus-within) { flex: 0 0 var(--dock-h); padding: 0; cursor: pointer; }
-.dock[data-min] .tabbar:not(:focus-within) a:not(.on) { flex: 0 0 0; opacity: 0; pointer-events: none; }
-.dock[data-min] .tabbar:not(:focus-within) .tab-label { opacity: 0; max-height: 0; }
-.dock[data-min] .tabbar:not(:focus-within) .tab-lens { opacity: 0; }
-
-@media (prefers-reduced-motion: no-preference) {
-  :root:not([data-motion="reduce"]) .tabbar { transition: flex 0.42s var(--spring), padding 0.3s ease; }
-  :root:not([data-motion="reduce"]) .tabbar a { transition: flex 0.42s var(--spring), opacity 0.2s ease; }
-  :root:not([data-motion="reduce"]) .tab-label { transition: opacity 0.2s ease, max-height 0.3s ease; }
-  :root:not([data-motion="reduce"]) .tab-lens { transition: opacity 0.2s ease, scale 0.35s var(--spring); }
-  :root:not([data-motion="reduce"]) .tabbar svg, :root:not([data-motion="reduce"]) .dock-search { transition: scale 0.35s var(--spring); }
-  :root:not([data-motion="reduce"]) .tabbar a:active .tab-lens { scale: 1.1 1.14; }
-  :root:not([data-motion="reduce"]) .tabbar a:active svg, :root:not([data-motion="reduce"]) .dock-search:active { scale: 0.92; }
-}
-
-/* the lens slides from the old tab to the new one between pages (Safari 18.2+, Chrome 126+) */
-@media (max-width: 47.99rem) and (prefers-reduced-motion: no-preference) {
-  @view-transition { navigation: auto; }
-}
-::view-transition-old(root) { animation: none; opacity: 0; }
-::view-transition-new(root) { animation: none; }
-::view-transition-group(tab-lens) { animation-duration: 0.42s; animation-timing-function: var(--spring); }
-:root[data-motion="reduce"]::view-transition-group(*), :root[data-motion="reduce"]::view-transition-old(*), :root[data-motion="reduce"]::view-transition-new(*) { animation: none !important; }
-
-/* no glass: solid newsprint surfaces */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .tabbar, .dock-search { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line), var(--glass-shadow); }
-}
-@media (prefers-reduced-transparency: reduce) {
-  .tabbar, .dock-search { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: inset 0 0 0 1px var(--line), var(--glass-shadow); }
-  .tabbar::before, .dock-search::before { display: none; }
-}
-:root[data-contrast="more"] :is(.tabbar, .dock-search) { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: inset 0 0 0 2px var(--ink), var(--glass-shadow); }
-:root[data-contrast="more"] :is(.tabbar, .dock-search)::before { display: none; }
-:root[data-contrast="more"] .tab-lens { background: color-mix(in srgb, var(--accent) 16%, transparent); }
-@media (prefers-contrast: more) {
-  :root:not([data-contrast="default"]) :is(.tabbar, .dock-search) { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: inset 0 0 0 2px var(--ink), var(--glass-shadow); }
-  :root:not([data-contrast="default"]) :is(.tabbar, .dock-search)::before { display: none; }
-  :root:not([data-contrast="default"]) .tab-lens { background: color-mix(in srgb, var(--accent) 16%, transparent); }
-}
-@media (forced-colors: active) {
-  .tabbar, .dock-search { border: 1px solid CanvasText; }
-  .tabbar a.on { outline: 2px solid Highlight; outline-offset: -4px; }
-}
-@media print { .dock { display: none; } }
-
+/* the app's tab bar, on phones */
+.tabbar { position: fixed; inset: auto 0 0 0; z-index: 30; display: grid; grid-template-columns: repeat(4, 1fr); background: color-mix(in srgb, var(--ground) 88%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-top: 1px solid var(--line); padding: 0.25rem 0.25rem env(safe-area-inset-bottom); }
+.tabbar a { display: grid; justify-items: center; align-content: center; gap: 0.15rem; min-height: 3.25rem; text-decoration: none; font-size: 0.6875rem; font-weight: 600; color: var(--muted); border-radius: var(--r-m); }
+.tabbar svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
+.tabbar a[aria-current="page"] { color: var(--accent); }
+.tabbar a[aria-current="page"] svg { fill: color-mix(in srgb, var(--accent) 18%, transparent); }
+body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 @media (min-width: 48rem) {
   .topnav { display: flex; }
-  .head-about, .dock { display: none; }
+  .head-about, .tabbar { display: none; }
   body { padding-bottom: 0; }
 }
 
@@ -475,10 +404,10 @@ body.season .site-head { position: relative; z-index: 2; }
 :root[data-motion="reduce"] { scroll-behavior: auto; }
 :root[data-motion="reduce"] *, :root[data-motion="reduce"] *::before, :root[data-motion="reduce"] *::after { animation: none !important; transition: none !important; }
 
-.dp-toggle { position: fixed; right: calc(var(--dock-gap) + (var(--dock-h) - 3rem) / 2); bottom: calc(var(--dock-bottom) + var(--dock-h) + 0.75rem); z-index: 40; display: grid; place-items: center; width: 3rem; height: 3rem; padding: 0; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); box-shadow: 0 4px 16px rgb(0 0 0 / 0.18); cursor: pointer; }
+.dp-toggle { position: fixed; right: 1rem; bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); z-index: 40; display: grid; place-items: center; width: 3rem; height: 3rem; padding: 0; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); box-shadow: 0 4px 16px rgb(0 0 0 / 0.18); cursor: pointer; }
 .dp-toggle svg, .dp-close svg { pointer-events: none; }
-@media (min-width: 48rem) { .dp-toggle { right: 1rem; bottom: 1rem; } }
-.dp-panel { position: fixed; inset: auto 1rem calc(var(--dock-bottom) + var(--dock-h) + 4.5rem) auto; width: min(22rem, calc(100vw - 2rem)); max-height: calc(100dvh - 10rem); overflow-y: auto; margin: 0; padding: var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.2); font-size: 0.9375rem; }
+@media (min-width: 48rem) { .dp-toggle { bottom: 1rem; } }
+.dp-panel { position: fixed; inset: auto 1rem calc(8rem + env(safe-area-inset-bottom, 0px)) auto; width: min(22rem, calc(100vw - 2rem)); max-height: calc(100dvh - 10rem); overflow-y: auto; margin: 0; padding: var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.2); font-size: 0.9375rem; }
 @media (min-width: 48rem) { .dp-panel { bottom: 4.5rem; max-height: calc(100dvh - 6rem); } }
 .dp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s-l); }
 .dp-head h2 { margin: 0; font-size: 1.25rem; }
