@@ -33,9 +33,9 @@
       "pending": {
         "since": "2026-11-03T02:37:26.412Z",
         "live_before": "2026-10-17|https://www.smithbrothersfarms.com/on-special",
-        "fires": 2,
-        "fired_at": "2026-11-03T10:03:15.617Z",
-        "session": "https://claude.ai/code/cse_015KDcQDFfhg49t6jCvawTHK"
+        "fires": 3,
+        "fired_at": "2026-11-03T17:45:51.404Z",
+        "session": "https://claude.ai/code/cse_015KDcQCPf8PhpCEzz7KQPBX"
       }
     },
     "met-market": {
@@ -83,7 +83,7 @@
     },
     "asian-family-market": {
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-03T10:03:15.617Z",
+      "error_at": "2026-11-03T17:45:51.404Z",
       "debug": {
         "final_url": "https://asianfamilymkt.com/",
         "title": "Asian Family Market",
@@ -105,9 +105,9 @@
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/TeamImage",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/StoreQuickLink",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/ContactInfo",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png",
           "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
-          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png"
+          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
+          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png"
         ]
       }
     }
