@@ -33,9 +33,9 @@
       "pending": {
         "since": "2026-11-03T02:37:26.412Z",
         "live_before": "2026-10-17|https://www.smithbrothersfarms.com/on-special",
-        "fires": 1,
-        "fired_at": "2026-11-03T02:37:26.412Z",
-        "session": "https://claude.ai/code/cse_015KDcQBuk7Z3ALhfWUykBAL"
+        "fires": 2,
+        "fired_at": "2026-11-03T10:03:15.617Z",
+        "session": "https://claude.ai/code/cse_015KDcQDFfhg49t6jCvawTHK"
       }
     },
     "met-market": {
@@ -83,7 +83,7 @@
     },
     "asian-family-market": {
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-03T02:37:26.412Z",
+      "error_at": "2026-11-03T10:03:15.617Z",
       "debug": {
         "final_url": "https://asianfamilymkt.com/",
         "title": "Asian Family Market",
@@ -92,8 +92,8 @@
         "text_start": "Home Stores Departments Products Food Hall Delivery Rewards Careers About Contact ASIAN FAMILY MARKET Fresh produce, authentic ingredients, and modern convenience across the Pacific Northwest. Find a Store Shop Delivery Fresh Produce Daily Farm-fresh vegetables and fruits delivered every morning Liv",
         "urls": [
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/analytics/track/batch",
-          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
           "https://asianfamilymkt.com/api/apps/public/prod/public-settings/by-id/699266c8c2f2e91c54efa8af",
+          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/29530ced5_.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/d6a668857_.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/6713db617_24.jpg",
