@@ -10,11 +10,18 @@
       "seen_at": "2026-10-31T18:28:16.768Z"
     },
     "uwajimaya": {
-      "fingerprint": "0b21f1a3f0b20b2f",
+      "fingerprint": "96e3f3ea0fdc9060",
       "matches": [
-        "wp-content/uploads/2026/10/WeeklyAd-10.28.26.pdf"
+        "wp-content/uploads/2026/11/WeeklyAd-11.04.26.pdf"
       ],
-      "seen_at": "2026-10-31T18:28:16.768Z"
+      "seen_at": "2026-11-04T11:30:08.463Z",
+      "pending": {
+        "since": "2026-11-04T11:30:08.463Z",
+        "live_before": "2026-10-28|https://www.uwajimaya.com/wp-content/uploads/2026/10/WeeklyAd-10.28.26.pdf https://www.uwajimaya.com/wp-content/uploads/2026/10/October-28-e1793127045138.jpg https://www.uwajimaya.com/wp-content/uploads/2026/10/October-282.jpg https://www.uwajimaya.com/wp-content/uploads/2026/10/October-213-Nagano-Fair-Update-1.png https://www.uwajimaya.com/weekly-specials/",
+        "fires": 1,
+        "fired_at": "2026-11-04T11:30:08.463Z",
+        "session": "https://claude.ai/code/cse_015KDcQCh3tq4KF9HYGHHMMg"
+      }
     },
     "central-coop": {
       "fingerprint": "5c66f8803321c705",
@@ -39,15 +46,23 @@
       }
     },
     "met-market": {
-      "fingerprint": "9822dce03c9a673f",
+      "fingerprint": "427e3093369279e8",
       "matches": [
-        "Weekly-Savings-102826-PG-1",
-        "Weekly-Savings-102826-PG-2",
-        "Weekly-Savings-102826-PG-3",
-        "Weekly-Savings-102826-PG-4",
-        "Weekly-Savings-102826-PG-5"
+        "Weekly-Savings-110426-PG-1",
+        "Weekly-Savings-110426-PG-2",
+        "Weekly-Savings-110426-PG-3",
+        "Weekly-Savings-110426-PG-4",
+        "Weekly-Savings-110426-PG-5",
+        "Weekly-Savings-110426-PG-6"
       ],
-      "seen_at": "2026-10-31T18:28:16.768Z"
+      "seen_at": "2026-11-04T11:30:08.463Z",
+      "pending": {
+        "since": "2026-11-04T11:30:08.463Z",
+        "live_before": "2026-10-28|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-5.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
+        "fires": 1,
+        "fired_at": "2026-11-04T11:30:08.463Z",
+        "session": "https://claude.ai/code/cse_015KDcQCh3tq4KF9HYGHHMMg"
+      }
     },
     "hmart": {
       "fingerprint": "6319cd577075c33a",
@@ -83,7 +98,7 @@
     },
     "asian-family-market": {
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-04T03:11:23.067Z",
+      "error_at": "2026-11-04T11:30:08.463Z",
       "debug": {
         "final_url": "https://asianfamilymkt.com/",
         "title": "Asian Family Market",
@@ -91,9 +106,9 @@
         "requests": 26,
         "text_start": "Home Stores Departments Products Food Hall Delivery Rewards Careers About Contact ASIAN FAMILY MARKET Fresh produce, authentic ingredients, and modern convenience across the Pacific Northwest. Find a Store Shop Delivery Fresh Produce Daily Farm-fresh vegetables and fruits delivered every morning Liv",
         "urls": [
-          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/analytics/track/batch",
           "https://asianfamilymkt.com/api/apps/public/prod/public-settings/by-id/699266c8c2f2e91c54efa8af",
+          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/29530ced5_.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/d6a668857_.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/6713db617_24.jpg",
