@@ -28,12 +28,24 @@
     {
       "store": "uwajimaya",
       "status": "full",
-      "valid_from": "2026-11-04",
-      "valid_through": "2026-11-10",
+      "valid_from": "2026-10-28",
+      "valid_through": "2026-11-03",
       "links": [
         {
           "label": "Weekly ad (PDF)",
-          "url": "https://www.uwajimaya.com/wp-content/uploads/2026/11/WeeklyAd-11.04.26.pdf"
+          "url": "https://www.uwajimaya.com/wp-content/uploads/2026/10/WeeklyAd-10.28.26.pdf"
+        },
+        {
+          "label": "Page 1",
+          "url": "https://www.uwajimaya.com/wp-content/uploads/2026/10/October-28-e1793127045138.jpg"
+        },
+        {
+          "label": "Page 2",
+          "url": "https://www.uwajimaya.com/wp-content/uploads/2026/10/October-282.jpg"
+        },
+        {
+          "label": "Page 3 Nagano Food Fair",
+          "url": "https://www.uwajimaya.com/wp-content/uploads/2026/10/October-213-Nagano-Fair-Update-1.png"
         },
         {
           "label": "Flyer page",
@@ -1103,6 +1115,599 @@
       "member_price": false,
       "valid_through": "2026-11-05",
       "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Green Cabbage",
+      "item_key": "cabbage-green",
+      "category": "produce",
+      "price": 0.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Save up to 50¢/lb"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Fuyu Persimmon",
+      "item_key": "persimmons",
+      "category": "produce",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.49,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Save up to $1.50 each"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Pastry Mitten Pie Slices, ube coconut or fuji apple",
+      "item_key": null,
+      "category": "bakery",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 5.99,
+        "per": "each"
+      },
+      "regular_price": 7.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Pork Shoulder Roast, boneless",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": 4.49,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Save $1.00 per lb"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Mary's Free Range Ground Chicken, 1 lb",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": 8.49,
+      "percent_off": 29,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Saba Fillet, frozen",
+      "item_key": "mackerel",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 11,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Live Manila Steamer Clams",
+      "item_key": "clams",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 11,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Salmon Poke",
+      "item_key": null,
+      "category": "seafood",
+      "price": 17.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 17.99,
+        "per": "lb"
+      },
+      "regular_price": 19.99,
+      "percent_off": 10,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Save $2.00 per lb"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kokuho Rose Rice",
+      "item_key": "rice-medium-grain",
+      "category": "pantry",
+      "price": 19.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.33,
+        "per": "lb"
+      },
+      "regular_price": 28.49,
+      "percent_off": 30,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "",
+      "highlight": {
+        "reason": "A 15 lb bag of Kokuho Rose for about $1.33 a pound, with an exact $8.50 printed savings."
+      }
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Mishima Reserve American Wagyu Beef Thin Sliced Chuck Roll",
+      "item_key": null,
+      "category": "meat",
+      "price": 14.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.99,
+        "per": "lb"
+      },
+      "regular_price": 18.99,
+      "percent_off": 21,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Nozomi Super Premium Short Grain Rice",
+      "item_key": "rice-short-grain",
+      "category": "pantry",
+      "price": 29.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 2,
+        "per": "lb"
+      },
+      "regular_price": 35.99,
+      "percent_off": 17,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Lee Kum Kee Chili Crisp",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 13.69,
+        "per": "lb"
+      },
+      "regular_price": 7.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Original or smoky"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Yellow Onions",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 0.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Save up to 20¢/lb"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kikkoman Organic Soy Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 25.4,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.03,
+        "per": "lb"
+      },
+      "regular_price": 9.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Fukushima Katsuo Fushi No Dashi, 20 pc",
+      "item_key": null,
+      "category": "pantry",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.65,
+        "per": "each"
+      },
+      "regular_price": 16.99,
+      "percent_off": 24,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Samlip Cream Bun, frozen",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 135,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 9.04,
+        "per": "lb"
+      },
+      "regular_price": 3.79,
+      "percent_off": 29,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Assorted"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kikkoman Panko",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": 2.59,
+      "percent_off": 23,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Lee Kum Kee Noodles",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3.9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.45,
+        "per": "lb"
+      },
+      "regular_price": 4.39,
+      "percent_off": 36,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Peppercorn chili oil or shallot oil flavor"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Otafuku Tonkatsu Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 17.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.45,
+        "per": "lb"
+      },
+      "regular_price": 4.79,
+      "percent_off": 21,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Shirakiku Sriracha Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 27.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.45,
+        "per": "lb"
+      },
+      "regular_price": 5.79,
+      "percent_off": 57,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": ""
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Wang BBQ Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 29.63,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Assorted. Save up to $1.20"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Marumo Aoki Additive-Free Miso",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 750,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 5.44,
+        "per": "lb"
+      },
+      "regular_price": 10.49,
+      "percent_off": 14,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair, Oct 21 to Nov 3. White or red"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Ufufu Donuts",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.59,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.59,
+        "per": "each"
+      },
+      "regular_price": 4.29,
+      "percent_off": 16,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair. 40-50 g, assorted"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Kanamoto Kimchi, frozen",
+      "item_key": null,
+      "category": "other",
+      "price": 5.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 200,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 12.9,
+        "per": "lb"
+      },
+      "regular_price": 6.69,
+      "percent_off": 15,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair. Original, spicy or shiso"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Irohado Oyaki Dumplings, 3 pack",
+      "item_key": null,
+      "category": "frozen",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 4.33,
+        "per": "each"
+      },
+      "regular_price": 15.99,
+      "percent_off": 19,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair. Nozawana, kabocha, tsubuan or bunashimeji"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Watanabe Zenkoji Soba, 2 servings",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 6.99,
+        "per": "each"
+      },
+      "regular_price": 7.99,
+      "percent_off": 13,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair. Includes broth"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Yawataya Shichimi Togarashi",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 151.95,
+        "per": "lb"
+      },
+      "regular_price": 5.69,
+      "percent_off": 18,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Tincarbell Egg Bread, 12-16 pc",
+      "item_key": null,
+      "category": "bakery",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 7.99,
+        "per": "each"
+      },
+      "regular_price": 9.59,
+      "percent_off": 17,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair. Assorted flavors"
+    },
+    {
+      "store": "uwajimaya",
+      "item": "Koyanagi Kazesayaka Rice",
+      "item_key": null,
+      "category": "pantry",
+      "price": 21.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 4.99,
+        "per": "lb"
+      },
+      "regular_price": 26.99,
+      "percent_off": 19,
+      "member_price": false,
+      "valid_through": "2026-11-03",
+      "notes": "Nagano Food Fair"
     },
     {
       "store": "central-coop",
@@ -10398,644 +11003,6 @@
       "member_price": false,
       "valid_through": "2026-11-04",
       "notes": "Seattle store"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Hachiya Persimmon",
-      "item_key": "persimmons",
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 1.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $1.50 each"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Honey Tangerines",
-      "item_key": "mandarins",
-      "category": "produce",
-      "price": 2.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 2.49,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $2.00/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Satsuma Imo Japanese Sweet Potato",
-      "item_key": "sweet-potatoes",
-      "category": "produce",
-      "price": 2.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 2.49,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $1.00/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Tamaki Gold Rice",
-      "item_key": null,
-      "category": "pantry",
-      "price": 34.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 15,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 2.33,
-        "per": "lb"
-      },
-      "regular_price": 48.99,
-      "percent_off": 29,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "White Prawns, 30/40 ct, head-on, previously frozen",
-      "item_key": "shrimp",
-      "category": "seafood",
-      "price": 5.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 5.49,
-        "per": "lb"
-      },
-      "regular_price": 5.99,
-      "percent_off": 8,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save 50¢/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Ahi Tuna Medallion, frozen, 2-4 oz",
-      "item_key": null,
-      "category": "seafood",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 8.99,
-        "per": "each"
-      },
-      "regular_price": 10.99,
-      "percent_off": 18,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Takumi Imitation Crab Meat, frozen",
-      "item_key": "crab",
-      "category": "seafood",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 17.6,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.45,
-        "per": "lb"
-      },
-      "regular_price": 6.99,
-      "percent_off": 14,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Venus Meat Balls, beef, pork or chicken",
-      "item_key": null,
-      "category": "meat",
-      "price": 3.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.58,
-        "per": "lb"
-      },
-      "regular_price": 4.79,
-      "percent_off": 31,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Mary's Organic Chicken Breast, boneless skinless",
-      "item_key": "chicken-breast-boneless",
-      "category": "meat",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 8.99,
-        "per": "lb"
-      },
-      "regular_price": 10.99,
-      "percent_off": 18,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save $2.00/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Mishima Reserve American Wagyu Beef Sukiyaki Meat",
-      "item_key": null,
-      "category": "meat",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 15.99,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save $2.00/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Shinshuichi Miko Brand Miso, awase, shiro or mild",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 17.63,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.99,
-        "per": "lb"
-      },
-      "regular_price": 5.49,
-      "percent_off": 40,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "",
-      "vegetarian": false
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Sugimoto Dried Shiitake Donko",
-      "item_key": null,
-      "category": "pantry",
-      "price": 13.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 70,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 90.65,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 22,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Hikari Koji, shio or shoyu",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 20.4,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.48,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $4.00"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Shirakiku Udon Noodles, frozen, 5 pc",
-      "item_key": "udon",
-      "category": "frozen",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 3.99,
-        "per": "each"
-      },
-      "regular_price": 5.99,
-      "percent_off": 33,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Lab Ten No Tsubu Rice",
-      "item_key": null,
-      "category": "pantry",
-      "price": 25.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 11,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 2.36,
-        "per": "lb"
-      },
-      "regular_price": 29.99,
-      "percent_off": 13,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Royal Elephant Jasmine Rice",
-      "item_key": "rice-jasmine",
-      "category": "pantry",
-      "price": 11.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 1.2,
-        "per": "lb"
-      },
-      "regular_price": 14.99,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Como Soft Croissant Bread",
-      "item_key": null,
-      "category": "bakery",
-      "price": 0.89,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1.26,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 11.3,
-        "per": "lb"
-      },
-      "regular_price": 1.59,
-      "percent_off": 44,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Lee Kum Kee Mabo Tofu Sauce",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6,
-      "quantity": 5,
-      "unit": "pack",
-      "pack": {
-        "size": 2.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 7.68,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "$1.20 each. Save up to $2.45 when you buy 5. Medium hot or hot",
-      "vegetarian": false
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Surasang Gyoza, frozen, leek, kimchi or vegetable",
-      "item_key": null,
-      "category": "frozen",
-      "price": 2.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.99,
-        "per": "lb"
-      },
-      "regular_price": 3.99,
-      "percent_off": 25,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "",
-      "vegetarian": false
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Wang Fresh Noodle, frozen",
-      "item_key": null,
-      "category": "pantry",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "kg"
-      },
-      "unit_price": {
-        "value": 2.26,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $2.00"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Nature's Soy Soymilk",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 0.5,
-        "unit": "gal"
-      },
-      "unit_price": {
-        "value": 2.64,
-        "per": "l"
-      },
-      "regular_price": 6.19,
-      "percent_off": 19,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Black sesame, black tea or classic"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Ito-En Green Tea Bags",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 20,
-        "unit": "ct"
-      },
-      "unit_price": {
-        "value": 0.32,
-        "per": "each"
-      },
-      "regular_price": 8.59,
-      "percent_off": 24,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Assorted"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Heritage Berkshire Thin Sliced Pork Belly",
-      "item_key": "pork-belly-sliced",
-      "category": "meat",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": 11.99,
-      "percent_off": 17,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save $2.00/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Jane Jane Seafood Balls, frozen",
-      "item_key": null,
-      "category": "frozen",
-      "price": 3.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Assorted. Save up to $1.20"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Nature's Soy Tofu",
-      "item_key": "tofu",
-      "category": "other",
-      "price": 5,
-      "quantity": 3,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 1.67,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "$1.67 each. Save up to $2.17 when you buy 3. Firm, soft or silken"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "EB Food Beancurd Ring Roll, frozen",
-      "item_key": null,
-      "category": "frozen",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5.93,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 10.77,
-        "per": "lb"
-      },
-      "regular_price": 5.99,
-      "percent_off": 33,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Organic Shiitake Mushrooms",
-      "item_key": "mushrooms",
-      "category": "produce",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 6,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 10.64,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $2.00. Grown in Oregon"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Nappa Cabbage",
-      "item_key": "cabbage-napa",
-      "category": "produce",
-      "price": 0.89,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 0.89,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to 30¢/lb"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Hai Di Lao Hot Pot Base",
-      "item_key": null,
-      "category": "pantry",
-      "price": 7,
-      "quantity": 2,
-      "unit": "each",
-      "unit_price": {
-        "value": 3.5,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "$3.50 each. Save up to $2.38 when you buy 2. 110-220 g, original or spicy"
-    },
-    {
-      "store": "uwajimaya",
-      "item": "Hai Di Lao Hot Pot Dipping Sauce",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 100,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 6.8,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "$1.50 each. Save up to $1.38 when you buy 2",
-      "vegetarian": false
-    },
-    {
-      "store": "uwajimaya",
-      "item": "L&W Bean Thread Rice Noodle, 8 pc",
-      "item_key": null,
-      "category": "pantry",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 4.99,
-        "per": "each"
-      },
-      "regular_price": 5.99,
-      "percent_off": 17,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
     },
     {
       "store": "met-market",
