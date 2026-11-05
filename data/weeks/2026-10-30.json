@@ -44,19 +44,19 @@
     {
       "store": "central-coop",
       "status": "full",
-      "valid_from": "2026-10-28",
-      "valid_through": "2026-11-03",
+      "valid_from": "2026-11-04",
+      "valid_through": "2026-11-17",
       "links": [
         {
-          "label": "Co+op Deals Oct 21 to Nov 3 PDF",
-          "url": "https://www.centralcoop.coop/s/Coop_Deals_2026_Oct_Flyer_West_B.pdf"
+          "label": "Co+op Deals Nov 4 to 17 PDF",
+          "url": "https://www.centralcoop.coop/s/Coop_Deals_2026_Nov_Flyer_West_A.pdf"
         },
         {
           "label": "Fresh deals",
           "url": "https://www.centralcoop.coop/freshdeals"
         }
       ],
-      "note": "Weekly produce sale Oct 28 to Nov 3, plus the NCG Co+op Deals flyer Oct 21 to Nov 3. Not every Co+op Deals item is carried."
+      "note": "Weekly produce sale Nov 4 to 10, plus the NCG Co+op Deals flyer Nov 4 to 17 (its items run to Nov 17). Not every Co+op Deals item is carried."
     },
     {
       "store": "smith-brothers",
@@ -1102,870 +1102,6 @@
       "member_price": false,
       "valid_through": "2026-11-05",
       "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Butternut Squash",
-      "item_key": "squash-winter",
-      "category": "produce",
-      "price": 1.69,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.69,
-        "per": "lb"
-      },
-      "regular_price": 2.49,
-      "percent_off": 32,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Opal Apples",
-      "item_key": "apples",
-      "category": "produce",
-      "price": 2.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 2.99,
-        "per": "lb"
-      },
-      "regular_price": 3.49,
-      "percent_off": 14,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Shallots",
-      "item_key": null,
-      "category": "produce",
-      "price": 5.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 5.49,
-        "per": "lb"
-      },
-      "regular_price": 6.99,
-      "percent_off": 21,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Green D'anjou Pears",
-      "item_key": "pears",
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.99,
-        "per": "lb"
-      },
-      "regular_price": 2.99,
-      "percent_off": 33,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Cucumbers",
-      "item_key": "cucumbers",
-      "category": "produce",
-      "price": 2.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 2.49,
-        "per": "lb"
-      },
-      "regular_price": 3.49,
-      "percent_off": 29,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Parsnips",
-      "item_key": null,
-      "category": "produce",
-      "price": 3.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 3.49,
-        "per": "lb"
-      },
-      "regular_price": 4.49,
-      "percent_off": 22,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Fuyu Persimmons",
-      "item_key": "persimmons",
-      "category": "produce",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 3.99,
-        "per": "lb"
-      },
-      "regular_price": 4.99,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Collard Greens",
-      "item_key": null,
-      "category": "produce",
-      "price": 5,
-      "quantity": 2,
-      "unit": "each",
-      "unit_price": {
-        "value": 2.5,
-        "per": "each"
-      },
-      "regular_price": 6.98,
-      "percent_off": 28,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "Weekly Produce Sale, valid at both stores"
-    },
-    {
-      "store": "central-coop",
-      "item": "Siggi's Skyr Yogurts, 4.4-5.3 oz",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 5,
-      "quantity": 4,
-      "unit": "each",
-      "unit_price": {
-        "value": 1.25,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Siggi's Plant-based Coconut Blends",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 4,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 5.3,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.04,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Siggi's Yogurt Smoothies",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 4,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 8.45,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Siggi's Skyr Yogurt",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 24,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Valley Shredded Cheese",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 6,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 13.31,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic Valley Raw Block Cheese",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 11.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Vital Farms Organic Pasture-raised Large Grade A Eggs",
-      "item_key": "eggs",
-      "category": "dairy-eggs",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "dozen"
-      },
-      "unit_price": {
-        "value": 8.99,
-        "per": "dozen"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Fage Greek Yogurts",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 4,
-      "quantity": 3,
-      "unit": "pack",
-      "pack": {
-        "size": 5.3,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.03,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Smart Chicken Party Wings",
-      "item_key": "chicken-wings",
-      "category": "meat",
-      "price": 5.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 5.49,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Abbot's Butcher Plant-based Protein",
-      "item_key": null,
-      "category": "other",
-      "price": 6.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 10.38,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Thousand Hills Pork & Beef Stadium Brats",
-      "item_key": null,
-      "category": "meat",
-      "price": 7.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 12.78,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Cascadian Farm Organic Frozen Vegetables",
-      "item_key": null,
-      "category": "frozen",
-      "price": 6,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.8,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Woodstock Organic Frozen Fruits",
-      "item_key": null,
-      "category": "frozen",
-      "price": 4.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.86,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Good Karma Flaxmilk",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 64,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 2.64,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Laird Superfood Organic Liquid Creamer",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 5.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 22,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 8.13,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Canyon Bakehouse Gluten-free Bread or Bagels, 14-18 oz",
-      "item_key": null,
-      "category": "bakery",
-      "price": 6.49,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 6.49,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Choice Organics Tea",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "ct"
-      },
-      "unit_price": {
-        "value": 0.25,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 8, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Nature's Path Organic Cereal, 26.4-32 oz",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 8.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 8, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Seven Sundays Cereal",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 10.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 8, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Elmhurst Plant-based Milk",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 5.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 5.8,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 9, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Organic India Tulsi Tea",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 18,
-        "unit": "ct"
-      },
-      "unit_price": {
-        "value": 0.22,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 9, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Navitas Organics Unsweetened Cacao Powder",
-      "item_key": null,
-      "category": "pantry",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 19.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Simple Mills Baking Mix, 9-12.9 oz",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 6.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Imagine Organic Gravy",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 13.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.96,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Imagine Organic Broths",
-      "item_key": null,
-      "category": "pantry",
-      "price": 7,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 3.7,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Imagine Soups",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 4.23,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Lily's Baking Chips",
-      "item_key": null,
-      "category": "pantry",
-      "price": 7.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 9,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 14.2,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "California Olive Ranch Global Blend Extra Virgin Olive Oil",
-      "item_key": null,
-      "category": "pantry",
-      "price": 11.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16.9,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 23.99,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Dr. McDougall's Soup Cup, 1.8-3.4 oz",
-      "item_key": null,
-      "category": "pantry",
-      "price": 2.29,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 2.29,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Field Day Organic 100% Pure Pumpkin",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 15,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.67,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "A Dozen Cousins Ready-to-Eat Beans",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.8,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Garden of Eatin' Taco Shells",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 11.61,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "Primal Kitchen Mayonnaise",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "fl-oz"
-      },
-      "unit_price": {
-        "value": 23.92,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
-    },
-    {
-      "store": "central-coop",
-      "item": "La Tourangelle Cooking Oil, 14-16.9 fl oz",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 8.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-03",
-      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
     },
     {
       "store": "99-ranch",
@@ -12119,6 +11255,1762 @@
       "member_price": false,
       "valid_through": "2026-11-10",
       "notes": "Selected varieties"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Kabocha Squash",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": 2.49,
+      "percent_off": 32,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Pomegranates",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.99,
+        "per": "each"
+      },
+      "regular_price": 4.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Red Onions",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.49,
+        "per": "lb"
+      },
+      "regular_price": 1.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Green D'anjou Pears",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": 2.99,
+      "percent_off": 33,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Eggplant",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": 4.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Collard Greens",
+      "item_key": null,
+      "category": "produce",
+      "price": 5,
+      "quantity": 2,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.5,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores. Regular price is per bunch"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Honeycrisp Apples",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Yellow Summer Squash",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 38,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Weekly Produce Sale, valid at both stores"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Broths",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 2.11,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 1, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Cut Green Beans",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 14.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.66,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 1, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Pumpkin Purees",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.67,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 1, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Gravy",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 1, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Olive Oil",
+      "item_key": null,
+      "category": "pantry",
+      "price": 16.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 33.8,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 17,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 1, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Beans",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4,
+      "quantity": 3,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.42,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 2, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Pastas",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 2, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Whole Kernel Sweet Corn",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 2, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Canola Oil",
+      "item_key": "cooking-oil",
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 6.33,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 2, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Pasta Sauces",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.67,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Dried Sweetened Cranberries",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 12,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Cane Sugars",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Saigon Cinnamon",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 1.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 37.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic Walnuts Halves & Pieces",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.41,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Organic All-purpose Flour",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.2,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Field Day Vegetable Oil",
+      "item_key": "cooking-oil",
+      "category": "pantry",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 3.48,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 3, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Cocojune Organic Coconut Cultured Yogurt",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 4, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Brown Cow Cream Top Yogurt",
+      "item_key": "yogurt",
+      "category": "dairy-eggs",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.25,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 4, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Nancy's Organic Cottage Cheese",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.39,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.39,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 4, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Fage Greek Yogurt",
+      "item_key": "yogurt",
+      "category": "dairy-eggs",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 4, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Chobani Coffee Creamer",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 7.73,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 4, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Kite Hill Dairy-free Sour Cream",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 3.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.38,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Kite Hill Dairy-free Yogurt",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Kite Hill Dairy-free Cream Cheese",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Kite Hill Dairy-free Filled Pasta",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.54,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Rumiano Organic Block Cheese",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 5, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Violife Just Like Cheese Slices or Shreds",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Silk Organic Soymilk",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 64,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 2.64,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Malk Organic Creamer",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 11.6,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Grillo's Pickles",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 6.33,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Applegate Sliced Ham",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 13.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Beyond Plant-based Ground Beef",
+      "item_key": null,
+      "category": "other",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Thousand Hills 85/15 Grass-fed Ground Beef",
+      "item_key": null,
+      "category": "meat",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 10.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Wildwood Organic High Protein Tofu",
+      "item_key": "tofu",
+      "category": "other",
+      "price": 3.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Miyoko's Creamery Organic Plant Milk Butter",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 6, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Mother-in-Law's Kimchi",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 16.89,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Ithaca Hummus",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.38,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Follow Your Heart Original Vegenaise",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.39,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 10.6,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Kerrygold Pure Irish Butter",
+      "item_key": "butter",
+      "category": "dairy-eggs",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Kerrygold Block Cheese",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 12.55,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Valley Ghee",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 17.05,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 7, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Gardein Plant-based Protein Meatballs",
+      "item_key": null,
+      "category": "other",
+      "price": 4.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13.7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.59,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 8, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Rudi's Organic Bread",
+      "item_key": null,
+      "category": "bakery",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 22,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.63,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 8, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Wyman's Frozen Wild Blueberries",
+      "item_key": null,
+      "category": "frozen",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 48,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.33,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 8, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Woodstock Organic Pecan Halves",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 21.3,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 9, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Equal Exchange Organic Teas",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.2,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 10, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Yogi Herbal Tea Blend",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.25,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 10, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Equal Exchange Organic French Roast Coffee",
+      "item_key": null,
+      "category": "pantry",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 10, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Teeccino Herbal Tea",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.46,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Nutpods Plant-based Creamer",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11.2,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 9.03,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Milkadamia Macadamia Milk",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.39,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 4.64,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Purely Elizabeth Cereal",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.37,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Grandy Organics Grain-free Coconola",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.39,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 13.14,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Tazo Organic Tea",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.39,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.22,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 11, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Imagine Organic Broth",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 4,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Spectrum Organic Extra Virgin Olive Oil",
+      "item_key": null,
+      "category": "pantry",
+      "price": 18.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 25.4,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 25.28,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Heyday Canning Co. Beans",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.73,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Muir Glen Organic Tomatoes",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.13,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Muir Glen Organic Tomatoes",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 28,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.71,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Muir Glen Organic Pasta Sauces",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 23.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.38,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Muir Glen Organic Salsas",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 12, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Wild Planet Sardines",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 4.4,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.09,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Amy's Soup",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14.7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.34,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Jovial Organic Brown Rice Pasta",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.32,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Lundberg Family Farms Wild Rice Blend",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "St. Dalfour Fruit Spread",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Cobram Estate 100% California Extra Virgin Olive Oil",
+      "item_key": null,
+      "category": "pantry",
+      "price": 15.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 25.4,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 21.29,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Frontier Co-op Organic Vanilla Extract",
+      "item_key": null,
+      "category": "pantry",
+      "price": 15.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 135.17,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Black Beans, bulk",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Organic Tri-color Quinoa, bulk",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Blanched Slivered Almonds, bulk",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 13, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Woodstock Frozen Vegetables",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.29,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.66,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 16, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Woodstock Organic Frozen Vegetables",
+      "item_key": null,
+      "category": "frozen",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.8,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 16, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "central-coop",
+      "item": "Woodstock Organic Frozen Mushrooms",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.06,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "NCG Co+op Deals flyer page 16, selected varieties; not all items carried by Central Co-op"
     }
   ]
 }
