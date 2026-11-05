@@ -48,12 +48,19 @@
       "updated_at": "2026-11-05T07:19:16.950Z"
     },
     "hmart": {
-      "fingerprint": "6319cd577075c33a",
+      "fingerprint": "d4da8f6c0c4f5360",
       "matches": [
-        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793308871660-FE9E3VSBK9HXNGIKNOY9/103026+WA+HMart+Weekly.jpg",
-        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793308876620-K71TR2U7T9O0IFPEN40X/103026+WA+HMart+Weekly_eng.jpg"
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915601404-R52NYWP6CQBA1KLSHAK1/110626+WA+HMart+Weekly.jpg",
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915604576-UA45DMH61MZJOU2WKPJE/110626+WA+HMart+Weekly_eng.jpg"
       ],
-      "seen_at": "2026-10-31T18:28:16.768Z"
+      "seen_at": "2026-11-05T21:55:52.245Z",
+      "pending": {
+        "since": "2026-11-05T21:55:52.245Z",
+        "live_before": "2026-10-30|https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793308876620-K71TR2U7T9O0IFPEN40X/103026+WA+HMart+Weekly_eng.jpg https://www.hmartus.com/weekly-sale-wa",
+        "fires": 1,
+        "fired_at": "2026-11-05T21:55:52.245Z",
+        "session": "https://claude.ai/code/cse_015KDcQDVA43D73LTgUXsJ6r"
+      }
     },
     "99-ranch": {
       "fingerprint": "4a7b3d518f4451f0",
