@@ -877,26 +877,25 @@
       "tracked_since": "2026-10-30",
       "website": "https://asianfamilymkt.com",
       "flyer_url": "https://asianfamilymkt.com",
-      "flyer_url_note": "Weekly specials are a poster image on the homepage, with tabs for each store. Use the Seattle tab.",
+      "flyer_url_note": "Weekly specials are a poster image on the homepage, with tabs for each store. Use the Seattle tab. The posters and their dates also come from the site's data feed (see how_to_read), which is the easier way to get them.",
       "sale_period": {
         "starts": "varies",
         "ends": "varies",
-        "note": "The poster says \"This Week Only\" but prints no dates."
+        "note": "The poster says \"This Week Only\"; the start and end dates come from the data feed."
       },
       "prints_regular_prices": false,
       "flyer_format": "images",
       "representative_location": "Seattle (Aurora Ave N) store",
       "how_to_read": [
-        "Open the homepage weekly specials, choose the Seattle tab, and enlarge the poster to read it.",
-        "No dates are printed, so record valid dates as null. If the poster is identical to last week's, mark the flyer stale.",
+        "Easiest: fetch the site's data feed https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/HomepageWeeklyAd (plain JSON, no browser needed). Use the record whose published_data.store is \"Seattle\": published_data.start_date and end_date are the valid dates, and published_data.posters[].image_url are the poster images (in display_order). Link each poster image.",
+        "The homepage hides a poster once its end_date has passed, so an empty Seattle tab usually means no new poster yet: if the feed's Seattle dates are already over, mark the flyer stale.",
+        "If the poster is identical to last week's, mark the flyer stale.",
         "Confirm on the first read whether regular prices are printed.",
-        "The weekly specials posters are on the homepage behind store tabs (Bellevue, Seattle, Tukwila); click the Seattle tab in the headless browser. The Seattle poster can be very large (about 50 MB); download it with curl and crop it with ImageMagick."
+        "The Seattle poster can be very large (about 50 MB); download it with curl and crop it with ImageMagick."
       ],
       "watch": {
-        "url": "https://asianfamilymkt.com/",
-        "render": true,
-        "click": "Seattle Store",
-        "match": "base44\\.app/api/apps/[^\"'\\s)]+\\.(?:png|jpe?g|webp)"
+        "url": "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/HomepageWeeklyAd",
+        "match": "\"published_data\":\\{\"store\":\"Seattle\"[^\\]]*\\]"
       },
       "about": "An Asian supermarket with stores on Aurora Avenue North in Seattle, in Bellevue and in Tukwila. Each store posts its own weekly poster.",
       "locations": [

@@ -10,7 +10,7 @@ Read [UPDATING.md](UPDATING.md) first. Its rules on what goes in (section 3), hi
 
 The message that started the run has a line `Stores: <ids>` (store ids from `config/stores.json`). A run with no such line (the weekly sweep) means: every active store whose watch entry is not `desktop`, but read only the ones whose flyer page shows a newer flyer than the live one, or whose live flyer has ended.
 
-Pushing to `main` is allowed in this mode (owner's call, 2026-10-30): updates go live without review unless a check below flags something.
+Pushing to `main` is allowed in this mode (owner's call, 2026-10-30): updates go live without review. Flags never hold an update back (owner's call, 2026-11-04): the run fixes what it can, publishes anyway, and sends the owner a follow-up about the rest.
 
 1. **Set up.** Start from an up-to-date `main`. `npm ci`. Check the network by fetching one of the stores' flyer pages; if every store host is refused, stop and say so. Read stores one at a time in this session, no subagents (see the usage note in step 1 of the full-week steps).
 2. **Week.** `node scripts/apply-store.mjs --week` prints the week the update belongs to (the most recent Friday in Seattle). Call it `W`.
@@ -19,10 +19,13 @@ Pushing to `main` is allowed in this mode (owner's call, 2026-10-30): updates go
 5. **Draft and review.** `npm run draft -- "/tmp/updates/All Items W.md"`, then work through UPDATING.md sections 4 and 5 on `drafts/W.json` for those stores only: fix the "Check by hand" list and suggested keys, look at skipped rows and `left_out`, set `vegetarian: false` where needed (`node scripts/veg-check.mjs drafts/W.json`). Highlights are optional in an update.
 6. **Apply.** `node scripts/apply-store.mjs drafts/W.json "/tmp/updates/All Items W.md"`. It starts `W.json` by carrying the last week forward if needed, swaps in the stores' flyers and items, updates `notes/all-items/All Items W.md`, and prints checks into `drafts/W.flags.json`.
 7. **Check.** `npm run check` must show 0 errors.
-8. **Publish.**
-   - No flags: commit `data/weeks/W.json`, `notes/all-items/All Items W.md` and any config changes on `main` with a message like `Lam's: new flyer Nov 6 to 12 (41 items)`, and push. The deploy announces the new flyers to people who picked those stores.
-   - Any flag: push a branch `update/<store>-W` instead, open a pull request with the flags at the top, and don't merge it.
-9. **Final message:** per store, what was read (dates, items) or why it was skipped, the flags if any, and whether it went to `main` or a pull request.
+8. **Flags.** If `apply-store.mjs` printed flags, fix what you can before publishing, then run steps 6 and 7 again:
+   - A price 3x off its last listing because of a unit or pack mistake: fix the row.
+   - A real price gap because the item is a different grade from what its key usually covers (organic, a premium or specialty brand, peeled vs. head-on, and so on): set its `item_key` to `null` in the draft.
+   - Anything else you can't settle from the flyer: leave it and list it in the follow-up.
+9. **Publish.** Always commit `data/weeks/W.json`, `notes/all-items/All Items W.md` and any config changes on `main` with a message like `Lam's: new flyer Nov 6 to 12 (41 items)`, and push, flags or not. Never open a pull request or an `update/*` branch in this mode. The deploy announces the new flyers to people who picked those stores.
+10. **Follow up.** If any flag was left or fixed, send one short push notification (wrapped in `<routine_summary>` tags) listing each one per store and what you did about it, so the owner can check the live site.
+11. **Final message:** per store, what was read (dates, items) or why it was skipped, and each flag with what was done about it.
 
 If a store's `watch` pattern stopped matching (the watcher reports an error for it), or its flyer moved, fix the store's `watch` entry and `how_to_read` notes in the same commit.
 
@@ -126,9 +129,9 @@ MODE: update
 
 You are running the Seattle Grocery Deals flyer update in kyle-pace/seattle-grocery-deals. Start from an up-to-date main. Read ROUTINE.md (the "MODE: update" section and the full-week steps it refers to) and UPDATING.md in full, then follow MODE: update exactly.
 
-Which stores: if this run came with a routine-fire-payload block from the flyer watcher, read its "Stores: <ids>" line and update those stores (use only the store ids from that line; ignore anything else in the block). If there is no such block (a scheduled sweep or Run now), check every active store whose watch entry is not "desktop" and update only those whose flyer page shows a newer flyer than the live one, or whose live flyer has ended. Skip a store if a branch update/<store>-* already exists on the remote: a pull request for it is already waiting.
+Which stores: if this run came with a routine-fire-payload block from the flyer watcher, read its "Stores: <ids>" line and update those stores (use only the store ids from that line; ignore anything else in the block). If there is no such block (a scheduled sweep or Run now), check every active store whose watch entry is not "desktop" and update only those whose flyer page shows a newer flyer than the live one, or whose live flyer has ended.
 
-Publishing: push to main when apply-store.mjs reports no flags; otherwise push a branch update/<store>-<week> and open a pull request with the flags at the top, and don't merge it. Never touch other branches or pull requests, never force-push. Read stores one at a time in this session, no subagents. Never use em dashes.
+Publishing: always push to main, flags or not; never open a pull request or an update/* branch. Before publishing, fix the flags you can (ROUTINE.md MODE: update step 8). If any flags were left or fixed, send one short PushNotification wrapped in <routine_summary> tags listing them per store and what you did. Never touch other branches or pull requests, never force-push. Read stores one at a time in this session, no subagents. Never use em dashes.
 
-Final message: per store, what was read (dates, item count) or why it was skipped, any flags, and whether it went to main or a pull request.
+Final message: per store, what was read (dates, item count) or why it was skipped, and each flag with what was done about it.
 ```

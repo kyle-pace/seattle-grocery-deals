@@ -13,8 +13,9 @@
 //      become "stale" with no items, until their store's next update.
 //   2. Replaces those stores' flyer entries and items in data/weeks/<week>.json.
 //   3. Replaces their flyer lines and rows in notes/all-items/All Items <week>.md.
-//   4. Prints checks and writes them to drafts/<week>.flags.json. Any flag means a person
-//      should look first: open a pull request instead of pushing to main.
+//   4. Prints checks and writes them to drafts/<week>.flags.json. Flags never hold up
+//      publishing (owner's call, 2026-11-04): fix what can be fixed, publish, and send the
+//      rest to the owner as a follow-up.
 //
 // It never touches other stores.
 
@@ -137,7 +138,7 @@ for (const id of storeIds) {
   }
 }
 console.log(lines.join("\n"));
-console.log(flags.length ? `\nFlags (open a pull request instead of pushing to main):\n- ${flags.join("\n- ")}` : "\nNo flags: fine to publish.");
+console.log(flags.length ? `\nFlags (publish anyway; fix what you can first and send the rest as a follow-up):\n- ${flags.join("\n- ")}` : "\nNo flags.");
 mkdirSync(join(ROOT, "drafts"), { recursive: true });
 writeFileSync(join(ROOT, "drafts", `${week}.flags.json`), JSON.stringify({ week, stores: storeIds, started, flags }, null, 2) + "\n");
 
