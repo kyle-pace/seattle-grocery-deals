@@ -24,13 +24,7 @@
         "SALES FOR 11.4.26 - 11.10.26"
       ],
       "seen_at": "2026-11-05T07:19:16.950Z",
-      "pending": {
-        "since": "2026-11-05T07:19:16.950Z",
-        "live_before": "2026-10-28|https://www.centralcoop.coop/s/Coop_Deals_2026_Oct_Flyer_West_B.pdf https://www.centralcoop.coop/freshdeals",
-        "fires": 1,
-        "fired_at": "2026-11-05T07:19:16.950Z",
-        "session": "https://claude.ai/code/cse_015KDcQFX2Ecp9hrYcDBUJZj"
-      }
+      "updated_at": "2026-11-05T15:46:08.383Z"
     },
     "smith-brothers": {
       "fingerprint": "8fd6e3143570f8f4",
