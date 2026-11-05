@@ -15,21 +15,22 @@
         "wp-content/uploads/2026/11/WeeklyAd-11.04.26.pdf"
       ],
       "seen_at": "2026-11-04T11:30:08.463Z",
-      "pending": {
-        "since": "2026-11-04T11:30:08.463Z",
-        "live_before": "2026-10-28|https://www.uwajimaya.com/wp-content/uploads/2026/10/WeeklyAd-10.28.26.pdf https://www.uwajimaya.com/wp-content/uploads/2026/10/October-28-e1793127045138.jpg https://www.uwajimaya.com/wp-content/uploads/2026/10/October-282.jpg https://www.uwajimaya.com/wp-content/uploads/2026/10/October-213-Nagano-Fair-Update-1.png https://www.uwajimaya.com/weekly-specials/",
-        "fires": 3,
-        "fired_at": "2026-11-05T00:19:54.184Z",
-        "session": "https://claude.ai/code/cse_015KDcQG9ctss3hs9PNDf6of"
-      }
+      "updated_at": "2026-11-05T07:19:16.950Z"
     },
     "central-coop": {
-      "fingerprint": "5c66f8803321c705",
+      "fingerprint": "836429687b108a27",
       "matches": [
-        "/s/Coop_Deals_2026_Oct_Flyer_West_B.pdf",
-        "SALES FOR 10.28.26 - 11.03.26"
+        "/s/Coop_Deals_2026_Nov_Flyer_West_A.pdf",
+        "SALES FOR 11.4.26 - 11.10.26"
       ],
-      "seen_at": "2026-10-31T18:28:16.768Z"
+      "seen_at": "2026-11-05T07:19:16.950Z",
+      "pending": {
+        "since": "2026-11-05T07:19:16.950Z",
+        "live_before": "2026-10-28|https://www.centralcoop.coop/s/Coop_Deals_2026_Oct_Flyer_West_B.pdf https://www.centralcoop.coop/freshdeals",
+        "fires": 1,
+        "fired_at": "2026-11-05T07:19:16.950Z",
+        "session": "https://claude.ai/code/cse_015KDcQFX2Ecp9hrYcDBUJZj"
+      }
     },
     "smith-brothers": {
       "fingerprint": "8fd6e3143570f8f4",
@@ -37,13 +38,7 @@
         "Enjoy these deals 10/31 to 11/13"
       ],
       "seen_at": "2026-11-03T02:37:26.412Z",
-      "pending": {
-        "since": "2026-11-03T02:37:26.412Z",
-        "live_before": "2026-10-17|https://www.smithbrothersfarms.com/on-special",
-        "fires": 3,
-        "fired_at": "2026-11-03T17:45:51.404Z",
-        "session": "https://claude.ai/code/cse_015KDcQCPf8PhpCEzz7KQPBX"
-      }
+      "updated_at": "2026-11-05T07:19:16.950Z"
     },
     "met-market": {
       "fingerprint": "427e3093369279e8",
@@ -56,13 +51,7 @@
         "Weekly-Savings-110426-PG-6"
       ],
       "seen_at": "2026-11-04T11:30:08.463Z",
-      "pending": {
-        "since": "2026-11-04T11:30:08.463Z",
-        "live_before": "2026-10-28|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-5.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
-        "fires": 3,
-        "fired_at": "2026-11-05T00:19:54.184Z",
-        "session": "https://claude.ai/code/cse_015KDcQG9ctss3hs9PNDf6of"
-      }
+      "updated_at": "2026-11-05T07:19:16.950Z"
     },
     "hmart": {
       "fingerprint": "6319cd577075c33a",
@@ -97,34 +86,11 @@
       "seen_at": "2026-10-31T18:28:16.768Z"
     },
     "asian-family-market": {
-      "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-05T00:19:54.184Z",
-      "debug": {
-        "final_url": "https://asianfamilymkt.com/",
-        "title": "Asian Family Market",
-        "clicked": "ok",
-        "requests": 26,
-        "text_start": "Home Stores Departments Products Food Hall Delivery Rewards Careers About Contact ASIAN FAMILY MARKET Fresh produce, authentic ingredients, and modern convenience across the Pacific Northwest. Find a Store Shop Delivery Fresh Produce Daily Farm-fresh vegetables and fruits delivered every morning Liv",
-        "urls": [
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/analytics/track/batch",
-          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
-          "https://asianfamilymkt.com/api/apps/public/prod/public-settings/by-id/699266c8c2f2e91c54efa8af",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/29530ced5_.png",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/d6a668857_.png",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/6713db617_24.jpg",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/d09abd95c_2026-02-2015857.png",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/WeeklyAd",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/BannerImage",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/HomepageWeeklyAd",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/FreshGuaranteeContent",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/TeamImage",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/StoreQuickLink",
-          "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/ContactInfo",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png",
-          "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
-          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png"
-        ]
-      }
+      "fingerprint": "881e1ba14e1ebd3b",
+      "matches": [
+        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-10-09\",\"end_date\":\"2026-10-31\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png\",\"display_order\":0}]"
+      ],
+      "seen_at": "2026-11-05T07:19:16.950Z"
     }
   }
 }
