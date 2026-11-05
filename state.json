@@ -18,9 +18,9 @@
       "pending": {
         "since": "2026-11-04T11:30:08.463Z",
         "live_before": "2026-10-28|https://www.uwajimaya.com/wp-content/uploads/2026/10/WeeklyAd-10.28.26.pdf https://www.uwajimaya.com/wp-content/uploads/2026/10/October-28-e1793127045138.jpg https://www.uwajimaya.com/wp-content/uploads/2026/10/October-282.jpg https://www.uwajimaya.com/wp-content/uploads/2026/10/October-213-Nagano-Fair-Update-1.png https://www.uwajimaya.com/weekly-specials/",
-        "fires": 2,
-        "fired_at": "2026-11-04T18:50:37.646Z",
-        "session": "https://claude.ai/code/cse_015KDcQBnwLQBQ9fzuDGU9Xq"
+        "fires": 3,
+        "fired_at": "2026-11-05T00:19:54.184Z",
+        "session": "https://claude.ai/code/cse_015KDcQG9ctss3hs9PNDf6of"
       }
     },
     "central-coop": {
@@ -59,9 +59,9 @@
       "pending": {
         "since": "2026-11-04T11:30:08.463Z",
         "live_before": "2026-10-28|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-102826-PG-5.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
-        "fires": 2,
-        "fired_at": "2026-11-04T18:50:37.646Z",
-        "session": "https://claude.ai/code/cse_015KDcQBnwLQBQ9fzuDGU9Xq"
+        "fires": 3,
+        "fired_at": "2026-11-05T00:19:54.184Z",
+        "session": "https://claude.ai/code/cse_015KDcQG9ctss3hs9PNDf6of"
       }
     },
     "hmart": {
@@ -98,7 +98,7 @@
     },
     "asian-family-market": {
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-04T18:50:37.646Z",
+      "error_at": "2026-11-05T00:19:54.184Z",
       "debug": {
         "final_url": "https://asianfamilymkt.com/",
         "title": "Asian Family Market",
@@ -106,8 +106,8 @@
         "requests": 26,
         "text_start": "Home Stores Departments Products Food Hall Delivery Rewards Careers About Contact ASIAN FAMILY MARKET Fresh produce, authentic ingredients, and modern convenience across the Pacific Northwest. Find a Store Shop Delivery Fresh Produce Daily Farm-fresh vegetables and fruits delivered every morning Liv",
         "urls": [
-          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/analytics/track/batch",
+          "https://media.base44.com/images/public/builder-assets/symbol-orange.png",
           "https://asianfamilymkt.com/api/apps/public/prod/public-settings/by-id/699266c8c2f2e91c54efa8af",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/29530ced5_.png",
           "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/d6a668857_.png",
@@ -120,9 +120,9 @@
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/TeamImage",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/StoreQuickLink",
           "https://asianfamilymkt.com/api/apps/699266c8c2f2e91c54efa8af/entities/ContactInfo",
+          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png",
           "https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png",
-          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png",
-          "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699266c8c2f2e91c54efa8af/8f289eb48_2026-03-04104715.png"
+          "https://www.gstatic.com/images/branding/product/2x/translate_24dp.png"
         ]
       }
     }
