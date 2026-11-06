@@ -71,6 +71,11 @@ const ICON_PATHS = {
   grid: `<rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/>`,
   list: `<path d="M5.5 4h8M5.5 8h8M5.5 12h8"/><circle cx="2.8" cy="4" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="8" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="12" r=".9" fill="currentColor" stroke="none"/>`,
   bell: `<path d="M4 11V7.2a4 4 0 0 1 8 0V11l1.2 1.5H2.8zM6.6 14a1.5 1.5 0 0 0 2.8 0"/>`,
+  plus: `<path d="M8 3.2v9.6M3.2 8h9.6"/>`,
+  check: `<path d="M3.4 8.4l3 3 6.2-6.6"/>`,
+  copy: `<rect x="5.5" y="5.5" width="8" height="8.5" rx="1.5"/><path d="M10.5 5.5V3.5A1.5 1.5 0 0 0 9 2H4a1.5 1.5 0 0 0-1.5 1.5v6.5A1.5 1.5 0 0 0 4 11.5h1.5"/>`,
+  share: `<path d="M8 10V2.4M5 5.2L8 2.2l3 3M3.5 8.5v4.6c0 .5.4.9.9.9h7.2c.5 0 .9-.4.9-.9V8.5"/>`,
+  trash: `<path d="M2.8 4.3h10.4M6.3 4.3V2.8h3.4v1.5M4.2 4.3l.6 9h6.4l.6-9"/>`,
   clock: `<circle cx="8" cy="8" r="6.3"/><path d="M8 4.6V8l2.4 1.6"/>`,
   people: `<circle cx="6" cy="5.2" r="2.3"/><path d="M1.8 13.4c.4-2.6 2.1-4 4.2-4s3.8 1.4 4.2 4"/><circle cx="11.4" cy="5.8" r="1.9"/><path d="M11.2 9.5c1.7.1 2.8 1.3 3.1 3.4"/>`,
   widget: `<rect x="2.5" y="2.5" width="11" height="11" rx="2.5"/><path d="M5.5 6h5M5.5 8.5h3M5.5 11h4"/>`,
@@ -215,16 +220,24 @@ function dealRow(i, rank, { why = false, store = true, ends = true, people = 0 }
   const meta = metaParts.join(" &middot; ") + (ends && i.valid_through ? `<span data-ends-detail${sep ? " data-sep" : ""}${end.detail ? "" : " hidden"}>${esc(end.detail ? sep + end.detail : "")}</span>` : "");
   // The pill and badges already say "% off", "under US avg" and "lowest", so the reason skips them.
   const reason = why ? (i.highlight?.reason ?? i.a.tags.filter((t) => !["pct", "us", "low", "member"].includes(t.kind)).map((t) => t.text).join(". ")) : "";
-  return `<li class="deal${end.ended ? " deal-ended" : ""}" ${rowAttrs(i, rank)}${ends && i.valid_through ? ` data-ends="${i.valid_through}"` : ""}>
+  // What the list keeps if this deal is added (app.js, sgd.list): enough to show it after the
+  // week's data has moved on. The id survives rebuilds: store, name and price.
+  const li = { id: `${i.store}|${i.item}|${i.price}`, name: i.item, store: i.store, storeName: storeName(i.store), price: priceText(i), ends: i.valid_through ?? null, key: i.item_key ?? null };
+  return `<li class="deal${end.ended ? " deal-ended" : ""}" ${rowAttrs(i, rank)}${i.valid_through ? ` data-ends="${i.valid_through}"` : ""} data-li="${esc(JSON.stringify(li))}">
   <div class="deal-main">${badges ? `<p class="deal-badges">${badges}</p>` : ""}<p class="deal-name">${esc(i.item)}</p>${meta ? `<p class="deal-meta">${meta}</p>` : ""}${sv ? `<p class="deal-pill">${sv.html}</p>` : ""}${people ? `<p class="deal-people">${ic("people")}${plural(people, "person", "people")} added this</p>` : ""}${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
   ${amount(i, { pill: false })}
+  <button type="button" class="add-btn" data-add aria-pressed="false" aria-label="Add ${esc(i.item)} at ${esc(storeName(i.store))} to your list">${ic("plus")}${ic("check")}</button>
 </li>`;
 }
+
+// Ended deals go to the bottom of a list (they stay, faded, until the store's next flyer).
+const isEnded = (i) => Boolean(i.valid_through && i.valid_through < TODAY);
+const liveFirst = (list) => [...list.filter((i) => !isEnded(i)), ...list.filter(isEnded)];
 
 // Deals grouped by department, each group a section that hides when filters empty it.
 function grouped(items, opts = {}) {
   return CATS.filter((c) => items.some((i) => i.category === c)).map((c) => {
-    const list = items.filter((i) => i.category === c);
+    const list = liveFirst(items.filter((i) => i.category === c));
     return `<section class="group" data-group aria-labelledby="g-${c}">
   <h2 class="sec-label group-h" id="g-${c}"><span>${esc(CATEGORY_LABELS[c])}</span> <span class="sec-note" data-group-count>${list.length}</span></h2>
   <ul class="deals" data-sortable>${list.map((i) => dealRow(i, items.indexOf(i), opts)).join("\n")}</ul>
@@ -239,6 +252,7 @@ function controls({ search = true, store = true, sort = false, stores = [], sear
 <div class="bar" data-filters><div class="wrap chiprow" role="group" aria-label="Filters">
   <button type="button" class="fchip" aria-pressed="false" data-veg-toggle>${ic("leaf")}<span>Vegetarian</span></button>
   ${store && stores.length ? `<label class="sr-only" for="f-store">Store</label><select class="fchip fchip-select" id="f-store" data-filter="store"><option value="">All stores</option>${stores.map((s) => `<option value="${esc(s)}">${esc(storeName(s))}</option>`).join("")}</select>` : ""}
+  <label class="sr-only" for="f-ends">When it ends</label><select class="fchip fchip-select" id="f-ends" data-filter="ends"><option value="0">Ends any day</option><option value="2">Not ending today</option><option value="3">3+ days left</option></select>
   ${sort ? `<label class="sr-only" for="f-sort">Sort</label><select class="fchip fchip-select" id="f-sort" data-sort><option value="rank">Best deals first</option><option value="off">Biggest % off</option><option value="price">Lowest price</option><option value="name">A to Z</option></select>` : ""}
 </div></div>`;
 }
@@ -341,9 +355,10 @@ const ICONS = {
   "": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>`,
   "departments/": `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
   "stores/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l1-5h14l1 5M4 9h16v11H4zM9 20v-6h6v6"/></svg>`,
+  "list/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 5.5l1.2 1.2L7.4 4.4M4 11.5l1.2 1.2 2.2-2.3M4 17.5l1.2 1.2 2.2-2.3"/></svg>`,
   "compare/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9M20 17l-3-3M20 17l-3 3"/></svg>`,
 };
-const MAIN_NAV = [["", "This week"], ["departments/", "Aisles"], ["stores/", "Stores"], ["compare/", "Compare"]];
+const MAIN_NAV = [["", "This week"], ["departments/", "Aisles"], ["stores/", "Stores"], ["compare/", "Compare"], ["list/", "List"]];
 
 // section: which menu item this page belongs to ("" is This week).
 // Display settings panel on every page (assets/display.js, styles at the end of style.css).
@@ -374,9 +389,9 @@ function page({ title, path, section = path, body, wrap = true, description, map
   const imgAlt = image ? imageAlt : DEFAULT_OG_ALT;
   if (!noindex && section !== "404") SITEMAP.add(path);
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
-  const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}</a>`).join("")
+  const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("")
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
-  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span></a>`).join("");
+  const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span>${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("");
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -416,6 +431,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <script>try{var d=JSON.parse(localStorage.getItem("sgd.display")||"{}");for(var k in d)document.documentElement.setAttribute("data-"+k,d[k])}catch(e){}</script>
 <script src="${asset("assets/app.js")}" defer></script>
 <script src="${asset("assets/display.js")}" defer></script>
+<script src="${asset("assets/list.js")}" defer></script>
 <script type="module" src="${ANALYTICS_SRC}"></script>${extraScript ? `
 <script src="${asset(extraScript)}" defer></script>` : ""}${head ? `
 ${head}` : ""}${map ? `
@@ -591,7 +607,7 @@ function listPage({ path, section, title, h1, sub, items, crumbsHtml = "", group
 ${controls({ stores: storesIn(items), sort: true, placeholder: placeholder ?? `Search ${title.toLowerCase()}`, searchLabel: `Search ${title.toLowerCase()}` })}
 <div class="wrap list" data-filterable>
 ${countLine()}
-${group ? grouped(items, { why }) : `<ul class="deals" data-sortable>${items.map((i, n) => dealRow(i, n, { why })).join("\n")}</ul>`}
+${group ? grouped(items, { why }) : `<ul class="deals" data-sortable>${liveFirst(items).map((i) => dealRow(i, items.indexOf(i), { why })).join("\n")}</ul>`}
 ${emptyLine(empty)}
 </div>`;
   write(path, page({ title, path, section, body, wrap: false, description }));
@@ -963,6 +979,36 @@ function seasonFeed(feedIds) {
   });
 }
 
+// The list, kept in this browser (app.js draws it from localStorage). Like the app's List tab,
+// with ways to get it into Reminders: copy it (pasted lines become separate reminders), send it
+// to a Shortcut that adds each line, or share it.
+function yourListPage() {
+  const sc = cfg.site.shortcut ?? {};
+  const body = `<div data-list-cfg data-shortcut="${esc(sc.name ?? "Add to Groceries")}" data-base="${esc(url())}" hidden></div>
+${pageHead("Your list", "Tap + on any deal to add it. Saved in this browser only.")}
+<form class="list-add" data-list-add><label class="sr-only" for="list-new">Add something not on sale</label><input id="list-new" type="text" placeholder="Add something else, like eggs" autocomplete="off" maxlength="120"><button type="submit" class="btn">${ic("plus")}<span>Add</span></button></form>
+<div class="list-tools" data-list-tools hidden>
+  <button type="button" class="btn btn-primary" data-list-reminders>${ic("list")}<span>Send to Reminders</span></button>
+  <button type="button" class="btn" data-list-copy>${ic("copy")}<span>Copy list</span></button>
+  <button type="button" class="btn" data-list-share hidden>${ic("share")}<span>Share</span></button>
+</div>
+<p class="list-status" data-list-status role="status"></p>
+<div data-list-body></div>
+<div data-list-empty hidden>${emptyState({ mood: "happy", title: "Your list is empty", msg: "Tap + on a deal and it shows up here, with its price, store and when the sale ends.", link: [url(), "See this week's deals"] })}</div>
+<div class="list-foot" data-list-foot hidden>
+  <button type="button" class="btn" data-list-clear-done>Clear checked</button>
+  <button type="button" class="btn" data-list-clear-ended hidden>Remove ended deals</button>
+</div>
+<details class="list-help" id="reminders">
+  <summary>How Send to Reminders works</summary>
+  <p>It hands your list to a Shortcut called <b>${esc(sc.name ?? "Add to Groceries")}</b>, which adds each item to a Reminders list. It works in Safari and Chrome on a Mac, iPhone or iPad.</p>
+  ${sc.install_url ? `<p><a class="btn" href="${esc(sc.install_url)}" rel="noopener">Get the Shortcut ${ext}</a></p>` : ""}
+  <p>${sc.install_url ? "Or make it yourself" : "To set it up"} in the Shortcuts app: make a new shortcut named <b>${esc(sc.name ?? "Add to Groceries")}</b>, set it to receive text, then add <b>Split Text</b> (by new lines), <b>Repeat with Each</b>, and inside it <b>Add New Reminder</b> with the Repeat Item, in your groceries list. The first time, Shortcuts asks before it adds anything.</p>
+  <p>No Shortcut? <b>Copy list</b>, then paste into a list in Reminders: each line becomes its own reminder.</p>
+</details>`;
+  write("list/", page({ title: "Your list", path: "list/", body, noindex: true, description: "Your grocery list from this week's Seattle sales, saved in your browser." }));
+}
+
 function aboutPage() {
   const c = cfg.criteria;
   const body = `<div class="page-h"><h1>About</h1></div>
@@ -1154,6 +1200,7 @@ comparePage();
 weekPages();
 storePages();
 aboutPage();
+yourListPage();
 appsPage();
 for (const s of SEASONS) seasonPage(s);
 dataPages();

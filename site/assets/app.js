@@ -22,6 +22,13 @@
   var search = document.querySelector("[data-search]");
   var storeSel = document.querySelector('[data-filter="store"]');
   var sortSel = document.querySelector("[data-sort]");
+  // "Not ending today" or "3+ days left": the fewest days a deal must have left, counting today.
+  // Kept in localStorage like Vegetarian, so it follows you from page to page.
+  var KEY_ENDS = "sgd.endsMin";
+  var endsSel = document.querySelector('[data-filter="ends"]');
+  var endsMin = +load(KEY_ENDS, 0) || 0;
+  if (endsSel) endsSel.value = String(endsMin);
+  function enoughLeft(iso) { return !endsMin || !iso || daysUntil(iso) + 1 >= endsMin; }
   var home = document.querySelector("[data-home]");
   var results = document.querySelector("[data-results]");
 
@@ -31,6 +38,7 @@
     if (vegOnly && el.dataset.veg === "0") return false;
     if (el.dataset.hl && el.dataset.hl.indexOf(vegOnly ? "v" : "a") === -1) return false;
     if (storeSel && storeSel.value && el.dataset.store !== storeSel.value) return false;
+    if (!enoughLeft(el.dataset.ends)) return false;
     if (q && el.dataset.text && el.dataset.text.indexOf(q) === -1) return false;
     return true;
   }
@@ -65,7 +73,7 @@
     var count = scope.querySelector("[data-count]");
     if (count) {
       count.textContent = (q ? shown + (shown === 1 ? " deal matches “" : " deals match “") + search.value.trim() + "”" : "Showing " + shown + (shown === 1 ? " deal" : " deals")) +
-        (vegOnly ? ", vegetarian only" : "") + (storeSel && storeSel.value ? ", at " + storeSel.options[storeSel.selectedIndex].text : "") + ".";
+        (vegOnly ? ", vegetarian only" : "") + (endsMin === 2 ? ", not ending today" : endsMin ? ", with " + endsMin + "+ days left" : "") + (storeSel && storeSel.value ? ", at " + storeSel.options[storeSel.selectedIndex].text : "") + ".";
     }
     // With nothing to show, the empty state says it; the count stays for screen readers.
     if (count) count.classList.toggle("sr-only", shown === 0);
@@ -89,7 +97,9 @@
     }[by];
     all("[data-sortable]").forEach(function (ul) {
       var rows = all(":scope > .deal", ul);
-      rows.sort(key ? function (a, b) { return key(a) - key(b); } : function (a, b) { return a.dataset.name.localeCompare(b.dataset.name); });
+      // Ended deals stay at the bottom whatever the sort.
+      var end = function (el) { return el.classList.contains("deal-ended") ? 1 : 0; };
+      rows.sort(function (a, b) { return end(a) - end(b) || (key ? key(a) - key(b) : a.dataset.name.localeCompare(b.dataset.name)); });
       rows.forEach(function (r) { ul.appendChild(r); });
     });
   }
@@ -103,6 +113,11 @@
   });
   if (search) search.addEventListener("input", apply);
   if (storeSel) storeSel.addEventListener("change", apply);
+  if (endsSel) endsSel.addEventListener("change", function () {
+    endsMin = +endsSel.value || 0;
+    save(KEY_ENDS, endsMin);
+    apply();
+  });
   if (sortSel) sortSel.addEventListener("change", function () { sortRows(); apply(); });
 
   // Stores page: only stores that deliver.
@@ -201,7 +216,7 @@
     var shown = 0;
     all("[data-ends]", ending).forEach(function (li) {
       var d = daysUntil(li.dataset.ends);
-      var ok = d >= 0 && d <= 2 && shown < 8 && !(vegOnly && li.dataset.veg === "0") && !(storeSel && storeSel.value && li.dataset.store !== storeSel.value);
+      var ok = d >= 0 && d <= 2 && enoughLeft(li.dataset.ends) && shown < 8 && !(vegOnly && li.dataset.veg === "0") && !(storeSel && storeSel.value && li.dataset.store !== storeSel.value);
       li.hidden = !ok;
       if (ok) {
         shown++;

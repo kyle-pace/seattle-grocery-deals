@@ -15,6 +15,14 @@ final class FeedStore {
     private(set) var loading = false
     /// The last refresh couldn't reach the site, so we're showing a saved week.
     private(set) var offline = false
+    /// Hides deals that end today (and ended ones) everywhere, like Vegetarian. The website's
+    /// "Not ending today" filter does the same (app.js, sgd.endsMin).
+    var hideEndingToday: Bool {
+        didSet {
+            UserDefaults.standard.set(hideEndingToday, forKey: "sgd.hideEndingToday")
+            Analytics.track("Toggled Hide Ending Today", ["on": hideEndingToday])
+        }
+    }
     var vegetarianOnly: Bool {
         didSet {
             UserDefaults.standard.set(vegetarianOnly, forKey: "sgd.vegOnly")
@@ -51,6 +59,7 @@ final class FeedStore {
         devSampleSeasons = UserDefaults.standard.integer(forKey: "sgd.dev.sampleSeasons")
         favoriteStores = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
         vegetarianOnly = UserDefaults.standard.bool(forKey: "sgd.vegOnly")
+        hideEndingToday = UserDefaults.standard.bool(forKey: "sgd.hideEndingToday")
         feed = Self.cached() ?? Self.bundled()
     }
 
@@ -107,7 +116,9 @@ final class FeedStore {
     // MARK: lookups
 
     /// Deals after the vegetarian filter, best first.
-    var items: [Deal] { (feed?.items ?? []).filter { !vegetarianOnly || $0.veg } }
+    var items: [Deal] {
+        (feed?.items ?? []).filter { (!vegetarianOnly || $0.veg) && (!hideEndingToday || ($0.daysLeft ?? 99) >= 2) }
+    }
     var standouts: [Deal] { items.filter { $0.tier == .standout } }
     func store(_ id: String) -> Store? { feed?.stores.first { $0.id == id } }
     func storeName(_ id: String) -> String { store(id)?.name ?? id }

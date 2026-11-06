@@ -240,6 +240,7 @@ struct AisleDetail: View {
         .searchableIf(ownSearch, text: $query, prompt: "Search \(title.lowercased())")
         .dealsPinnedBar {
             ChipRow {
+                FilterChip("Not ending today", systemImage: "clock", isOn: store.hideEndingToday) { store.hideEndingToday.toggle() }
                 FilterChip("All stores", count: all.count, isOn: storeFilter == nil) { storeFilter = nil }
                 ForEach(storeCounts, id: \.store.id) { entry in
                     FilterChip(entry.store.name, count: entry.count,

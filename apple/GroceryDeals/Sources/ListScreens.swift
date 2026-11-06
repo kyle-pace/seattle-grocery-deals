@@ -300,6 +300,9 @@ struct SettingsView: View {
                         labeled("Vegetarian deals only", "Hides meat and seafood everywhere in the app")
                     }
                     .tint(Palette.mark(.good))   // the leaf's green, whatever the app's accent
+                    Toggle(isOn: Binding(get: { store.hideEndingToday }, set: { store.hideEndingToday = $0 })) {
+                        labeled("Hide deals ending today", "So you only see sales you can still get to")
+                    }
                 } header: { Text("Shopping") } footer: {
                     Text("Your stores come first on This week, Aisles and Stores. Every store still shows.")
                 }
