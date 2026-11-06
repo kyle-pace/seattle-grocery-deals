@@ -305,8 +305,14 @@ const DISPLAY_PANEL = `<button class="dp-toggle" type="button" popovertarget="di
   <p class="dp-note">Saved in this browser only.</p>
 </div>`;
 
-function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "" }) {
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
+  const desc = description ?? cfg.site.tagline;
+  const pageUrl = cfg.site.origin + cfg.site.base_path + path;
+  // Pages without their own share image get the site's (scripts/site-og.mjs).
+  const img = image ?? DEFAULT_OG;
+  const imgAlt = image ? imageAlt : DEFAULT_OG_ALT;
+  if (!noindex && section !== "404") SITEMAP.add(path);
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
   const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}</a>`).join("")
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
@@ -317,22 +323,32 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(full)}</title>
-<meta name="description" content="${esc(description ?? cfg.site.tagline)}">
+<meta name="description" content="${esc(desc)}">
+<link rel="canonical" href="${esc(pageUrl)}">
 <meta property="og:site_name" content="${esc(cfg.site.title)}">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
 <meta property="og:title" content="${esc(ogTitle || title || cfg.site.title)}">
-<meta property="og:description" content="${esc(description ?? cfg.site.tagline)}">
-<meta property="og:url" content="${esc(cfg.site.origin + cfg.site.base_path + path)}">${image ? `
-<meta property="og:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">
+<meta property="og:description" content="${esc(desc)}">
+<meta property="og:url" content="${esc(pageUrl)}">
+<meta property="og:image" content="${esc(cfg.site.origin + cfg.site.base_path + img)}">
+<meta property="og:image:type" content="${img.endsWith(".gif") ? "image/gif" : "image/png"}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${esc(imageAlt)}">
+<meta property="og:image:alt" content="${esc(imgAlt)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="${esc(cfg.site.origin + cfg.site.base_path + image)}">` : `
-<meta name="twitter:card" content="summary">`}
+<meta name="twitter:title" content="${esc(ogTitle || title || cfg.site.title)}">
+<meta name="twitter:description" content="${esc(desc)}">
+<meta name="twitter:image" content="${esc(cfg.site.origin + cfg.site.base_path + img)}">
+<meta name="twitter:image:alt" content="${esc(imgAlt)}">
 <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-title" content="Grocery Deals">${noindex ? `
+<meta name="robots" content="noindex">` : ""}
+<link rel="icon" href="${url("favicon.ico")}" sizes="48x48">
 <link rel="icon" href="${url("assets/logo.svg")}" type="image/svg+xml">
+<link rel="icon" href="${url("assets/favicon-96.png")}" type="image/png" sizes="96x96">
+<link rel="manifest" href="${url("site.webmanifest")}">
 <link rel="apple-touch-icon" href="${url("assets/apple-touch-icon.png")}">
 <link rel="preload" href="${url("assets/fonts/atkinson-hyperlegible-next.woff2")}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${asset("assets/style.css")}">
@@ -345,7 +361,8 @@ function page({ title, path, section = path, body, wrap = true, description, map
 ${head}` : ""}${map ? `
 <link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
 <script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
-<script src="${asset("assets/map.js")}" defer></script>` : ""}
+<script src="${asset("assets/map.js")}" defer></script>` : ""}${jsonld ? `
+<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>` : ""}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ""}${pageId ? ` data-page="${pageId}"` : ""}>
 <a class="skip" href="#main">Skip to content</a>
@@ -369,6 +386,28 @@ ${DISPLAY_PANEL}
 </html>
 `;
 }
+
+const DEFAULT_OG = "assets/img/og.png";
+const DEFAULT_OG_ALT = "Seattle Grocery Deals: a smiling persimmon next to the names of the Seattle stores whose sales the site lists.";
+// Every indexable page, for sitemap.xml.
+const SITEMAP = new Set();
+// Search and share descriptions: "Persimmon, 99¢/lb at Lam's Seafood; ...". Prices are the
+// printed ones from the week file, the same text the deal rows show.
+// The name is cut at its first comma ("Folgers Ground Coffee, selected varieties").
+const dealPhrase = (i, { store = true } = {}) => `${i.item.split(", ")[0].replace(/^Fz /, "Frozen ")} ${priceText(i)}${store ? ` at ${storeName(i.store)}` : ""}`;
+// As many picks as fit in a search snippet (about 160 characters with the rest of the line),
+// at least one and at most n.
+const DESC_MAX = 165;
+const pickList = (list, n, opts, room = DESC_MAX - 70) => {
+  const out = [];
+  for (const i of list.slice(0, n)) {
+    const next = [...out, dealPhrase(i, opts)].join("; ");
+    if (out.length && next.length > room) break;
+    out.push(dealPhrase(i, opts));
+  }
+  return out.join("; ");
+};
+const storeCount = (items) => new Set(items.map((i) => i.store)).size;
 
 function write(path, html) {
   const dir = join(DIST, path);
@@ -472,12 +511,19 @@ ${seasonStories()}
   ${emptyLine("Try a shorter word or a store name.")}
 </div>
 </div>`;
-  write("", page({ title: "", path: "", body, wrap: false, pageId: "home" }));
+  const home = cfg.site.origin + cfg.site.base_path;
+  write("", page({ title: "", path: "", body, wrap: false, pageId: "home",
+    ogTitle: "Seattle Grocery Deals: this week's sales, sorted",
+    description: `${plural(items.length, "sale")} this week at ${storeCount(items)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
+    jsonld: [
+      { "@context": "https://schema.org", "@type": "WebSite", name: cfg.site.title, alternateName: ["SGD", "seattlegrocery.deals"], url: home, description: cfg.site.tagline, inLanguage: "en-US" },
+      { "@context": "https://schema.org", "@type": "Organization", name: cfg.site.title, url: home, logo: `${home}assets/logo-512.png`, sameAs: [cfg.site.repo_url] },
+    ] }));
 }
 
 // ---------- list pages ----------
 
-function listPage({ path, section, title, h1, sub, items, crumbsHtml = "", group = true, why = true, empty }) {
+function listPage({ path, section, title, h1, sub, items, crumbsHtml = "", group = true, why = true, empty, description }) {
   const body = `<div class="wrap">${crumbsHtml}${pageHead(h1, sub)}</div>
 ${controls({ stores: storesIn(items), sort: true })}
 <div class="wrap list" data-filterable>
@@ -485,14 +531,16 @@ ${countLine()}
 ${group ? grouped(items, { why }) : `<ul class="deals" data-sortable>${items.map((i, n) => dealRow(i, n, { why })).join("\n")}</ul>`}
 ${emptyLine(empty)}
 </div>`;
-  write(path, page({ title, path, section, body, wrap: false }));
+  write(path, page({ title, path, section, body, wrap: false, description }));
 }
 
 function departmentPages() {
   const items = analyzed.get(latest.week);
   const cats = CATS.filter((c) => items.some((i) => i.category === c));
   write("departments/", page({
-    title: "Departments", path: "departments/", body: `${pageHead("Departments", `Every deal for the week of ${esc(fmtDate(latest.week, { weekday: false }))}, by section of the store.`)}
+    title: "Departments", path: "departments/",
+    description: `This week's Seattle grocery sales by aisle: ${cats.map((c) => `${CATEGORY_LABELS[c].toLowerCase()} (${items.filter((i) => i.category === c).length})`).join(", ")}.`,
+    body: `${pageHead("Departments", `Every deal for the week of ${esc(fmtDate(latest.week, { weekday: false }))}, by section of the store.`)}
 <ul class="tiles">${cats.map((c) => deptTile(c, items)).join("\n")}</ul>`,
   }));
   for (const c of cats) {
@@ -503,6 +551,7 @@ function departmentPages() {
       crumbsHtml: crumbs(["departments/", "Departments"]),
       sub: `${vegText(plural(list.length, "deal"), plural(veg, "vegetarian deal"))} this week, best first. Prices through each store's sale end date.`,
       empty: veg ? "Nothing matches these filters." : "No vegetarian deals here this week. Turn off Vegetarian to see them all.",
+      description: `${plural(list.length, `${CATEGORY_LABELS[c].toLowerCase()} sale`)} this week at ${plural(storeCount(list), "Seattle store")}, best first: ${pickList(list, 3)}.`,
     });
   }
 }
@@ -514,6 +563,7 @@ function standoutsPage() {
     crumbsHtml: crumbs(["", "This week"]),
     sub: "Big drops from the regular price, prices well under the US average, the lowest we've listed, or hand-picked. <a href=\"" + url("about/#how") + "\">How deals are chosen</a>",
     empty: "No standouts match these filters.",
+    description: `${plural(items.length, "standout sale")} at Seattle grocery stores this week, best first: ${pickList(items, 3)}.`,
   });
 }
 
@@ -542,7 +592,8 @@ ${groups.map((g) => `<section class="block cmp" id="${esc(g.k)}" aria-labelledby
   <div class="table-wrap"><table><thead><tr><th scope="col">Store</th><th scope="col">Item</th><th scope="col">Sale price</th><th scope="col">Per ${esc(PER_LABEL[g.per].replace(/^[/ ]/, ""))}</th></tr></thead>
   <tbody>${g.rows.map((r, n) => `<tr${n === 0 ? ' class="best"' : ""}><td><a href="${url(`stores/${r.i.store}/`)}">${esc(storeName(r.i.store))}</a>${n === 0 ? ` <span class="chip">Cheapest</span>` : ""}</td><td>${esc(r.i.item)}</td><td class="num">${esc(priceText(r.i))}</td><td class="num">${esc(money(r.v))}${PER_LABEL[g.per]}</td></tr>`).join("")}</tbody></table></div>
 </section>`).join("\n")}` : `<p class="muted">No item is on sale at more than one store this week.</p>`}`;
-  write("compare/", page({ title: "Compare stores", path: "compare/", body }));
+  write("compare/", page({ title: "Compare stores", path: "compare/", body,
+    description: groups.length ? `The same item at different Seattle stores this week, by price per pound or each: ${groups.slice(0, 5).map((g) => keyLabel(g.k).toLowerCase()).join(", ")} and more.` : "The same item at different Seattle stores, compared by price per pound or each." }));
 }
 
 // ---------- past weeks ----------
@@ -559,7 +610,8 @@ ${grouped(items, { ends: false })}
 ${emptyLine("Nothing matches these filters.")}
 </div>` : `<div class="wrap"><p>No sale items were recorded this week.</p></div>`}
 <div class="wrap"><section class="block" aria-labelledby="h-fly"><div class="sec-h"><h2 id="h-fly">Flyers that week</h2></div>${flyerList(w)}</section></div>`;
-    write(`weeks/${w.week}/`, page({ title: `Week of ${fmtDate(w.week, { weekday: false, year: true })}`, path: `weeks/${w.week}/`, section: "", body, wrap: false }));
+    write(`weeks/${w.week}/`, page({ title: `Week of ${fmtDate(w.week, { weekday: false, year: true })}`, path: `weeks/${w.week}/`, section: "", body, wrap: false,
+      description: `Seattle grocery sales for the week of ${fmtDate(w.week, { weekday: false, year: true })}: ${plural(w.items.length, "sale")} from ${plural(storeCount(w.items), "store")}. Past prices, kept for comparison.` }));
   }
   const rows = [...weeks].reverse().map((w) => {
     const items = analyzed.get(w.week);
@@ -569,7 +621,7 @@ ${emptyLine("Nothing matches these filters.")}
   <span class="muted">${items.length} items, ${stand.length} standouts, ${read} flyers read</span>
   ${stand.length ? `<div class="small">Top: ${stand.slice(0, 3).map((i) => `${esc(i.item)} at ${esc(storeName(i.store))}`).join("; ")}</div>` : ""}</li>`;
   });
-  write("weeks/", page({ title: "Past weeks", path: "weeks/", section: "", body: `${pageHead("Past weeks", "Every week since the site started.")}\n<ul class="weeks">${rows.join("\n")}</ul>` }));
+  write("weeks/", page({ title: "Past weeks", path: "weeks/", section: "", description: "Every past week of Seattle grocery sales on the site, kept so prices can be compared over time.", body: `${pageHead("Past weeks", "Every week since the site started.")}\n<ul class="weeks">${rows.join("\n")}</ul>` }));
 }
 
 function mapData(stores, items) {
@@ -605,7 +657,8 @@ function storePages() {
     .map((s) => `<label class="check"><input type="checkbox" value="${esc(s.id)}" data-map-store checked> ${esc(s.name)}</label>`).join("");
   write("stores/", page({
     title: "Stores and map", path: "stores/", map: true,
-    body: `${pageHead("Stores", "The Asian markets, seafood shops and co-ops we read every Friday, with the most standouts first. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.")}
+    description: `The Seattle-area grocery stores we list sales for, with a map: ${tracked.slice(0, 4).map((s) => s.name).join(", ")} and ${tracked.length - 4} more.`,
+    body: `${pageHead("Stores", "The Asian markets, seafood shops and co-ops we read as each new flyer comes out, with the most standouts first. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.")}
 <div class="tools chiprow"><button type="button" class="fchip" aria-pressed="false" data-deliv-toggle>${ic("truck")}<span>Delivers</span></button></div>
 <ul class="tiles" data-store-tiles>${tracked.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
 ${emptyState({ mood: "surprised", title: "No stores match", msg: "None of these stores deliver. Turn off Delivers to see them all.", attrs: "data-deliv-empty hidden" })}
@@ -697,7 +750,14 @@ ${s.no_online_flyer ? "" : `<section class="block" aria-labelledby="h-past">
   ${histRows.length ? `<div class="table-wrap"><table><thead><tr><th scope="col">Week</th><th scope="col">Item</th><th scope="col">Price</th><th scope="col">Deal</th></tr></thead><tbody>${histRows.join("")}</tbody></table></div>` : `<p class="muted">None yet.</p>`}
 </section>`}
 </div>`;
-    write(`stores/${s.id}/`, page({ title: s.name, path: `stores/${s.id}/`, section: "stores/", body, wrap: false, map: s.locations.length > 0 }));
+    const saleDates = f && (f.status === "full" || f.status === "partial") && f.valid_from ? ` (sale ${fmtDate(f.valid_from, { weekday: false })} to ${fmtDate(f.valid_through, { weekday: false })})` : "";
+    const storeDesc = s.no_online_flyer
+      ? `${s.about ?? `${s.name} is a Seattle-area market.`}${/flyer/i.test(s.about ?? "") ? "" : " It has no online flyer, so its prices aren't tracked here."}`
+      : mine.length
+        ? `${plural(mine.length, "sale")} at ${s.name} this week${saleDates}, best first: ${pickList(mine, 3, { store: false })}.`
+        : `${s.name}'s weekly ad and this week's sales${towns.length ? `, with stores in ${towns.join(", ")}` : ""}.`;
+    write(`stores/${s.id}/`, page({ title: s.no_online_flyer ? s.name : `${s.name} weekly ad and sales`, ogTitle: s.no_online_flyer ? s.name : `${s.name} sales this week`, description: storeDesc,
+      path: `stores/${s.id}/`, section: "stores/", body, wrap: false, map: s.locations.length > 0 }));
   }
 }
 
@@ -874,7 +934,7 @@ function aboutPage() {
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <p>Your "Vegetarian" choice and the analytics setting are saved only in your browser and are never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
-  write("about/", page({ title: "About", path: "about/", body }));
+  write("about/", page({ title: "About", path: "about/", body, description: "How Seattle Grocery Deals reads Seattle grocery flyers, how standouts are chosen, and what the site does and doesn't collect." }));
 }
 
 // The iPhone app, before it's on the App Store. The badge is Apple's own, unchanged and not a
@@ -930,13 +990,29 @@ function dataPages() {
   mkdirSync(join(DIST, "data", "weeks"), { recursive: true });
   for (const w of weeks) writeFileSync(join(DIST, "data", "weeks", `${w.week}.json`), JSON.stringify(w, null, 2));
   const list = [...weeks].reverse().map((w) => `<li><a href="${url(`data/weeks/${w.week}.json`)}">${w.week}.json</a></li>`).join("");
-  write("data/weeks/", page({ title: "Data", path: "", body: `<h1>Weekly data</h1>\n<ul>${list}</ul>` }));
+  write("data/weeks/", page({ title: "Data", path: "data/weeks/", section: "", noindex: true, body: `<h1>Weekly data</h1>\n<ul>${list}</ul>` }));
   mkdirSync(join(DIST, "schema"), { recursive: true });
   cpSync(join(ROOT, "schema", "week.schema.json"), join(DIST, "schema", "week.schema.json"));
 }
 
+// What search engines and home screens read: the favicon at the root (Google looks there
+// first), a web app manifest, robots.txt and a sitemap of every indexable page.
+function searchFiles() {
+  const origin = cfg.site.origin + cfg.site.base_path;
+  cpSync(join(ROOT, "site", "assets", "favicon.ico"), join(DIST, "favicon.ico"));
+  writeFileSync(join(DIST, "site.webmanifest"), JSON.stringify({
+    name: cfg.site.title, short_name: "Grocery Deals", description: cfg.site.tagline, start_url: url(), scope: url(), display: "browser",
+    background_color: "#f4f4f1", theme_color: "#f4f4f1",
+    icons: [{ src: url("assets/logo-192.png"), sizes: "192x192", type: "image/png" }, { src: url("assets/logo-512.png"), sizes: "512x512", type: "image/png" }],
+  }, null, 2));
+  writeFileSync(join(DIST, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: ${url("data/")}\n\nSitemap: ${origin}sitemap.xml\n`);
+  const home = new Set(["", "departments/", "stores/", "standouts/", "compare/"]);
+  const xml = [...SITEMAP].sort().map((p) => `  <url><loc>${esc(origin + p)}</loc><lastmod>${TODAY}</lastmod>${home.has(p) || p.startsWith("stores/") || p.startsWith("departments/") ? "<changefreq>daily</changefreq>" : p.startsWith("weeks/") && p !== "weeks/" ? "<changefreq>yearly</changefreq>" : ""}</url>`);
+  writeFileSync(join(DIST, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${xml.join("\n")}\n</urlset>\n`);
+}
+
 function notFound() {
-  writeFileSync(join(DIST, "404.html"), page({ title: "Not found", path: "", section: "404", body: `<div class="nf">${buddy("sad", 120)}<h1>Page not found</h1><p class="page-sub">That page isn't in this week's paper. It may have moved, or the sale it was about has ended.</p><p><a class="btn btn-primary" href="${url()}">See this week's deals</a></p></div>` }));
+  writeFileSync(join(DIST, "404.html"), page({ title: "Not found", path: "", section: "404", noindex: true, body: `<div class="nf">${buddy("sad", 120)}<h1>Page not found</h1><p class="page-sub">That page isn't in this week's paper. It may have moved, or the sale it was about has ended.</p><p><a class="btn btn-primary" href="${url()}">See this week's deals</a></p></div>` }));
 }
 
 
@@ -1007,4 +1083,5 @@ const feed = appFeed();
 // What people are adding this week (Amplitude, counts only): /api/popular.json for the app.
 await writePopular(feed, DIST);
 notFound();
+searchFiles();
 console.log(`Built ${weeks.length} week(s), latest ${latest.week}, into dist/ with base ${BASE}`);

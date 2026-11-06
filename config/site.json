@@ -1,6 +1,6 @@
 {
   "title": "Seattle Grocery Deals",
-  "tagline": "Seattle grocery sales, sorted. New every Friday.",
+  "tagline": "Seattle grocery sales, sorted. Updated as each store's new flyer comes out.",
   "base_path": "/",
   "repo_url": "https://github.com/kyle-pace/seattle-grocery-deals",
   "suggest_store_url": "https://github.com/kyle-pace/seattle-grocery-deals/issues/new?title=Store+suggestion",
