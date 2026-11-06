@@ -54,13 +54,7 @@
         "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915604576-UA45DMH61MZJOU2WKPJE/110626+WA+HMart+Weekly_eng.jpg"
       ],
       "seen_at": "2026-11-05T21:55:52.245Z",
-      "pending": {
-        "since": "2026-11-05T21:55:52.245Z",
-        "live_before": "2026-10-30|https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793308876620-K71TR2U7T9O0IFPEN40X/103026+WA+HMart+Weekly_eng.jpg https://www.hmartus.com/weekly-sale-wa",
-        "fires": 1,
-        "fired_at": "2026-11-05T21:55:52.245Z",
-        "session": "https://claude.ai/code/cse_015KDcQDVA43D73LTgUXsJ6r"
-      }
+      "updated_at": "2026-11-06T02:17:17.260Z"
     },
     "99-ranch": {
       "fingerprint": "4a7b3d518f4451f0",
@@ -87,11 +81,19 @@
       "seen_at": "2026-10-31T18:28:16.768Z"
     },
     "asian-family-market": {
-      "fingerprint": "881e1ba14e1ebd3b",
+      "fingerprint": "6147c2b17664ca1a",
       "matches": [
-        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-10-09\",\"end_date\":\"2026-10-31\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png\",\"display_order\":0}]"
+        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-10-09\",\"end_date\":\"2026-10-31\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png\",\"display_order\":0}]",
+        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-11-05\",\"end_date\":\"2026-11-13\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/8517b98fb_bell__116_131.png\",\"display_order\":0},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/be0356eb8_Bellevue1106_18.png\",\"display_order\":1},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/26c7aabde_BELL__1106_142.png\",\"display_order\":2}]"
       ],
-      "seen_at": "2026-11-05T07:19:16.950Z"
+      "seen_at": "2026-11-06T02:17:17.260Z",
+      "pending": {
+        "since": "2026-11-06T02:17:17.260Z",
+        "live_before": "2026-10-23|https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png",
+        "fires": 1,
+        "fired_at": "2026-11-06T02:17:17.260Z",
+        "session": "https://claude.ai/code/cse_015KDcQFVqYbmToAsFiYtDNM"
+      }
     }
   }
 }
