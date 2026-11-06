@@ -428,10 +428,10 @@ body.season .site-head { position: relative; z-index: 2; }
 :root[data-motion="reduce"] { scroll-behavior: auto; }
 :root[data-motion="reduce"] *, :root[data-motion="reduce"] *::before, :root[data-motion="reduce"] *::after { animation: none !important; transition: none !important; }
 
-.dp-toggle { position: fixed; right: 1rem; bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); z-index: 40; display: grid; place-items: center; width: 3rem; height: 3rem; padding: 0; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); box-shadow: 0 4px 16px rgb(0 0 0 / 0.18); cursor: pointer; }
+.dp-toggle { position: fixed; left: 1rem; bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); z-index: 40; display: grid; place-items: center; width: 3rem; height: 3rem; padding: 0; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); box-shadow: 0 4px 16px rgb(0 0 0 / 0.18); cursor: pointer; }
 .dp-toggle svg, .dp-close svg { pointer-events: none; }
 @media (min-width: 48rem) { .dp-toggle { bottom: 1rem; } }
-.dp-panel { position: fixed; inset: auto 1rem calc(8rem + env(safe-area-inset-bottom, 0px)) auto; width: min(22rem, calc(100vw - 2rem)); max-height: calc(100dvh - 10rem); overflow-y: auto; margin: 0; padding: var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.2); font-size: 0.9375rem; }
+.dp-panel { position: fixed; inset: auto auto calc(8rem + env(safe-area-inset-bottom, 0px)) 1rem; width: min(22rem, calc(100vw - 2rem)); max-height: calc(100dvh - 10rem); overflow-y: auto; margin: 0; padding: var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.2); font-size: 0.9375rem; }
 @media (min-width: 48rem) { .dp-panel { bottom: 4.5rem; max-height: calc(100dvh - 6rem); } }
 .dp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s-l); }
 .dp-head h2 { margin: 0; font-size: 1.25rem; }
@@ -515,8 +515,8 @@ body.season .site-head { position: relative; z-index: 2; }
 .list-tools { display: flex; flex-wrap: wrap; gap: var(--s-s); margin: var(--s-s) 0; }
 .list-status { min-height: 1.4em; color: var(--muted); font-size: 0.9375rem; margin: 0.4rem 0; max-width: 60ch; }
 .list-group { margin-top: var(--s-l); max-width: 44rem; }
-.list-group h2 a { color: inherit; text-decoration: none; }
-.list-group h2 a:hover { text-decoration: underline; }
+.list-group .sec-label a { color: inherit; text-decoration: none; }
+.list-group .sec-label a:hover { text-decoration: underline; }
 .list-items { list-style: none; margin: 0; padding: 0; }
 .list-item { display: flex; align-items: center; gap: var(--s-m); padding: var(--s-s) 0; border-bottom: 1px solid var(--divider); }
 .list-check { display: flex; align-items: center; gap: var(--s-m); flex: 1; min-width: 0; min-height: 44px; cursor: pointer; }
@@ -527,9 +527,33 @@ body.season .site-head { position: relative; z-index: 2; }
 .list-item.ended .list-name { color: var(--muted); }
 .list-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-s); color: var(--muted); font-size: 0.9375rem; }
 .list-foot { display: flex; flex-wrap: wrap; gap: var(--s-s); margin: var(--s-l) 0; }
-.list-help { max-width: 60ch; margin: var(--s-xl) 0; padding: var(--s-m) var(--s-l); background: var(--surface); border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); border-radius: var(--r-l); }
-.list-help summary { font-weight: 700; cursor: pointer; min-height: 32px; display: flex; align-items: center; }
-.list-help p { color: var(--text-body); }
-.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(5rem + env(safe-area-inset-bottom)); z-index: 60; max-width: min(28rem, calc(100vw - 2rem)); margin: 0; padding: 0.7rem 1rem; border-radius: var(--r-m); background: var(--ink); color: var(--ground); font-weight: 600; font-size: 0.9375rem; box-shadow: 0 6px 20px rgb(0 0 0 / 0.2); }
-@media (min-width: 48rem) { .toast { bottom: 1.5rem; } }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(8.5rem + env(safe-area-inset-bottom)); z-index: 60; max-width: min(28rem, calc(100vw - 2rem)); margin: 0; padding: 0.7rem 1rem; border-radius: var(--r-m); background: var(--ink); color: var(--ground); font-weight: 600; font-size: 0.9375rem; box-shadow: 0 6px 20px rgb(0 0 0 / 0.2); }
 button.btn { font: 600 1rem/1.2 var(--font); cursor: pointer; }
+
+/* The floating List button (lower right, every page but the List page) and its panel.
+   The display settings button sits lower left so the two never overlap. */
+.list-fab { position: fixed; right: 1rem; bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); z-index: 41; display: inline-flex; align-items: center; gap: 0.45rem; min-height: 3.25rem; padding: 0 1.1rem 0 0.95rem; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 700 1rem/1 var(--font); box-shadow: 0 6px 20px rgb(0 0 0 / 0.22); cursor: pointer; }
+.list-fab .ic { width: 20px; height: 20px; }
+.list-fab-n { display: inline-grid; place-items: center; min-width: 1.5rem; height: 1.5rem; padding: 0 0.35rem; border-radius: 999px; background: var(--on-accent); color: var(--accent); font-size: 0.8125rem; }
+@media (min-width: 48rem) { .list-fab { bottom: 1.25rem; right: 1.5rem; } }
+:root:not([data-motion="reduce"]) .list-fab.bump { animation: fab-bump 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes fab-bump { 0% { transform: scale(1); } 35% { transform: scale(1.14); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .list-fab.bump { animation: none !important; } }
+.list-panel { position: fixed; inset: auto 1rem calc(8.5rem + env(safe-area-inset-bottom, 0px)) auto; width: min(26rem, calc(100vw - 2rem)); max-height: calc(100dvh - 11rem); overflow-y: auto; margin: 0; padding: var(--s-l) var(--s-xl) var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.22); }
+@media (min-width: 48rem) { .list-panel { bottom: 5.5rem; right: 1.5rem; max-height: calc(100dvh - 7.5rem); } }
+.list-panel .list-group { margin-top: var(--s-m); }
+.list-panel .list-tools { margin-top: var(--s-xs); }
+.list-empty-small { color: var(--muted); margin: var(--s-s) 0; }
+.list-panel-foot { margin: var(--s-l) 0 0; }
+.list-note { max-width: 60ch; color: var(--muted); font-size: 0.9375rem; margin: var(--s-xl) 0; }
+@media print { .list-fab, .list-panel { display: none; } }
+:root:not([data-motion="reduce"]) .list-panel { transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1), translate 0.25s cubic-bezier(0.22, 1, 0.36, 1), overlay 0.25s allow-discrete, display 0.25s allow-discrete; }
+:root:not([data-motion="reduce"]) .list-panel:not(:popover-open) { opacity: 0; translate: 0 0.5rem; }
+@starting-style { :root:not([data-motion="reduce"]) .list-panel:popover-open { opacity: 0; translate: 0 0.5rem; } }
+/* The toast sits above the floating buttons. */
+@media (min-width: 48rem) { .toast { bottom: 5.5rem; } }
+/* Room at the bottom so the floating List button never covers the last deal's +. */
+body { padding-bottom: calc(8.5rem + env(safe-area-inset-bottom)); }
+@media (min-width: 48rem) { body { padding-bottom: 5rem; } }
+body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+@media (min-width: 48rem) { body.page-list { padding-bottom: 0; } }

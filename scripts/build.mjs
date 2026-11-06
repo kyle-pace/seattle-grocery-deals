@@ -393,7 +393,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
   const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span>${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("");
   return `<!doctype html>
-<html lang="en">
+<html lang="en" data-base="${esc(url())}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -458,6 +458,7 @@ ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
 ${DISPLAY_PANEL}
+${section === "list/" ? "" : LIST_FAB()}
 </body>
 </html>
 `;
@@ -982,31 +983,38 @@ function seasonFeed(feedIds) {
 // The list, kept in this browser (app.js draws it from localStorage). Like the app's List tab,
 // with ways to get it into Reminders: copy it (pasted lines become separate reminders), send it
 // to a Shortcut that adds each line, or share it.
-function yourListPage() {
-  const sc = cfg.site.shortcut ?? {};
-  const body = `<div data-list-cfg data-shortcut="${esc(sc.name ?? "Add to Groceries")}" data-base="${esc(url())}" hidden></div>
-${pageHead("Your list", "Tap + on any deal to add it. Saved in this browser only.")}
-<form class="list-add" data-list-add><label class="sr-only" for="list-new">Add something not on sale</label><input id="list-new" type="text" placeholder="Add something else, like eggs" autocomplete="off" maxlength="120"><button type="submit" class="btn">${ic("plus")}<span>Add</span></button></form>
-<div class="list-tools" data-list-tools hidden>
-  <button type="button" class="btn btn-primary" data-list-reminders>${ic("list")}<span>Send to Reminders</span></button>
-  <button type="button" class="btn" data-list-copy>${ic("copy")}<span>Copy list</span></button>
+// Copy list (works in every browser) and Share (where the browser has it), with a status line.
+const listTools = () => `<div class="list-tools" data-list-tools hidden>
+  <button type="button" class="btn btn-primary" data-list-copy>${ic("copy")}<span>Copy list</span></button>
   <button type="button" class="btn" data-list-share hidden>${ic("share")}<span>Share</span></button>
 </div>
-<p class="list-status" data-list-status role="status"></p>
+<p class="list-status" data-list-status role="status"></p>`;
+
+// The floating List button, lower right on every page but the List page, and its panel: the
+// same list as /list/, checkable, with Copy and Share.
+const LIST_FAB = () => `<button type="button" class="list-fab" data-list-fab popovertarget="list-panel" aria-label="Your list">${ic("list")}<span class="list-fab-t">List</span><span class="list-fab-n" data-list-count hidden></span></button>
+<div id="list-panel" class="list-panel" popover role="dialog" aria-labelledby="list-panel-title" data-list-view>
+  <div class="dp-head"><h2 id="list-panel-title">Your list</h2><button type="button" class="dp-close" popovertarget="list-panel" popovertargetaction="hide" aria-label="Close your list"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></div>
+  ${listTools()}
+  <div data-list-body></div>
+  <div data-list-empty hidden><p class="list-empty-small">Tap + on any deal to add it here. Your list stays in this browser.</p></div>
+  <p class="list-panel-foot"><a class="go" href="${url("list/")}">Open the full list</a></p>
+</div>`;
+
+function yourListPage() {
+  const body = `<div data-list-view>
+${pageHead("Your list", "Tap + on any deal to add it. Saved in this browser only.")}
+<form class="list-add" data-list-add><label class="sr-only" for="list-new">Add something not on sale</label><input id="list-new" type="text" placeholder="Add something else, like eggs" autocomplete="off" maxlength="120"><button type="submit" class="btn">${ic("plus")}<span>Add</span></button></form>
+${listTools()}
 <div data-list-body></div>
 <div data-list-empty hidden>${emptyState({ mood: "happy", title: "Your list is empty", msg: "Tap + on a deal and it shows up here, with its price, store and when the sale ends.", link: [url(), "See this week's deals"] })}</div>
 <div class="list-foot" data-list-foot hidden>
   <button type="button" class="btn" data-list-clear-done>Clear checked</button>
   <button type="button" class="btn" data-list-clear-ended hidden>Remove ended deals</button>
 </div>
-<details class="list-help" id="reminders">
-  <summary>How Send to Reminders works</summary>
-  <p>It hands your list to a Shortcut called <b>${esc(sc.name ?? "Add to Groceries")}</b>, which adds each item to a Reminders list. It works in Safari and Chrome on a Mac, iPhone or iPad.</p>
-  ${sc.install_url ? `<p><a class="btn" href="${esc(sc.install_url)}" rel="noopener">Get the Shortcut ${ext}</a></p>` : ""}
-  <p>${sc.install_url ? "Or make it yourself" : "To set it up"} in the Shortcuts app: make a new shortcut named <b>${esc(sc.name ?? "Add to Groceries")}</b>, set it to receive text, then add <b>Split Text</b> (by new lines), <b>Repeat with Each</b>, and inside it <b>Add New Reminder</b> with the Repeat Item, in your groceries list. The first time, Shortcuts asks before it adds anything.</p>
-  <p>No Shortcut? <b>Copy list</b>, then paste into a list in Reminders: each line becomes its own reminder.</p>
-</details>`;
-  write("list/", page({ title: "Your list", path: "list/", body, noindex: true, description: "Your grocery list from this week's Seattle sales, saved in your browser." }));
+<p class="list-note">To put it in Reminders: <b>Copy list</b>, then paste into a list in the Reminders app. Each line becomes its own reminder, on a Mac, iPhone or iPad.</p>
+</div>`;
+  write("list/", page({ title: "Your list", path: "list/", body, noindex: true, bodyClass: "page-list", description: "Your grocery list from this week's Seattle sales, saved in your browser." }));
 }
 
 function aboutPage() {

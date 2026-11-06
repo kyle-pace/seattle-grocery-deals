@@ -5,9 +5,5 @@
   "repo_url": "https://github.com/kyle-pace/seattle-grocery-deals",
   "suggest_store_url": "https://github.com/kyle-pace/seattle-grocery-deals/issues/new?title=Store+suggestion",
   "origin": "https://seattlegrocery.deals",
-  "amplitude_api_key": "209f961ae2c60b11c922363aa094ed0a",
-  "shortcut": {
-    "name": "Add to Groceries",
-    "install_url": ""
-  }
+  "amplitude_api_key": "209f961ae2c60b11c922363aa094ed0a"
 }
