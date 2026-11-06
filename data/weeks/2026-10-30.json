@@ -282,15 +282,22 @@
     {
       "store": "asian-family-market",
       "status": "full",
-      "valid_from": "2026-10-23",
-      "valid_through": "2026-11-01",
+      "valid_from": "2026-11-06",
+      "valid_through": "2026-11-12",
       "links": [
         {
-          "label": "Seattle weekly ad poster",
-          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png"
+          "label": "Page 1",
+          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/8517b98fb_bell__116_131.png"
+        },
+        {
+          "label": "Page 2",
+          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/be0356eb8_Bellevue1106_18.png"
+        },
+        {
+          "label": "Page 3",
+          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/26c7aabde_BELL__1106_142.png"
         }
-      ],
-      "note": "Same 19th anniversary poster as last week, printed Oct 23 to Nov 1."
+      ]
     }
   ],
   "items": [
@@ -3979,314 +3986,6 @@
       "member_price": false,
       "valid_through": "2026-11-05",
       "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Ong Choy",
-      "item_key": "greens-asian",
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": "19th anniversary sale, Oct 23 to Nov 1."
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Pomelo Red Florida",
-      "item_key": "pomelo",
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Young Coconut",
-      "item_key": "coconut",
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 1.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Garlic Stem",
-      "item_key": null,
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 1.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": "Per bunch."
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Dragon Fruit White",
-      "item_key": null,
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "BW47 White or Aroma Waxy Corn on the Cob",
-      "item_key": null,
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 1.99,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": "Per pack. Limit 5 packs."
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Eagle Coin Fried Dace with Black Beans",
-      "item_key": null,
-      "category": "pantry",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 184,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 4.91,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Wagyu Oxtail",
-      "item_key": "oxtail",
-      "category": "meat",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Chuck Roll Sliced",
-      "item_key": null,
-      "category": "meat",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": "Hot pot slices."
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Live Oyster",
-      "item_key": "oysters",
-      "category": "seafood",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "dozen"
-      },
-      "unit_price": {
-        "value": 9.99,
-        "per": "dozen"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "White Pomfret",
-      "item_key": null,
-      "category": "seafood",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Ningxia Jujube",
-      "item_key": null,
-      "category": "pantry",
-      "price": 9.99,
-      "quantity": 3,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 3.33,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "WC SD Multi Flavor Dumpling",
-      "item_key": null,
-      "category": "frozen",
-      "price": 9.99,
-      "quantity": 3,
-      "unit": "each",
-      "unit_price": {
-        "value": 3.33,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "10/20 Scallop",
-      "item_key": "scallops",
-      "category": "seafood",
-      "price": 19.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 19.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": ""
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Nishiki Premium Rice",
-      "item_key": "rice-short-grain",
-      "category": "pantry",
-      "price": 19.99,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 15,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 0.67,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": "Limit 2 packs."
-    },
-    {
-      "store": "asian-family-market",
-      "item": "Goc Vang Vietnam Gao Rice ST25",
-      "item_key": null,
-      "category": "pantry",
-      "price": 19.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 25,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 0.8,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-01",
-      "notes": "Limit 1 pack."
     },
     {
       "store": "red-apple",
@@ -13002,6 +12701,525 @@
       },
       "unit_price": {
         "value": 17.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Fuyu Persimmons, extra large",
+      "item_key": "persimmons",
+      "category": "produce",
+      "price": 1.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Sweet Bok Choy",
+      "item_key": "bok-choy",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Taishan Cauliflower",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Enoki Mushrooms 200 g",
+      "item_key": "mushrooms",
+      "category": "produce",
+      "price": 1.68,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 200,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 3.81,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Japanese Daikon Radish",
+      "item_key": "daikon",
+      "category": "produce",
+      "price": 0.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Chinese Radish",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Cocktail Grapefruit",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.48,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Sold per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Gold Melo Pomelo",
+      "item_key": "pomelo",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Taiwan Rice Cooking Wine Red Label, Fortune",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 750,
+        "unit": "ml"
+      },
+      "unit_price": {
+        "value": 6.64,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Quail Eggs, CK",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.68,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.86,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Shelled Edamame, Welpac",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.68,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Yakisoba Noodles, Wanhua",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Panda Oyster Flavored Sauce, LKK",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "",
+      "vegetarian": false
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Jumbo Pork Sausage Original / Spicy / Extra Spicy, JBasket",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Seattle store only."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Glutinous Rice Flour, JHX",
+      "item_key": null,
+      "category": "pantry",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Seattle store only."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Shrimp Paste, Jack & Kings",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 9.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Frozen, sold per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Golden Pompano",
+      "item_key": null,
+      "category": "seafood",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Taiwan Tilapia",
+      "item_key": "tilapia",
+      "category": "seafood",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "White Shrimp Peeled and Deveined 31/40",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Mixed Fish Balls",
+      "item_key": null,
+      "category": "seafood",
+      "price": 6.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Frozen Boiled Whole Abalone",
+      "item_key": "abalone",
+      "category": "seafood",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 6.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Sold per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Prime Chuck Roll Sliced for Hot Pot",
+      "item_key": null,
+      "category": "meat",
+      "price": 12.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Beef Banana Shank",
+      "item_key": null,
+      "category": "meat",
+      "price": 8.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Chicken Mid Joints",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "New Zealand Lamb Shoulder Sliced for Hot Pot",
+      "item_key": null,
+      "category": "meat",
+      "price": 12.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Pork Feet, Hind",
+      "item_key": "pork-feet",
+      "category": "meat",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Pork Spareribs",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.48,
         "per": "lb"
       },
       "regular_price": null,
