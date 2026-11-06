@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// The edition banners at the top of This week: fresh when new deals post, a heads-up when the week is
-/// ending, and an honest note when we're offline.
+/// The banners at the top of This week: fresh when a new week starts, and an honest note when
+/// we're offline. The "next edition" and "sales have ended" notes went away (2026-11-05): each
+/// store updates as its flyer comes out, so every row says when it ends instead.
 struct EditionBanner: View {
     @Environment(FeedStore.self) private var store
     @AppStorage("sgd.seenEdition") private var seenEdition = ""
@@ -22,9 +23,7 @@ struct EditionBanner: View {
                     .buttonStyle(.plain)
                     .accessibilityHint("Tries again")
                 }
-                if let left = store.daysLeft, left <= 0 {
-                    note(.sleepy, Lines.staleTitle, Lines.staleDetail)
-                } else if seenEdition != feed.week {
+                if seenEdition != feed.week {
                     Card(padding: Space.l) {
                         HStack(spacing: Space.m) {
                             Buddy(.persimmon, mood: .happy, size: 64, hop: hop).hiddenWhenTextIsLarge()
@@ -45,8 +44,6 @@ struct EditionBanner: View {
                     .stampOnAppear()
                     .onAppear { hop += 1 }
                     .sensoryFeedback(.impact(weight: .medium), trigger: hop)
-                } else if let left = store.daysLeft, left <= 2 {
-                    note(.neutral, Lines.nextTitle, Lines.nextDetail)
                 }
             }
             .padding(.top, Space.s)

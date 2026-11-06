@@ -121,37 +121,14 @@
   function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }
   all("[data-expired-after]").forEach(function (el) { el.hidden = !(today > el.dataset.expiredAfter); });
 
-  // "Most run through Thursday, some end Tuesday": stores' sales end on different days, so
-  // the header says when most deals end (data-end) and an earlier day a good share end on
-  // (data-some). Words are relative to today in Seattle.
-  var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  function dayWord(iso) {
-    var d = daysUntil(iso);
-    return d === 0 ? "today" : d === 1 ? "tomorrow" : DAYS[new Date(iso + "T12:00:00Z").getUTCDay()];
-  }
-  all("[data-ends-line]").forEach(function (el) {
-    var most = el.dataset.end, some = el.dataset.some;
-    var text;
-    if (daysUntil(most) < 0) text = "Most have ended";
-    else {
-      text = daysUntil(most) === 0 ? "Most end today" : "Most run through " + dayWord(most);
-      if (some && daysUntil(some) >= 0 && some < most) text += ", some end " + dayWord(some);
-    }
-    el.querySelector("[data-ends-text]").textContent = text;
-    el.hidden = false;
-  });
-
-  // The edition note on This week: "Fresh off the press" once per edition until dismissed,
-  // "New flyers are coming in" once it's dismissed and most sales end today or tomorrow, and a
-  // sleepy note once they've ended. The same order as the app (Moments.swift EditionBanner).
+  // "Fresh off the press" on This week, once per week until dismissed (Moments.swift
+  // EditionBanner). The "next edition" and "sales have ended" notes are gone (2026-11-05):
+  // stores update on their own days, so each row says when it ends instead.
   var edition = document.querySelector("[data-edition]");
-  if (edition && edition.dataset.end) {
+  if (edition) {
     var SEEN = "sgd.seenEdition";
-    var left = daysUntil(edition.dataset.end);
     var fresh = edition.querySelector("[data-edition-fresh]");
-    var show = left < 0 ? "[data-edition-ended]" : load(SEEN, "") !== edition.dataset.week ? "[data-edition-fresh]" : left <= 1 ? "[data-edition-next]" : null;
-    var card = show && edition.querySelector(show);
-    if (card) card.hidden = false;
+    if (fresh && load(SEEN, "") !== edition.dataset.week) fresh.hidden = false;
     var dismiss = edition.querySelector("[data-edition-dismiss]");
     if (dismiss) dismiss.addEventListener("click", function () {
       save(SEEN, edition.dataset.week);
@@ -160,6 +137,28 @@
       if (next) { next.setAttribute("tabindex", "-1"); next.focus(); }
     });
   }
+
+  // When each deal ends, counted from today in Seattle, as the app says it: a red "Ends today"
+  // or "Ends tomorrow" badge, a gray "Ended", or "Through Sat" in the details. The build writes
+  // the same words for its own day; this keeps a cached page right.
+  var ABBR = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var CLOCK = '<svg class="ic ic-clock" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6.3"/><path d="M8 4.6V8l2.4 1.6"/></svg>';
+  all(".deal[data-ends]").forEach(function (row) {
+    var d = row.dataset.ends, left = daysUntil(d) + 1;
+    var word = left <= 0 ? "Ended" : left === 1 ? "Ends today" : left === 2 ? "Ends tomorrow" : "";
+    var b = row.querySelector("[data-ends-badge]"), det = row.querySelector("[data-ends-detail]");
+    if (b) {
+      b.innerHTML = word ? '<span class="badge tone-' + (left <= 0 ? "neutral" : "bad") + '">' + CLOCK + word + "</span>" : "";
+      b.hidden = !word;
+    }
+    if (det) {
+      var dt = new Date(d + "T12:00:00Z");
+      det.textContent = word ? "" : (det.hasAttribute("data-sep") ? " \u00b7 " : "") + "Through " + (left <= 7 ? ABBR[dt.getUTCDay()] : MON[dt.getUTCMonth()] + " " + dt.getUTCDate());
+      det.hidden = !!word;
+    }
+    row.classList.toggle("deal-ended", left <= 0);
+  });
 
   // Store pages: "3 days left" on the weekly ad, counted again here in case the page is old.
   all("[data-days-left]").forEach(function (el) {

@@ -71,6 +71,7 @@ const ICON_PATHS = {
   grid: `<rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/>`,
   list: `<path d="M5.5 4h8M5.5 8h8M5.5 12h8"/><circle cx="2.8" cy="4" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="8" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="12" r=".9" fill="currentColor" stroke="none"/>`,
   bell: `<path d="M4 11V7.2a4 4 0 0 1 8 0V11l1.2 1.5H2.8zM6.6 14a1.5 1.5 0 0 0 2.8 0"/>`,
+  clock: `<circle cx="8" cy="8" r="6.3"/><path d="M8 4.6V8l2.4 1.6"/>`,
   people: `<circle cx="6" cy="5.2" r="2.3"/><path d="M1.8 13.4c.4-2.6 2.1-4 4.2-4s3.8 1.4 4.2 4"/><circle cx="11.4" cy="5.8" r="1.9"/><path d="M11.2 9.5c1.7.1 2.8 1.3 3.1 3.4"/>`,
   widget: `<rect x="2.5" y="2.5" width="11" height="11" rx="2.5"/><path d="M5.5 6h5M5.5 8.5h3M5.5 11h4"/>`,
 };
@@ -147,6 +148,19 @@ const EDITION_END = ENDS.most;
 
 // ---------- deal rows ----------
 
+// When a deal ends, said the same way as the app (Deal.endsBadge, Deal.endsDetail): a badge for
+// "Ends today", "Ends tomorrow" and "Ended", otherwise "Through Sat" (this week) or "Through
+// Nov 14" in the details. Worked out for the build's day; app.js redoes it in the browser so a
+// cached page stays right.
+const DAY_ABBR = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function endsInfo(d) {
+  if (!d) return { badge: "", detail: "" };
+  const left = Math.round((Date.parse(d) - Date.parse(TODAY)) / 86400000) + 1;
+  const word = left <= 0 ? "Ended" : left === 1 ? "Ends today" : left === 2 ? "Ends tomorrow" : "";
+  if (word) return { badge: badge(left <= 0 ? "neutral" : "bad", "clock", word), detail: "", ended: left <= 0 };
+  return { badge: "", detail: `Through ${left <= 7 ? DAY_ABBR[new Date(d + "T12:00:00Z").getUTCDay()] : fmtDate(d, { weekday: false })}` };
+}
+
 // Price split into parts so the number can be large and the unit small.
 function priceParts(i) {
   const q = i.quantity;
@@ -184,21 +198,24 @@ function rowAttrs(i, rank) {
 
 // One deal, laid out like the app's DealRow: tier badge, name, store and details, why it's a
 // deal, and the price with one savings pill. why: show the reason. store: name the store.
-// ends: say "through" when the deal ends on a day other than endRef.
-function dealRow(i, rank, { why = false, store = true, ends = true, endRef = EDITION_END, people = 0 } = {}) {
+// ends: say when it ends (every row does, since stores update on their own days).
+function dealRow(i, rank, { why = false, store = true, ends = true, people = 0 } = {}) {
   const p = priceParts(i);
   const sv = savings(i);
   const low = why && i.a.tags.some((t) => t.kind === "low");
-  const badges = tierBadge(i.a.tier) + (low ? badge("good", "down", "Lowest we've listed") : "");
-  const meta = [
+  const end = ends ? endsInfo(i.valid_through) : { badge: "", detail: "" };
+  const badges = tierBadge(i.a.tier) + (i.valid_through && ends ? `<span class="ends-b" data-ends-badge${end.badge ? "" : " hidden"}>${end.badge}</span>` : "") + (low ? badge("good", "down", "Lowest we've listed") : "");
+  const metaParts = [
     store ? `<a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : "",
     ...p.detail.map(esc),
     i.member_price ? "member price" : "",
-    ends && i.valid_through && i.valid_through !== endRef ? `through ${esc(fmtDate(i.valid_through))}` : "",
-  ].filter(Boolean).join(" &middot; ");
+  ].filter(Boolean);
+  // The end date carries its own separator, so hiding it (when the badge says it) leaves no stray dot.
+  const sep = metaParts.length ? " · " : "";
+  const meta = metaParts.join(" &middot; ") + (ends && i.valid_through ? `<span data-ends-detail${sep ? " data-sep" : ""}${end.detail ? "" : " hidden"}>${esc(end.detail ? sep + end.detail : "")}</span>` : "");
   // The pill and badges already say "% off", "under US avg" and "lowest", so the reason skips them.
   const reason = why ? (i.highlight?.reason ?? i.a.tags.filter((t) => !["pct", "us", "low", "member"].includes(t.kind)).map((t) => t.text).join(". ")) : "";
-  return `<li class="deal" ${rowAttrs(i, rank)}>
+  return `<li class="deal${end.ended ? " deal-ended" : ""}" ${rowAttrs(i, rank)}${ends && i.valid_through ? ` data-ends="${i.valid_through}"` : ""}>
   <div class="deal-main">${badges ? `<p class="deal-badges">${badges}</p>` : ""}<p class="deal-name">${esc(i.item)}</p>${meta ? `<p class="deal-meta">${meta}</p>` : ""}${sv ? `<p class="deal-pill">${sv.html}</p>` : ""}${people ? `<p class="deal-people">${ic("people")}${plural(people, "person", "people")} added this</p>` : ""}${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
   ${amount(i, { pill: false })}
 </li>`;
@@ -469,7 +486,8 @@ const storesIn = (items) => [...new Set(items.map((i) => i.store))].sort((a, b) 
 // Top picks, as in the app: standouts, best first, at most PICKS_PER_STORE from one store.
 function topPicks(list) {
   const taken = {};
-  return list.filter((i) => (taken[i.store] = (taken[i.store] ?? 0) + 1) <= PICKS_PER_STORE).slice(0, HOME_BEST);
+  // A pick that has ended isn't a pick: leave it out (the build runs hourly).
+  return list.filter((i) => !i.valid_through || i.valid_through >= TODAY).filter((i) => (taken[i.store] = (taken[i.store] ?? 0) + 1) <= PICKS_PER_STORE).slice(0, HOME_BEST);
 }
 
 // One store on This week as a card: a header row into the store, its best few deals that
@@ -480,7 +498,7 @@ function storeCard(s, items, hlAll, hlVeg) {
   const bestA = mine.filter((i) => !hlAll.includes(i)).slice(0, 3);
   const bestV = veg.filter((i) => !hlVeg.includes(i)).slice(0, 3);
   const rows = mine.filter((i) => bestA.includes(i) || bestV.includes(i))
-    .map((i) => dealRow(i, items.indexOf(i), { store: false, endRef: latest.flyers.find((f) => f.store === s.id)?.valid_through ?? EDITION_END }).replace('<li class="deal" ', `<li class="deal" data-hl="${(bestA.includes(i) ? "a" : "") + (bestV.includes(i) ? "v" : "")}" `));
+    .map((i) => dealRow(i, items.indexOf(i), { store: false }).replace('<li class="deal" ', `<li class="deal" data-hl="${(bestA.includes(i) ? "a" : "") + (bestV.includes(i) ? "v" : "")}" `));
   return `<li class="card store-card" data-store-card="${esc(s.id)}"${veg.length ? "" : " data-meat-only"}>
   <h3 class="store-card-h"><a href="${url(`stores/${s.id}/`)}">${ic("storefront")}<span class="store-card-t"><span class="store-card-name">${esc(s.name)}</span><span class="store-card-n">${vegText(dealCounts(mine), dealCounts(veg))}</span></span>${ic("chevron")}</a></h3>
   <ul class="deals">${rows.join("\n")}</ul>
@@ -514,24 +532,16 @@ function homePage() {
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
   <p class="page-intro">Sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
-  <p class="page-sub">Updated ${esc(fmtDate(updatedOn(latest), { weekday: false }))} &middot; ${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))}${end ? `<span data-ends-line data-end="${end}"${ENDS.some ? ` data-some="${ENDS.some}"` : ""} hidden> &middot; <span data-ends-text></span></span>` : ""}</p>
+  <p class="page-sub">${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))} from ${plural(storeCount(items), "store")}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
 <div class="wrap" data-filterable>
 <div data-home>
-<div class="edition" data-edition data-week="${latest.week}"${end ? ` data-end="${end}"` : ""}>
+<div class="edition" data-edition data-week="${latest.week}">
   <div class="card edition-card edition-fresh" data-edition-fresh hidden>
     ${buddy("happy", 64, "bd-hop")}
     <div class="edition-text"><h2 class="edition-t">Fresh off the press</h2><p class="edition-d">The ${esc(edition)} edition: ${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))} from ${plural(read, "store")}.</p></div>
     <button type="button" class="icon-btn" data-edition-dismiss aria-label="Got it, hide this note">${ic("close")}</button>
-  </div>
-  <div class="card edition-card edition-note" data-edition-next hidden>
-    ${buddy("neutral", 48)}
-    <div class="edition-text"><h2 class="edition-t">New flyers are coming in</h2><p class="edition-d">Stores post on different days. Each one shows up here as soon as its new flyer is out.</p></div>
-  </div>
-  <div class="card edition-card edition-note" data-edition-ended hidden>
-    ${buddy("sleepy", 48)}
-    <div class="edition-text"><h2 class="edition-t">New flyers are on their way</h2><p class="edition-d">Most of this week's sales have ended. Each store's new deals show up here as soon as its flyer is out.</p></div>
   </div>
 </div>
 ${seasonStories()}
@@ -791,7 +801,7 @@ ${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals this week</h2><
 ${mine.length ? `${controls({ store: false, sort: true, placeholder: `Search ${s.name}`, searchLabel: `Search ${s.name}'s deals` })}
 <div class="wrap list" data-filterable>
 ${countLine()}
-${grouped(mine, { store: false, endRef: f?.valid_through ?? EDITION_END })}
+${grouped(mine, { store: false })}
 ${emptyLine(vegN ? "Nothing matches these filters." : "No vegetarian deals here this week. Turn off Vegetarian to see them all.")}
 </div>` : ""}
 <div class="wrap">

@@ -96,37 +96,12 @@ final class FeedStore {
         return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: end)).day ?? 0) + 1
     }
 
-    /// "Updated Oct 30 · 576 deals · Most run through Thursday, some end Tuesday" for the This
-    /// week header. Stores' sales end on different days, and each store is updated when its
-    /// next flyer comes out.
+    /// "576 deals from 12 stores" for the This week header. Each store updates as soon as its
+    /// new flyer comes out, so there's no one date for the week; every row says when it ends.
     var editionLine: String {
-        guard let feed else { return "" }
-        var parts = ["Updated \(Dates.short(feed.updated ?? feed.week, weekday: false))", "\(items.count) deals"]
-        let most = feed.ends?.most ?? feed.end
-        if let left = Self.daysUntil(most) {
-            if left <= 0 { parts.append("Most have ended") }
-            else {
-                var text = left == 1 ? "Most end today" : "Most run through \(Self.dayWord(most, left: left))"
-                if let some = feed.ends?.some, let s = Self.daysUntil(some), s >= 1, let m = most, some < m {
-                    text += ", some end \(Self.dayWord(some, left: s))"
-                }
-                parts.append(text)
-            }
-        }
-        return parts.joined(separator: " · ")
-    }
-
-    /// Days until a date's sales end, counting today: 1 means today, 0 means it ended.
-    private static func daysUntil(_ iso: String?) -> Int? {
-        guard let date = Dates.date(iso) else { return nil }
-        let cal = Calendar.current
-        return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: date)).day ?? 0) + 1
-    }
-
-    private static func dayWord(_ iso: String?, left: Int) -> String {
-        if left == 1 { return "today" }
-        if left == 2 { return "tomorrow" }
-        return Dates.date(iso)?.formatted(.dateTime.weekday(.wide)) ?? ""
+        guard feed != nil else { return "" }
+        let stores = Set(items.map(\.store)).count
+        return "\(items.count) deals from \(stores) \(stores == 1 ? "store" : "stores")"
     }
 
     // MARK: lookups

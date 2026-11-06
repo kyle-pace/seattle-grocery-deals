@@ -159,7 +159,10 @@ struct DealRow: View {
             Button(action: open) {
                 AdaptiveStack(spacing: Space.m) {
                     VStack(alignment: .leading, spacing: 3) {
-                        TierBadge(tier: deal.tier)
+                        HStack(spacing: 6) {
+                            TierBadge(tier: deal.tier)
+                            EndsBadge(deal: deal)
+                        }
                         Text(deal.name).font(.app(.headline)).foregroundStyle(Palette.ink)
                         meta
                         // The savings pill sits with the words, not under the price: under the
@@ -196,6 +199,7 @@ struct DealRow: View {
         var parts: [String] = []
         if showStore { parts.append(store.storeName(deal.store)) }
         parts += deal.detail
+        if let ends = deal.endsDetail { parts.append(ends) }
         if let note { parts.append(note) }
         return parts
     }
@@ -209,6 +213,7 @@ struct DealRow: View {
     private var spokenSummary: String {
         var parts: [String] = []
         if deal.tier == .standout { parts.append("Standout") } else if deal.tier == .good { parts.append("Good deal") }
+        if let ends = deal.endsBadge { parts.append(ends) }
         parts.append(deal.name)
         parts.append(metaParts.joined(separator: ", "))
         parts.append(deal.spoken)
@@ -217,6 +222,18 @@ struct DealRow: View {
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
         if let people { parts.append("\(people) people added this this week") }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
+    }
+}
+
+/// "Ends today", "Ends tomorrow" or "Ended" on a row, so nobody adds a deal that's about to go.
+/// Red for the last two days, gray once it's over. Nothing for deals with time left (the row's
+/// details say "Through Sat" instead).
+struct EndsBadge: View {
+    let deal: Deal
+    var body: some View {
+        if let text = deal.endsBadge {
+            Badge(text, tone: text == "Ended" ? .neutral : .bad, compact: true) { Image(systemName: "clock").imageScale(.small) }
+        }
     }
 }
 

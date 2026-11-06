@@ -262,6 +262,27 @@ struct Deal: Codable, Sendable, Identifiable, Hashable {
     }
 }
 
+/// When a deal ends, said the same way on every row (and on the website's rows).
+extension Deal {
+    /// Days left counting today: 1 means it ends today, 0 or less means it has ended.
+    var daysLeft: Int? {
+        guard let end = Dates.date(ends) else { return nil }
+        let cal = Calendar.current
+        return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: end)).day ?? 0) + 1
+    }
+    /// "Ends today", "Ends tomorrow" or "Ended": loud enough for a badge on the row.
+    var endsBadge: String? {
+        guard let left = daysLeft else { return nil }
+        return left <= 0 ? "Ended" : left == 1 ? "Ends today" : left == 2 ? "Ends tomorrow" : nil
+    }
+    /// "Through Sat" this week, "Through Nov 14" after that, for the row's details. Nil when
+    /// the badge already says it.
+    var endsDetail: String? {
+        guard endsBadge == nil, let left = daysLeft, let end = Dates.date(ends) else { return nil }
+        return "Through " + (left <= 7 ? end.formatted(.dateTime.weekday(.abbreviated)) : end.formatted(.dateTime.month(.abbreviated).day()))
+    }
+}
+
 enum Dates {
     private static let iso: DateFormatter = {
         let f = DateFormatter()

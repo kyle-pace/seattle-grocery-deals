@@ -493,3 +493,7 @@ body.season .site-head { position: relative; z-index: 2; }
   .tile-aisle .tile-top { font-size: 0.875rem; }
 }
 :root[data-text="larger"] .tiles:has(> li > .tile-aisle) { grid-template-columns: 1fr; }
+/* When a deal ends: the badge sits with the tier badge; an ended deal fades so nobody adds it. */
+.ends-b { display: contents; }
+.deal-ended .deal-main, .deal-ended .amt { opacity: 0.55; }
+.deal-badges:not(:has(> :not([hidden]))) { display: none; }
