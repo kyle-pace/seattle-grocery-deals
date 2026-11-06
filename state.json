@@ -57,28 +57,42 @@
       "updated_at": "2026-11-06T02:17:17.260Z"
     },
     "99-ranch": {
-      "fingerprint": "4a7b3d518f4451f0",
+      "fingerprint": "931e374866e5ebad",
       "matches": [
-        "img.awsprod.99ranch.com/30a54d217c944c6380d21e3356d8dba1.jpeg",
-        "img.awsprod.99ranch.com/3e46a578db76420eb8672bac712305a1.jpeg",
-        "img.awsprod.99ranch.com/532a939ee3b74617bdb61af49f7abbe4.jpeg",
-        "img.awsprod.99ranch.com/83c6ca34b734406690d70303f9b46976.jpeg",
-        "img.awsprod.99ranch.com/8fddbcc3d72d46c69608a7425ee79202.jpeg",
-        "img.awsprod.99ranch.com/a59aebe24dcc4a1ebf2d7fe449f31044.jpeg",
-        "img.awsprod.99ranch.com/a742b70e1972462680a4627a75e6d41c.jpeg",
-        "img.awsprod.99ranch.com/b5f0245eb81843b7b4f9fb04b9f566f2.jpeg",
-        "img.awsprod.99ranch.com/d10857b1336b43feab891846d8ee9665.jpeg",
-        "img.awsprod.99ranch.com/ddd274045a624ab38f48c742e024ac61.jpeg"
+        "img.awsprod.99ranch.com/358d590464ae4f80b495e4e922c42f6c.jpeg",
+        "img.awsprod.99ranch.com/4a6b3b1dc94e4eb993d93abe0b8f8e27.jpeg",
+        "img.awsprod.99ranch.com/53db34eb5b86457298c87ce16a273202.jpeg",
+        "img.awsprod.99ranch.com/554f522e9bb64632b6e5c9fb43ef65bf.jpeg",
+        "img.awsprod.99ranch.com/62b321af862a4b43bc6952a6516d7813.jpeg",
+        "img.awsprod.99ranch.com/7e0df7cfc86c4b9da5a45f0e89ec2c29.jpeg",
+        "img.awsprod.99ranch.com/810ee99672ad4a03abfe91e87699a946.jpeg",
+        "img.awsprod.99ranch.com/af66b8bd8b6849c3a44ff1c4a129c56e.jpeg",
+        "img.awsprod.99ranch.com/e8430316b8b448d780c2407e806544ea.jpeg",
+        "img.awsprod.99ranch.com/ec905b0c927340278f495dd44d0fb8d0.jpeg"
       ],
-      "seen_at": "2026-10-31T18:28:16.768Z"
+      "seen_at": "2026-11-06T09:48:12.675Z",
+      "pending": {
+        "since": "2026-11-06T09:48:12.675Z",
+        "live_before": "2026-10-30|https://img.awsprod.99ranch.com/532a939ee3b74617bdb61af49f7abbe4.jpeg https://img.awsprod.99ranch.com/d10857b1336b43feab891846d8ee9665.jpeg https://img.awsprod.99ranch.com/a742b70e1972462680a4627a75e6d41c.jpeg https://img.awsprod.99ranch.com/8fddbcc3d72d46c69608a7425ee79202.jpeg https://img.awsprod.99ranch.com/a59aebe24dcc4a1ebf2d7fe449f31044.jpeg https://img.awsprod.99ranch.com/30a54d217c944c6380d21e3356d8dba1.jpeg https://img.awsprod.99ranch.com/ddd274045a624ab38f48c742e024ac61.jpeg https://img.awsprod.99ranch.com/3e46a578db76420eb8672bac712305a1.jpeg https://img.awsprod.99ranch.com/83c6ca34b734406690d70303f9b46976.jpeg https://www.99ranch.com/stores/promotions/1791",
+        "fires": 1,
+        "fired_at": "2026-11-06T09:48:12.675Z",
+        "session": "https://claude.ai/code/cse_015KDcQC5GLt8Bogws5XZFeu"
+      }
     },
     "viet-wah": {
-      "fingerprint": "1e8abec2d90f3c6c",
+      "fingerprint": "2455b36f70fa5e18",
       "matches": [
-        "single-post/weekly-ad-oct-23-29-2026",
+        "single-post/weekly-ad-nov-6-12-2026",
         "single-post/weekly-ad-oct-30-nov-5-2026"
       ],
-      "seen_at": "2026-10-31T18:28:16.768Z"
+      "seen_at": "2026-11-06T09:48:12.675Z",
+      "pending": {
+        "since": "2026-11-06T09:48:12.675Z",
+        "live_before": "2026-10-30|https://static.wixstatic.com/media/d268df_01d19b732c16446cb6c022a48ff959f9~mv2.jpg https://www.vietwah.com/_files/ugd/d268df_7b394224545c488892dbc1fd5a67950f.pdf https://www.vietwah.com/single-post/weekly-ad-oct-30-nov-5-2026",
+        "fires": 1,
+        "fired_at": "2026-11-06T09:48:12.675Z",
+        "session": "https://claude.ai/code/cse_015KDcQC5GLt8Bogws5XZFeu"
+      }
     },
     "asian-family-market": {
       "fingerprint": "6147c2b17664ca1a",
@@ -87,13 +101,7 @@
         "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-11-05\",\"end_date\":\"2026-11-13\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/8517b98fb_bell__116_131.png\",\"display_order\":0},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/be0356eb8_Bellevue1106_18.png\",\"display_order\":1},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/26c7aabde_BELL__1106_142.png\",\"display_order\":2}]"
       ],
       "seen_at": "2026-11-06T02:17:17.260Z",
-      "pending": {
-        "since": "2026-11-06T02:17:17.260Z",
-        "live_before": "2026-10-23|https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png",
-        "fires": 1,
-        "fired_at": "2026-11-06T02:17:17.260Z",
-        "session": "https://claude.ai/code/cse_015KDcQFVqYbmToAsFiYtDNM"
-      }
+      "updated_at": "2026-11-06T09:48:12.675Z"
     }
   }
 }
