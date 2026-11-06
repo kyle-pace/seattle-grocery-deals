@@ -71,13 +71,7 @@
         "img.awsprod.99ranch.com/ec905b0c927340278f495dd44d0fb8d0.jpeg"
       ],
       "seen_at": "2026-11-06T09:48:12.675Z",
-      "pending": {
-        "since": "2026-11-06T09:48:12.675Z",
-        "live_before": "2026-10-30|https://img.awsprod.99ranch.com/532a939ee3b74617bdb61af49f7abbe4.jpeg https://img.awsprod.99ranch.com/d10857b1336b43feab891846d8ee9665.jpeg https://img.awsprod.99ranch.com/a742b70e1972462680a4627a75e6d41c.jpeg https://img.awsprod.99ranch.com/8fddbcc3d72d46c69608a7425ee79202.jpeg https://img.awsprod.99ranch.com/a59aebe24dcc4a1ebf2d7fe449f31044.jpeg https://img.awsprod.99ranch.com/30a54d217c944c6380d21e3356d8dba1.jpeg https://img.awsprod.99ranch.com/ddd274045a624ab38f48c742e024ac61.jpeg https://img.awsprod.99ranch.com/3e46a578db76420eb8672bac712305a1.jpeg https://img.awsprod.99ranch.com/83c6ca34b734406690d70303f9b46976.jpeg https://www.99ranch.com/stores/promotions/1791",
-        "fires": 1,
-        "fired_at": "2026-11-06T09:48:12.675Z",
-        "session": "https://claude.ai/code/cse_015KDcQC5GLt8Bogws5XZFeu"
-      }
+      "updated_at": "2026-11-06T17:25:15.917Z"
     },
     "viet-wah": {
       "fingerprint": "2455b36f70fa5e18",
@@ -86,13 +80,7 @@
         "single-post/weekly-ad-oct-30-nov-5-2026"
       ],
       "seen_at": "2026-11-06T09:48:12.675Z",
-      "pending": {
-        "since": "2026-11-06T09:48:12.675Z",
-        "live_before": "2026-10-30|https://static.wixstatic.com/media/d268df_01d19b732c16446cb6c022a48ff959f9~mv2.jpg https://www.vietwah.com/_files/ugd/d268df_7b394224545c488892dbc1fd5a67950f.pdf https://www.vietwah.com/single-post/weekly-ad-oct-30-nov-5-2026",
-        "fires": 1,
-        "fired_at": "2026-11-06T09:48:12.675Z",
-        "session": "https://claude.ai/code/cse_015KDcQC5GLt8Bogws5XZFeu"
-      }
+      "updated_at": "2026-11-06T17:25:15.917Z"
     },
     "asian-family-market": {
       "fingerprint": "6147c2b17664ca1a",
