@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// The edition banners at the top of This week: fresh on Friday, a heads-up when the week is
+/// The edition banners at the top of This week: fresh when new deals post, a heads-up when the week is
 /// ending, and an honest note when we're offline.
 struct EditionBanner: View {
     @Environment(FeedStore.self) private var store

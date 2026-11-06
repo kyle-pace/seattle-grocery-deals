@@ -258,7 +258,7 @@ struct SettingsView: View {
                 Section {
                     Toggle(isOn: Binding(get: { alerts.friday }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.friday = on } } })) {
                         if PushStore.shared.available {
-                            labeled("New deals are in", "As soon as the new week posts, usually Friday morning")
+                            labeled("New deals are in", "As soon as one of your stores posts a new flyer")
                         } else {
                             labeled("Friday reminder", "When new deals post, about 10:30 AM")
                         }

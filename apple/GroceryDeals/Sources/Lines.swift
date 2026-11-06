@@ -14,10 +14,10 @@ enum Lines {
     static func freshDetail(_ date: String, deals: Int, stores: Int) -> String {
         "The \(date) edition: \(deals) deals from \(stores) stores."
     }
-    static let nextTitle = "Next edition lands Friday"
-    static let nextDetail = "Fresh flyers usually post by mid-morning."
+    static let nextTitle = "New flyers are coming in"
+    static let nextDetail = "Stores post on different days. Each one shows up here as soon as its new flyer is out."
     static let staleTitle = "New flyers are on their way"
-    static let staleDetail = "This week's sales have ended. The next edition posts Friday."
+    static let staleDetail = "Most of this week's sales have ended. Each store's new deals show up here as soon as its flyer is out."
     static func offline(_ date: String) -> String { "You're offline. Showing the \(date) edition." }
     static let noFeedTitle = "Couldn't get this week's deals"
     static let noFeedDetail = "Check your connection and try again."

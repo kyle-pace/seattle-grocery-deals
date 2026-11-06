@@ -5,6 +5,9 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { buildSync } from "esbuild";
 import { writePopular } from "./popular.mjs";
+// What people are adding this week (Amplitude, counts only), read before the pages are built
+// so This week can show it like the app. Set in the build steps at the bottom.
+let POPULAR = { items: [] };
 import { buddy, seasonBuddy, seasonIcon } from "./buddy.mjs";
 import { loadSeasons, seasonOn, seasonDeals, seasonLog, seasonEnd, fill } from "./seasons.mjs";
 import {
@@ -68,6 +71,7 @@ const ICON_PATHS = {
   grid: `<rect x="2.5" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="2.5" width="4.5" height="4.5" rx="1"/><rect x="2.5" y="9" width="4.5" height="4.5" rx="1"/><rect x="9" y="9" width="4.5" height="4.5" rx="1"/>`,
   list: `<path d="M5.5 4h8M5.5 8h8M5.5 12h8"/><circle cx="2.8" cy="4" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="8" r=".9" fill="currentColor" stroke="none"/><circle cx="2.8" cy="12" r=".9" fill="currentColor" stroke="none"/>`,
   bell: `<path d="M4 11V7.2a4 4 0 0 1 8 0V11l1.2 1.5H2.8zM6.6 14a1.5 1.5 0 0 0 2.8 0"/>`,
+  people: `<circle cx="6" cy="5.2" r="2.3"/><path d="M1.8 13.4c.4-2.6 2.1-4 4.2-4s3.8 1.4 4.2 4"/><circle cx="11.4" cy="5.8" r="1.9"/><path d="M11.2 9.5c1.7.1 2.8 1.3 3.1 3.4"/>`,
   widget: `<rect x="2.5" y="2.5" width="11" height="11" rx="2.5"/><path d="M5.5 6h5M5.5 8.5h3M5.5 11h4"/>`,
 };
 const ic = (name) => `<svg class="ic ic-${name}" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICON_PATHS[name]}</svg>`;
@@ -81,6 +85,24 @@ const tierBadge = (tier) => tier === "standout" ? badge("warn", "star", "Standou
 const emptyState = ({ mood = "sad", title, msg = "", link = null, attrs = "" }) => `<div class="empty-state"${attrs ? " " + attrs : ""}>${buddy(mood, 88)}<p class="empty-title">${esc(title)}</p>${msg ? `<p class="empty-msg"${attrs.includes("data-empty") ? " data-empty-msg" : ""}>${esc(msg)}</p>` : ""}${link ? `<p><a class="go" href="${link[0]}">${esc(link[1])}</a></p>` : ""}</div>`;
 
 // "Oct 23 to 29", or "Oct 30 to Nov 5" across months.
+// "Fuyu Persimmon" from "Fuyu Persimmon, jumbo (8 ct)", as the app's shortName (DealViews.swift).
+function shortName(name) {
+  let s = name.split(/[,(]/)[0].replace(/\s*#\s*\d+\b/g, "").trim();
+  const parts = s.split(" - ");
+  if (parts.length === 2 && parts[1]) s = `${parts[1]} ${parts[0].toLowerCase()}`;
+  return s.trim();
+}
+// A small picture for each aisle, the same emoji as the app (Aisles.swift AisleArt). Decorative.
+const AISLE_EMOJI = { produce: "🥬", meat: "🥩", seafood: "🐟", "dairy-eggs": "🥚", pantry: "🍚", frozen: "🥟", bakery: "🥖", prepared: "🍱", "snacks-drinks": "🍵" };
+const aisleEmoji = (c) => `<span class="tile-art" aria-hidden="true">${AISLE_EMOJI[c] ?? "🧺"}</span>`;
+// Days left on a flyer, as the app's weekly ad card: "Ends today", "3 days left". The build
+// runs at least hourly, and app.js recounts it from data-through in the browser.
+const daysLeftText = (through) => {
+  if (!through) return "";
+  const left = Math.round((Date.parse(through) - Date.parse(TODAY)) / 86400000) + 1;
+  return left === 1 ? "Ends today" : left > 1 ? `${left} days left` : "";
+};
+
 // ---------- analysis ----------
 
 function analyzeWeek(week) {
@@ -140,7 +162,7 @@ function priceParts(i) {
   return { lead, cur: cents ? "" : "$", num: cents ? m : m.slice(1), unit, spoken: `${lead ? lead + " " : ""}${m}${spokenUnit}`, detail };
 }
 
-// One savings pill under the price, as in the app: the US average where there is one (BLS,
+// One savings pill with the deal's words (under the name and details), as in the app: the US average where there is one (BLS,
 // staples only), otherwise the store's own percent off. The regular price stays off rows.
 function savings(i) {
   const under = i.a.us && i.a.us.ratio < 1 ? Math.round((1 - i.a.us.ratio) * 100) : 0;
@@ -163,8 +185,9 @@ function rowAttrs(i, rank) {
 // One deal, laid out like the app's DealRow: tier badge, name, store and details, why it's a
 // deal, and the price with one savings pill. why: show the reason. store: name the store.
 // ends: say "through" when the deal ends on a day other than endRef.
-function dealRow(i, rank, { why = false, store = true, ends = true, endRef = EDITION_END } = {}) {
+function dealRow(i, rank, { why = false, store = true, ends = true, endRef = EDITION_END, people = 0 } = {}) {
   const p = priceParts(i);
+  const sv = savings(i);
   const low = why && i.a.tags.some((t) => t.kind === "low");
   const badges = tierBadge(i.a.tier) + (low ? badge("good", "down", "Lowest we've listed") : "");
   const meta = [
@@ -176,8 +199,8 @@ function dealRow(i, rank, { why = false, store = true, ends = true, endRef = EDI
   // The pill and badges already say "% off", "under US avg" and "lowest", so the reason skips them.
   const reason = why ? (i.highlight?.reason ?? i.a.tags.filter((t) => !["pct", "us", "low", "member"].includes(t.kind)).map((t) => t.text).join(". ")) : "";
   return `<li class="deal" ${rowAttrs(i, rank)}>
-  <div class="deal-main">${badges ? `<p class="deal-badges">${badges}</p>` : ""}<p class="deal-name">${esc(i.item)}</p>${meta ? `<p class="deal-meta">${meta}</p>` : ""}${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
-  ${amount(i)}
+  <div class="deal-main">${badges ? `<p class="deal-badges">${badges}</p>` : ""}<p class="deal-name">${esc(i.item)}</p>${meta ? `<p class="deal-meta">${meta}</p>` : ""}${sv ? `<p class="deal-pill">${sv.html}</p>` : ""}${people ? `<p class="deal-people">${ic("people")}${plural(people, "person", "people")} added this</p>` : ""}${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
+  ${amount(i, { pill: false })}
 </li>`;
 }
 
@@ -194,8 +217,8 @@ function grouped(items, opts = {}) {
 
 // Search, then a sticky row of chips: Vegetarian (KitchenUI FilterChip), store and sort.
 // Rows below with [data-filterable] respond.
-function controls({ search = true, store = true, sort = false, stores = [], searchLabel = "Search these deals" } = {}) {
-  return `${search ? `<div class="wrap find-wrap"><div class="find">${ic("search")}<label class="sr-only" for="f-q">${esc(searchLabel)}</label><input id="f-q" type="search" data-search placeholder="tofu, persimmon, 99 Ranch" autocomplete="off"></div></div>` : ""}
+function controls({ search = true, store = true, sort = false, stores = [], searchLabel = "Search these deals", placeholder = "tofu, persimmon, 99 Ranch" } = {}) {
+  return `${search ? `<div class="wrap find-wrap"><div class="find">${ic("search")}<label class="sr-only" for="f-q">${esc(searchLabel)}</label><input id="f-q" type="search" data-search placeholder="${esc(placeholder)}" autocomplete="off"></div></div>` : ""}
 <div class="bar" data-filters><div class="wrap chiprow" role="group" aria-label="Filters">
   <button type="button" class="fchip" aria-pressed="false" data-veg-toggle>${ic("leaf")}<span>Vegetarian</span></button>
   ${store && stores.length ? `<label class="sr-only" for="f-store">Store</label><select class="fchip fchip-select" id="f-store" data-filter="store"><option value="">All stores</option>${stores.map((s) => `<option value="${esc(s)}">${esc(storeName(s))}</option>`).join("")}</select>` : ""}
@@ -242,6 +265,8 @@ function flyerList(week) {
   return `<ul class="flyers">${rows.join("\n")}</ul>`;
 }
 
+// "Seattle · Tukwila": the towns a store has locations in.
+const towns = (s) => [...new Set(s.locations.map((l) => l.address.split(",").pop().trim().replace(/\s+WA.*$/, "")))];
 const chips = (s) => s.delivery ? `<span class="chips">${badge("neutral", "truck", "Delivers")}</span>` : "";
 
 // A store tile: name, counts and its top deal, linking to the store page.
@@ -255,6 +280,7 @@ function storeTile(s, items, { about = false } = {}) {
   const status = s.no_online_flyer ? "No online flyer" : !f ? "Not checked this week" : f.status === "unreadable" ? "Flyer couldn't be read this week" : f.status === "stale" ? "Flyer not updated this week" : f.valid_through ? `Sale through ${fmtDate(f.valid_through)}` : "";
   return `<li${s.delivery ? " data-delivers" : ""}><a class="tile" href="${url(`stores/${s.id}/`)}">
   <span class="tile-t">${esc(s.name)}${ic("chevron")}</span>${chips(s)}
+  ${towns(s).length ? `<span class="tile-n">${esc(towns(s).join(" · "))}</span>` : ""}
   ${about ? `<span class="tile-about">${esc(s.about)}</span>` : ""}
   ${mine.length ? `<span class="tile-n">${vegText(counts(mine), counts(veg))}</span>` : ""}
   ${status ? `<span class="tile-n">${esc(status)}</span>` : ""}
@@ -262,16 +288,33 @@ function storeTile(s, items, { about = false } = {}) {
 </a></li>`;
 }
 
+// One aisle as the app's AisleTile: its emoji and standouts count, the name, how many deals,
+// and the best one by its short name.
 function deptTile(c, items, base = "departments/") {
   const l = items.filter((i) => i.category === c);
   const veg = l.filter(isVegetarian);
   const st = (x) => x.filter((i) => i.a.tier === "standout").length;
-  const counts = dealCounts;
-  const top = (x) => x[0] ? `Top: <b>${esc(x[0].item)}</b> ${esc(priceText(x[0]))} at ${esc(storeName(x[0].store))}` : "No vegetarian deals";
-  return `<li${veg.length ? "" : " data-meat-only"}><a class="tile" href="${url(`${base}${c}/`)}">
+  const stars = (x) => st(x) ? `<span class="badge tone-warn tile-stars">${st(x)}${ic("star")}<span class="sr-only"> standouts</span></span>` : "";
+  const top = (x) => x[0] ? `<b>${esc(shortName(x[0].item))}</b> ${esc(priceText(x[0]))}` : "No vegetarian deals";
+  return `<li${veg.length ? "" : " data-meat-only"}><a class="tile tile-aisle" href="${url(`${base}${c}/`)}">
+  <span class="tile-art-row">${aisleEmoji(c)}${vegText(stars(l), stars(veg))}</span>
   <span class="tile-t">${esc(CATEGORY_LABELS[c])}${ic("chevron")}</span>
-  <span class="tile-n">${vegText(counts(l), counts(veg))}</span>
+  <span class="tile-n">${vegText(plural(l.length, "deal"), plural(veg.length, "vegetarian deal"))}</span>
   <span class="tile-top">${vegText(top(l), top(veg))}</span>
+</a></li>`;
+}
+
+// "★ Standouts · 61 this week, every aisle · Top: Fuyu Persimmon $1.48/lb", full width above
+// the aisle tiles, like the app's StandoutsTile.
+function standoutsTile(items) {
+  const st = items.filter((i) => i.a.tier === "standout");
+  const veg = st.filter(isVegetarian);
+  const top = (x) => x[0] ? `Top: <b>${esc(shortName(x[0].item))}</b> ${esc(priceText(x[0]))}` : "";
+  return `<li class="tile-wide"><a class="tile tile-standouts" href="${url("standouts/")}">
+  <span class="tile-star" aria-hidden="true">${ic("star")}</span>
+  <span class="tile-body"><span class="tile-t">Standouts${ic("chevron")}</span>
+  <span class="tile-n">${vegText(`${st.length} this week, every aisle`, `${veg.length} vegetarian this week, every aisle`)}</span>
+  <span class="tile-top">${vegText(top(st), top(veg))}</span></span>
 </a></li>`;
 }
 
@@ -283,7 +326,7 @@ const ICONS = {
   "stores/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9l1-5h14l1 5M4 9h16v11H4zM9 20v-6h6v6"/></svg>`,
   "compare/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9M20 17l-3-3M20 17l-3 3"/></svg>`,
 };
-const MAIN_NAV = [["", "This week"], ["departments/", "Departments"], ["stores/", "Stores"], ["compare/", "Compare"]];
+const MAIN_NAV = [["", "This week"], ["departments/", "Aisles"], ["stores/", "Stores"], ["compare/", "Compare"]];
 
 // section: which menu item this page belongs to ("" is This week).
 // Display settings panel on every page (assets/display.js, styles at the end of style.css).
@@ -462,9 +505,15 @@ function homePage() {
     .map((id) => ({ s: cfg.storeById[id], n: items.filter((i) => i.store === id && i.a.tier === "standout").length, c: items.filter((i) => i.store === id).length }))
     .sort((a, b) => b.n - a.n || b.c - a.c).map((x) => x.s);
   const edition = fmtDate(latest.week, { weekday: false });
+  // People are adding: the top three from /api/popular.json (ids are "<store>-<rank>").
+  const adding = (POPULAR.items ?? []).map((p) => {
+    const rank = +p.deal_id.slice(p.deal_id.lastIndexOf("-") + 1);
+    return { i: items[rank], rank, store: p.deal_id.slice(0, p.deal_id.lastIndexOf("-")), people: p.people };
+  }).filter((a) => a.i && a.i.store === a.store).slice(0, 3);
 
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
+  <p class="page-intro">Sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
   <p class="page-sub">Updated ${esc(fmtDate(updatedOn(latest), { weekday: false }))} &middot; ${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))}${end ? `<span data-ends-line data-end="${end}"${ENDS.some ? ` data-some="${ENDS.some}"` : ""} hidden> &middot; <span data-ends-text></span></span>` : ""}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
@@ -478,30 +527,34 @@ ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and
   </div>
   <div class="card edition-card edition-note" data-edition-next hidden>
     ${buddy("neutral", 48)}
-    <div class="edition-text"><h2 class="edition-t">Next edition lands Friday</h2><p class="edition-d">Fresh flyers usually post by mid-morning.</p></div>
+    <div class="edition-text"><h2 class="edition-t">New flyers are coming in</h2><p class="edition-d">Stores post on different days. Each one shows up here as soon as its new flyer is out.</p></div>
   </div>
   <div class="card edition-card edition-note" data-edition-ended hidden>
     ${buddy("sleepy", 48)}
-    <div class="edition-text"><h2 class="edition-t">New flyers are on their way</h2><p class="edition-d">This week's sales have ended. The next edition posts Friday.</p></div>
+    <div class="edition-text"><h2 class="edition-t">New flyers are on their way</h2><p class="edition-d">Most of this week's sales have ended. Each store's new deals show up here as soon as its flyer is out.</p></div>
   </div>
 </div>
+${seasonStories()}
 <section class="block" aria-labelledby="h-best">
   <div class="sec-h"><h2 id="h-best">Top picks</h2><p>${vegText(`${standouts.length} standouts in all`, `${vegStandouts.length} vegetarian standouts`)}</p></div>
   <ul class="deals deals-2">${best.map((i) => dealRow(i, items.indexOf(i), { why: true }).replace('<li class="deal" ', `<li class="deal" data-hl="${(hlAll.includes(i) ? "a" : "") + (hlVeg.includes(i) ? "v" : "")}" `)).join("\n")}</ul>
   <a class="go" href="${url("standouts/")}">See all ${vegText(`${standouts.length} standouts`, `${vegStandouts.length} vegetarian standouts`)}</a>
 </section>
+${adding.length ? `<section class="block" aria-labelledby="h-adding"${adding.some((a) => isVegetarian(a.i)) ? "" : " data-meat-only"}>
+  <div class="sec-h"><h2 id="h-adding">People are adding</h2><p>this week</p></div>
+  <ul class="deals">${adding.map((a) => dealRow(a.i, a.rank, { people: a.people })).join("\n")}</ul>
+</section>` : ""}
 ${soonPool.length ? `<section class="block ending" data-ending hidden aria-labelledby="h-end">
   <div class="sec-h"><h2 id="h-end">Ending soon</h2><p>Last chance</p></div>
   <ul class="mini">${soonPool.map((i) => `<li data-ends="${i.valid_through}" data-veg="${isVegetarian(i) ? 1 : 0}" data-store="${esc(i.store)}" hidden><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span> <span class="mini-price">${esc(priceText(i))} <span class="badge tone-warn ends-when" data-ends-label></span></span></li>`).join("")}</ul>
 </section>` : ""}
-${seasonStories()}
 <section class="block" aria-labelledby="h-where">
   <div class="sec-h"><h2 id="h-where">By store</h2><p>Each store's best</p></div>
   <ul class="store-cards">${shops.map((s) => storeCard(s, items, hlAll, hlVeg)).join("\n")}</ul>
   <a class="go" href="${url("stores/")}">All stores, flyers and the map</a>
 </section>
 <section class="block" aria-labelledby="h-dep">
-  <div class="sec-h"><h2 id="h-dep">Shop by department</h2></div>
+  <div class="sec-h"><h2 id="h-dep">Shop by aisle</h2></div>
   <ul class="tiles">${CATS.filter((c) => items.some((i) => i.category === c)).map((c) => deptTile(c, items)).join("\n")}</ul>
 </section>
 </div>
@@ -523,9 +576,9 @@ ${seasonStories()}
 
 // ---------- list pages ----------
 
-function listPage({ path, section, title, h1, sub, items, crumbsHtml = "", group = true, why = true, empty, description }) {
+function listPage({ path, section, title, h1, sub, items, crumbsHtml = "", group = true, why = true, empty, description, placeholder }) {
   const body = `<div class="wrap">${crumbsHtml}${pageHead(h1, sub)}</div>
-${controls({ stores: storesIn(items), sort: true })}
+${controls({ stores: storesIn(items), sort: true, placeholder: placeholder ?? `Search ${title.toLowerCase()}`, searchLabel: `Search ${title.toLowerCase()}` })}
 <div class="wrap list" data-filterable>
 ${countLine()}
 ${group ? grouped(items, { why }) : `<ul class="deals" data-sortable>${items.map((i, n) => dealRow(i, n, { why })).join("\n")}</ul>`}
@@ -538,17 +591,18 @@ function departmentPages() {
   const items = analyzed.get(latest.week);
   const cats = CATS.filter((c) => items.some((i) => i.category === c));
   write("departments/", page({
-    title: "Departments", path: "departments/",
+    title: "Aisles", path: "departments/",
     description: `This week's Seattle grocery sales by aisle: ${cats.map((c) => `${CATEGORY_LABELS[c].toLowerCase()} (${items.filter((i) => i.category === c).length})`).join(", ")}.`,
-    body: `${pageHead("Departments", `Every deal for the week of ${esc(fmtDate(latest.week, { weekday: false }))}, by section of the store.`)}
-<ul class="tiles">${cats.map((c) => deptTile(c, items)).join("\n")}</ul>`,
+    body: `${pageHead("Aisles", vegText(`${plural(items.length, "deal")} in ${plural(cats.length, "aisle")}`, `${plural(items.filter(isVegetarian).length, "vegetarian deal")} in ${plural(cats.length, "aisle")}`))}
+<ul class="tiles">${standoutsTile(items)}
+${cats.map((c) => deptTile(c, items)).join("\n")}</ul>`,
   }));
   for (const c of cats) {
     const list = items.filter((i) => i.category === c);
     const veg = list.filter(isVegetarian).length;
     listPage({
       path: `departments/${c}/`, section: "departments/", title: CATEGORY_LABELS[c], h1: esc(CATEGORY_LABELS[c]), items: list, group: false,
-      crumbsHtml: crumbs(["departments/", "Departments"]),
+      crumbsHtml: crumbs(["departments/", "Aisles"]),
       sub: `${vegText(plural(list.length, "deal"), plural(veg, "vegetarian deal"))} this week, best first. Prices through each store's sale end date.`,
       empty: veg ? "Nothing matches these filters." : "No vegetarian deals here this week. Turn off Vegetarian to see them all.",
       description: `${plural(list.length, `${CATEGORY_LABELS[c].toLowerCase()} sale`)} this week at ${plural(storeCount(list), "Seattle store")}, best first: ${pickList(list, 3)}.`,
@@ -559,7 +613,7 @@ function departmentPages() {
 function standoutsPage() {
   const items = analyzed.get(latest.week).filter((i) => i.a.tier === "standout");
   listPage({
-    path: "standouts/", section: "", title: "All standouts", h1: "All standouts", items,
+    path: "standouts/", section: "", title: "All standouts", h1: "All standouts", items, placeholder: "Search standouts",
     crumbsHtml: crumbs(["", "This week"]),
     sub: "Big drops from the regular price, prices well under the US average, the lowest we've listed, or hand-picked. <a href=\"" + url("about/#how") + "\">How deals are chosen</a>",
     empty: "No standouts match these filters.",
@@ -689,13 +743,18 @@ ${others.length ? `<section class="block" aria-labelledby="h-other">
       analyzed.get(w.week).filter((i) => i.store === s.id && i.a.tier !== "sale").map((i) => ({ week: w.week, i })),
     );
     const towns = [...new Set(s.locations.map((l) => l.address.split(",").pop().trim().replace(/\s+WA.*$/, "")))];
-    const adUrl = s.flyer_url ?? f?.links?.[0]?.url ?? null;
+    // Where the weekly ad lives, in the app's order (Store.flyerLinkURL): this week's flyer page,
+    // else the store's flyer page, else the first flyer link. Web addresses only.
+    const adUrl = [f?.links?.find((l) => flyerKind(l.url) === "web")?.url, s.flyer_url, f?.links?.[0]?.url].find((u) => u && /^https?:/i.test(u)) ?? null;
+    const readNow = f && (f.status === "full" || f.status === "partial");
+    const starts = readNow && f.valid_from > TODAY ? `Starts ${fmtDate(f.valid_from).split(",")[0]}` : "";
+    const adDetail = [`On ${s.name}${s.name.endsWith("s") ? "'" : "'s"} site`, starts || (readNow ? daysLeftText(f.valid_through) : "")].filter(Boolean);
     const sub = [
       towns.length ? esc(towns.join(" · ")) : s.locations.length ? "" : "Home delivery",
       f && (f.status === "full" || f.status === "partial") && f.valid_from ? `Sale ${esc(fmtDate(f.valid_from, { weekday: false }))} to ${esc(fmtDate(f.valid_through, { weekday: false }))}` : "",
     ].filter(Boolean).join(" &middot; ");
     const actions = `<div class="actions">
-  ${adUrl && !s.no_online_flyer ? `<a class="btn btn-primary btn-ad" href="${esc(adUrl)}" rel="noopener">${ic("ad")}See ${esc(s.name)}'s weekly ad ${ext}</a>` : ""}
+  ${adUrl && !s.no_online_flyer ? `<a class="ad-card" href="${esc(adUrl)}" rel="noopener"><span class="ad-ic">${ic("newspaper")}</span><span class="ad-t"><b>Weekly ad</b><span>${esc(adDetail[0])}${adDetail[1] ? `<span${readNow && !starts ? ` data-days-left="${f.valid_through}"` : ""}> &middot; ${esc(adDetail[1])}</span>` : ""}</span></span>${ext}</a>` : ""}
   ${mine.length ? `<a class="btn" href="#deals"><span>This week's ${vegText(plural(mine.length, "deal"), plural(vegN, "vegetarian deal"))} here</span></a>` : ""}
   ${s.website ? `<a class="btn" href="${esc(s.website)}" rel="noopener">Store website ${ext}</a>` : ""}
 </div>`;
@@ -727,9 +786,9 @@ ${pageHead(esc(s.name), sub)}
 ${actions}
 ${s.delivery ? `<div class="note-card"><b>Delivery</b><span>${esc(s.delivery)}</span></div>` : ""}
 ${flyerNote}
-${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals this week</h2><p>${vegText(dealCounts(mine), dealCounts(mine.filter(isVegetarian)))}</p></div>` : !s.no_online_flyer ? emptyState({ mood: "sleepy", title: "No deals from this flyer this week", msg: f && f.status === "unreadable" ? "The flyer couldn't be read this week. The weekly ad link above still works." : "Nothing was listed from this store this week. The next edition posts Friday.", link: [url(), "See this week's deals"] }) : ""}
+${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals this week</h2><p>${vegText(dealCounts(mine), dealCounts(mine.filter(isVegetarian)))}</p></div>` : !s.no_online_flyer ? emptyState({ mood: "sleepy", title: f && f.status === "unreadable" ? "Couldn't read this week's flyer" : "No deals this week", msg: adUrl ? "The weekly ad might still have something." : "Its new deals show up here as soon as its next flyer is out.", link: adUrl ? [esc(adUrl), "Open the weekly ad"] : [url(), "See this week's deals"] }) : ""}
 </div>
-${mine.length ? `${controls({ store: false, sort: true })}
+${mine.length ? `${controls({ store: false, sort: true, placeholder: `Search ${s.name}`, searchLabel: `Search ${s.name}'s deals` })}
 <div class="wrap list" data-filterable>
 ${countLine()}
 ${grouped(mine, { store: false, endRef: f?.valid_through ?? EDITION_END })}
@@ -755,7 +814,7 @@ ${s.no_online_flyer ? "" : `<section class="block" aria-labelledby="h-past">
       ? `${s.about ?? `${s.name} is a Seattle-area market.`}${/flyer/i.test(s.about ?? "") ? "" : " It has no online flyer, so its prices aren't tracked here."}`
       : mine.length
         ? `${plural(mine.length, "sale")} at ${s.name} this week${saleDates}, best first: ${pickList(mine, 3, { store: false })}.`
-        : `${s.name}'s weekly ad and this week's sales${towns.length ? `, with stores in ${towns.join(", ")}` : ""}.`;
+        : `${s.name}${s.name.endsWith("s") ? "'" : "'s"} weekly ad and this week's sales${towns.length ? `, with stores in ${towns.join(", ")}` : ""}.`;
     write(`stores/${s.id}/`, page({ title: s.no_online_flyer ? s.name : `${s.name} weekly ad and sales`, ogTitle: s.no_online_flyer ? s.name : `${s.name} sales this week`, description: storeDesc,
       path: `stores/${s.id}/`, section: "stores/", body, wrap: false, map: s.locations.length > 0 }));
   }
@@ -810,7 +869,7 @@ function seasonPage(s) {
   <h2 id="best-h" class="season-price">${esc(priceText(best))}</h2>
   <p class="season-where">at <a href="${url(`stores/${best.store}/`)}">${esc(storeName(best.store))}</a>${best.valid_through ? `, through ${esc(fmtDate(best.valid_through))}` : ""}</p>
   <p class="season-item">${esc(best.item)}</p>
-  ${best.valid_through ? `<p class="notice" data-expired-after="${best.valid_through}" hidden>This deal ended ${esc(fmtDate(best.valid_through))}. New flyers come in on Friday.</p>` : ""}
+  ${best.valid_through ? `<p class="notice" data-expired-after="${best.valid_through}" hidden>This deal ended ${esc(fmtDate(best.valid_through))}. New ones show up here as soon as stores post them.</p>` : ""}
   ${d.perTen ? `<p class="season-math">That's about <strong>${d.perTen} ${esc(s.item)} for $10</strong>.<span class="muted"> ${esc(fill(s.copy.per_10_note, v))}</span></p>` : ""}
   ${best.notes ? `<p class="muted">${esc(best.notes)}</p>` : ""}
 </section>`
@@ -850,14 +909,20 @@ function seasonStories() {
   return SEASONS_NOW.map((s) => {
     const d = seasonWeek(s, latest.week);
     if (!d.best) return "";
-    return `<section class="card story" aria-labelledby="h-story-${s.id}">
+    // As the app's SeasonCard: "Fuyu $1.28/lb at T&T Supermarket", then "Through Thu · 6 stores
+    // have them". The X hides it for this season (app.js, sgd.hiddenSeasons); the buddy in the
+    // top bar still opens the page.
+    const through = d.best.valid_through ? `Through ${fmtDate(d.best.valid_through).split(",")[0]}` : "";
+    const detail = [through, d.stores > 1 ? `${d.stores} stores have them` : ""].filter(Boolean).join(" · ");
+    return `<section class="card story" data-season-card="${esc(s.id)}" aria-labelledby="h-story-${s.id}">
   ${seasonBuddy(s.buddy, "happy", 72)}
-  <div>
-  <p class="kicker">In season</p>
-  <h2 id="h-story-${s.id}">${esc(fill(s.copy.name, seasonVars(s, d)))}</h2>
-  <p>${esc(fill(s.copy.story, seasonVars(s, d)))}</p>
+  <div class="story-text">
+  <p class="kicker">${esc(fill(s.copy.name, seasonVars(s, d)))}</p>
+  <h2 id="h-story-${s.id}">${esc(s.starLabel ?? s.label)} ${esc(priceText(d.best))} at ${esc(storeName(d.best.store))}</h2>
+  ${detail ? `<p class="story-d">${esc(detail)}</p>` : ""}
   <p><a class="go" href="${url(`${s.slug}/`)}">Where to buy ${esc(s.item)} this week</a></p>
   </div>
+  <button type="button" class="icon-btn story-x" data-season-hide="${esc(s.id)}" aria-label="Hide ${esc(fill(s.copy.name, seasonVars(s, d)))} for this season">${ic("close")}</button>
 </section>`;
   }).join("\n");
 }
@@ -891,7 +956,7 @@ function seasonFeed(feedIds) {
 function aboutPage() {
   const c = cfg.criteria;
   const body = `<div class="page-h"><h1>About</h1></div>
-<p>Every Friday this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
+<p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
 <p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("apps/")}">about the app</a>.</p>
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
@@ -945,14 +1010,14 @@ function appsPage() {
   const shots = [
     ["week", "This week: top picks, then each store's best"],
     ["aisles", "Aisles: produce, seafood, meat and the rest, across every store"],
-    ["stores", "Stores: the ones with the most standouts first, with each flyer to flip through"],
+    ["stores", "Stores: the ones with the most standouts first, with a link to each weekly ad"],
     ["deal", "A deal: the price, how it compares, and the same item at other stores"],
     ["list", "The list: in the app, or a Reminders list you share"],
   ].filter(([id]) => existsSync(join(ROOT, "site", "assets", "img", "app", `${id}.png`)));
   const features = [
     ["newspaper", "This week", "The same deals as this site, with top picks first and each store's best below. Pull to refresh when a flyer updates."],
     ["grid", "Aisles and search", "Browse by aisle, or search across stores. This week's deals show up in iPhone search too."],
-    ["storefront", "Your stores", "Pick the stores you actually shop at and they come first everywhere. Every store stays in the app, with its weekly ad to flip through."],
+    ["storefront", "Your stores", "Pick the stores you actually shop at and they come first everywhere. Every store stays in the app, with a link to its weekly ad."],
     ["list", "A list that knows the sale", "Tap + on a deal and it goes on your list with the price, the store and the day the sale ends. Keep the list in the app, or in a Reminders list you already share."],
     ["bell", "Alerts you choose", "A nudge when new deals are in, the day before a list item's sale ends, and when an item you're watching gets cheaper. Each one is off until you turn it on."],
     ["leaf", "Vegetarian", "The same switch as the site: hide meat, poultry and seafood, and anything made with them."],
@@ -1069,6 +1134,9 @@ const analyticsOut = buildSync({
 const analyticsEntry = readFileSync(join(DIST, "assets", "analytics", "analytics.js"));
 ANALYTICS_SRC = `${url("assets/analytics/analytics.js")}?v=${createHash("sha1").update(analyticsEntry).digest("hex").slice(0, 8)}`;
 writeFileSync(join(DIST, ".nojekyll"), "");
+// The app feed and what people are adding come first: This week shows "People are adding".
+const feed = appFeed();
+POPULAR = await writePopular(feed, DIST);
 homePage();
 standoutsPage();
 departmentPages();
@@ -1079,9 +1147,6 @@ aboutPage();
 appsPage();
 for (const s of SEASONS) seasonPage(s);
 dataPages();
-const feed = appFeed();
-// What people are adding this week (Amplitude, counts only): /api/popular.json for the app.
-await writePopular(feed, DIST);
 notFound();
 searchFiles();
 console.log(`Built ${weeks.length} week(s), latest ${latest.week}, into dist/ with base ${BASE}`);

@@ -189,7 +189,7 @@ struct DealsOnboarding: View {
                 HowRow(title: "Tap + to add it to your list", detail: "Keep the list here, or in a Reminders list you share. The price and sale end come along.") {
                     MiniDeal(deal: sample)
                 }
-                HowRow(title: "Watch a price", detail: "Get a nudge when it drops. Turn on the Friday reminder in Settings, too.") {
+                HowRow(title: "Watch a price", detail: "Get a nudge when it drops. Turn on the new deals alert in Settings, too.") {
                     Label("Watch price", systemImage: "bell")
                         .font(.app(.subheadline, .semibold)).foregroundStyle(Palette.ink)
                         .padding(.horizontal, Space.m).frame(minHeight: 40)

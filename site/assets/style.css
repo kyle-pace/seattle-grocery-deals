@@ -454,3 +454,42 @@ body.season .site-head { position: relative; z-index: 2; }
   @starting-style { :root:not([data-motion="reduce"]) .dp-panel:popover-open { opacity: 0; translate: 0 0.5rem; } }
 }
 @media print { .dp-toggle { display: none; } }
+
+/* App parity, Nov 2026: the savings pill and "people added" sit with the deal's words (as the
+   app's DealRow), aisle tiles with their emoji and standouts tile, the weekly ad card, the
+   season card's X, and the vegetarian chip in the leaf's green instead of the accent. */
+.deal-pill { margin-top: 5px !important; }
+.deal-people { margin-top: 5px !important; display: inline-flex; align-items: center; gap: 5px; font-size: 0.8125rem; font-weight: 600; color: var(--muted); }
+.deal-people .ic { width: 14px; height: 14px; }
+.page-intro { margin: 0 0 0.35rem; color: var(--text-body); max-width: 60ch; }
+.fchip[data-veg-toggle][aria-pressed="true"] { background: var(--good-mark); color: light-dark(#ffffff, #0f1a14); }
+.tile-art-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.35rem; }
+.tile-art { font-size: 2.25rem; line-height: 1; }
+.tile-stars { min-height: 24px; padding: 1px 8px; gap: 2px; }
+.tile-stars .ic { width: 11px; height: 11px; }
+.tile-wide { grid-column: 1 / -1; }
+.tile-standouts { display: flex; align-items: center; gap: var(--s-l); }
+.tile-star { flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--warn-fill); color: var(--warn-text); }
+.tile-star .ic { width: 24px; height: 24px; }
+.tile-body { display: grid; gap: 0.2rem; flex: 1; min-width: 0; }
+.ad-card { display: flex; align-items: center; gap: var(--s-m); flex: 1 1 100%; max-width: 32rem; min-height: 64px; padding: var(--s-m) var(--s-l); border: 1px solid color-mix(in srgb, var(--line) 70%, transparent); border-radius: var(--r-l); background: var(--surface); color: var(--ink); text-decoration: none; }
+.ad-card:hover { border-color: var(--line); }
+.ad-card:hover b { text-decoration: underline; }
+.ad-ic { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--r-m); background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
+.ad-ic .ic { width: 22px; height: 22px; }
+.ad-t { display: grid; gap: 2px; flex: 1; min-width: 0; }
+.ad-t b { font-size: 1.0625rem; }
+.ad-t > span { color: var(--muted); font-size: 0.9375rem; }
+.ad-card > span[aria-hidden] { color: var(--muted); }
+.story { position: relative; }
+.story-text { flex: 1; min-width: 0; padding-right: 2.5rem; }
+.story-d { color: var(--muted) !important; font-size: 0.9375rem; }
+.story-x { position: absolute; top: var(--s-m); right: var(--s-m); }
+/* Aisle tiles two across on phones, like the app's grid. */
+@media (max-width: 35.99rem) {
+  .tiles:has(> li > .tile-aisle) { grid-template-columns: 1fr 1fr; }
+  .tile-aisle { padding: var(--s-m); }
+  .tile-aisle .tile-t { font-size: 1.0625rem; }
+  .tile-aisle .tile-top { font-size: 0.875rem; }
+}
+:root[data-text="larger"] .tiles:has(> li > .tile-aisle) { grid-template-columns: 1fr; }

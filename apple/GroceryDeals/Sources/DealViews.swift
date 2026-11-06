@@ -410,7 +410,7 @@ struct AlertPrimer: View {
             .glassEffect(.regular, in: .rect(cornerRadius: Radius.large))
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Example alert: price drop on \(shortName(deal.name))")
-            Text("Only for prices you watch, the Friday reminder, and sales ending on your list. Change it anytime in Settings.")
+            Text("Only for prices you watch, new deals from your stores, and sales ending on your list. Change it anytime in Settings.")
                 .font(.app(.footnote)).foregroundStyle(Palette.muted).multilineTextAlignment(.center)
             VStack(spacing: Space.s) {
                 Button { done(true) } label: { Text("Turn on alerts").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44) }

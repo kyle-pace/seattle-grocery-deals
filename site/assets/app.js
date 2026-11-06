@@ -73,7 +73,7 @@
     if (empty) {
       empty.hidden = shown !== 0;
       var msg = empty.querySelector("[data-empty-msg]");
-      if (msg) msg.textContent = q ? "Nothing matches “" + search.value.trim() + "”. Check back Friday." : empty.dataset.fallback;
+      if (msg) msg.textContent = q ? "Nothing matches “" + search.value.trim() + "”. New flyers come in all week, so check back soon." : empty.dataset.fallback;
     }
     showEnding();
   }
@@ -83,7 +83,8 @@
     var key = {
       rank: function (el) { return +el.dataset.rank; },
       off: function (el) { return -(+el.dataset.off) * 1000 + +el.dataset.rank / 1000; },
-      price: function (el) { return +el.dataset.price; },
+      // Unit price when there is one, as the app sorts ("99¢ ea" no longer beats "89¢/lb").
+      price: function (el) { return +(el.dataset.unit || el.dataset.price); },
       name: null,
     }[by];
     all("[data-sortable]").forEach(function (ul) {
@@ -141,13 +142,14 @@
   });
 
   // The edition note on This week: "Fresh off the press" once per edition until dismissed,
-  // "Next edition lands Friday" in the last two days, and a sleepy note once sales end.
+  // "New flyers are coming in" once it's dismissed and most sales end today or tomorrow, and a
+  // sleepy note once they've ended. The same order as the app (Moments.swift EditionBanner).
   var edition = document.querySelector("[data-edition]");
   if (edition && edition.dataset.end) {
     var SEEN = "sgd.seenEdition";
     var left = daysUntil(edition.dataset.end);
     var fresh = edition.querySelector("[data-edition-fresh]");
-    var show = left < 0 ? "[data-edition-ended]" : left <= 2 ? "[data-edition-next]" : load(SEEN, "") !== edition.dataset.week ? "[data-edition-fresh]" : null;
+    var show = left < 0 ? "[data-edition-ended]" : load(SEEN, "") !== edition.dataset.week ? "[data-edition-fresh]" : left <= 1 ? "[data-edition-next]" : null;
     var card = show && edition.querySelector(show);
     if (card) card.hidden = false;
     var dismiss = edition.querySelector("[data-edition-dismiss]");
@@ -158,6 +160,29 @@
       if (next) { next.setAttribute("tabindex", "-1"); next.focus(); }
     });
   }
+
+  // Store pages: "3 days left" on the weekly ad, counted again here in case the page is old.
+  all("[data-days-left]").forEach(function (el) {
+    var left = daysUntil(el.dataset.daysLeft) + 1;
+    if (left < 1) { el.hidden = true; return; }
+    el.textContent = " \u00b7 " + (left === 1 ? "Ends today" : left + " days left");
+  });
+
+  // This week's season card: the X hides it for this season, as in the app. The buddy in the
+  // top bar still opens the season's page.
+  var hiddenSeasons = load("sgd.hiddenSeasons", []);
+  all("[data-season-card]").forEach(function (card) {
+    var id = card.dataset.seasonCard;
+    if (hiddenSeasons.indexOf(id) >= 0) { card.hidden = true; return; }
+    var x = card.querySelector("[data-season-hide]");
+    if (x) x.addEventListener("click", function () {
+      hiddenSeasons.push(id);
+      save("sgd.hiddenSeasons", hiddenSeasons);
+      card.hidden = true;
+      var next = document.querySelector("#h-best");
+      if (next) { next.setAttribute("tabindex", "-1"); next.focus(); }
+    });
+  });
 
   // Store pages: the about text shows three lines, with "Read more" when there's more.
   all("[data-clamp]").forEach(function (p) {

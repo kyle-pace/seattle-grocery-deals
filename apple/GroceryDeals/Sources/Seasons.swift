@@ -423,7 +423,7 @@ struct SeasonScreen: View {
             } else {
                 Text(season.line(\.none_title) ?? "No \(season.starLabel) on sale this week.")
                     .font(.app(.title2, .heavy)).foregroundStyle(Palette.ink).multilineTextAlignment(.center)
-                Text(season.line(\.none_line) ?? "Check back Friday.")
+                Text(season.line(\.none_line) ?? "New flyers come in all week.")
                     .font(.app(.body)).foregroundStyle(Palette.muted).multilineTextAlignment(.center)
             }
         }
