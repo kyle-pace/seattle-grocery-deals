@@ -3,28 +3,27 @@
   "flyers": [
     {
       "store": "lams",
-      "status": "stale",
-      "valid_from": "2026-10-30",
-      "valid_through": "2026-11-05",
+      "status": "full",
+      "valid_from": "2026-11-06",
+      "valid_through": "2026-11-12",
       "links": [
         {
           "label": "Seattle Store Sale",
-          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/863849665_1557323726200763_8065119104016335185_n.jpg"
+          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/892860290_1814336116882700_4748373572081284081_n.jpg"
         },
         {
           "label": "Weekly Sale both stores",
-          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/876048683_1667291678332899_2317216661969943180_n.jpg"
+          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/892485648_1315953007299355_6751413021937486291_n.jpg"
         },
         {
           "label": "Tukwila Filipino Sale",
-          "url": "https://www.lamsseafood.com/wp-content/uploads/2025/04/869471680_1837396980918149_3165310108411255510_n.jpg"
+          "url": "https://www.lamsseafood.com/wp-content/uploads/2025/04/890198256_1124791023858672_8558554805588745947_n.jpg"
         },
         {
           "label": "Flyer page",
           "url": "https://lamsseafood.com/specials"
         }
-      ],
-      "note": "The flyer that ended 2026-11-05 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "uwajimaya",
@@ -8809,6 +8808,784 @@
       "member_price": false,
       "valid_through": "2026-11-12",
       "notes": ""
+    },
+    {
+      "store": "lams",
+      "item": "LAL Mushroom Seasoning",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 500,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 5.25,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Totole Chicken Bouillon S",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LC Spears Asparagus L",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 800,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 2.83,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Sherlihon",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Ginger, Organic",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Grapefruit, Cocktail",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.19,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Fz Whole Durian",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Fresh Catfish",
+      "item_key": "catfish",
+      "category": "seafood",
+      "price": 4.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Cuttlefish Cleaned 1-2",
+      "item_key": "cuttlefish",
+      "category": "seafood",
+      "price": 6.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "26-30 PD White Shrimp Fz, 2 lb bag",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 6.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Black Silkie Chicken",
+      "item_key": null,
+      "category": "meat",
+      "price": 11.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 11.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Pork Leg Ham Boneless",
+      "item_key": "pork-leg",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Cafe Du Monde Coffee and Chicory",
+      "item_key": null,
+      "category": "pantry",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 10.66,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LAL Quail Eggs in Water",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "CF Condensed Creamer",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Super.Q Golden Bihon",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.89,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "AD 26 Jasmine Rice, 50 lb",
+      "item_key": "rice-jasmine",
+      "category": "pantry",
+      "price": 51.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 50,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.04,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LE Fz Banana Leaves",
+      "item_key": null,
+      "category": "frozen",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "DoDo Fz Fish Ball",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "PH Beef Meat/Tendon Ball",
+      "item_key": null,
+      "category": "frozen",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.71,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "OF Fz Fried Fish Cake",
+      "item_key": null,
+      "category": "frozen",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.32,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LAL Natural Sugarcane",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LAL Baked Banana Cake",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 17.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.63,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "SC Wonton Noodle Box",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Mushroom, Seafood",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Longan, Florida",
+      "item_key": null,
+      "category": "produce",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Carrot, Jumbo",
+      "item_key": "carrots",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Papaya, Green",
+      "item_key": "papaya",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "10-20 HO White Shrimp Fz, 4 lb box",
+      "item_key": null,
+      "category": "seafood",
+      "price": 27.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 7,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "White Shrimp, fresh",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Belt Fish Head On Fresh",
+      "item_key": null,
+      "category": "seafood",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Whole Periwinkle VN",
+      "item_key": null,
+      "category": "seafood",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Beef Flank Meat",
+      "item_key": null,
+      "category": "meat",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Beef Top Round Roast",
+      "item_key": "beef-round",
+      "category": "meat",
+      "price": 8.89,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Pork Hock",
+      "item_key": "pork-hock",
+      "category": "meat",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Chicken Drummet",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Fz Jumbo Quail, 6 pc",
+      "item_key": null,
+      "category": "meat",
+      "price": 12.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 2.08,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Datu Puti Value Pack, vinegar and soy sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 2.4,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Tukwila store only. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Pork Sweet Sausage",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-12",
+      "notes": "Tukwila store only. While supplies last"
     }
   ]
 }
