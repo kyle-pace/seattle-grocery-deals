@@ -100,11 +100,12 @@
 
   // ---- the list views (the panel and the List page) ----
 
-  // One line per item for Reminders: "Chicken Drumsticks (99¢/lb at Viet-Wah, ends today)".
+  // One line per item, each starting with a dash so they read as a list wherever they're pasted:
+  // "- Chicken Drumsticks (99¢/lb at Viet-Wah, ends today)".
   function line(i) {
-    if (i.custom) return i.name;
+    if (i.custom) return "- " + i.name;
     var w = endsWord(i.ends);
-    return i.name + " (" + i.price + " at " + i.storeName + (w ? ", " + w.charAt(0).toLowerCase() + w.slice(1) : "") + ")";
+    return "- " + i.name + " (" + i.price + " at " + i.storeName + (w ? ", " + w.charAt(0).toLowerCase() + w.slice(1) : "") + ")";
   }
   function exportLines() {
     return load().filter(function (i) { return !i.done && !ended(i); }).map(line);
