@@ -30,7 +30,13 @@ if (!AMPLITUDE_API_KEY) {
   console.warn('Amplitude API key missing: analytics disabled');
 } else if (location.hostname === 'seattlegrocery.deals' && !optedOut()) {
   amplitude.init(AMPLITUDE_API_KEY, { autocapture: true, identityStorage: 'localStorage', trackingOptions: { ipAddress: false } });
-  if (document.body.dataset.page === 'home') amplitude.track('Viewed Home Page');
+  if (document.body.dataset.page === 'home') {
+    let picked = [];
+    try { picked = JSON.parse(localStorage.getItem('sgd.stores') || '[]'); } catch (e) {}
+    amplitude.track('Viewed Home Page', { stores_picked: Array.isArray(picked) ? picked.length : 0 });
+  }
+  // Events from the site's own scripts (app.js): "Changed Your Stores", "Opened Store Card".
+  document.addEventListener('sgd:track', (e) => amplitude.track(e.detail.name, e.detail.props));
   if (recordThisVisit()) {
     import('@amplitude/plugin-session-replay-browser').then(({ sessionReplayPlugin }) => {
       amplitude.add(sessionReplayPlugin({ sampleRate: 1, privacyConfig: { defaultMaskLevel: 'conservative' } }));

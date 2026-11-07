@@ -205,6 +205,36 @@ html.veg-on [data-meat-only] { display: none; }
 .see-all { display: flex; align-items: center; min-height: 44px; padding: var(--s-xs) var(--s-l); font-weight: 600; font-size: 1rem; text-decoration: none; }
 .see-all:hover { text-decoration: underline; }
 
+/* Best of your stores (This week): the picker, reasons, badges, the quiet note, elsewhere */
+.tone-accent { background: color-mix(in srgb, var(--accent) 8%, var(--surface)); color: var(--accent); }
+.store-card-badges { display: flex; flex-wrap: wrap; gap: var(--s-xs); }
+.store-card-badges:not(:has(:not([hidden]))) { display: none; }
+.store-card-why { font-size: 1rem; font-weight: 400; color: var(--text-body); line-height: 1.35; }
+.store-card-best .store-card-h a { background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
+.yours-pick { margin: 0 0 var(--s-m); padding: 0; }
+.yours-pick > summary { display: flex; align-items: center; gap: var(--s-m); min-height: 56px; padding: var(--s-s) var(--s-l); cursor: pointer; list-style: none; }
+.yours-pick > summary::-webkit-details-marker { display: none; }
+.yours-pick-t { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.yours-pick-h { font-weight: 700; }
+.yours-pick-names { font-size: 0.9375rem; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.yours-pick[open] > summary .badge { visibility: hidden; }
+.yours-pick .small { margin: 0; padding: 0 var(--s-l) var(--s-l); }
+.pick-grid { border: 0; margin: 0; padding: 0 var(--s-l) var(--s-m); display: grid; gap: 0 var(--s-l); }
+@media (min-width: 40rem) { .pick-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 60rem) { .pick-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.pick { display: flex; align-items: center; gap: var(--s-m); min-height: 52px; border-bottom: 1px solid var(--divider); cursor: pointer; }
+.pick input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--accent); }
+.pick > span { display: grid; }
+.pick-name { font-weight: 600; }
+.pick-where { font-size: 0.8125rem; color: var(--muted); }
+.quiet-note { margin: 0 0 var(--s-m); padding: var(--s-m) var(--s-l); background: var(--warn-fill); color: var(--warn-text); }
+.quiet-note b { display: block; }
+.unread-cards { list-style: none; margin: var(--s-m) 0 0; padding: 0; display: grid; gap: var(--s-s); }
+.unread-card { display: flex; align-items: center; justify-content: space-between; gap: var(--s-m); padding: var(--s-s) var(--s-l); min-height: 56px; border: 2px dashed var(--line); border-radius: var(--r-l); }
+.unread-card > span { display: grid; }
+.unread-card a { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
+.elsewhere { margin-top: var(--s-xl); }
+
 /* the persimmon buddy (KitchenUI Buddy) */
 .buddy { flex: none; overflow: visible; }
 .bd-fruit { fill: var(--bd-fruit); }
