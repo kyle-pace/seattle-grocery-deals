@@ -335,7 +335,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
-            .fullScreenCover(isPresented: $replayingTour) { Welcome.view(.tourOnly) { replayingTour = false } }
+            .fullScreenCover(isPresented: $replayingTour) { Welcome.view(.tourOnly) { replayingTour = false }.environment(store).environment(alerts) }
         }
     }
 

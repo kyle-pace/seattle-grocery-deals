@@ -90,6 +90,15 @@ struct ThisWeekView: View {
             }
             .navigationTitle("This week")
             .navigationSubtitle(store.editionLine)
+            .toolbar {
+                // The crow lives at the top of This week, like Henwood's hen: he blinks and
+                // bobs, and hops when tapped (KitchenUI's CrowBuddy; still with Reduce Motion).
+                ToolbarItem(placement: .topBarLeading) {
+                    CrowBuddy(mood: store.feed == nil && !store.loading ? .sad : .neutral, size: 40)
+                        .accessibilityHidden(true)
+                }
+                .sharedBackgroundVisibility(.hidden)
+            }
             .settingsButton()
             // A hidden season's buddy, to find its card again (Seasons.swift).
             .seasonToolbarButtons()

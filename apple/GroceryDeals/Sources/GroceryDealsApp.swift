@@ -135,13 +135,14 @@ struct RootView: View {
         .asksWhereListLives(inDealSheet: false)
         // The floating dev button (not on App Store builds).
         .devMenuButton { DealsDevMenu().environment(store).environment(list).environment(alerts) }
-        // First run: welcome, your stores, how it works, then the usage question. Can't be swiped away.
+        // First run: welcome, your stores, alerts, how it works, then the usage question. Can't be swiped away.
         .fullScreenCover(isPresented: $onboarding) {
             Welcome.view(Welcome.start ?? .question) {
                 onboarding = false
                 Analytics.screen(tab.rawValue)
             }
             .environment(store)
+            .environment(alerts)
         }
         .alert("Something went wrong", isPresented: Binding(get: { list.lastError != nil }, set: { if !$0 { list.lastError = nil } })) {
             Button("OK", role: .cancel) {}

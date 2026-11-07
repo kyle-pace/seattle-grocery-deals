@@ -78,7 +78,7 @@ struct DealsDevMenu: View {
         }
         .task { pending = await AlertsStore.devPendingCount() }
         .fullScreenCover(isPresented: $showing) {
-            Welcome.view(start) { showing = false }
+            Welcome.view(start) { showing = false }.environment(store).environment(alerts)
         }
     }
 
