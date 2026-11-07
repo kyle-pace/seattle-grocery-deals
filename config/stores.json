@@ -110,18 +110,20 @@
       "active": true,
       "tracked_since": "2026-09-18",
       "website": "https://www.pccmarkets.com",
-      "flyer_url": "https://www.pccmarkets.com",
-      "flyer_url_note": "The dedicated sales page has been erroring or empty since September 2026, so the homepage is the only reliable link.",
+      "flyer_url": "https://www.pccmarkets.com/weeklyad/flyerview",
+      "flyer_url_note": "The Weekly Specials page (back since about November 2026). It shows one shared flyer image for all stores, whichever store is selected.",
       "sale_period": {
         "starts": "wed",
         "ends": "tue"
       },
       "prints_regular_prices": true,
-      "flyer_format": "web-page",
-      "representative_location": "Seattle-area stores (one shared ad)",
+      "flyer_format": "images",
+      "representative_location": "All PCC stores (one shared ad)",
       "how_to_read": [
-        "Not part of the weekly routine (skipped at the owner's request, 2026-10-29). Do not try to read it and leave it out of the All Items note.",
-        "Why: the site is behind a Cloudflare bot check that blocks both curl and headless browsers. Do not try to get around it."
+        "Back in the routine since 2026-11-07 (owner's call). Open https://www.pccmarkets.com/weeklyad/flyerview in a desktop browser and wait for it to load (about 10 seconds). The page prints the end date under the banner (\"Through November 10, 2026\") and shows the week's ad as one image on prd-dxpro-us-east-1-s3-public-cdn.mercatus.com, named like .../HOME_PCC/Default/<timestamp>_FLYER_MMDD_<id>.jpg, where MMDD is the start date. Link that image, then the flyer page.",
+        "Prices are the sale price plus a printed amount off (\"$6.99 lb, $2 OFF per lb\"): the regular price is the sale price plus the savings, per unit or each, as printed. \"Up to $X off\" is not exact: no regular price, put the text in notes.",
+        "Below the image, a \"This week's member-only offer\" banner (often a free item). It has no price, so mention it in the flyer note instead of an item row. Skip the winter wear and other non-food deals.",
+        "The flyer image itself downloads fine from the cloud, but the page that names it is behind a Cloudflare bot check that blocks curl and headless browsers. Do not try to get around it; if no desktop browser is available, skip the store."
       ],
       "about": "A member-owned natural foods co-op with stores across the Seattle area, strong on organic produce and local products. Anyone can shop.",
       "locations": [
@@ -244,7 +246,11 @@
           "lon": -122.18499,
           "flyer": true
         }
-      ]
+      ],
+      "watch": {
+        "url": "https://www.pccmarkets.com/weeklyad/flyerview",
+        "desktop": true
+      }
     },
     {
       "id": "central-coop",

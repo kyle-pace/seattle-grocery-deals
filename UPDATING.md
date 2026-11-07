@@ -144,7 +144,7 @@ The settings are in `config/criteria.json`. Every item gets a tier:
 - **H Mart:** meat and produce prices often end Monday. Set those items' `valid_through` and say so in the flyer note.
 - **Smith Brothers:** a two-week delivery cycle, so its items can appear in two weeks.
 - **Central Co-op:** often keeps old dates for weeks. Mark it `stale` when the dates are wrong.
-- **PCC:** if the sales page shows no items, mark it `unreadable`.
+- **PCC:** one flyer image on the Weekly Specials page, with sale prices and a printed amount off (regular price = sale + savings). The member-only offer goes in the flyer note.
 - Every store's reading notes are in `how_to_read` in `config/stores.json`.
 
 ## 9. Privacy

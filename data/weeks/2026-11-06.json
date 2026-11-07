@@ -289,6 +289,23 @@
           "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/26c7aabde_BELL__1106_142.png"
         }
       ]
+    },
+    {
+      "store": "pcc",
+      "status": "full",
+      "valid_from": "2026-11-04",
+      "valid_through": "2026-11-10",
+      "links": [
+        {
+          "label": "Weekly flyer",
+          "url": "https://prd-dxpro-us-east-1-s3-public-cdn.mercatus.com/assetsv2/HOME_PCC/Default/2026102812052360_FLYER_1104_dfa0a28b-deef-4725-a922-0b200ba69a25.jpg"
+        },
+        {
+          "label": "Flyer page",
+          "url": "https://www.pccmarkets.com/weeklyad/flyerview"
+        }
+      ],
+      "note": "Member-only offer Nov 4 to 10: a free 1 lb package of Oregon Country Beef ground beef, in store only."
     }
   ],
   "items": [
@@ -13243,6 +13260,144 @@
       "member_price": false,
       "valid_through": "2026-11-10",
       "notes": "Page 4"
+    },
+    {
+      "store": "pcc",
+      "item": "Pure Country Farms Long Bone-in Pork Roast, non-GMO",
+      "item_key": null,
+      "category": "meat",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "$2 off per lb"
+    },
+    {
+      "store": "pcc",
+      "item": "Organic Local Red and Yukon Potatoes",
+      "item_key": "potatoes-red-yellow",
+      "category": "produce",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": 1.99,
+      "percent_off": 35,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "70¢ off per lb"
+    },
+    {
+      "store": "pcc",
+      "item": "Cocojune Organic Greek-style Coconut Yogurt",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.4,
+        "per": "lb"
+      },
+      "regular_price": 6.58,
+      "percent_off": 39,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "$1.29 off each"
+    },
+    {
+      "store": "pcc",
+      "item": "Tony's Coffee Bulk Organic Coffee",
+      "item_key": null,
+      "category": "pantry",
+      "price": 13.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 13.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "Up to $6 off per lb"
+    },
+    {
+      "store": "pcc",
+      "item": "Field Day Organic Pasta Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 26,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.54,
+        "per": "lb"
+      },
+      "regular_price": 7.98,
+      "percent_off": 37,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "$1.49 off each"
+    },
+    {
+      "store": "pcc",
+      "item": "Field Day Organic Pasta",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.5,
+        "per": "lb"
+      },
+      "regular_price": 4.98,
+      "percent_off": 40,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "99¢ off each"
+    },
+    {
+      "store": "pcc",
+      "item": "Belle Epicurean Pumpkin Buche Cake, 4 inch",
+      "item_key": null,
+      "category": "bakery",
+      "price": 11.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 11.99,
+        "per": "each"
+      },
+      "regular_price": 15.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-10",
+      "notes": "$4 off. NW made"
     }
   ]
 }
