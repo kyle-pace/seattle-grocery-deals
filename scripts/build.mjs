@@ -456,7 +456,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("apps/")}">iPhone app</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -1048,7 +1048,7 @@ function aboutPage() {
   const c = cfg.criteria;
   const body = `<div class="page-h"><h1>About</h1></div>
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
-<p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("apps/")}">about the app</a>.</p>
+<p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
 <p>A store is included when it:</p>
@@ -1134,53 +1134,33 @@ function accessibilityPage() {
   write("accessibility/", page({ title: "Accessibility", path: "accessibility/", section: "about/", body, description: "How Seattle Grocery Deals is built to work for everyone, the display settings you can change, and how to report a problem." }));
 }
 
-// The iPhone app, before it's on the App Store. The badge is Apple's own, unchanged and not a
-// link (there's no store page yet); "Coming soon" sits beside it in plain text so nobody,
-// sighted or not, takes it for a download. Screenshots come from site/assets/img/app/ when
-// they exist (simulator captures), so the page builds either way.
+// The iPhone app, before it's on the App Store, at /app/ (it was /apps/, which now redirects).
+// Laid out like henwood.app: the buddy, the name, one line, the badge, then a few cards.
+// The badge is Apple's own, unchanged and not a link (there's no store page yet); "Coming soon"
+// sits beside it in plain text so nobody, sighted or not, takes it for a download.
+// Screenshots are off for now; captures stay in site/assets/img/app/ for later.
 function appsPage() {
-  const shots = [
-    ["week", "This week: top picks, then each store's best"],
-    ["aisles", "Aisles: produce, seafood, meat and the rest, across every store"],
-    ["stores", "Stores: the ones with the most standouts first, with a link to each weekly ad"],
-    ["deal", "A deal: the price, how it compares, and the same item at other stores"],
-    ["list", "The list: in the app, or a Reminders list you share"],
-  ].filter(([id]) => existsSync(join(ROOT, "site", "assets", "img", "app", `${id}.png`)));
   const features = [
-    ["newspaper", "This week", "The same deals as this site, with top picks first and each store's best below. Pull to refresh when a flyer updates."],
-    ["grid", "Aisles and search", "Browse by aisle, or search across stores. This week's deals show up in iPhone search too."],
-    ["storefront", "Your stores", "Pick the stores you actually shop at and they come first everywhere. Every store stays in the app, with a link to its weekly ad."],
-    ["list", "A list that knows the sale", "Tap + on a deal and it goes on your list with the price, the store and the day the sale ends. Keep the list in the app, or in a Reminders list you already share."],
-    ["bell", "Alerts you choose", "A nudge when new deals are in, the day before a list item's sale ends, and when an item you're watching gets cheaper. Each one is off until you turn it on."],
-    ["leaf", "Vegetarian", "The same switch as the site: hide meat, poultry and seafood, and anything made with them."],
-    ["widget", "Widget, Siri and Shortcuts", "Best This Week on your Home Screen. Ask Siri what's on sale, or add something to your list without opening the app."],
+    ["newspaper", "This week, sorted", "The same deals as this site, top picks first. Browse by aisle, search across stores, or hide meat and seafood with Vegetarian."],
+    ["storefront", "Your stores first", "Pick the stores you actually shop at and they lead everywhere, each with a link to its weekly ad."],
+    ["list", "A list that knows the sale", "Tap + on a deal and it goes on your list with the price, the store and the day the sale ends. Keep it in the app, or in a Reminders list you already share."],
+    ["bell", "Alerts you choose", "New deals, a sale about to end, or something you're watching getting cheaper. Each one is off until you turn it on."],
+    ["widget", "Widget and Siri", "Best This Week on your Home Screen. Ask Siri what's on sale, or add to your list without opening the app."],
   ];
-  const body = `<div class="page-h"><h1>The iPhone app</h1>
-<p class="page-sub">Seattle Grocery Deals, in your pocket. iPhone only for now.</p></div>
-<div class="card app-hero">
-  ${buddy("happy", 96, "bd-hop")}
-  <div class="app-hero-text">
-    <p class="app-hero-lede">The week's sales at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, with a list that fills itself and alerts you pick.</p>
-    <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
-  </div>
-</div>
-${shots.length ? `<section class="block" aria-labelledby="h-shots">
-  <div class="sec-h"><h2 id="h-shots">A look inside</h2></div>
-  <ul class="app-shots">${shots.map(([id, caption]) => `<li><figure><img src="${url(`assets/img/app/${id}.png`)}" alt="" width="603" height="1311" loading="lazy"><figcaption>${esc(caption)}</figcaption></figure></li>`).join("")}</ul>
-</section>` : ""}
-<section class="block" aria-labelledby="h-does">
-  <div class="sec-h"><h2 id="h-does">What it does</h2></div>
-  <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h3>${esc(title)}</h3><p>${esc(text)}</p></div></li>`).join("")}</ul>
-</section>
-<section class="block" aria-labelledby="h-priv">
-  <div class="sec-h"><h2 id="h-priv">Private by design</h2></div>
-  <p>No account. Your list and your stores stay on your iPhone, or in your own Reminders. Price watches are checked on the phone. The app asks once whether to share anonymous usage, nothing is sent before you answer, and no is a fine answer. More in <a href="${url("about/")}#privacy">About</a>.</p>
-</section>
-<section class="block" aria-labelledby="h-now">
-  <div class="sec-h"><h2 id="h-now">In the meantime</h2></div>
-  <p>Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
-</section>`;
-  write("apps/", page({ title: "iPhone app", path: "apps/", section: "about/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that fills itself, and alerts you choose. Coming soon." }));
+  const body = `<div class="app-landing">
+  ${buddy("happy", 160, "bd-hop")}
+  <h1>Seattle Grocery Deals</h1>
+  <p class="app-tag">This week's grocery sales, in your pocket.</p>
+  <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
+  <p class="app-platforms">For iPhone</p>
+  <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h2>${esc(title)}</h2><p>${esc(text)}</p></div></li>`).join("")}</ul>
+  <p class="app-note">No account, and your list stays on your phone. More in <a href="${url("about/")}#privacy">About</a>.</p>
+  <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
+</div>`;
+  write("app/", page({ title: "iPhone app", path: "app/", section: "about/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
+  // The old address.
+  const to = url("app/");
+  write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
 }
 
 function dataPages() {
