@@ -81,7 +81,7 @@ struct DealsOnboarding: View {
             case .stores: stores.transition(slide)
             case .howItWorks: howItWorks.transition(slide)
             case .question:
-                Onboarding(buddy: .persimmon, appName: "Deals",
+                Onboarding(buddy: .crow, appName: "Deals",
                            tagline: "This week's best sales at Seattle's specialty grocers.",
                            pages: [], question: Welcome.question, start: .question) { result in
                     if let share = result.shareUsage { Analytics.setSharing(share) }
@@ -107,7 +107,7 @@ struct DealsOnboarding: View {
         } content: {
             VStack(spacing: Space.l) {
                 HStack(spacing: Space.m) {
-                    Buddy(.persimmon, mood: .happy, size: 56).hiddenWhenTextIsLarge()
+                    Buddy(.crow, mood: .happy, size: 56).hiddenWhenTextIsLarge()
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Welcome to Deals").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                             .accessibilityAddTraits(.isHeader)
