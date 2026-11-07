@@ -8,13 +8,7 @@
         "wp-content/uploads/2025/04/890198256_1124791023858672_8558554805588745947_n.jpg"
       ],
       "seen_at": "2026-11-06T22:20:45.609Z",
-      "pending": {
-        "since": "2026-11-06T22:20:45.609Z",
-        "live_before": "2026-10-30|https://www.lamsseafood.com/wp-content/uploads/2019/06/863849665_1557323726200763_8065119104016335185_n.jpg https://www.lamsseafood.com/wp-content/uploads/2019/06/876048683_1667291678332899_2317216661969943180_n.jpg https://www.lamsseafood.com/wp-content/uploads/2025/04/869471680_1837396980918149_3165310108411255510_n.jpg https://lamsseafood.com/specials",
-        "fires": 1,
-        "fired_at": "2026-11-06T22:20:45.609Z",
-        "session": "https://claude.ai/code/cse_015KDcQFXAAXPitiPvnA8cUm"
-      }
+      "updated_at": "2026-11-07T02:20:09.009Z"
     },
     "uwajimaya": {
       "fingerprint": "96e3f3ea0fdc9060",
