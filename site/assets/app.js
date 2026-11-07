@@ -66,9 +66,10 @@
       var c = g.querySelector("[data-group-count]");
       if (c) c.textContent = n;
     });
-    // Store cards on This week follow the store picker.
-    if (home && storeSel) all("[data-store-card]", home).forEach(function (li) {
-      li.hidden = Boolean(storeSel.value) && li.dataset.storeCard !== storeSel.value;
+    // Store cards on This week: Best of your stores, then the store picker on top.
+    rankStores();
+    if (home && storeSel && storeSel.value) all("[data-store-card]", home).forEach(function (li) {
+      if (li.dataset.storeCard !== storeSel.value) li.hidden = true;
     });
     var count = scope.querySelector("[data-count]");
     if (count) {
@@ -84,6 +85,92 @@
       if (msg) msg.textContent = q ? "Nothing matches “" + search.value.trim() + "”. New flyers come in all week, so check back soon." : empty.dataset.fallback;
     }
     showEnding();
+  }
+
+  // Best of your stores (This week). Your stores live in localStorage (sgd.stores), apart from
+  // the app's. The build gives each store card its rank score and whether it's a quiet week
+  // there (scripts/lib.mjs storeRanks), plain and vegetarian. With no stores picked, every
+  // store is ranked; with one, that store's week; with more, the picked ones best first. One
+  // store you didn't pick can show under Elsewhere when it's clearly ahead, and picked stores
+  // with no deals listed (flyer not read) stay at the bottom with a link to their ad.
+  var KEY_STORES = "sgd.stores";
+  var yours = document.querySelector("[data-yours]");
+  var picked = load(KEY_STORES, []);
+  if (!Array.isArray(picked)) picked = [];
+  function track(name, props) {
+    document.dispatchEvent(new CustomEvent("sgd:track", { detail: { name: name, props: props || {} } }));
+  }
+  function num(li, key) { return +(vegOnly && li.dataset[key + "V"] != null ? li.dataset[key + "V"] : li.dataset[key]) || 0; }
+  function quietAt(li) { return vegOnly ? li.hasAttribute("data-quiet-v") : li.hasAttribute("data-quiet"); }
+  function rankStores() {
+    if (!yours) return;
+    var list = yours.querySelector("[data-rank-list]");
+    var elseList = yours.querySelector("[data-elsewhere-list]");
+    var cards = all("[data-store-card]", yours);
+    cards.forEach(function (li) { list.appendChild(li); li.classList.remove("store-card-best"); });
+    // A store with no vegetarian deals can't be best when Vegetarian is on.
+    var usable = cards.filter(function (li) { return !(vegOnly && li.hasAttribute("data-meat-only")); });
+    usable.sort(function (a, b) { return num(b, "score") - num(a, "score"); });
+    var mine = picked.length ? usable.filter(function (li) { return picked.indexOf(li.dataset.storeCard) >= 0; }) : usable;
+    cards.forEach(function (li) { li.hidden = mine.indexOf(li) < 0; });
+    mine.forEach(function (li) { list.appendChild(li); });
+    cards.forEach(function (li) {
+      var badge = li.querySelector("[data-best-badge]");
+      if (badge) badge.hidden = true;
+      var nf = li.querySelector("[data-new-flyer]");
+      if (nf) nf.hidden = li.dataset.from !== today;
+    });
+    var best = mine[0];
+    var quiet = best ? quietAt(best) : false;
+    if (best && mine.length > 1 && !quiet) {
+      best.classList.add("store-card-best");
+      best.querySelector("[data-best-badge]").hidden = false;
+    }
+    // Elsewhere: the best store you didn't pick, when it's clearly ahead of all of yours.
+    var other = picked.length ? usable.filter(function (li) { return mine.indexOf(li) < 0; })[0] : null;
+    var ahead = other && num(other, "standouts") >= 5 && !quietAt(other) &&
+      (!best || num(other, "score") >= 1.5 * num(best, "score") || quiet);
+    var elsewhere = yours.querySelector("[data-elsewhere]");
+    elsewhere.hidden = !ahead;
+    if (ahead) { other.hidden = false; elseList.appendChild(other); }
+    var note = yours.querySelector("[data-quiet-note]");
+    note.hidden = !(picked.length && (quiet || !best));
+    if (!note.hidden) {
+      var names = mine.map(function (li) { return li.dataset.name; });
+      note.innerHTML = "";
+      var b = document.createElement("b");
+      b.textContent = best ? "A quiet week at " + (names.length > 2 ? "your stores" : names.join(" and ")) : "No deals listed at your stores yet";
+      note.appendChild(b);
+      note.appendChild(document.createTextNode(" " + (ahead ? other.dataset.name + " has " + num(other, "standouts") + " standouts, if you can get there." : "New flyers come in through the week, so check back soon.")));
+    }
+    // Picked stores with no deals listed this week.
+    all("[data-unread-card]", yours).forEach(function (li) { li.hidden = picked.indexOf(li.dataset.unreadCard) < 0; });
+    var title = yours.querySelector("[data-yours-title]"), sub = yours.querySelector("[data-yours-sub]");
+    var pickedNames = all("[data-pick-store]", yours).filter(function (c) { return picked.indexOf(c.value) >= 0; })
+      .map(function (c) { return c.parentNode.querySelector(".pick-name").textContent; });
+    title.textContent = !picked.length ? "Best stores this week" : picked.length === 1 ? "This week at " + pickedNames[0] : "Best of your stores";
+    sub.textContent = !picked.length ? "Pick your stores to rank just those" : vegOnly ? "Ranked by vegetarian deals" : "Ranked by this week's deals";
+    yours.querySelector("[data-yours-names]").textContent = pickedNames.length ? pickedNames.join(", ") : "None picked yet";
+  }
+  if (yours) {
+    all("[data-pick-store]", yours).forEach(function (c) {
+      c.checked = picked.indexOf(c.value) >= 0;
+      c.addEventListener("change", function () {
+        picked = all("[data-pick-store]", yours).filter(function (x) { return x.checked; }).map(function (x) { return x.value; });
+        save(KEY_STORES, picked);
+        track("Changed Your Stores", { count: picked.length, store: c.value, added: c.checked, source: "web" });
+        apply();
+      });
+    });
+    yours.addEventListener("click", function (e) {
+      var a = e.target.closest("[data-open-store]");
+      if (!a) return;
+      var li = a.closest("[data-store-card]");
+      var inElse = !!li.closest("[data-elsewhere]");
+      var shown = all("[data-rank-list] > [data-store-card]", yours).filter(function (x) { return !x.hidden; });
+      track("Opened Store Card", { store: li.dataset.storeCard, position: inElse ? 0 : shown.indexOf(li) + 1,
+        section: inElse ? "elsewhere" : picked.length ? "yours" : "all", stores_picked: picked.length, veg_only: vegOnly });
+    });
   }
 
   function sortRows() {

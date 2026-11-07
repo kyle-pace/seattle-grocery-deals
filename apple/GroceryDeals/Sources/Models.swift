@@ -23,6 +23,43 @@ struct Feed: Codable, Sendable {
     /// screen. Missing in feeds built before 2026-10-31. Read one by one, so a season this
     /// version can't read is skipped instead of losing the whole week.
     let seasons: LossyList<Season>?
+    /// "Best of your stores": each store's rank numbers for this week, by store id
+    /// (scripts/lib.mjs storeRanks). Missing in feeds built before 2026-11-07.
+    let store_ranks: [String: StoreRank]?
+}
+
+/// How a store's week stacks up (scripts/lib.mjs storeRanks): a score from its standouts and
+/// good deals (weighted by how often people buy the item and the aisle, plus a bonus for deals
+/// across several core aisles), a reason line and its top deal ids.
+struct RankNumbers: Codable, Sendable, Hashable {
+    let score: Double
+    let standouts: Int
+    let good: Int
+    let deals: Int
+    let aisles: Int
+    /// Fewer than 3 standouts and 6 good deals: This week says it's a quiet week.
+    let quiet: Bool
+    /// "A good week for produce, seafood and pantry staples."
+    let reason: String
+    /// The store's best few deal ids, best first.
+    let top: [String]
+}
+
+/// A store's rank numbers, plus the same over vegetarian deals only (`veg`), for when
+/// "Vegetarian deals only" is on. In the feed they're one object with `veg` inside.
+struct StoreRank: Codable, Sendable, Hashable {
+    let all: RankNumbers
+    let veg: RankNumbers?
+    private enum Keys: String, CodingKey { case veg }
+    init(from decoder: Decoder) throws {
+        all = try RankNumbers(from: decoder)
+        veg = try decoder.container(keyedBy: Keys.self).decodeIfPresent(RankNumbers.self, forKey: .veg)
+    }
+    func encode(to encoder: Encoder) throws {
+        try all.encode(to: encoder)
+        var c = encoder.container(keyedBy: Keys.self)
+        try c.encodeIfPresent(veg, forKey: .veg)
+    }
 }
 
 /// A list that skips entries it can't decode, for parts of the feed that may grow new shapes.

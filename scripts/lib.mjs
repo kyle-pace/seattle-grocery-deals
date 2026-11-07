@@ -431,3 +431,66 @@ export function flyerKind(url) {
   if (IMAGE_HOSTS.some((h) => url.includes(h))) return "image";
   return "web";
 }
+
+// ---------- store ranking ("Best of your stores", decided 2026-11-06) ----------
+//
+// People shop one store per trip, so This week ranks stores, not just deals. The site and the
+// app rank the stores a person picked ("Your stores") by these numbers; no list or location is
+// needed. A store's score adds up its deals still on sale today:
+//   standout 4 points, good deal 0.8, any other sale 0.1,
+//   times how many people buy the item (everyday 1.5, common 1, specialty 0.6),
+//   times the aisle (produce, meat and seafood 1.2, dairy and eggs 1.1, pantry 1, the rest less),
+//   then a bonus for breadth: +8% for each core aisle (produce, meat, seafood, dairy and eggs,
+//   pantry) with at least one good deal or better, so a store you can do a whole shop at wins.
+// The same numbers are worked out over the vegetarian deals only, for when "Vegetarian" is on.
+const RANK_TIER = { standout: 4, good: 0.8 };
+const RANK_POP = { everyday: 1.5, common: 1, specialty: 0.6 };
+const RANK_AISLE = { produce: 1.2, meat: 1.2, seafood: 1.2, "dairy-eggs": 1.1, pantry: 1, frozen: 0.7, bakery: 0.7, prepared: 0.6, "snacks-drinks": 0.5, other: 0.5 };
+const CORE_AISLES = ["produce", "meat", "seafood", "dairy-eggs", "pantry"];
+const AISLE_WORDS = { produce: "produce", meat: "meat", seafood: "seafood", "dairy-eggs": "dairy", pantry: "pantry staples", frozen: "frozen food", bakery: "bakery", prepared: "deli", other: "other groceries" };
+// A quiet week: fewer standouts than this and fewer good deals than QUIET_GOOD. This week
+// can say so instead of crowning a weak store, and point to a stronger one elsewhere.
+export const QUIET_STANDOUTS = 3;
+export const QUIET_GOOD = 6;
+
+const joinWords = (w) => w.length <= 1 ? (w[0] ?? "") : `${w.slice(0, -1).join(", ")} and ${w.at(-1)}`;
+
+function rankOf(list, cfg, id) {
+  const points = {};
+  let score = 0, standouts = 0, good = 0;
+  for (const i of list) {
+    const p = (RANK_TIER[i.a.tier] ?? 0.1) * (RANK_POP[popularity(i, cfg)] ?? 1) * (RANK_AISLE[i.category] ?? 0.5);
+    score += p;
+    points[i.category] = (points[i.category] ?? 0) + p;
+    if (i.a.tier === "standout") standouts++;
+    else if (i.a.tier === "good") good++;
+  }
+  const strong = (c) => list.some((i) => i.category === c && (i.a.tier === "standout" || i.a.tier === "good"));
+  const aisles = CORE_AISLES.filter(strong).length;
+  score *= 1 + 0.08 * aisles;
+  // What the week is good for: aisles with a standout, or two good deals or better, most points first.
+  const focus = Object.keys(points)
+    .filter((c) => list.filter((i) => i.category === c && i.a.tier === "standout").length >= 1 || list.filter((i) => i.category === c && i.a.tier === "good").length >= 2)
+    .sort((a, b) => points[b] - points[a]).slice(0, 3).map((c) => AISLE_WORDS[c] ?? c);
+  const quiet = standouts < QUIET_STANDOUTS && good < QUIET_GOOD;
+  const reason = !list.length ? "Nothing on sale this week."
+    : quiet ? (focus.length ? `A quiet week, best for ${focus[0]}.` : "A quiet week.")
+    : focus.length ? `A good week for ${joinWords(focus)}.`
+    : "Mostly smaller sales this week.";
+  const top = list.filter((i) => i.a.tier === "standout" || i.a.tier === "good").slice(0, 3).map(id);
+  return { score: Math.round(score * 10) / 10, standouts, good, deals: list.length, aisles, quiet, reason, top };
+}
+
+/**
+ * Each store's rank numbers for this week, keyed by store id: { ...all, veg: { ...vegetarian only } }.
+ * `items` are the week's analyzed items, best first; `id(item)` gives the id the feed uses.
+ */
+export function storeRanks(items, cfg, today, id) {
+  const live = items.filter((i) => !i.valid_through || i.valid_through >= today);
+  const out = {};
+  for (const s of new Set(items.map((i) => i.store))) {
+    const mine = live.filter((i) => i.store === s);
+    out[s] = { ...rankOf(mine, cfg, id), veg: rankOf(mine.filter(isVegetarian), cfg, id) };
+  }
+  return out;
+}

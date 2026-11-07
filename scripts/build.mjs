@@ -12,7 +12,7 @@ import { buddy, seasonBuddy, seasonIcon } from "./buddy.mjs";
 import { loadSeasons, seasonOn, seasonDeals, seasonLog, seasonEnd, fill } from "./seasons.mjs";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
-  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind,
+  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind, storeRanks,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
@@ -149,6 +149,9 @@ function updatedOn(week) {
 // The date most of this edition's sales run through, and each store's flyer end. Rows only
 // say "through" when a deal ends on a different day.
 const ENDS = endsSummary(latest);
+// Each store's rank for "Best of your stores" (lib.mjs storeRanks), shared by the site and the app.
+const LATEST_ITEMS = analyzed.get(latest.week);
+const RANKS = storeRanks(LATEST_ITEMS, cfg, TODAY, (i) => `${i.store}-${LATEST_ITEMS.indexOf(i)}`);
 const EDITION_END = ENDS.most;
 
 // ---------- deal rows ----------
@@ -511,13 +514,16 @@ function topPicks(list) {
 // aren't already top picks, and a way to see the rest. Rows carry data-hl like the picks.
 function storeCard(s, items, hlAll, hlVeg) {
   const mine = items.filter((i) => i.store === s.id);
+  const r = RANKS[s.id];
+  const f = latest.flyers.find((x) => x.store === s.id);
   const veg = mine.filter(isVegetarian);
   const bestA = mine.filter((i) => !hlAll.includes(i)).slice(0, 3);
   const bestV = veg.filter((i) => !hlVeg.includes(i)).slice(0, 3);
   const rows = mine.filter((i) => bestA.includes(i) || bestV.includes(i))
     .map((i) => dealRow(i, items.indexOf(i), { store: false }).replace('<li class="deal" ', `<li class="deal" data-hl="${(bestA.includes(i) ? "a" : "") + (bestV.includes(i) ? "v" : "")}" `));
-  return `<li class="card store-card" data-store-card="${esc(s.id)}"${veg.length ? "" : " data-meat-only"}>
-  <h3 class="store-card-h"><a href="${url(`stores/${s.id}/`)}">${ic("storefront")}<span class="store-card-t"><span class="store-card-name">${esc(s.name)}</span><span class="store-card-n">${vegText(dealCounts(mine), dealCounts(veg))}</span></span>${ic("chevron")}</a></h3>
+  // data-score and data-quiet (and their vegetarian twins) let app.js rank Your stores.
+  return `<li class="card store-card" data-store-card="${esc(s.id)}" data-name="${esc(s.name)}" data-score="${r.score}" data-score-v="${r.veg.score}" data-standouts="${r.standouts}" data-standouts-v="${r.veg.standouts}"${r.quiet ? " data-quiet" : ""}${r.veg.quiet ? " data-quiet-v" : ""}${f?.valid_from ? ` data-from="${f.valid_from}"` : ""}${veg.length ? "" : " data-meat-only"}>
+  <h3 class="store-card-h"><a href="${url(`stores/${s.id}/`)}" data-open-store>${ic("storefront")}<span class="store-card-t"><span class="store-card-badges"><span class="badge tone-accent" data-best-badge hidden>Best this week</span><span class="badge tone-info" data-new-flyer hidden>New flyer today</span></span><span class="store-card-name">${esc(s.name)}</span><span class="store-card-why">${vegText(esc(r.reason), esc(r.veg.reason))}</span><span class="store-card-n">${vegText(dealCounts(mine), dealCounts(veg))}</span></span>${ic("chevron")}</a></h3>
   <ul class="deals">${rows.join("\n")}</ul>
   <a class="see-all" href="${url(`stores/${s.id}/#deals`)}">${vegText(`See all ${mine.length} at ${esc(s.name)}`, `See all ${plural(veg.length, "vegetarian deal")} at ${esc(s.name)}`)}</a>
 </li>`;
@@ -536,9 +542,13 @@ function homePage() {
   const best = standouts.filter((i) => hlAll.includes(i) || hlVeg.includes(i));
   const read = latest.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
   const soonPool = items.filter((i) => i.valid_through).slice(0, 60);
-  const shops = [...new Set(items.map((i) => i.store))]
-    .map((id) => ({ s: cfg.storeById[id], n: items.filter((i) => i.store === id && i.a.tier === "standout").length, c: items.filter((i) => i.store === id).length }))
-    .sort((a, b) => b.n - a.n || b.c - a.c).map((x) => x.s);
+  // Stores with deals, best first by rank score (app.js reorders for Your stores and Vegetarian).
+  const shops = [...new Set(items.map((i) => i.store))].map((id) => cfg.storeById[id])
+    .sort((a, b) => RANKS[b.id].score - RANKS[a.id].score);
+  // Every store someone can pick (ones the routine reads), and the ones with no deals listed this week (their flyer
+  // couldn't be read, or hasn't changed): picked ones still show, with a link to their ad.
+  const pickable = cfg.stores.filter((s) => s.active && !s.no_online_flyer && latest.flyers.some((f) => f.store === s.id)).sort((a, b) => a.name.localeCompare(b.name));
+  const unread = pickable.filter((s) => !RANKS[s.id]);
   const edition = fmtDate(latest.week, { weekday: false });
   // People are adding: the top three from /api/popular.json (ids are "<store>-<rank>").
   const adding = (POPULAR.items ?? []).map((p) => {
@@ -562,8 +572,30 @@ ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and
   </div>
 </div>
 ${seasonStories()}
+<section class="block yours" data-yours aria-labelledby="h-yours">
+  <div class="sec-h"><h2 id="h-yours" data-yours-title>Best stores this week</h2><p data-yours-sub>Pick your stores to rank just those</p></div>
+  <details class="card yours-pick" data-yours-pick>
+    <summary><span class="yours-pick-t"><span class="yours-pick-h">Your stores</span><span class="yours-pick-names" data-yours-names>None picked yet</span></span><span class="badge tone-accent">Edit</span></summary>
+    <fieldset class="pick-grid"><legend class="sr-only">Your stores</legend>
+${pickable.map((s) => `      <label class="pick"><input type="checkbox" value="${esc(s.id)}" data-pick-store><span><span class="pick-name">${esc(s.name)}</span><span class="pick-where">${esc(s.delivery && !s.locations.length ? "Delivers" : towns(s).slice(0, 3).join(", ") + (towns(s).length > 3 ? " and more" : ""))}</span></span></label>`).join("\n")}
+    </fieldset>
+    <p class="small">Saved in this browser only. The iPhone app keeps its own.</p>
+  </details>
+  <div class="card quiet-note" data-quiet-note hidden></div>
+  <ul class="store-cards" data-rank-list>${shops.map((s) => storeCard(s, items, hlAll, hlVeg)).join("\n")}</ul>
+  <ul class="unread-cards" data-unread-list>${unread.map((s) => {
+    const f = latest.flyers.find((x) => x.store === s.id);
+    const ad = s.flyer_url ?? f?.links?.[0]?.url ?? s.website;
+    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${f?.status === "stale" ? "Its new flyer isn't up yet." : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
+  }).join("")}</ul>
+  <div class="elsewhere" data-elsewhere hidden>
+    <div class="sec-h"><h3 class="sec-label">Elsewhere this week</h3><p>Not one of your stores, but clearly ahead</p></div>
+    <ul class="store-cards" data-elsewhere-list></ul>
+  </div>
+  <a class="go" href="${url("stores/")}">All stores, flyers and the map</a>
+</section>
 <section class="block" aria-labelledby="h-best">
-  <div class="sec-h"><h2 id="h-best">Top picks</h2><p>${vegText(`${standouts.length} standouts in all`, `${vegStandouts.length} vegetarian standouts`)}</p></div>
+  <div class="sec-h"><h2 id="h-best">Best single deals</h2><p>Any store · ${vegText(`${standouts.length} standouts in all`, `${vegStandouts.length} vegetarian standouts`)}</p></div>
   <ul class="deals deals-2">${best.map((i) => dealRow(i, items.indexOf(i), { why: true }).replace('<li class="deal" ', `<li class="deal" data-hl="${(hlAll.includes(i) ? "a" : "") + (hlVeg.includes(i) ? "v" : "")}" `)).join("\n")}</ul>
   <a class="go" href="${url("standouts/")}">See all ${vegText(`${standouts.length} standouts`, `${vegStandouts.length} vegetarian standouts`)}</a>
 </section>
@@ -575,11 +607,6 @@ ${soonPool.length ? `<section class="block ending" data-ending hidden aria-label
   <div class="sec-h"><h2 id="h-end">Ending soon</h2><p>Last chance</p></div>
   <ul class="mini">${soonPool.map((i) => `<li data-ends="${i.valid_through}" data-veg="${isVegetarian(i) ? 1 : 0}" data-store="${esc(i.store)}" hidden><span>${esc(i.item)} <a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a></span> <span class="mini-price">${esc(priceText(i))} <span class="badge tone-warn ends-when" data-ends-label></span></span></li>`).join("")}</ul>
 </section>` : ""}
-<section class="block" aria-labelledby="h-where">
-  <div class="sec-h"><h2 id="h-where">By store</h2><p>Each store's best</p></div>
-  <ul class="store-cards">${shops.map((s) => storeCard(s, items, hlAll, hlVeg)).join("\n")}</ul>
-  <a class="go" href="${url("stores/")}">All stores, flyers and the map</a>
-</section>
 <section class="block" aria-labelledby="h-dep">
   <div class="sec-h"><h2 id="h-dep">Shop by aisle</h2></div>
   <ul class="tiles">${CATS.filter((c) => items.some((i) => i.category === c)).map((c) => deptTile(c, items)).join("\n")}</ul>
@@ -1220,6 +1247,11 @@ function appFeed() {
     // Seasonal items on this week (persimmons first): the This week card and season screen.
     // Missing in feeds built before 2026-10-31; older apps ignore it.
     seasons: seasonFeed(feedIds),
+    // "Best of your stores": each store's score, standouts, good deals, core aisles covered, a
+    // reason line and its top deal ids, plus the same over vegetarian deals (veg). The app ranks
+    // the stores the person picked by score; quiet says it's a quiet week there.
+    // Missing in feeds built before 2026-11-07; older apps ignore it.
+    store_ranks: RANKS,
   };
   mkdirSync(join(DIST, "api"), { recursive: true });
   writeFileSync(join(DIST, "api", "week.json"), JSON.stringify(feed));

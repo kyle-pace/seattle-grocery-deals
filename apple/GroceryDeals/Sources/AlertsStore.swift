@@ -174,6 +174,8 @@ final class NotificationPresenter: NSObject, UNUserNotificationCenterDelegate, @
         let info = response.notification.request.content.userInfo
         guard let kind = info["kind"] as? String else { return }
         let week = info["week"] as? String
-        await MainActor.run { PushStore.shared.opened(kind: kind, week: week) }
+        // "stores": the store ids the push was about ("lams" or "hmart,lams").
+        let stores = (info["stores"] as? String)?.split(separator: ",").map(String.init) ?? []
+        await MainActor.run { PushStore.shared.opened(kind: kind, week: week, stores: stores) }
     }
 }

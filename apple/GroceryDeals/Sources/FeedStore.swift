@@ -149,9 +149,71 @@ final class FeedStore {
         }
     }
     func isFavorite(_ id: String) -> Bool { favoriteStores.contains(id) }
-    func toggleFavorite(_ id: String) {
-        if favoriteStores.contains(id) { favoriteStores.remove(id) } else { favoriteStores.insert(id) }
+    /// Adds or removes a store from Your stores. `source` says where (onboarding, sheet,
+    /// settings, store page) for the "Changed Your Stores" event.
+    func toggleFavorite(_ id: String, source: String = "store_page") {
+        let added = !favoriteStores.contains(id)
+        if added { favoriteStores.insert(id) } else { favoriteStores.remove(id) }
+        Analytics.track("Changed Your Stores", ["store": id, "added": added, "count": favoriteStores.count, "source": source])
     }
+
+    // MARK: Best of your stores
+
+    /// A store's rank numbers for this week, vegetarian ones when Vegetarian is on. Feeds from
+    /// before 2026-11-07 have none: the numbers are then worked out roughly from the deals.
+    func rank(_ id: String) -> RankNumbers? {
+        if let r = feed?.store_ranks?[id] { return vegetarianOnly ? (r.veg ?? r.all) : r.all }
+        let mine = deals(atStore: id)
+        guard !mine.isEmpty else { return nil }
+        let st = mine.filter { $0.tier == .standout }.count, good = mine.filter { $0.tier == .good }.count
+        return RankNumbers(score: Double(st) * 4 + Double(good) * 0.8, standouts: st, good: good, deals: mine.count,
+                           aisles: Set(mine.map(\.category)).count, quiet: st < 3 && good < 6, reason: "",
+                           top: mine.filter { $0.tier != .sale }.prefix(3).map(\.id))
+    }
+
+    /// This week's store ranking (ThisWeekView, the site's app.js does the same):
+    /// - `ranked`: your stores best first, or every store when you haven't picked any;
+    /// - `quiet`: the best of them is having a quiet week;
+    /// - `elsewhere`: one store you didn't pick, when it's clearly ahead of all of yours;
+    /// - `unread`: picked stores with no deals listed this week (flyer not read yet).
+    struct RankedStore: Identifiable {
+        let store: Store
+        let rank: RankNumbers
+        var id: String { store.id }
+    }
+    struct StoreWeek {
+        var ranked: [RankedStore] = []
+        var quiet = false
+        var elsewhere: RankedStore?
+        var unread: [Store] = []
+    }
+    var storeWeek: StoreWeek {
+        var w = StoreWeek()
+        var all: [RankedStore] = []
+        for s in feed?.stores ?? [] {
+            if let r = rank(s.id), r.deals > 0, !deals(atStore: s.id).isEmpty { all.append(RankedStore(store: s, rank: r)) }
+        }
+        all.sort { $0.rank.score > $1.rank.score }
+        w.ranked = favoriteStores.isEmpty ? all : all.filter { favoriteStores.contains($0.store.id) }
+        w.quiet = w.ranked.first?.rank.quiet ?? false
+        if !favoriteStores.isEmpty, let other = all.first(where: { !favoriteStores.contains($0.store.id) }),
+           other.rank.standouts >= 5, !other.rank.quiet,
+           w.ranked.isEmpty || w.quiet || other.rank.score >= 1.5 * (w.ranked.first?.rank.score ?? 0) {
+            w.elsewhere = other
+        }
+        // Only stores with nothing in the feed at all: one hidden by Vegetarian isn't "unread".
+        let listed = Set((feed?.items ?? []).map(\.store))
+        w.unread = (feed?.stores ?? []).filter { favoriteStores.contains($0.id) && !listed.contains($0.id) }
+        return w
+    }
+    /// The deals a store card shows: its top deals from the feed, still on sale and after filters.
+    func topDeals(_ r: RankNumbers, at id: String) -> [Deal] {
+        let shown = Set(items.map(\.id))
+        let top = r.top.filter(shown.contains).compactMap { t in items.first { $0.id == t } }
+        return top.isEmpty ? Array(deals(atStore: id).prefix(3)) : top
+    }
+    /// True when the store's current flyer started today: "New flyer today".
+    func isNewFlyer(_ s: Store) -> Bool { Dates.date(s.from).map(Calendar.current.isDateInToday) ?? false }
 
     /// Aisles that have deals this week, in the feed's order.
     var aisles: [Category] { (feed?.categories ?? []).filter { c in items.contains { $0.category == c.id } } }

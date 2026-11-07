@@ -141,19 +141,47 @@ struct DealsOnboarding: View {
                     Text("Where do you shop?").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($titleFocused)
-                    Text("Pick any. Your stores show up first; every store stays in the app.")
+                    Text("Pick the stores you'd actually go to. Each week This week shows which of them is worth the trip. Change them anytime from This week.")
                         .font(.app(.callout)).foregroundStyle(Palette.body)
                 }
-                FlowLayout(spacing: Space.s) {
-                    ForEach(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }) { s in
-                        let on = picked.contains(s.id)
-                        FilterChip(s.name, count: store.deals(atStore: s.id).count, systemImage: on ? "heart.fill" : nil, isOn: on) {
-                            if on { picked.remove(s.id) } else { picked.insert(s.id) }
+                // Every store, by name, with where it is: people recognize "the one near me" by
+                // place, and a store whose flyer wasn't read this week can still be picked.
+                // (Was chips with deal counts, which hid stores without deals and nudged people
+                // toward the biggest flyers.)
+                Card(padding: 0) {
+                    VStack(spacing: 0) {
+                        ForEach((store.feed?.stores ?? []).sorted { $0.name.localizedCompare($1.name) == .orderedAscending }) { s in
+                            let on = picked.contains(s.id)
+                            Button {
+                                if on { picked.remove(s.id) } else { picked.insert(s.id) }
+                            } label: {
+                                HStack(spacing: Space.m) {
+                                    Image(systemName: on ? "checkmark.circle.fill" : "circle")
+                                        .font(.app(.title3)).foregroundStyle(on ? Palette.accent : Palette.muted)
+                                        .accessibilityHidden(true)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                                        if !s.towns.isEmpty {
+                                            Text(s.towns).font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                                        } else if s.delivery != nil {
+                                            Text("Delivers").font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                                        }
+                                    }
+                                    Spacer(minLength: 0)
+                                }
+                                .padding(.horizontal, Space.l)
+                                .frame(minHeight: 56)
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityAddTraits(on ? .isSelected : [])
+                            .overlay(alignment: .bottom) { Rectangle().fill(Palette.divider).frame(height: 1) }
                         }
-                        .accessibilityHint(s.towns)
                     }
                 }
                 .sensoryFeedback(.selection, trigger: picked)
+                Text("Not sure yet? Skip it, and This week ranks every store until you pick.")
+                    .font(.app(.subheadline)).foregroundStyle(Palette.muted)
 
                 VStack(alignment: .leading, spacing: Space.s) {
                     SectionHeader("Anything else?")
@@ -167,6 +195,7 @@ struct DealsOnboarding: View {
         } buttons: {
             Button {
                 store.favoriteStores = picked
+                if !picked.isEmpty { Analytics.track("Changed Your Stores", ["count": picked.count, "source": "onboarding"]) }
                 go(.howItWorks)
             } label: {
                 wide(picked.isEmpty ? "Continue" : picked.count == 1 ? "Continue with 1 store" : "Continue with \(picked.count) stores", prominent: true)

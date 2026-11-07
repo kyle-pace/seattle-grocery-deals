@@ -452,32 +452,73 @@ struct ListHomePrimer: View {
     }
 }
 
-/// Pick your stores: a checklist, the same choice as onboarding's "Where do you shop?".
+/// Pick your stores: a checklist, the same choice as onboarding's "Where do you shop?". Your
+/// stores first, then the rest, each with where it is and how its week looks, so adding one
+/// is an easy call. In Settings, and as a sheet from This week (YourStoresSheet).
 struct YourStoresPicker: View {
     @Environment(FeedStore.self) private var store
+    /// Where the change came from, for "Changed Your Stores": settings or sheet.
+    var source = "settings"
 
     var body: some View {
-        List(store.feed?.stores ?? []) { s in
-            let on = store.isFavorite(s.id)
-            Button { store.toggleFavorite(s.id) } label: {
-                HStack {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
-                        Text(s.towns).font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                    }
-                    Spacer()
-                    Image(systemName: on ? "heart.fill" : "heart").foregroundStyle(on ? Palette.accent : Palette.muted)
-                }
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
+        let stores = (store.feed?.stores ?? []).sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+        let mine = stores.filter { store.isFavorite($0.id) }
+        List {
+            if !mine.isEmpty {
+                Section("Your stores") { ForEach(mine) { row($0) } }
             }
-            .buttonStyle(.plain)
-            .accessibilityAddTraits(on ? .isSelected : [])
-            .listRowBackground(Palette.surface)
+            Section(mine.isEmpty ? "Pick the stores you shop at" : "Add a store") {
+                ForEach(stores.filter { !store.isFavorite($0.id) }) { row($0) }
+            }
         }
         .scrollContentBackground(.hidden)
         .background(Palette.ground)
         .navigationTitle("Your stores")
         .sensoryFeedback(.selection, trigger: store.favoriteStores)
+    }
+
+    private func row(_ s: Store) -> some View {
+        let on = store.isFavorite(s.id)
+        return Button { store.toggleFavorite(s.id, source: source) } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                    Text([s.towns, weekLine(s)].filter { !$0.isEmpty }.joined(separator: " · "))
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                }
+                Spacer()
+                Image(systemName: on ? "checkmark.circle.fill" : "plus.circle")
+                    .font(.app(.title3)).foregroundStyle(on ? Palette.accent : Palette.muted)
+                    .accessibilityHidden(true)
+            }
+            .frame(minHeight: 44)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(on ? .isSelected : [])
+        .accessibilityHint(on ? "Removes it from your stores" : "Adds it to your stores")
+        .listRowBackground(Palette.surface)
+    }
+
+    /// "7 standouts this week", or why there's nothing.
+    private func weekLine(_ s: Store) -> String {
+        guard let r = store.rank(s.id), r.deals > 0 else {
+            return s.status == "stale" ? "New flyer not up yet" : s.readThisWeek ? "No deals this week" : "Flyer not read this week"
+        }
+        return r.standouts > 0 ? "\(r.standouts) standout\(r.standouts == 1 ? "" : "s") this week" : "\(r.deals) deals this week"
+    }
+}
+
+/// Your stores as a sheet from This week, so changing them is one tap away.
+struct YourStoresSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    var body: some View {
+        NavigationStack {
+            YourStoresPicker(source: "sheet")
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
+                }
+        }
+        .presentationDetents([.large])
     }
 }
