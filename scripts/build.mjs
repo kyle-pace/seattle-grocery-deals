@@ -453,7 +453,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("apps/")}">iPhone app</a><a href="${url("about/")}">About and privacy</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("apps/")}">iPhone app</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -1062,8 +1062,49 @@ function aboutPage() {
 <p>The site uses <a href="https://amplitude.com">Amplitude</a> to count which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so repeat visits count once, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. Its handling of that data is described in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <p>Your "Vegetarian" choice and the analytics setting are saved only in your browser and are never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
-<p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>`;
+<p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>
+<h2>Accessibility</h2>
+<p>The site aims for WCAG 2.2 AA and has display settings for theme, text size, contrast, font, spacing, motion and links. More on the <a href="${url("accessibility/")}">accessibility page</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body, description: "How Seattle Grocery Deals reads Seattle grocery flyers, how standouts are chosen, and what the site does and doesn't collect." }));
+}
+
+// Accessibility statement, linked from the footer and the About page.
+function accessibilityPage() {
+  const report = `${esc(cfg.site.repo_url)}/issues/new?title=Accessibility%3A+`;
+  const body = `${pageHead("Accessibility", "Seattle Grocery Deals should work for everyone, however you read the web. What's built in, the settings you can change, and how to report a problem.")}
+<h2>The goal</h2>
+<p>The site aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a> at level AA. It hasn't been formally audited yet, so treat this as what it's working toward, not a certificate.</p>
+<h2>What's built in</h2>
+<ul>
+  <li><strong>A typeface made for reading.</strong> Everything is set in <a href="https://www.brailleinstitute.org/freefont/">Atkinson Hyperlegible Next</a>, designed by the Braille Institute for readers with low vision.</li>
+  <li><strong>Readable color.</strong> Text meets AA contrast in light and dark mode.</li>
+  <li><strong>Color is never the only signal.</strong> Every highlight pairs its color with a word or shape: Standout, "% off" and "under US avg" are spelled out.</li>
+  <li><strong>Prices that read well aloud.</strong> Screen readers hear "per pound" and "each" instead of "/lb" and "ea".</li>
+  <li><strong>Keyboard first.</strong> Everything works with a keyboard, focus is always visible, and a "Skip to content" link appears on your first Tab.</li>
+  <li><strong>Room to tap.</strong> Buttons and links are at least 44 pixels tall.</li>
+  <li><strong>Your device's settings, followed.</strong> Light or dark mode, reduced motion and increased contrast follow your system preferences.</li>
+  <li><strong>Text that scales.</strong> You can zoom to 200% or more without losing anything.</li>
+</ul>
+<h2>Display settings</h2>
+<p>The round button in the bottom left corner of every page opens display settings. You can change:</p>
+<ul>
+  <li><strong>Theme:</strong> follow your device, or always light or always dark</li>
+  <li><strong>Text size:</strong> default, large or larger</li>
+  <li><strong>Contrast:</strong> follow your device, standard, or more</li>
+  <li><strong>Font:</strong> keep Atkinson Hyperlegible, or use your device's own font</li>
+  <li><strong>Spacing:</strong> wider line, letter and word spacing</li>
+  <li><strong>Motion:</strong> turn off animations even if your device allows them</li>
+  <li><strong>Links:</strong> underline every link</li>
+</ul>
+<p>Your choices are saved in this browser only. They aren't sent anywhere, and Reset puts everything back. These are extras, not fixes: the site should work well without them, and it doesn't use an accessibility overlay.</p>
+<h2>Known limits</h2>
+<ul>
+  <li>The store map is harder to use with a screen reader or keyboard. Every store's addresses are also listed in text on its store page.</li>
+  <li>Store flyers are linked, not copied. They're the stores' own pages and PDFs and may not meet the same standard.</li>
+</ul>
+<h2>Report a problem</h2>
+<p>If something here gets in your way, <a href="${report}">open an issue on GitHub</a> with the page and what happened (it needs a free GitHub account). Reports are answered within a week.</p>`;
+  write("accessibility/", page({ title: "Accessibility", path: "accessibility/", section: "about/", body, description: "How Seattle Grocery Deals is built to work for everyone, the display settings you can change, and how to report a problem." }));
 }
 
 // The iPhone app, before it's on the App Store. The badge is Apple's own, unchanged and not a
@@ -1208,6 +1249,7 @@ comparePage();
 weekPages();
 storePages();
 aboutPage();
+accessibilityPage();
 yourListPage();
 appsPage();
 for (const s of SEASONS) seasonPage(s);
