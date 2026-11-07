@@ -82,7 +82,10 @@ struct RootView: View {
         .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
         // A tapped "New deals are in": fetch the latest deals, then open the store when the
         // push was about one store's new flyer, or This week when it was about several.
-        .onChange(of: PushStore.shared.opens) {
+        // Initial too: a push that launches the app is tapped before this view exists, and a
+        // change that happened before it was watching never counted.
+        .onChange(of: PushStore.shared.opens, initial: true) {
+            guard PushStore.shared.opens > 0 else { return }
             tab = .week
             let stores = PushStore.shared.openedStores
             Task {
@@ -107,23 +110,21 @@ struct RootView: View {
         }
         .handlesSpotlight(router)
         .onChange(of: router.searchRequest, initial: true) { if router.searchRequest > 0 { tab = .search } }
-        .onChange(of: router.dealID) { _, id in
-            guard let id else { return }
-            spotlightDeal = store.feed?.items.first { $0.id == id }
-            router.dealID = nil
+        // A deal from Spotlight can be newer than the deals saved on the phone: it waits for the
+        // refresh instead of being dropped (it was, when the app opened from Spotlight).
+        .onChange(of: router.dealID, initial: true) { openPendingDeal(dropIfMissing: false) }
+        .onChange(of: feedVersion) {
+            openPendingDeal(dropIfMissing: true)
+            openPendingSeason(dropIfMissing: true)
         }
         .sheet(item: $spotlightDeal) { DealDetail(deal: $0, openStore: openStore) }
         // A season screen, from a This week card, Search or Spotlight (Seasons.swift).
-        .onChange(of: router.seasonID) { _, id in
-            guard let id else { return }
-            openSeason = store.season(id)
-            router.seasonID = nil
-        }
+        .onChange(of: router.seasonID, initial: true) { openPendingSeason(dropIfMissing: false) }
         .sheet(item: $openSeason) { SeasonScreen(season: $0, openStore: openStore) }
         // Simulator screenshots: -season <id> opens that season's screen at launch.
         .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
-        .onChange(of: router.tabRequest) { _, name in
+        .onChange(of: router.tabRequest, initial: true) { _, name in
             guard let name else { return }
             let tabs: [String: TabID] = ["week": .week, "aisles": .aisles, "stores": .stores, "list": .list, "search": .search]
             if let t = tabs[name.lowercased()] { tab = t }
@@ -147,6 +148,26 @@ struct RootView: View {
         .alert("Something went wrong", isPresented: Binding(get: { list.lastError != nil }, set: { if !$0 { list.lastError = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(list.lastError ?? "") }
+    }
+
+    private func openPendingDeal(dropIfMissing: Bool) {
+        guard let id = router.dealID else { return }
+        if let deal = store.feed?.items.first(where: { $0.id == id }) {
+            spotlightDeal = deal
+            router.dealID = nil
+        } else if dropIfMissing {
+            router.dealID = nil   // ended, or gone from the latest deals
+        }
+    }
+
+    private func openPendingSeason(dropIfMissing: Bool) {
+        guard let id = router.seasonID else { return }
+        if let season = store.season(id) {
+            openSeason = season
+            router.seasonID = nil
+        } else if dropIfMissing {
+            router.seasonID = nil
+        }
     }
 
     private func openStore(_ id: String) {

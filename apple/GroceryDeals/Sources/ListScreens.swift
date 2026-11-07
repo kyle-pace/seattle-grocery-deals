@@ -10,6 +10,7 @@ struct ListView: View {
     @State private var selected: Deal?
     @State private var choosing = false
     @State private var celebrate = false
+    @State private var matches = DealMatches()
     @FocusState private var typing: Bool
     @AppStorage("sgd.list.byStore") private var byStore = false
     let openStore: (String) -> Void
@@ -167,7 +168,8 @@ struct ListView: View {
 
     private func deal(for item: ListStore.Item) -> Deal? {
         if let id = item.dealID, let d = store.items.first(where: { $0.id == id }) { return d }
-        return matchDeal(item.text, in: store.items)
+        let version = "\(store.feed?.week ?? "")|\(store.feed?.updated ?? "")|\(store.vegetarianOnly)|\(store.hideEndingToday)|\(store.items.count)"
+        return matches.deal(item.text, version: version) { store.items }
     }
 
     private func row(_ item: ListStore.Item) -> some View {
@@ -520,5 +522,24 @@ struct YourStoresSheet: View {
                 }
         }
         .presentationDetents([.large])
+    }
+}
+
+/// List items matched to this week's deals, kept until the deals change. matchDeal makes a pattern
+/// for each word and checks every deal, and the List asks about each item several times a draw
+/// (its group, its row, the count, the sort), so checking one thing off redid it all.
+final class DealMatches {
+    private var version = ""
+    private var found: [String: Deal?] = [:]
+
+    func deal(_ text: String, version: String, in deals: () -> [Deal]) -> Deal? {
+        if version != self.version {
+            found = [:]
+            self.version = version
+        }
+        if let hit = found[text] { return hit }
+        let deal = matchDeal(text, in: deals())
+        found[text] = deal
+        return deal
     }
 }
