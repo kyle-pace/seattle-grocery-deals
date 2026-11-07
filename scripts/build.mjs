@@ -392,7 +392,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
   const imgAlt = image ? imageAlt : DEFAULT_OG_ALT;
   if (!noindex && section !== "404") SITEMAP.add(path);
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
-  const top = [...MAIN_NAV, ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("")
+  const top = [...MAIN_NAV, ["app/", "App"], ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("")
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
   const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span>${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("");
   return `<!doctype html>
@@ -1157,7 +1157,7 @@ function appsPage() {
   <p class="app-note">No account, and your list stays on your phone. More in <a href="${url("about/")}#privacy">About</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "about/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
