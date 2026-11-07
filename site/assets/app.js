@@ -100,6 +100,9 @@
   function track(name, props) {
     document.dispatchEvent(new CustomEvent("sgd:track", { detail: { name: name, props: props || {} } }));
   }
+  // The header heart (Buy Me a Coffee).
+  var heart = document.querySelector("[data-support]");
+  if (heart) heart.addEventListener("click", function () { track("Tapped Support", { path: location.pathname }); });
   function num(li, key) { return +(vegOnly && li.dataset[key + "V"] != null ? li.dataset[key + "V"] : li.dataset[key]) || 0; }
   function quietAt(li) { return vegOnly ? li.hasAttribute("data-quiet-v") : li.hasAttribute("data-quiet"); }
   function rankStores() {

@@ -156,17 +156,102 @@ struct RootView: View {
     }
 }
 
-/// The gear at the top right of every tab, opening Settings as a sheet.
+/// The heart and the gear at the top right of every tab. The heart opens Feedback (below) for
+/// now; it becomes the place to chip in once tips are set up. The gear opens Settings.
 private struct SettingsButton: ViewModifier {
     @State private var showing = false
+    @State private var feedback = false
     func body(content: Content) -> some View {
         content
             .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Send feedback", systemImage: "heart") {
+                        feedback = true
+                        Analytics.track("Opened Feedback")
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Settings", systemImage: "gearshape") { showing = true }
                 }
             }
             .sheet(isPresented: $showing) { SettingsView() }
+            .sheet(isPresented: $feedback) { FeedbackSheet() }
+    }
+}
+
+/// What the heart opens: a note from the person who makes the app and a way to write back, by
+/// email to the site's public address with the app version filled in. If there's no mail app,
+/// it shows the address to copy instead.
+struct FeedbackSheet: View {
+    static let address = "hello@seattlegrocery.deals"
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
+    @State private var noMail = false
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: Space.l) {
+                    Buddy(.crow, mood: .happy, size: 72).hiddenWhenTextIsLarge()
+                        .accessibilityHidden(true)
+                    VStack(spacing: Space.s) {
+                        Text("Thanks for using Grocery Deals")
+                            .font(.app(.title2, .bold)).foregroundStyle(Palette.ink)
+                            .accessibilityAddTraits(.isHeader)
+                        Text("It's free and made by one person in Seattle. Tell me what's working, what isn't, or which store to add next.")
+                            .font(.app(.body)).foregroundStyle(Palette.body)
+                    }
+                    .multilineTextAlignment(.center)
+                    Button { write() } label: {
+                        Label("Send feedback", systemImage: "envelope")
+                            .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                    }
+                    .buttonStyle(.glassProminent)
+                    .tint(Palette.accent)
+                    if noMail {
+                        VStack(spacing: Space.xs) {
+                            Text("No mail app is set up here. You can write to")
+                                .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                            Text(Self.address).font(.app(.headline)).foregroundStyle(Palette.ink).textSelection(.enabled)
+                            Button("Copy address", systemImage: "doc.on.doc") {
+                                UIPasteboard.general.string = Self.address
+                                Announce.say("Copied")
+                            }
+                            .font(.app(.subheadline, .semibold))
+                            .frame(minHeight: 44)
+                        }
+                        .multilineTextAlignment(.center)
+                    }
+                }
+                .padding(Space.l)
+                .frame(maxWidth: 520)
+                .frame(maxWidth: .infinity)
+            }
+            .background(Palette.ground)
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
+        }
+        .presentationDetents([.medium, .large])
+    }
+
+    private func write() {
+        Analytics.track("Started Feedback Email")
+        guard let url = FeedbackSheet.mailURL(app: "Grocery Deals", to: Self.address) else { noMail = true; return }
+        openURL(url) { opened in if !opened { withAnimation { noMail = true } } }
+    }
+
+    /// mailto: with a subject and the version and iOS at the bottom of the body.
+    static func mailURL(app: String, to address: String) -> URL? {
+        let info = Bundle.main.infoDictionary
+        let version = "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
+        let os = ProcessInfo.processInfo.operatingSystemVersion
+        var c = URLComponents()
+        c.scheme = "mailto"
+        c.path = address
+        c.queryItems = [
+            URLQueryItem(name: "subject", value: "\(app) feedback"),
+            URLQueryItem(name: "body", value: "\n\n\n\(app) \(version) · iOS \(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"),
+        ]
+        return c.url
     }
 }
 

@@ -81,6 +81,12 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 .topnav a:hover, .head-about:hover { color: var(--ink); background: var(--raised); }
 /* 8%, not more: the accent text on this wash stays at 4.6:1 in light mode (12% dipped to 4.4:1) */
 .topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.head-end { display: flex; align-items: center; gap: 0.15rem; }
+.head-heart { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; color: var(--muted); }
+.head-heart svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; transition: transform 0.2s, fill 0.2s; }
+.head-heart:hover, .head-heart:focus-visible { color: light-dark(#c2334d, #ff8fa3); background: var(--raised); }
+.head-heart:hover svg, .head-heart:focus-visible svg { fill: currentColor; transform: scale(1.12); }
+@media (prefers-reduced-motion: reduce) { .head-heart svg { transition: none; } .head-heart:hover svg { transform: none; } }
 .nav-season { margin-left: 0.2rem; }
 .nav-season svg { width: 1.4rem; height: 1.4rem; transition: transform 0.2s; }
 .nav-season:hover svg, .nav-season:focus-visible svg { transform: rotate(-15deg) scale(1.2); }

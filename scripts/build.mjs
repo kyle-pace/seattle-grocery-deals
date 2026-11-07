@@ -361,6 +361,10 @@ const ICONS = {
   "list/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 5.5l1.2 1.2L7.4 4.4M4 11.5l1.2 1.2 2.2-2.3M4 17.5l1.2 1.2 2.2-2.3"/></svg>`,
   "compare/": `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M4 7l3-3M4 7l3 3M20 17H9M20 17l-3-3M20 17l-3 3"/></svg>`,
 };
+// The little heart in the header's corner: tips on Buy Me a Coffee (config/site.json support_url).
+// Hidden until the link is set. Tracked as Tapped Support.
+const HEART = cfg.site.support_url ? `
+      <a class="head-heart" href="${esc(cfg.site.support_url)}" target="_blank" rel="noopener" aria-label="Support Grocery Deals: buy me a coffee (opens in a new tab)" title="Buy me a coffee" data-support><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M12 20.3s-7.5-4.5-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.6-7.5 10.1-7.5 10.1z"/></svg></a>` : "";
 const MAIN_NAV = [["", "This week"], ["departments/", "Aisles"], ["stores/", "Stores"], ["compare/", "Compare"], ["list/", "List"]];
 
 // section: which menu item this page belongs to ("" is This week).
@@ -448,8 +452,10 @@ ${head}` : ""}${map ? `
 <header class="site-head">
   <div class="wrap head-in">
     <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span></a>
-    <nav class="topnav" aria-label="Main">${top}</nav>
-    <a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>
+    <div class="head-end">
+      <nav class="topnav" aria-label="Main">${top}</nav>
+      <a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>${HEART}
+    </div>
   </div>
 </header>
 <main id="main" tabindex="-1">
