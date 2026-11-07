@@ -56,6 +56,6 @@ App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. Fir
 
 1. **Done:** shell, live data, This week, Aisles, Stores, deal sheet, share.
 2. **Done:** List (in the app or Reminders via EventKit), + and checkmark on every deal, Amplitude with private settings. (Trip plan dropped.)
-2b. **Done:** alerts (`Sources/AlertsStore.swift`): Friday reminder, ending soon, price watches.
+2b. **Done:** alerts (`Sources/AlertsStore.swift`): new deals (a server push per store; a weekly local reminder without Firebase), ending soon, price watches.
 3. **Done:** Siri and Shortcuts (`Sources/Intents.swift`: "Add to my grocery list in Deals", "What's on sale in Deals") and the Best This Week widget (`Widget/`).
 4. With the paid Apple account: **TestFlight done** (2026-10-26). **Firebase push wired up** (2026-10-26): dev project `seattle-grocery-deals-dev`, APNs key `62XWUGPJN9`, sent from the deploy workflow. Then Universal Links. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.

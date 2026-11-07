@@ -260,7 +260,7 @@ struct SettingsView: View {
                         if PushStore.shared.available {
                             labeled("New deals are in", "As soon as one of your stores posts a new flyer")
                         } else {
-                            labeled("Friday reminder", "When new deals post, about 10:30 AM")
+                            labeled("New deals reminder", "A weekly nudge to see what's new")
                         }
                     }
                     Toggle(isOn: Binding(get: { alerts.endingSoon }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.endingSoon = on } } })) {
@@ -286,7 +286,7 @@ struct SettingsView: View {
                         .swipeActions { Button("Stop watching", role: .destructive) { alerts.unwatch(w) } }
                     }
                 } header: { Text("Price watches") } footer: {
-                    Text("Watches are checked on your phone when the app loads a new week, so your prices stay with you.")
+                    Text("Watches are checked on your phone each time the deals update, so your prices stay with you.")
                 }
 
                 Section {

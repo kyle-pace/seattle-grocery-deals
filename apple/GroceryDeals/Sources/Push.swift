@@ -12,7 +12,7 @@ import UserNotifications
 ///
 /// Firebase is only set up when a config file is bundled: `GoogleService-Info-Dev.plist` for
 /// Debug builds, `GoogleService-Info-Prod.plist` for Release (falling back to Dev until the
-/// prod project exists). Without one, the app keeps its local Friday reminder.
+/// prod project exists). Without one, the app keeps its local weekly reminder.
 @MainActor @Observable
 final class PushStore {
     static let shared = PushStore()
@@ -36,7 +36,7 @@ final class PushStore {
         available = true
         devProject = options.projectID?.hasSuffix("-dev") ?? false
         print("Push: Firebase configured for \(options.projectID ?? "?")")
-        // Clear a local Friday reminder left from before push, so it doesn't double up.
+        // Clear a local weekly reminder left from before push, so it doesn't double up.
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["friday"])
     }
 

@@ -32,7 +32,7 @@ export function loadSeasons(root) {
       eyebrow_after: `It's ${item} season (or it was)`,
       kicker: `The best ${star} deal in this week's flyers`,
       none_title: `No ${star} on sale this week.`,
-      none_line: "Check back Friday.",
+      none_line: "New flyers come in through the week, so check back soon.",
       also_title: "Also on sale",
       others_title: `Other ${item}`,
       others_note: "",
@@ -45,7 +45,7 @@ export function loadSeasons(root) {
       share_title: `${s.label} season: ${star} at {price} at {store}`,
       share_title_none: `${s.label} season`,
       share_text: `The best ${star} deal in this week's flyers: {price} at {store}.`,
-      share_text_none: `No ${star} on sale this week. Check back Friday.`,
+      share_text_none: `No ${star} on sale right now. Check back soon.`,
       ...look.copy,
     };
     return {

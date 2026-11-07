@@ -2,9 +2,9 @@ import Foundation
 import Observation
 import UserNotifications
 
-/// Local notifications: a Friday "new deals" reminder, "ends tomorrow" for list items, and
-/// price watches checked when the app loads the week. When Firebase is set up, "New deals are
-/// in" comes as a server push instead of the local Friday reminder (see Push.swift).
+/// Local notifications: a weekly "new deals" reminder (only without push), "ends tomorrow" for list items, and
+/// price watches checked whenever the deals update. When Firebase is set up, "New deals are
+/// in" comes as a server push, per store as each new flyer goes up, instead (see Push.swift).
 @MainActor @Observable
 final class AlertsStore {
     struct Watch: Codable, Identifiable, Hashable {
@@ -42,18 +42,20 @@ final class AlertsStore {
         return (try? await center.requestAuthorization(options: [.alert, .sound, .badge])) ?? false
     }
 
-    // MARK: Friday reminder
+    // MARK: weekly reminder (fallback without push)
 
     private func scheduleFriday() async {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: ["friday"])
-        // The server push replaces the guess at 10:30 when Firebase is available.
+        // Without push the app can't know when a store posts, so this is a weekly nudge instead.
+        // The server push replaces it when Firebase is available. (The "friday" id and setting key
+        // are kept so existing installs carry over.)
         guard friday, !PushStore.shared.available else { return }
         let content = UNMutableNotificationContent()
         content.title = "New deals are in"
-        content.body = "This week's flyers are up. See what's on sale from your list."
+        content.body = "Stores post new flyers through the week. See what's on sale from your list."
         var when = DateComponents()
-        when.weekday = 6; when.hour = 10; when.minute = 30 // Friday 10:30, after the week usually posts
+        when.weekday = 6; when.hour = 10; when.minute = 30 // Friday 10:30, when the most flyers are usually out
         try? await center.add(UNNotificationRequest(identifier: "friday", content: content, trigger: UNCalendarNotificationTrigger(dateMatching: when, repeats: true)))
     }
 
@@ -107,7 +109,7 @@ final class AlertsStore {
             .min { $0.1 < $1.1 }?.0
     }
 
-    /// Called when a week loads: one notification per watch per week.
+    /// Called whenever the deals change: one notification per watch per week.
     func checkWatches(_ feed: Feed, storeName: (String) -> String) {
         var changed = false
         for i in watches.indices {

@@ -22,8 +22,9 @@ struct DealsProvider: TimelineProvider {
         nonisolated(unsafe) let done = completion
         Task {
             let entry = await Self.load()
-            // New weeks post on Fridays; checking every few hours is plenty.
-            done(Timeline(entries: [entry], policy: .after(.now.addingTimeInterval(4 * 3600))))
+            // Stores post new flyers on their own days and the site picks each one up within
+            // the hour, so check hourly (well inside WidgetKit's daily refresh budget).
+            done(Timeline(entries: [entry], policy: .after(.now.addingTimeInterval(3600))))
         }
     }
 

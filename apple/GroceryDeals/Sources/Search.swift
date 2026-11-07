@@ -206,7 +206,7 @@ struct SearchView: View {
 // MARK: Spotlight
 
 /// Puts this week's standouts and good deals in iPhone Spotlight, so "persimmon" from the Home
-/// Screen shows "Fuyu Persimmon $1.48/lb · T&T". Replaced every week; each item expires with
+/// Screen shows "Fuyu Persimmon $1.48/lb · T&T". Replaced whenever the deals update; each item expires with
 /// its sale. Only public deal data, nothing personal.
 enum DealsSpotlight {
     static let domain = "deals.week"

@@ -66,7 +66,7 @@ if (storeIds.length) {
 } else {
   const deals = week.items.length;
   const stores = new Set(week.items.map((i) => i.store)).size;
-  body = `This week's deals are up: ${deals} deals from ${stores} stores.`;
+  body = `${deals} deals from ${stores} stores, updated as each new flyer comes out.`;
 }
 const base = {
   notification: { title: "New deals are in", body },

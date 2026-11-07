@@ -28,7 +28,6 @@ struct GroceryDealsApp: App {
                 .task {
                     PushStore.shared.sync(newDeals: alerts.friday)
                     await store.refresh()
-                    if let feed = store.feed { alerts.checkWatches(feed, storeName: store.storeName) }
                 }
                 // Pick up changes made in Reminders (Siri, a shared list) when coming back.
                 .onChange(of: phase) { _, p in
@@ -58,6 +57,12 @@ struct RootView: View {
     @Environment(ListStore.self) private var list
     @Environment(AlertsStore.self) private var alerts
 
+    /// Changes whenever the deals do: a new week, or a store's new flyer added partway through one.
+    private var feedVersion: String {
+        guard let f = store.feed else { return "" }
+        return "\(f.week)|\(f.updated ?? "")|\(f.items.count)"
+    }
+
     var body: some View {
         @Bindable var list = list
         TabView(selection: $tab) {
@@ -80,16 +85,21 @@ struct RootView: View {
             tab = .week
             Task { await store.refresh() }
         }
-        // Keep "ends tomorrow" notifications in step with the list and the week.
-        .task(id: "\(store.feed?.week ?? "")|\(list.openItems.map(\.text).joined(separator: ","))|\(alerts.endingSoon)") {
+        // Stores post new flyers on their own days, so the deals change through the week, not
+        // just on Fridays. Price watches and Spotlight follow every change, not only a new week.
+        .task(id: feedVersion) {
+            guard let feed = store.feed else { return }
+            alerts.checkWatches(feed, storeName: store.storeName)
+            DealsSpotlight.update(store)
+        }
+        // Keep "ends tomorrow" notifications in step with the list and the deals.
+        .task(id: "\(feedVersion)|\(list.openItems.map(\.text).joined(separator: ","))|\(alerts.endingSoon)") {
             let matches = list.openItems.compactMap { item -> (text: String, deal: Deal, store: String)? in
                 let d = item.dealID.flatMap { id in store.items.first { $0.id == id } } ?? matchDeal(item.text, in: store.items)
                 return d.map { (item.text, $0, store.storeName($0.store)) }
             }
             await alerts.scheduleEndingSoon(matches)
         }
-        // This week's deals in Spotlight, refreshed when the week changes.
-        .task(id: store.feed?.week ?? "") { DealsSpotlight.update(store) }
         .handlesSpotlight(router)
         .onChange(of: router.searchRequest, initial: true) { if router.searchRequest > 0 { tab = .search } }
         .onChange(of: router.dealID) { _, id in
