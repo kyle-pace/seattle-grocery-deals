@@ -80,10 +80,15 @@ struct RootView: View {
         }
         .tint(Palette.accent)
         .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
-        // A tapped "New deals are in": open This week with the latest week.
+        // A tapped "New deals are in": fetch the latest deals, then open the store when the
+        // push was about one store's new flyer, or This week when it was about several.
         .onChange(of: PushStore.shared.opens) {
             tab = .week
-            Task { await store.refresh() }
+            let stores = PushStore.shared.openedStores
+            Task {
+                await store.refresh()
+                if stores.count == 1 { openStore(stores[0]) }
+            }
         }
         // Stores post new flyers on their own days, so the deals change through the week, not
         // just on Fridays. Price watches and Spotlight follow every change, not only a new week.

@@ -49,6 +49,7 @@ extension View {
 struct ThisWeekView: View {
     @Environment(FeedStore.self) private var store
     @State private var selected: Deal?
+    @State private var editingStores = false
     let openStore: (String) -> Void
 
     var body: some View {
@@ -60,8 +61,14 @@ struct ThisWeekView: View {
                     WatchHits { selected = $0 }
                     // Persimmon season and friends: one card, or a row to swipe (Seasons.swift).
                     SeasonCards()
+                    // People shop one store per trip: rank stores first (Best of your stores),
+                    // then the best single deals from anywhere.
+                    YourStoresWeek(select: { selected = $0 }, openStore: openStore) {
+                        editingStores = true
+                        Analytics.track("Opened Edit Stores", ["source": "this_week"])
+                    }
                     let picks = store.topPicks()
-                    SectionHeading(title: "Top picks", note: "\(store.standouts.count) standouts in all")
+                    SectionHeading(title: "Best single deals", note: "Any store · \(store.standouts.count) standouts")
                     ForEach(picks) { d in
                         DealRow(deal: d, showWhy: true) { selected = d }
                     }
@@ -71,16 +78,6 @@ struct ThisWeekView: View {
                         SectionHeading(title: "People are adding", note: "this week")
                         ForEach(adding, id: \.deal.id) { entry in
                             DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
-                        }
-                    }
-                    let picked = Set(picks.map(\.id))
-                    SectionHeading(title: "By store", note: "Each store's best")
-                    ForEach(store.rankedStores) { s in
-                        let all = store.deals(atStore: s.id)
-                        let best = all.filter { !picked.contains($0.id) }.prefix(3)
-                        if !best.isEmpty {
-                            StoreSection(s: s, total: all.count, standouts: all.filter { $0.tier == .standout }.count,
-                                         deals: Array(best), select: { selected = $0 }, openStore: openStore)
                         }
                     }
                 } else if store.loading {
@@ -98,19 +95,135 @@ struct ThisWeekView: View {
             .seasonToolbarButtons()
             .refreshable { await store.refresh() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
+            .sheet(isPresented: $editingStores) { YourStoresSheet() }
             // Simulator screenshots: -deal <name> opens the first deal whose name contains it.
             .task { if let q = DebugArgs.value("-deal") { selected = store.items.first { $0.name.localizedCaseInsensitiveContains(q) } } }
         }
     }
 }
 
-/// One store on This week, as its own card: the store's name, its best few deals, and a way to
-/// see the rest.
+/// Best of your stores on This week (the site's app.js does the same from the same numbers):
+/// your stores ranked by this week's deals, or every store when you haven't picked any. One
+/// store: just its week. A quiet week says so, and one store you didn't pick can show under
+/// Elsewhere when it's clearly ahead. Picked stores with no deals listed stay, with their ad.
+private struct YourStoresWeek: View {
+    @Environment(FeedStore.self) private var store
+    let select: (Deal) -> Void
+    let openStore: (String) -> Void
+    let editStores: () -> Void
+
+    var body: some View {
+        let w = store.storeWeek
+        let picked = store.favoriteStores
+        let names = (store.feed?.stores ?? []).filter { picked.contains($0.id) }.map(\.name)
+        SectionHeading(title: picked.isEmpty ? "Best stores this week" : picked.count == 1 ? "This week at \(names.first ?? "your store")" : "Best of your stores",
+                       note: picked.isEmpty ? "Pick yours to rank just those" : store.vegetarianOnly ? "By vegetarian deals" : "By this week's deals")
+        YourStoresButton(names: names, action: editStores)
+        if !picked.isEmpty, w.quiet || w.ranked.isEmpty {
+            QuietNote(names: w.ranked.map(\.store.name), none: w.ranked.isEmpty, elsewhere: w.elsewhere)
+        }
+        ForEach(Array(w.ranked.enumerated()), id: \.element.id) { i, e in
+            section(e, best: i == 0 && w.ranked.count > 1 && !w.quiet, position: i + 1, place: picked.isEmpty ? "all" : "yours")
+        }
+        ForEach(w.unread) { s in UnreadStoreRow(s: s) }
+        if let e = w.elsewhere {
+            SectionHeading(title: "Elsewhere this week", note: "Not one of your stores")
+            section(e, best: false, position: 0, place: "elsewhere")
+        }
+    }
+
+    private func section(_ e: FeedStore.RankedStore, best: Bool, position: Int, place: String) -> some View {
+        StoreSection(s: e.store, total: store.deals(atStore: e.store.id).count, standouts: e.rank.standouts,
+                     deals: store.topDeals(e.rank, at: e.store.id), reason: e.rank.reason, isBest: best,
+                     newFlyer: store.isNewFlyer(e.store), select: select) { id in
+            Analytics.track("Opened Store Card", ["store": id, "position": position, "section": place,
+                                                  "stores_picked": store.favoriteStores.count, "veg_only": store.vegetarianOnly])
+            openStore(id)
+        }
+    }
+}
+
+/// "Your stores · 4, Met Market, Central Co-op…" with Edit: one tap to change them.
+private struct YourStoresButton: View {
+    let names: [String]
+    let action: () -> Void
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: Space.m) {
+                Image(systemName: names.isEmpty ? "heart" : "heart.fill").foregroundStyle(Palette.accent)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(names.isEmpty ? "Your stores" : "Your stores · \(names.count)").font(.app(.headline)).foregroundStyle(Palette.ink)
+                    Text(names.isEmpty ? "Pick the stores you shop at" : names.joined(separator: ", "))
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted).lineLimitUnlessLarge(1)
+                }
+                Spacer(minLength: 0)
+                Text(names.isEmpty ? "Pick" : "Edit").font(.app(.subheadline, .bold)).foregroundStyle(Palette.accent)
+            }
+            .padding(Space.m)
+            .frame(minHeight: 56)
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: Radius.large))
+            .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Palette.line.opacity(0.7)))
+            .contentShape(RoundedRectangle(cornerRadius: Radius.large))
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityHint("Changes which stores This week ranks")
+    }
+}
+
+/// "A quiet week at H Mart and Lam's. 99 Ranch has 13 standouts, if you can get there."
+private struct QuietNote: View {
+    let names: [String]
+    let none: Bool
+    let elsewhere: FeedStore.RankedStore?
+    var body: some View {
+        Card(padding: Space.m) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(none ? "No deals listed at your stores yet" : "A quiet week at \(names.count > 2 ? "your stores" : names.joined(separator: " and "))")
+                    .font(.app(.headline)).foregroundStyle(Palette.ink)
+                Text(elsewhere.map { "\($0.store.name) has \($0.rank.standouts) standouts, if you can get there." }
+                     ?? "New flyers come in through the week, so check back soon.")
+                    .font(.app(.callout)).foregroundStyle(Palette.body)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(.top, Space.m)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// A picked store with no deals listed this week: its flyer couldn't be read or isn't up yet.
+private struct UnreadStoreRow: View {
+    let s: Store
+    var body: some View {
+        HStack(spacing: Space.m) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                Text(s.status == "stale" ? "Its new flyer isn't up yet." : "We couldn't read this week's flyer.")
+                    .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+            }
+            Spacer(minLength: 0)
+            if let url = s.flyerLinkURL {
+                Link("Their ad", destination: url).font(.app(.subheadline, .bold)).tint(Palette.accent).frame(minHeight: 44)
+            }
+        }
+        .padding(.horizontal, Space.l)
+        .padding(.vertical, Space.s)
+        .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Palette.line, style: StrokeStyle(lineWidth: 2, dash: [6, 4])))
+        .padding(.top, Space.m)
+    }
+}
+
+/// One store on This week, as its own card: badges (Best this week, New flyer today), the
+/// store's name, why this week is good there, its best few deals, and a way to see the rest.
 private struct StoreSection: View {
     let s: Store
     let total: Int
     let standouts: Int
     let deals: [Deal]
+    var reason: String = ""
+    var isBest = false
+    var newFlyer = false
     let select: (Deal) -> Void
     let openStore: (String) -> Void
 
@@ -121,7 +234,17 @@ private struct StoreSection: View {
                     HStack(alignment: .firstTextBaseline, spacing: Space.s) {
                         Image(systemName: "storefront").foregroundStyle(Palette.accent).hiddenWhenTextIsLarge()
                         VStack(alignment: .leading, spacing: 2) {
+                            if isBest || newFlyer {
+                                HStack(spacing: 6) {
+                                    if isBest { Badge("Best this week", tone: .good, compact: true) { Image(systemName: "star.fill").imageScale(.small) } }
+                                    if newFlyer { Badge("New flyer today", tone: .info, compact: true) { Image(systemName: "sparkles").imageScale(.small) } }
+                                }
+                                .padding(.bottom, 2)
+                            }
                             Text(s.name).font(.app(.title3, .bold)).foregroundStyle(Palette.ink)
+                            if !reason.isEmpty {
+                                Text(reason).font(.app(.callout)).foregroundStyle(Palette.body)
+                            }
                             Text(standouts > 0 ? "\(standouts) standouts, \(total) deals" : "\(total) deals")
                                 .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                         }
@@ -200,7 +323,7 @@ struct StoresView: View {
         .buttonStyle(.plain)
         .contextMenu {
             Button(store.isFavorite(s.id) ? "Remove from your stores" : "Add to your stores",
-                   systemImage: store.isFavorite(s.id) ? "heart.slash" : "heart") { store.toggleFavorite(s.id) }
+                   systemImage: store.isFavorite(s.id) ? "heart.slash" : "heart") { store.toggleFavorite(s.id, source: "stores_tab") }
         }
     }
 }
@@ -252,8 +375,20 @@ struct StoreDetail: View {
                 .padding(.top, Space.s)
             }
             SectionHeading(title: q.isEmpty ? "This week" : "Matching", note: "\(deals.count) deals")
-            ForEach(deals) { d in
-                DealRow(deal: d, showStore: false) { selected = d }
+            if q.isEmpty {
+                // By aisle, so the page reads like a walk through the store.
+                ForEach(store.aisles.filter { a in deals.contains { $0.category == a.id } }) { a in
+                    let rows = deals.filter { $0.category == a.id }
+                    SectionHeader(a.label, trailing: "\(rows.count)")
+                        .padding(.top, Space.l)
+                    ForEach(rows) { d in
+                        DealRow(deal: d, showStore: false) { selected = d }
+                    }
+                }
+            } else {
+                ForEach(deals) { d in
+                    DealRow(deal: d, showStore: false) { selected = d }
+                }
             }
             if deals.isEmpty {
                 EmptyState(.persimmon, mood: q.isEmpty ? .sleepy : .surprised,
@@ -271,7 +406,7 @@ struct StoreDetail: View {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button(store.isFavorite(s.id) ? "Remove from your stores" : "Add to your stores",
                        systemImage: store.isFavorite(s.id) ? "heart.fill" : "heart") {
-                    store.toggleFavorite(s.id)
+                    store.toggleFavorite(s.id, source: "store_page")
                     Announce.say(store.isFavorite(s.id) ? "Added \(s.name) to your stores" : "Removed \(s.name) from your stores")
                 }
                 .sensoryFeedback(.selection, trigger: store.isFavorite(s.id))

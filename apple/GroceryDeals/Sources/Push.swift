@@ -64,9 +64,13 @@ final class PushStore {
         Task { await updateTopics() }
     }
 
-    func opened(kind: String, week: String?) {
+    /// The stores the last tapped push was about: one store's new flyer opens that store.
+    private(set) var openedStores: [String] = []
+
+    func opened(kind: String, week: String?, stores: [String] = []) {
+        openedStores = stores
         opens += 1
-        Analytics.track("Opened Push", ["kind": kind, "week": week ?? ""])
+        Analytics.track("Opened Push", ["kind": kind, "week": week ?? "", "stores": stores.joined(separator: ",")])
     }
 
     /// Topics this phone should be in. On the dev project it also joins the test topic, so
