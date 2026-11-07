@@ -13,7 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import { pathToFileURL } from "node:url";
-import { buddy, FRUIT_SVG } from "./buddy.mjs";
+import { persimmon as buddy, FRUIT_SVG } from "./buddy.mjs";
 import { loadSeasons } from "./seasons.mjs";
 
 const { chromium } = createRequire(import.meta.url)("playwright");

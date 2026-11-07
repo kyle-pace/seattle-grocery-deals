@@ -1,7 +1,8 @@
 /* Seattle Grocery Deals, in the Deals app's look (KitchenUI): Atkinson Hyperlegible Next only,
-   quiet neutral ground, white cards, one persimmon accent (Palette.Accent.persimmon, the fruit
-   on the icon; Maitake keeps the green), and tones that always pair a shape with a word.
-   Values mirror KitchenUI's Palette.swift, Type.swift and Components.swift. */
+   the "Puget evening" palette (harbor blue neutrals, one rain-blue accent, a gold coin for the
+   crow), and tones that always pair a shape with a word. The crow is the mascot (2026-11-06;
+   the persimmon before it now only stands for persimmon season).
+   Values mirror KitchenUI's Palette.swift (Neutrals.harbor, Accent.rain) and Crow.swift. */
 @font-face {
   font-family: "Atkinson Hyperlegible Next";
   src: url("fonts/atkinson-hyperlegible-next.woff2") format("woff2");
@@ -11,24 +12,26 @@
 
 :root {
   /* neutrals */
-  --ground: light-dark(#f4f4f1, #121413);
-  --surface: light-dark(#ffffff, #1d201e);
-  --raised: light-dark(#e9eae6, #2a2e2b);
-  --ink: light-dark(#1b1f1d, #eef1ee);
-  --text-body: light-dark(#4a514d, #c9cfcb);
-  --muted: light-dark(#5e6661, #a3aba6);
-  --line: light-dark(#d5d7d1, #3a3f3c);
-  --divider: light-dark(#ecece8, #2a2e2b);
-  --accent: light-dark(#b04418, #f5a06a);
-  --on-accent: light-dark(#ffffff, #2a1208);
+  --ground: light-dark(#eef3f6, #0f1a24);
+  --surface: light-dark(#ffffff, #172633);
+  --raised: light-dark(#e1e9ef, #223445);
+  --ink: light-dark(#0f1a24, #eef3f6);
+  --text-body: light-dark(#3a4a57, #c9d4dc);
+  --muted: light-dark(#536472, #a9b8c4);
+  --line: light-dark(#ccd7e0, #2a3d4e);
+  --divider: light-dark(#e3eaf0, #1e2f3e);
+  --accent: light-dark(#24577a, #6cc4e8);
+  --on-accent: light-dark(#ffffff, #0f1a24);
   --focus: light-dark(#2c639a, #8dbce8);
   /* tones: fill behind text, text on the fill, and a stronger mark */
   --good-fill: light-dark(#e3efe8, #1c3529); --good-text: light-dark(#1f4d37, #a6dcbf); --good-mark: light-dark(#2f6b4f, #7cc4a0);
   --warn-fill: light-dark(#fbeed0, #3a2e12); --warn-text: light-dark(#6e4700, #f2c66d); --warn-mark: light-dark(#8a5a00, #e8b44f);
   --bad-fill: light-dark(#fadfd6, #3d1f17); --bad-text: light-dark(#85290f, #ffad94); --bad-mark: light-dark(#a3361a, #ff8c6e);
-  --neutral-fill: light-dark(#e9eae6, #2a2e2b); --neutral-text: light-dark(#454c48, #c9cfcb); --neutral-mark: light-dark(#5e6661, #a3aba6);
+  --neutral-fill: light-dark(#e1e9ef, #223445); --neutral-text: light-dark(#3a4a57, #c9d4dc); --neutral-mark: light-dark(#536472, #a9b8c4);
   --info-fill: light-dark(#e1ecf7, #1a2a3a); --info-text: light-dark(#1e4a73, #a8ccf0); --info-mark: light-dark(#2c639a, #8dbce8);
-  /* the persimmon buddy */
+  /* the crow (KitchenUI CrowColors), and the persimmon for persimmon season */
+  --cr-body: light-dark(#23272e, #38444f); --cr-sheen: light-dark(#3a4250, #4d5d72); --cr-wing: light-dark(#303846, #445162); --cr-beak: light-dark(#5a6270, #a3afbd);
+  --coin: #f2c14e; --evening: #345a78;
   --bd-fruit: light-dark(#e8743b, #f08a4b); --bd-leaf: light-dark(#2f6b4f, #5faf86); --bd-stem: light-dark(#5b4632, #8a7058); --bd-face: light-dark(#1b1f1d, #111412);
   /* radius and space */
   --r-s: 10px; --r-m: 14px; --r-l: 18px;
@@ -235,8 +238,15 @@ html.veg-on [data-meat-only] { display: none; }
 .unread-card a { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
 .elsewhere { margin-top: var(--s-xl); }
 
-/* the persimmon buddy (KitchenUI Buddy) */
+/* the crow and the persimmon (KitchenUI Buddy, scripts/buddy.mjs) */
 .buddy { flex: none; overflow: visible; }
+.cr-body { fill: var(--cr-body); }
+.cr-sheen { fill: var(--cr-sheen); }
+.cr-wing { fill: var(--cr-wing); }
+.cr-beak { fill: var(--cr-beak); }
+.cr-line { fill: none; stroke: var(--cr-body); stroke-width: 2; stroke-linecap: round; opacity: 0.45; }
+.cr-wing-line { fill: none; stroke: var(--cr-sheen); stroke-width: 3; stroke-linecap: round; }
+.cr-feet { fill: none; stroke: var(--cr-beak); stroke-width: 4.5; stroke-linecap: round; }
 .bd-fruit { fill: var(--bd-fruit); }
 .bd-shine { fill: #ffffff; opacity: 0.28; }
 .bd-stem { fill: var(--bd-stem); }

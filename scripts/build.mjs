@@ -51,7 +51,7 @@ const keyLabel = (k) => cfg.items[k]?.label ?? k;
 const plural = (n, one, many = one + "s") => `${n} ${n === 1 ? one : many}`;
 const ext = `<span aria-hidden="true">&#8599;</span><span class="sr-only"> (opens the store's site)</span>`;
 
-// ---------- KitchenUI pieces: icons, badges and the persimmon buddy ----------
+// ---------- KitchenUI pieces: icons, badges and the crow ----------
 // Matches the Deals app's shared kit (KitchenUI): same tones, shapes and words.
 
 const ICON_PATHS = {
@@ -85,7 +85,7 @@ const ic = (name) => `<svg class="ic ic-${name}" viewBox="0 0 16 16" aria-hidden
 const badge = (tone, icon, text) => `<span class="badge tone-${tone}">${icon ? ic(icon) : ""}${esc(text)}</span>`;
 const tierBadge = (tier) => tier === "standout" ? badge("warn", "star", "Standout") : tier === "good" ? badge("neutral", "halfStar", "Good deal") : "";
 
-// The persimmon buddy lives in buddy.mjs, shared with scripts/season-og.mjs.
+// The crow (and the persimmon for persimmon season) live in buddy.mjs, shared with the share-image scripts.
 
 // A friendly empty screen: the buddy, a headline, a line, and at most one way forward.
 const emptyState = ({ mood = "sad", title, msg = "", link = null, attrs = "" }) => `<div class="empty-state"${attrs ? " " + attrs : ""}>${buddy(mood, 88)}<p class="empty-title">${esc(title)}</p>${msg ? `<p class="empty-msg"${attrs.includes("data-empty") ? " data-empty-msg" : ""}>${esc(msg)}</p>` : ""}${link ? `<p><a class="go" href="${link[0]}">${esc(link[1])}</a></p>` : ""}</div>`;
@@ -419,8 +419,8 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <meta name="twitter:description" content="${esc(desc)}">
 <meta name="twitter:image" content="${esc(cfg.site.origin + cfg.site.base_path + img)}">
 <meta name="twitter:image:alt" content="${esc(imgAlt)}">
-<meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121413" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef3f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1a24" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-title" content="Grocery Deals">${noindex ? `
 <meta name="robots" content="noindex">` : ""}
 <link rel="icon" href="${url("favicon.ico")}" sizes="48x48">
@@ -1179,7 +1179,7 @@ function searchFiles() {
   cpSync(join(ROOT, "site", "assets", "favicon.ico"), join(DIST, "favicon.ico"));
   writeFileSync(join(DIST, "site.webmanifest"), JSON.stringify({
     name: cfg.site.title, short_name: "Grocery Deals", description: cfg.site.tagline, start_url: url(), scope: url(), display: "browser",
-    background_color: "#f4f4f1", theme_color: "#f4f4f1",
+    background_color: "#eef3f6", theme_color: "#eef3f6",
     icons: [{ src: url("assets/logo-192.png"), sizes: "192x192", type: "image/png" }, { src: url("assets/logo-512.png"), sizes: "512x512", type: "image/png" }],
   }, null, 2));
   writeFileSync(join(DIST, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: ${url("data/")}\n\nSitemap: ${origin}sitemap.xml\n`);
