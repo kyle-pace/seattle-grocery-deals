@@ -115,7 +115,8 @@ private struct YourStoresWeek: View {
     var body: some View {
         let w = store.storeWeek
         let picked = store.favoriteStores
-        let names = (store.feed?.stores ?? []).filter { picked.contains($0.id) }.map(\.name)
+        // Your stores in the order they rank this week, then any with no deals listed.
+        let names = picked.isEmpty ? [] : w.ranked.map(\.store.name) + w.unread.map(\.name)
         SectionHeading(title: picked.isEmpty ? "Best stores this week" : picked.count == 1 ? "This week at \(names.first ?? "your store")" : "Best of your stores",
                        note: picked.isEmpty ? "Pick yours to rank just those" : store.vegetarianOnly ? "By vegetarian deals" : "By this week's deals")
         YourStoresButton(names: names, action: editStores)
