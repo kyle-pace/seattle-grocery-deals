@@ -89,5 +89,5 @@ Ideas for later: plan-my-trip (fewest stores covering your sale items), in-store
 ## House rules
 
 - Pushing straight to `main` is fine (owner's call, 2026-10-28). Use a branch and a pull request for bigger or riskier work the owner should look at first.
-- Never put the owner's email address on the site. The site's own public address is hello@seattlegrocery.deals (forwards to the owner; used on the Accessibility page since 2026-11-06).
+- Never put the owner's email address on the site. The site's own public address is hello@seattlegrocery.deals (an alias on the owner's mail; used on the Accessibility page since 2026-11-06).
 - Weekly data: never guess a price; only use regular prices the store printed; food for cooking only (no snacks or packaged convenience food); no em dashes. `npm run check` must pass.
