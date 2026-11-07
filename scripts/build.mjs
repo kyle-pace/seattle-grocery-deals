@@ -1130,7 +1130,7 @@ function accessibilityPage() {
   <li>Store flyers are linked, not copied. They're the stores' own pages and PDFs and may not meet the same standard.</li>
 </ul>
 <h2>Report a problem</h2>
-<p>If something here gets in your way, <a href="${report}">open an issue on GitHub</a> with the page and what happened (it needs a free GitHub account). Reports are answered within a week.</p>`;
+<p>If something here gets in your way, <a href="mailto:hello@seattlegrocery.deals?subject=Accessibility">email hello@seattlegrocery.deals</a> with the page and what happened. You'll hear back within a week. If you'd rather, you can also <a href="${report}">open an issue on GitHub</a>.</p>`;
   write("accessibility/", page({ title: "Accessibility", path: "accessibility/", section: "about/", body, description: "How Seattle Grocery Deals is built to work for everyone, the display settings you can change, and how to report a problem." }));
 }
 
