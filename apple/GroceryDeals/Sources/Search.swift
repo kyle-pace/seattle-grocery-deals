@@ -184,7 +184,7 @@ struct SearchView: View {
             }
         }
         if aisles.isEmpty && stores.isEmpty && deals.isEmpty && (scope == .stores || store.seasons(matching: q).isEmpty) {
-            EmptyState(.persimmon, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
+            EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
                        message: Lines.noResultsDetail(q), actionTitle: "Add to list", actionImage: "plus") {
                 list.request(q)
                 Announce.say("Added \(q) to your list")

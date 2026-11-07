@@ -39,7 +39,7 @@ struct ListView: View {
 
                 if list.items.isEmpty {
                     Section {
-                        EmptyState(.persimmon, mood: .sleepy, title: Lines.emptyListTitle, message: Lines.emptyListDetail)
+                        EmptyState(.crow, mood: .sleepy, title: Lines.emptyListTitle, message: Lines.emptyListDetail)
                     }
                     .listRowBackground(Color.clear)
                 } else if byStore {
@@ -335,7 +335,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
-            .fullScreenCover(isPresented: $replayingTour) { Welcome.view(.tourOnly) { replayingTour = false } }
+            .fullScreenCover(isPresented: $replayingTour) { Welcome.view(.tourOnly) { replayingTour = false }.environment(store).environment(alerts) }
         }
     }
 
@@ -389,7 +389,7 @@ struct ListHomePrimer: View {
         } else {
             ScrollView {
                 VStack(spacing: Space.l) {
-                    Buddy(.persimmon, mood: .happy, size: 64).hiddenWhenTextIsLarge()
+                    Buddy(.crow, mood: .happy, size: 64).hiddenWhenTextIsLarge()
                     Text("Where should your list live?")
                         .font(.app(.title2, .bold)).foregroundStyle(Palette.ink).multilineTextAlignment(.center)
                         .accessibilityAddTraits(.isHeader)

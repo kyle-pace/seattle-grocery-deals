@@ -26,7 +26,7 @@ struct EditionBanner: View {
                 if seenEdition != feed.week {
                     Card(padding: Space.l) {
                         HStack(spacing: Space.m) {
-                            Buddy(.persimmon, mood: .happy, size: 64, hop: hop).hiddenWhenTextIsLarge()
+                            Buddy(.crow, mood: .happy, size: 64, hop: hop).hiddenWhenTextIsLarge()
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(Lines.freshTitle).font(.app(.title3, .heavy)).foregroundStyle(Palette.ink)
                                 Text(Lines.freshDetail(Dates.short(feed.week, weekday: false), deals: store.items.count,
@@ -53,7 +53,7 @@ struct EditionBanner: View {
     private func note(_ mood: Buddy.Mood, _ title: String, _ detail: String) -> some View {
         Card(padding: Space.m) {
             HStack(spacing: Space.m) {
-                Buddy(.persimmon, mood: mood, size: 48).hiddenWhenTextIsLarge()
+                Buddy(.crow, mood: mood, size: 48).hiddenWhenTextIsLarge()
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title).font(.app(.headline)).foregroundStyle(Palette.ink)
                     Text(detail).font(.app(.subheadline)).foregroundStyle(Palette.muted)
@@ -86,7 +86,7 @@ struct WatchHits: View {
 struct LoadingDeals: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            WorkingView(.persimmon, title: Lines.pick(Lines.loading), compact: true)
+            WorkingView(.crow, title: Lines.pick(Lines.loading), compact: true)
                 .padding(.vertical, Space.l)
             ForEach(0..<6, id: \.self) { _ in
                 HStack(spacing: Space.m) {

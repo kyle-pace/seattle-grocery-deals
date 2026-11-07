@@ -96,7 +96,7 @@ struct DealsWidget: Widget {
 struct DealsWidgets: WidgetBundle {
     init() {
         KitchenUI.registerFonts()
-        Palette.use(.persimmon)
+        Palette.use(.rain, neutrals: .harbor)
     }
     var body: some Widget { DealsWidget() }
 }

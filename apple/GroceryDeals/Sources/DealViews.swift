@@ -412,7 +412,7 @@ struct AlertPrimer: View {
 
     var body: some View {
         VStack(spacing: Space.l) {
-            Buddy(.persimmon, mood: .happy, size: 72).hiddenWhenTextIsLarge()
+            Buddy(.crow, mood: .happy, size: 72).hiddenWhenTextIsLarge()
             Text("Get a nudge when it drops").font(.app(.title2, .bold)).foregroundStyle(Palette.ink).multilineTextAlignment(.center)
             // A sample of the alert, styled like a notification.
             HStack(alignment: .top, spacing: Space.m) {

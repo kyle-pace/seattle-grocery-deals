@@ -224,7 +224,7 @@ struct AisleDetail: View {
                     ForEach(deals) { d in DealRow(deal: d) { selected = d } }
                 }
                 if deals.isEmpty {
-                    EmptyState(.persimmon, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
+                    EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
                                message: query.isEmpty ? "Nothing here with these filters." : Lines.noResultsDetail(query))
                         .padding(.top, Space.xl)
                 }

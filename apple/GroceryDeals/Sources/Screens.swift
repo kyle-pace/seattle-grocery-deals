@@ -83,13 +83,22 @@ struct ThisWeekView: View {
                 } else if store.loading {
                     LoadingDeals()
                 } else {
-                    EmptyState(.persimmon, mood: .sad, title: Lines.noFeedTitle, message: Lines.noFeedDetail,
+                    EmptyState(.crow, mood: .sad, title: Lines.noFeedTitle, message: Lines.noFeedDetail,
                                actionTitle: "Try again", actionImage: "arrow.clockwise") { Task { await store.refresh() } }
                         .padding(.top, Space.xl)
                 }
             }
             .navigationTitle("This week")
             .navigationSubtitle(store.editionLine)
+            .toolbar {
+                // The crow lives at the top of This week, like Henwood's hen: he blinks and
+                // bobs, and hops when tapped (KitchenUI's CrowBuddy; still with Reduce Motion).
+                ToolbarItem(placement: .topBarLeading) {
+                    CrowBuddy(mood: store.feed == nil && !store.loading ? .sad : .neutral, size: 40)
+                        .accessibilityHidden(true)
+                }
+                .sharedBackgroundVisibility(.hidden)
+            }
             .settingsButton()
             // A hidden season's buddy, to find its card again (Seasons.swift).
             .seasonToolbarButtons()
@@ -392,7 +401,7 @@ struct StoreDetail: View {
                 }
             }
             if deals.isEmpty {
-                EmptyState(.persimmon, mood: q.isEmpty ? .sleepy : .surprised,
+                EmptyState(.crow, mood: q.isEmpty ? .sleepy : .surprised,
                            title: !q.isEmpty ? "Not on sale here this week" : s.status == "unreadable" ? "Couldn't read this week's flyer" : "No deals this week",
                            message: s.hasFlyer ? "The weekly ad might still have something." : nil,
                            actionTitle: s.hasFlyer ? "Open the weekly ad" : nil, actionImage: "newspaper") { flyerOpen = true }
