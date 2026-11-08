@@ -159,7 +159,9 @@ struct DealRow: View {
             Button(action: open) {
                 AdaptiveStack(spacing: Space.m) {
                     VStack(alignment: .leading, spacing: 3) {
-                        HStack(spacing: 6) {
+                        // Wraps: side by side, "Standout" and "Ends tomorrow" were wider than
+                        // the words column and squeezed the price into one character per line.
+                        FlowLayout(spacing: 6) {
                             TierBadge(tier: deal.tier)
                             EndsBadge(deal: deal)
                         }
@@ -177,7 +179,9 @@ struct DealRow: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    // The price never wraps; the words column gives way instead.
                     PriceTag(deal: deal)
+                        .fixedSize(horizontal: true, vertical: false)
                         .layoutPriority(1)
                 }
                 .contentShape(Rectangle())
