@@ -77,7 +77,7 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 .brand { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; color: var(--ink); text-decoration: none; font-weight: 700; font-size: 1.0625rem; }
 .brand svg { flex: none; }
 .topnav { display: none; align-items: center; gap: 0.15rem; }
-.topnav a, .head-about { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.9375rem; padding: 0 0.85rem; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; }
+.topnav a, .head-about { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.9375rem; padding: 0 0.85rem; min-height: 44px; display: inline-flex; align-items: center; border-radius: 999px; white-space: nowrap; flex: none; }
 .topnav a:hover, .head-about:hover { color: var(--ink); background: var(--raised); }
 /* 8%, not more: the accent text on this wash stays at 4.6:1 in light mode (12% dipped to 4.4:1) */
 .topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
@@ -91,15 +91,23 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 .nav-season svg { width: 1.4rem; height: 1.4rem; transition: transform 0.2s; }
 .nav-season:hover svg, .nav-season:focus-visible svg { transform: rotate(-15deg) scale(1.2); }
 @media (prefers-reduced-motion: reduce) { .nav-season svg { transition: none; } }
-/* the app's tab bar, on phones */
+/* the app's tab bar, on phones and iPads in portrait. The full top menu needs about 920px
+   on one line, so it takes over at 60rem (960px); below that the header is just the brand,
+   About and the heart, and the tab bar carries the menu. */
 .tabbar { position: fixed; inset: auto 0 0 0; z-index: 30; display: grid; grid-template-columns: repeat(5, 1fr); background: color-mix(in srgb, var(--ground) 88%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px); border-top: 1px solid var(--line); padding: 0.25rem 0.25rem env(safe-area-inset-bottom); }
 .tabbar a { display: grid; justify-items: center; align-content: center; gap: 0.15rem; min-height: 3.25rem; text-decoration: none; font-size: 0.6875rem; font-weight: 600; color: var(--muted); border-radius: var(--r-m); }
 .tabbar svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; stroke-linecap: round; }
 .tabbar a[aria-current="page"] { color: var(--accent); }
 .tabbar a[aria-current="page"] svg { fill: color-mix(in srgb, var(--accent) 18%, transparent); }
 body { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
-@media (min-width: 48rem) {
+@media (min-width: 60rem) {
   .topnav { display: flex; }
+  /* The brand stays on one line. If the menu still doesn't fit (Larger text), it scrolls
+     sideways inside the header instead of wrapping; the padding keeps focus rings unclipped. */
+  .brand { flex: none; white-space: nowrap; }
+  .head-end { min-width: 0; }
+  .topnav { min-width: 0; overflow-x: auto; scrollbar-width: none; padding: 5px; margin: -5px; }
+  .topnav::-webkit-scrollbar { display: none; }
   .head-about, .tabbar { display: none; }
   body { padding-bottom: 0; }
 }
@@ -473,9 +481,9 @@ body.season .site-head { position: relative; z-index: 2; }
 
 .dp-toggle { position: fixed; left: 1rem; bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); z-index: 40; display: grid; place-items: center; width: 3rem; height: 3rem; padding: 0; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); box-shadow: 0 4px 16px rgb(0 0 0 / 0.18); cursor: pointer; }
 .dp-toggle svg, .dp-close svg { pointer-events: none; }
-@media (min-width: 48rem) { .dp-toggle { bottom: 1rem; } }
+@media (min-width: 60rem) { .dp-toggle { bottom: 1rem; } }
 .dp-panel { position: fixed; inset: auto auto calc(8rem + env(safe-area-inset-bottom, 0px)) 1rem; width: min(22rem, calc(100vw - 2rem)); max-height: calc(100dvh - 10rem); overflow-y: auto; margin: 0; padding: var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.2); font-size: 0.9375rem; }
-@media (min-width: 48rem) { .dp-panel { bottom: 4.5rem; max-height: calc(100dvh - 6rem); } }
+@media (min-width: 60rem) { .dp-panel { bottom: 4.5rem; max-height: calc(100dvh - 6rem); } }
 .dp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s-l); }
 .dp-head h2 { margin: 0; font-size: 1.25rem; }
 .dp-close { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; margin-right: -0.5rem; border: 0; border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
@@ -578,12 +586,12 @@ button.btn { font: 600 1rem/1.2 var(--font); cursor: pointer; }
 .list-fab { position: fixed; right: 1rem; bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)); z-index: 41; display: inline-flex; align-items: center; gap: 0.45rem; min-height: 3.25rem; padding: 0 1.1rem 0 0.95rem; border: 2px solid var(--ground); border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 700 1rem/1 var(--font); box-shadow: 0 6px 20px rgb(0 0 0 / 0.22); cursor: pointer; }
 .list-fab .ic { width: 20px; height: 20px; }
 .list-fab-n { display: inline-grid; place-items: center; min-width: 1.5rem; height: 1.5rem; padding: 0 0.35rem; border-radius: 999px; background: var(--on-accent); color: var(--accent); font-size: 0.8125rem; }
-@media (min-width: 48rem) { .list-fab { bottom: 1.25rem; right: 1.5rem; } }
+@media (min-width: 60rem) { .list-fab { bottom: 1.25rem; right: 1.5rem; } }
 :root:not([data-motion="reduce"]) .list-fab.bump { animation: fab-bump 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
 @keyframes fab-bump { 0% { transform: scale(1); } 35% { transform: scale(1.14); } 100% { transform: scale(1); } }
 @media (prefers-reduced-motion: reduce) { .list-fab.bump { animation: none !important; } }
 .list-panel { position: fixed; inset: auto 1rem calc(8.5rem + env(safe-area-inset-bottom, 0px)) auto; width: min(26rem, calc(100vw - 2rem)); max-height: calc(100dvh - 11rem); overflow-y: auto; margin: 0; padding: var(--s-l) var(--s-xl) var(--s-xl); border: 1px solid var(--line); border-radius: var(--r-l); background: var(--surface); color: var(--ink); box-shadow: 0 12px 40px rgb(0 0 0 / 0.22); }
-@media (min-width: 48rem) { .list-panel { bottom: 5.5rem; right: 1.5rem; max-height: calc(100dvh - 7.5rem); } }
+@media (min-width: 60rem) { .list-panel { bottom: 5.5rem; right: 1.5rem; max-height: calc(100dvh - 7.5rem); } }
 .list-panel .list-group { margin-top: var(--s-m); }
 .list-panel .list-tools { margin-top: var(--s-xs); }
 .list-empty-small { color: var(--muted); margin: var(--s-s) 0; }
@@ -594,9 +602,9 @@ button.btn { font: 600 1rem/1.2 var(--font); cursor: pointer; }
 :root:not([data-motion="reduce"]) .list-panel:not(:popover-open) { opacity: 0; translate: 0 0.5rem; }
 @starting-style { :root:not([data-motion="reduce"]) .list-panel:popover-open { opacity: 0; translate: 0 0.5rem; } }
 /* The toast sits above the floating buttons. */
-@media (min-width: 48rem) { .toast { bottom: 5.5rem; } }
+@media (min-width: 60rem) { .toast { bottom: 5.5rem; } }
 /* Room at the bottom so the floating List button never covers the last deal's +. */
 body { padding-bottom: calc(8.5rem + env(safe-area-inset-bottom)); }
-@media (min-width: 48rem) { body { padding-bottom: 5rem; } }
+@media (min-width: 60rem) { body { padding-bottom: 5rem; } }
 body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
-@media (min-width: 48rem) { body.page-list { padding-bottom: 0; } }
+@media (min-width: 60rem) { body.page-list { padding-bottom: 0; } }
