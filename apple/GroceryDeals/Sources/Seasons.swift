@@ -103,9 +103,11 @@ extension FeedStore {
 /// one item is in season.
 struct SeasonCards: View {
     @Environment(FeedStore.self) private var store
+    @Environment(\.horizontalSizeClass) private var sizeClass
 
     var body: some View {
         let seasons = store.seasons
+        let wide = sizeClass == .regular
         if seasons.count == 1, let s = seasons.first {
             SeasonCardButton(season: s)
                 .padding(.top, Space.m)
@@ -117,7 +119,11 @@ struct SeasonCards: View {
                 LazyHStack(alignment: .top, spacing: Space.m) {
                     ForEach(seasons) { s in
                         SeasonCardButton(season: s, fill: true)
-                            .containerRelativeFrame(.horizontal) { width, _ in width * 0.86 }
+                            // Most of the width on iPhone, with the next card peeking in; on
+                            // iPad a card stays card-sized and two or three show at once.
+                            .containerRelativeFrame(.horizontal) { width, _ in
+                                wide ? min(width * 0.86, Wide.card) : width * 0.86
+                            }
                     }
                 }
                 .fixedSize(horizontal: false, vertical: true)

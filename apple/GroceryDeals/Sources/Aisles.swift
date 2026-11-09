@@ -24,10 +24,16 @@ enum AisleArt {
 
 struct AislesView: View {
     @Environment(FeedStore.self) private var store
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Binding var path: [AisleRoute]
     let openStore: (String) -> Void
 
-    private let columns = [GridItem(.flexible(), spacing: Space.m), GridItem(.flexible(), spacing: Space.m)]
+    /// Two across on iPhone; on iPad as many as fit at 200 points or wider (three in portrait,
+    /// four or five in landscape), so tiles stay tile-sized instead of stretching.
+    private var columns: [GridItem] {
+        if sizeClass == .regular { return [GridItem(.adaptive(minimum: 200), spacing: Space.m, alignment: .top)] }
+        return [GridItem(.flexible(), spacing: Space.m), GridItem(.flexible(), spacing: Space.m)]
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -57,6 +63,7 @@ struct AislesView: View {
                 }
                 .padding(.horizontal, Space.l)
                 .padding(.bottom, Space.xl)
+                .pageWidth()
             }
             .background(Palette.ground)
             .navigationTitle("Aisles")
@@ -217,11 +224,15 @@ struct AisleDetail: View {
                             .buttonStyle(.plain)
                             .padding(.top, Space.xl).padding(.bottom, Space.xs)
                             .accessibilityHint("Opens the store")
-                            ForEach(mine) { d in DealRow(deal: d, showStore: false) { selected = d } }
+                            WideColumns {
+                                ForEach(mine) { d in DealRow(deal: d, showStore: false) { selected = d } }
+                            }
                         }
                     }
                 } else {
-                    ForEach(deals) { d in DealRow(deal: d) { selected = d } }
+                    WideColumns {
+                        ForEach(deals) { d in DealRow(deal: d) { selected = d } }
+                    }
                 }
                 if deals.isEmpty {
                     EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
@@ -231,6 +242,7 @@ struct AisleDetail: View {
             }
             .padding(.horizontal, Space.l)
             .padding(.bottom, Space.xl)
+            .pageWidth()
         }
         .background(Palette.ground)
         .navigationTitle(title)
