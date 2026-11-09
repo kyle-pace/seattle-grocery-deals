@@ -607,7 +607,7 @@ ${pickable.map((s) => `      <label class="pick"><input type="checkbox" value="$
 </section>
 ${adding.length ? `<section class="block" aria-labelledby="h-adding"${adding.some((a) => isVegetarian(a.i)) ? "" : " data-meat-only"}>
   <div class="sec-h"><h2 id="h-adding">People are adding</h2><p>this week</p></div>
-  <ul class="deals">${adding.map((a) => dealRow(a.i, a.rank, { people: a.people })).join("\n")}</ul>
+  <ul class="deals deals-2">${adding.map((a) => dealRow(a.i, a.rank, { people: a.people })).join("\n")}</ul>
 </section>` : ""}
 ${soonPool.length ? `<section class="block ending" data-ending hidden aria-labelledby="h-end">
   <div class="sec-h"><h2 id="h-end">Ending soon</h2><p>Last chance</p></div>

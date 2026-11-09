@@ -201,14 +201,17 @@ html.veg-on [data-meat-only] { display: none; }
 .amt-lead { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 2px; }
 .amt-cur { font-size: 0.7em; margin-right: 1px; }
 .amt-unit { font-size: 0.6em; font-weight: 600; color: var(--muted); }
-@media (min-width: 48rem) { .deals-2 { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2.5rem; } }
-@media (min-width: 60rem) { .group .deals, .list > .deals { display: grid; grid-template-columns: 1fr 1fr; column-gap: 2.5rem; } }
+/* Deal lists go two across from 44rem (704px, below the iPad mini's 744) so the price stays near
+   the name: a row is about 320px on an iPad, as on a phone. The page tops out at 70rem, so wide
+   screens keep the two columns instead of stretching them. */
+@media (min-width: 44rem) { .deals-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; } }
+@media (min-width: 44rem) { .group .deals, .list > .deals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; } }
 .group-h { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin: var(--s-xl) 0 0 !important; padding-bottom: var(--s-xs); }
 .list { padding-bottom: 1rem; }
 
 /* store cards on This week */
 .store-cards { list-style: none; margin: var(--s-xs) 0 0; padding: 0; display: grid; gap: var(--s-m); align-items: start; }
-@media (min-width: 60rem) { .store-cards { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 44rem) { .store-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .store-card { overflow: hidden; }
 .store-card-h { margin: 0 !important; font-size: inherit !important; }
 .store-card-h a { display: flex; align-items: center; gap: var(--s-s); min-height: 44px; padding: var(--s-l); background: color-mix(in srgb, var(--raised) 50%, transparent); color: var(--ink); text-decoration: none; }
@@ -349,6 +352,7 @@ tr.best td { font-weight: 700; }
 .mini a { display: block; color: var(--muted); font-size: 0.9375rem; font-weight: 400; }
 .mini-price { display: grid; justify-items: end; gap: 3px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ends-when { min-height: 24px; padding: 1px 8px; font-size: 0.75rem; }
+@media (min-width: 44rem) { .mini { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; } }
 
 /* flyers */
 .flyers { list-style: none; padding: 0; margin: 0.5rem 0 0; display: grid; gap: 0 2rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
