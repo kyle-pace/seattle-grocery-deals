@@ -243,7 +243,7 @@ html.veg-on [data-meat-only] { display: none; }
 @media (min-width: 40rem) { .pick-grid { grid-template-columns: 1fr 1fr; } }
 @media (min-width: 60rem) { .pick-grid { grid-template-columns: 1fr 1fr 1fr; } }
 .pick { display: flex; align-items: center; gap: var(--s-m); min-height: 52px; border-bottom: 1px solid var(--divider); cursor: pointer; }
-.pick input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--accent); }
+.pick input { width: 24px; height: 24px; margin: 0; flex: none; accent-color: var(--accent); }
 .pick > span { display: grid; }
 .pick-name { font-weight: 600; }
 .pick-where { font-size: 0.8125rem; color: var(--muted); }
@@ -349,7 +349,7 @@ tr.best td { font-weight: 700; }
 .mini { list-style: none; margin: 0; padding: 0; }
 .mini li { display: flex; justify-content: space-between; align-items: center; gap: var(--s-m); padding: var(--s-s) 0; border-bottom: 1px solid var(--divider); }
 .mini li > span:first-child { min-width: 0; font-weight: 600; }
-.mini a { display: block; color: var(--muted); font-size: 0.9375rem; font-weight: 400; }
+.mini a { display: block; min-height: 24px; color: var(--muted); font-size: 0.9375rem; font-weight: 400; }
 .mini-price { display: grid; justify-items: end; gap: 3px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .ends-when { min-height: 24px; padding: 1px 8px; font-size: 0.75rem; }
 @media (min-width: 44rem) { .mini { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; } }
@@ -384,12 +384,13 @@ tr.best td { font-weight: 700; }
 .map-toggles summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; color: var(--accent); }
 .map-toggles .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); gap: 0.3rem; margin-top: 0.5rem; }
 .check { display: inline-flex; gap: 0.4rem; align-items: center; min-height: 32px; }
-.check input { accent-color: var(--accent); width: 1.1rem; height: 1.1rem; }
+.check input { accent-color: var(--accent); width: 24px; height: 24px; margin: 0; }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--surface); color: var(--ink); }
 .leaflet-popup-content-wrapper { border-radius: var(--r-m); }
 .leaflet-popup-content { font: 0.9375rem/1.4 var(--font); }
 .leaflet-container a { color: var(--accent); }
 .leaflet-container { font-family: var(--font); }
+.leaflet-container .leaflet-control-attribution a { display: inline-block; min-height: 24px; line-height: 24px; }
 .tiles-dark { filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9); }
 
 /* footer */
@@ -576,7 +577,7 @@ body.season .site-head { position: relative; z-index: 2; }
 .list-item { display: flex; align-items: center; gap: var(--s-m); padding: var(--s-s) 0; border-bottom: 1px solid var(--divider); }
 .list-check { display: flex; align-items: center; gap: var(--s-m); flex: 1; min-width: 0; min-height: 44px; cursor: pointer; }
 .list-text { display: grid; gap: 3px; min-width: 0; }
-.list-check input { width: 22px; height: 22px; accent-color: var(--accent); flex: none; }
+.list-check input { width: 24px; height: 24px; accent-color: var(--accent); flex: none; }
 .list-name { font-weight: 600; color: var(--ink); }
 .list-item.done .list-name { text-decoration: line-through; color: var(--muted); font-weight: 400; }
 .list-item.ended .list-name { color: var(--muted); }
@@ -612,3 +613,9 @@ body { padding-bottom: calc(8.5rem + env(safe-area-inset-bottom)); }
 @media (min-width: 60rem) { body { padding-bottom: 5rem; } }
 body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 @media (min-width: 60rem) { body.page-list { padding-bottom: 0; } }
+
+/* Tap targets: standalone links that sit on their own (breadcrumbs, the store under a deal,
+   links in tables, a store's facts and flyer links) get at least a 24px hit area. Padding on an
+   inline link grows the area you can tap without moving any text. Links inside a sentence are
+   left alone. */
+.crumbs a, .deal-meta a, td a, .facts dd a, .links a, .legend a { padding-block: 3px; }

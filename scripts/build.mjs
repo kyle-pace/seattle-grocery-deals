@@ -791,7 +791,7 @@ ${others.length ? `<section class="block" aria-labelledby="h-other">
   <div class="sec-h"><h2 id="h-fly">This week's flyers</h2></div>
   ${flyerList(latest)}
 </section>
-<p><a href="${esc(cfg.site.suggest_store_url)}">Suggest a store</a></p>`,
+<p><a class="go" href="${esc(cfg.site.suggest_store_url)}">Suggest a store</a></p>`,
   }));
 
   for (const s of cfg.stores) {
