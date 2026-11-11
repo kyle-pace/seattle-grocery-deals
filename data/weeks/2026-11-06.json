@@ -85,32 +85,32 @@
     {
       "store": "met-market",
       "status": "full",
-      "valid_from": "2026-11-04",
-      "valid_through": "2026-11-10",
+      "valid_from": "2026-11-11",
+      "valid_through": "2026-11-17",
       "links": [
         {
           "label": "Page 1",
-          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-1.webp"
+          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-1.webp"
         },
         {
           "label": "Page 2",
-          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-2.webp"
+          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-2.webp"
         },
         {
           "label": "Page 3",
-          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-3.webp"
+          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-3.webp"
         },
         {
           "label": "Page 4",
-          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-4.webp"
+          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-4.webp"
         },
         {
           "label": "Page 5",
-          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-5.webp"
+          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-5.webp"
         },
         {
           "label": "Page 6",
-          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-6.webp"
+          "url": "https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-6.webp"
         },
         {
           "label": "Flyer page",
@@ -866,1090 +866,6 @@
       "member_price": false,
       "valid_through": "2026-11-13",
       "notes": "Home delivery add-on"
-    },
-    {
-      "store": "met-market",
-      "item": "Bone-In Pork Rib Roast or Chops",
-      "item_key": null,
-      "category": "meat",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 5.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $4.00/lb. All-natural, no antibiotics or added hormones"
-    },
-    {
-      "store": "met-market",
-      "item": "Harvest Butternut Squash Soup",
-      "item_key": null,
-      "category": "pantry",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 24,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.66,
-        "per": "lb"
-      },
-      "regular_price": 13.99,
-      "percent_off": 29,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Bunched Orange Carrots, organic",
-      "item_key": "carrots",
-      "category": "produce",
-      "price": 6,
-      "quantity": 2,
-      "unit": "each",
-      "unit_price": {
-        "value": 3,
-        "per": "each"
-      },
-      "regular_price": 7.98,
-      "percent_off": 25,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Grown in USA. Save $1.98 on 2"
-    },
-    {
-      "store": "met-market",
-      "item": "Navel Oranges",
-      "item_key": "oranges-navel",
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.99,
-        "per": "lb"
-      },
-      "regular_price": 2.99,
-      "percent_off": 33,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "New crop, grown in USA"
-    },
-    {
-      "store": "met-market",
-      "item": "Franz Naked Bread",
-      "item_key": null,
-      "category": "bakery",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 22.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.84,
-        "per": "lb"
-      },
-      "regular_price": 5.49,
-      "percent_off": 27,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Classic white or honey wheat"
-    },
-    {
-      "store": "met-market",
-      "item": "Yo Quiero! Guacamole or Salsa",
-      "item_key": null,
-      "category": "other",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 15,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.26,
-        "per": "lb"
-      },
-      "regular_price": 5.99,
-      "percent_off": 33,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Argentine Red Shrimp, wild-caught, 21/25 ct, peeled and deveined",
-      "item_key": null,
-      "category": "seafood",
-      "price": 14.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 14.99,
-        "per": "lb"
-      },
-      "regular_price": 20.99,
-      "percent_off": 29,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Previously frozen. Product of Argentina"
-    },
-    {
-      "store": "met-market",
-      "item": "Delicata Squash, organic",
-      "item_key": null,
-      "category": "produce",
-      "price": 1.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.99,
-        "per": "lb"
-      },
-      "regular_price": 2.99,
-      "percent_off": 33,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "BelGioioso American Grana",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 15.99,
-        "per": "lb"
-      },
-      "regular_price": 19.99,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Jovial Beans, organic",
-      "item_key": null,
-      "category": "pantry",
-      "price": 7,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 13,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.31,
-        "per": "lb"
-      },
-      "regular_price": 9.58,
-      "percent_off": 27,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save $2.58 on 2"
-    },
-    {
-      "store": "met-market",
-      "item": "Tonnino Yellowfin Tuna Fillets in olive oil",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 6.7,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 16.69,
-        "per": "lb"
-      },
-      "regular_price": 9.69,
-      "percent_off": 28,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Fidalgo Coffee Roasters Coffee, organic",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 14.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 19.99,
-        "per": "lb"
-      },
-      "regular_price": 17.49,
-      "percent_off": 14,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Holiday Red Seedless Grapes",
-      "item_key": null,
-      "category": "produce",
-      "price": 6.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.5,
-        "per": "lb"
-      },
-      "regular_price": 8.99,
-      "percent_off": 22,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Grown in USA"
-    },
-    {
-      "store": "met-market",
-      "item": "Pork Shoulder for Stew",
-      "item_key": "pork-shoulder",
-      "category": "meat",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 5.99,
-        "per": "lb"
-      },
-      "regular_price": 7.99,
-      "percent_off": 25,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "All-natural, no antibiotics or added hormones. Born, raised, harvested USA"
-    },
-    {
-      "store": "met-market",
-      "item": "Bosc Pears",
-      "item_key": "pears",
-      "category": "produce",
-      "price": 2.49,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 2.49,
-        "per": "lb"
-      },
-      "regular_price": 2.99,
-      "percent_off": 17,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Grown in Washington"
-    },
-    {
-      "store": "met-market",
-      "item": "Beef for Stew",
-      "item_key": "beef-stew",
-      "category": "meat",
-      "price": 10.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 10.99,
-        "per": "lb"
-      },
-      "regular_price": 14.99,
-      "percent_off": 27,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "All-natural, no antibiotics or added hormones. Born, raised, harvested USA"
-    },
-    {
-      "store": "met-market",
-      "item": "Pacific Rockfish Fillet, fresh, wild-caught",
-      "item_key": null,
-      "category": "seafood",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": 11.99,
-      "percent_off": 17,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Product of USA"
-    },
-    {
-      "store": "met-market",
-      "item": "Red, Lacinato and Green Kale, organic",
-      "item_key": null,
-      "category": "produce",
-      "price": 5,
-      "quantity": 2,
-      "unit": "each",
-      "unit_price": {
-        "value": 2.5,
-        "per": "each"
-      },
-      "regular_price": 5.98,
-      "percent_off": 16,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Grown in Washington. Save $0.98 on 2"
-    },
-    {
-      "store": "met-market",
-      "item": "Chicken Breast Parmesan, ready-to-cook",
-      "item_key": null,
-      "category": "meat",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": 12.99,
-      "percent_off": 23,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "From the Butcher Shop"
-    },
-    {
-      "store": "met-market",
-      "item": "Cod Parmesan, ready-to-cook",
-      "item_key": null,
-      "category": "seafood",
-      "price": 14.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 14.99,
-        "per": "lb"
-      },
-      "regular_price": 19.99,
-      "percent_off": 25,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "From the Fish Market"
-    },
-    {
-      "store": "met-market",
-      "item": "Verve Coffee",
-      "item_key": "coffee",
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 21.32,
-        "per": "lb"
-      },
-      "regular_price": 21.49,
-      "percent_off": 26,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Bono Sicilian Extra Virgin Olive Oil, organic",
-      "item_key": null,
-      "category": "pantry",
-      "price": 17.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16.9,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 17.03,
-        "per": "lb"
-      },
-      "regular_price": 22.49,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Cascadian Farm Cereal or Granola",
-      "item_key": null,
-      "category": "pantry",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 4.99,
-        "per": "each"
-      },
-      "regular_price": 7.29,
-      "percent_off": 32,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "9.2-14.6 oz, selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Marianne's Avocado Oil, organic",
-      "item_key": null,
-      "category": "pantry",
-      "price": 16.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 500,
-        "unit": "ml"
-      },
-      "unit_price": {
-        "value": 33.98,
-        "per": "l"
-      },
-      "regular_price": 23.99,
-      "percent_off": 29,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Youngsters Black Garlic Gouda",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 27.99,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 27.99,
-        "per": "lb"
-      },
-      "regular_price": 29.99,
-      "percent_off": 7,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Dietz & Watson Sliced Ham",
-      "item_key": "ham",
-      "category": "meat",
-      "price": 7.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 7,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 18.26,
-        "per": "lb"
-      },
-      "regular_price": 8.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Mi Rancho Tortillas, organic",
-      "item_key": null,
-      "category": "bakery",
-      "price": 3.29,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 13.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.9,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $1.70"
-    },
-    {
-      "store": "met-market",
-      "item": "Little Sesame Hummus",
-      "item_key": null,
-      "category": "other",
-      "price": 4.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 7.18,
-        "per": "lb"
-      },
-      "regular_price": 5.69,
-      "percent_off": 21,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Zoi Greek Yogurt",
-      "item_key": "yogurt",
-      "category": "dairy-eggs",
-      "price": 4.79,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.4,
-        "per": "lb"
-      },
-      "regular_price": 5.89,
-      "percent_off": 19,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Plain"
-    },
-    {
-      "store": "met-market",
-      "item": "Organic Valley Half & Half",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Regular or lactose-free. Save up to $2.00"
-    },
-    {
-      "store": "met-market",
-      "item": "Seattle International Baking Company Bagels",
-      "item_key": null,
-      "category": "bakery",
-      "price": 4.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.49,
-        "per": "lb"
-      },
-      "regular_price": 6.59,
-      "percent_off": 32,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Beecher's Frozen Soup",
-      "item_key": null,
-      "category": "frozen",
-      "price": 9.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 20,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 7.59,
-        "per": "lb"
-      },
-      "regular_price": 12.99,
-      "percent_off": 27,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Woodstock Frozen Fruit, organic",
-      "item_key": null,
-      "category": "frozen",
-      "price": 25,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 10,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 40,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save up to $1.75"
-    },
-    {
-      "store": "met-market",
-      "item": "Field Roast Plant-Based Roast",
-      "item_key": null,
-      "category": "frozen",
-      "price": 19.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 9.99,
-        "per": "lb"
-      },
-      "regular_price": 22.49,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Kettle & Fire Broth",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save up to $4.38 on 2"
-    },
-    {
-      "store": "met-market",
-      "item": "Momofuku Original Chili Crunch",
-      "item_key": null,
-      "category": "pantry",
-      "price": 9.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 29.06,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $3.50"
-    },
-    {
-      "store": "met-market",
-      "item": "Momofuku Noodles",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 14.5,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 9.92,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save up to $3.00"
-    },
-    {
-      "store": "met-market",
-      "item": "Rice Select Rice",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 36,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.11,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save up to $4.00"
-    },
-    {
-      "store": "met-market",
-      "item": "Jasberry Superfood Rice, organic",
-      "item_key": null,
-      "category": "pantry",
-      "price": 4.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 15,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.32,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $1.50. 7.05 oz is 2/$7"
-    },
-    {
-      "store": "met-market",
-      "item": "Woodstock Pickles, organic",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 24,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 3.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save up to $2.50"
-    },
-    {
-      "store": "met-market",
-      "item": "Heyday Canning Co. Soup or Chili",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 15,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.26,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $2.80"
-    },
-    {
-      "store": "met-market",
-      "item": "Garcia de la Cruz Stuffed Queen Olives",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 14,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.85,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $2.60"
-    },
-    {
-      "store": "met-market",
-      "item": "Bonafide Provisions Broth, organic",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16.9,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.67,
-        "per": "lb"
-      },
-      "regular_price": 7.49,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Organic Valley Heavy Whipping Cream",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 5.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.49,
-        "per": "lb"
-      },
-      "regular_price": 7.49,
-      "percent_off": 27,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Kraft Philadelphia Cream Cheese",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 6.59,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.59,
-        "per": "lb"
-      },
-      "regular_price": 7.79,
-      "percent_off": 15,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "2-pk"
-    },
-    {
-      "store": "met-market",
-      "item": "Cook Stix Chicken Stock",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6,
-      "quantity": 2,
-      "unit": "pack",
-      "pack": {
-        "size": 0.57,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 84.21,
-        "per": "lb"
-      },
-      "regular_price": 8.58,
-      "percent_off": 30,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save $2.58 on 2"
-    },
-    {
-      "store": "met-market",
-      "item": "Redmond Real Salt Ancient Fine Sea Salt",
-      "item_key": null,
-      "category": "pantry",
-      "price": 6.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Save up to $2.50"
-    },
-    {
-      "store": "met-market",
-      "item": "Michael's of Brooklyn Pasta Sauce",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 4.5,
-        "per": "lb"
-      },
-      "regular_price": 12.99,
-      "percent_off": 31,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Willamette Valley Pie Co. Pumpkin Pie",
-      "item_key": null,
-      "category": "bakery",
-      "price": 13.49,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 6.75,
-        "per": "lb"
-      },
-      "regular_price": 16.99,
-      "percent_off": 21,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": ""
-    },
-    {
-      "store": "met-market",
-      "item": "Essential Everyday Frozen Vegetables",
-      "item_key": null,
-      "category": "frozen",
-      "price": 4.79,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 2.4,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties. Save up to $1.20"
-    },
-    {
-      "store": "met-market",
-      "item": "Illy Caffe Coffee",
-      "item_key": null,
-      "category": "pantry",
-      "price": 15.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 8.8,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 29.07,
-        "per": "lb"
-      },
-      "regular_price": 17.99,
-      "percent_off": 11,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
-    },
-    {
-      "store": "met-market",
-      "item": "Stash Tea",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.99,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 20,
-        "unit": "ct"
-      },
-      "unit_price": {
-        "value": 0.2,
-        "per": "each"
-      },
-      "regular_price": 4.99,
-      "percent_off": 20,
-      "member_price": false,
-      "valid_through": "2026-11-10",
-      "notes": "Selected varieties"
     },
     {
       "store": "central-coop",
@@ -13438,6 +12354,1130 @@
       "member_price": false,
       "valid_through": "2026-11-17",
       "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Metropolitan Market Fresh Free-Range Turkey",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Hatched, raised, harvested USA"
+    },
+    {
+      "store": "met-market",
+      "item": "Metropolitan Market Kurobuta Bone-In Half Ham",
+      "item_key": null,
+      "category": "meat",
+      "price": 7.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "No added nitrates or nitrites"
+    },
+    {
+      "store": "met-market",
+      "item": "Sweet Potatoes and Yams, organic",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 38,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Grown in USA"
+    },
+    {
+      "store": "met-market",
+      "item": "Bulk Brussels Sprouts",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 38,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Grown in Washington"
+    },
+    {
+      "store": "met-market",
+      "item": "Hempler's Bacon",
+      "item_key": "bacon",
+      "category": "meat",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.79,
+        "per": "lb"
+      },
+      "regular_price": 13.99,
+      "percent_off": 21,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Vital Farms Pasture-Raised Brown Eggs",
+      "item_key": "eggs",
+      "category": "dairy-eggs",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "dozen"
+      },
+      "unit_price": {
+        "value": 4.99,
+        "per": "dozen"
+      },
+      "regular_price": 8.89,
+      "percent_off": 44,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Ellenos Greek Yogurt",
+      "item_key": "yogurt",
+      "category": "dairy-eggs",
+      "price": 6.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.33,
+        "per": "lb"
+      },
+      "regular_price": 9.49,
+      "percent_off": 32,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Pacific Foods Broth, organic",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.75,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $2.58 on 2"
+    },
+    {
+      "store": "met-market",
+      "item": "Butternut Squash, organic",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": 2.99,
+      "percent_off": 33,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Grown in Washington"
+    },
+    {
+      "store": "met-market",
+      "item": "Laura Chenel Fresh Goat Cheese Log",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 14.53,
+        "per": "lb"
+      },
+      "regular_price": 15.99,
+      "percent_off": 38,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Dietz & Watson Sliced Ham",
+      "item_key": "ham",
+      "category": "meat",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 7,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 15.98,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Maple, Virginia baked, or black forest"
+    },
+    {
+      "store": "met-market",
+      "item": "Organic Valley Butter",
+      "item_key": "butter",
+      "category": "dairy-eggs",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": 5.99,
+      "percent_off": 33,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Salted or unsalted"
+    },
+    {
+      "store": "met-market",
+      "item": "Macrina Bakery Buttermilk Rolls",
+      "item_key": null,
+      "category": "bakery",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 1,
+        "per": "each"
+      },
+      "regular_price": 7.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "6-pk tray"
+    },
+    {
+      "store": "met-market",
+      "item": "Somerdale Wensleydale & Cranberries",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 19.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 19.99,
+        "per": "lb"
+      },
+      "regular_price": 25.99,
+      "percent_off": 23,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Metropolitan Market Winter Roast Coffee",
+      "item_key": null,
+      "category": "pantry",
+      "price": 11.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 11.99,
+        "per": "each"
+      },
+      "regular_price": 13.99,
+      "percent_off": 14,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Whole bean"
+    },
+    {
+      "store": "met-market",
+      "item": "Holiday Red Seedless Grapes",
+      "item_key": null,
+      "category": "produce",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.5,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Grown in USA"
+    },
+    {
+      "store": "met-market",
+      "item": "Pork Shoulder for Stew",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": 7.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "All-natural, no antibiotics or added hormones. Born, raised, harvested USA"
+    },
+    {
+      "store": "met-market",
+      "item": "Bosc Pears",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": 2.99,
+      "percent_off": 17,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Grown in Washington"
+    },
+    {
+      "store": "met-market",
+      "item": "Beef for Stew",
+      "item_key": "beef-stew",
+      "category": "meat",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 10.99,
+        "per": "lb"
+      },
+      "regular_price": 14.99,
+      "percent_off": 27,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "All-natural, no antibiotics or added hormones. Born, raised, harvested USA"
+    },
+    {
+      "store": "met-market",
+      "item": "Pacific Rockfish Fillet, fresh, wild-caught",
+      "item_key": null,
+      "category": "seafood",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 9.99,
+        "per": "lb"
+      },
+      "regular_price": 11.99,
+      "percent_off": 17,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Product of USA"
+    },
+    {
+      "store": "met-market",
+      "item": "Red, Lacinato and Green Kale, organic",
+      "item_key": null,
+      "category": "produce",
+      "price": 5,
+      "quantity": 2,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.5,
+        "per": "each"
+      },
+      "regular_price": 5.98,
+      "percent_off": 16,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Grown in Washington. Save $0.98 on 2"
+    },
+    {
+      "store": "met-market",
+      "item": "Chicken Breast Parmesan, ready-to-cook",
+      "item_key": null,
+      "category": "meat",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 9.99,
+        "per": "lb"
+      },
+      "regular_price": 12.99,
+      "percent_off": 23,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "From the Butcher Shop"
+    },
+    {
+      "store": "met-market",
+      "item": "Cod Parmesan, ready-to-cook",
+      "item_key": null,
+      "category": "seafood",
+      "price": 14.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.99,
+        "per": "lb"
+      },
+      "regular_price": 19.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "From the Fish Market"
+    },
+    {
+      "store": "met-market",
+      "item": "Verve Coffee",
+      "item_key": "coffee",
+      "category": "pantry",
+      "price": 15.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 21.32,
+        "per": "lb"
+      },
+      "regular_price": 21.49,
+      "percent_off": 26,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Bono Sicilian Extra Virgin Olive Oil, organic",
+      "item_key": null,
+      "category": "pantry",
+      "price": 17.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16.9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 17.03,
+        "per": "lb"
+      },
+      "regular_price": 22.49,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Cascadian Farm Cereal or Granola",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.99,
+        "per": "each"
+      },
+      "regular_price": 7.29,
+      "percent_off": 32,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "9.2-14.6 oz, selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Marianne's Avocado Oil, organic",
+      "item_key": null,
+      "category": "pantry",
+      "price": 16.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 500,
+        "unit": "ml"
+      },
+      "unit_price": {
+        "value": 33.98,
+        "per": "l"
+      },
+      "regular_price": 23.99,
+      "percent_off": 29,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Youngsters Black Garlic Gouda",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 27.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 27.99,
+        "per": "lb"
+      },
+      "regular_price": 29.99,
+      "percent_off": 7,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Mi Rancho Tortillas, organic",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.9,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $1.70"
+    },
+    {
+      "store": "met-market",
+      "item": "Little Sesame Hummus",
+      "item_key": null,
+      "category": "other",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.18,
+        "per": "lb"
+      },
+      "regular_price": 5.69,
+      "percent_off": 21,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Zoi Greek Yogurt",
+      "item_key": "yogurt",
+      "category": "dairy-eggs",
+      "price": 4.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.4,
+        "per": "lb"
+      },
+      "regular_price": 5.89,
+      "percent_off": 19,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Organic Valley Half & Half",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Regular or lactose-free. Save up to $2.00"
+    },
+    {
+      "store": "met-market",
+      "item": "Seattle International Baking Company Bagels",
+      "item_key": null,
+      "category": "bakery",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": 6.59,
+      "percent_off": 32,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Beecher's Frozen Soup",
+      "item_key": null,
+      "category": "frozen",
+      "price": 9.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.59,
+        "per": "lb"
+      },
+      "regular_price": 12.99,
+      "percent_off": 27,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Woodstock Frozen Fruit, organic",
+      "item_key": null,
+      "category": "frozen",
+      "price": 25,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 40,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $1.75"
+    },
+    {
+      "store": "met-market",
+      "item": "Field Roast Plant-Based Roast",
+      "item_key": null,
+      "category": "frozen",
+      "price": 19.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.99,
+        "per": "lb"
+      },
+      "regular_price": 22.49,
+      "percent_off": 11,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Kettle & Fire Broth",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $4.38 on 2"
+    },
+    {
+      "store": "met-market",
+      "item": "Momofuku Original Chili Crunch",
+      "item_key": null,
+      "category": "pantry",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 29.06,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Save up to $3.50"
+    },
+    {
+      "store": "met-market",
+      "item": "Momofuku Noodles",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.92,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $3.00"
+    },
+    {
+      "store": "met-market",
+      "item": "Rice Select Rice",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 36,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.11,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $4.00"
+    },
+    {
+      "store": "met-market",
+      "item": "Jasberry Superfood Rice, organic",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.32,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Save up to $1.50. 7.05 oz is 2/$7"
+    },
+    {
+      "store": "met-market",
+      "item": "Woodstock Pickles, organic",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $2.50"
+    },
+    {
+      "store": "met-market",
+      "item": "Heyday Canning Co. Soup or Chili",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.26,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $2.80"
+    },
+    {
+      "store": "met-market",
+      "item": "Garcia de la Cruz Stuffed Queen Olives",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.85,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $2.60"
+    },
+    {
+      "store": "met-market",
+      "item": "Bonafide Provisions Broth, organic",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16.9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.67,
+        "per": "lb"
+      },
+      "regular_price": 7.49,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Organic Valley Heavy Whipping Cream",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": 7.49,
+      "percent_off": 27,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Kraft Philadelphia Cream Cheese",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 6.59,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.59,
+        "per": "lb"
+      },
+      "regular_price": 7.79,
+      "percent_off": 15,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "2-pk"
+    },
+    {
+      "store": "met-market",
+      "item": "Cook Stix Chicken Stock",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 0.57,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 84.21,
+        "per": "lb"
+      },
+      "regular_price": 8.58,
+      "percent_off": 30,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save $2.58 on 2"
+    },
+    {
+      "store": "met-market",
+      "item": "Redmond Real Salt Ancient Fine Sea Salt",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Save up to $2.50. 26 oz pouch is $9.99"
+    },
+    {
+      "store": "met-market",
+      "item": "Michael's of Brooklyn Pasta Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.5,
+        "per": "lb"
+      },
+      "regular_price": 12.99,
+      "percent_off": 31,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Willamette Valley Pie Co. Pumpkin Pie",
+      "item_key": null,
+      "category": "bakery",
+      "price": 13.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.75,
+        "per": "lb"
+      },
+      "regular_price": 16.99,
+      "percent_off": 21,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": ""
+    },
+    {
+      "store": "met-market",
+      "item": "Essential Everyday Frozen Vegetables",
+      "item_key": null,
+      "category": "frozen",
+      "price": 4.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.4,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties. Save up to $1.20"
+    },
+    {
+      "store": "met-market",
+      "item": "Illy Caffe Coffee",
+      "item_key": null,
+      "category": "pantry",
+      "price": 15.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8.8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 29.07,
+        "per": "lb"
+      },
+      "regular_price": 17.99,
+      "percent_off": 11,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
+    },
+    {
+      "store": "met-market",
+      "item": "Stash Tea",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.2,
+        "per": "each"
+      },
+      "regular_price": 4.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-17",
+      "notes": "Selected varieties"
     }
   ]
 }
