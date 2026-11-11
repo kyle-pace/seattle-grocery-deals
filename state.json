@@ -16,14 +16,7 @@
         "wp-content/uploads/2026/11/WeeklyAd-11.11.26.pdf"
       ],
       "seen_at": "2026-11-11T07:04:39.686Z",
-      "updated_at": "2026-11-05T07:19:16.950Z",
-      "pending": {
-        "since": "2026-11-11T07:04:39.686Z",
-        "live_before": "2026-11-04|https://www.uwajimaya.com/wp-content/uploads/2026/11/WeeklyAd-11.04.26.pdf https://www.uwajimaya.com/weekly-specials/",
-        "fires": 1,
-        "fired_at": "2026-11-11T07:04:39.686Z",
-        "session": "https://claude.ai/code/cse_015KDcQDvya6hP9aEsBSj3VU"
-      }
+      "updated_at": "2026-11-11T15:16:09.090Z"
     },
     "central-coop": {
       "fingerprint": "836429687b108a27",
@@ -43,17 +36,24 @@
       "updated_at": "2026-11-05T07:19:16.950Z"
     },
     "met-market": {
-      "fingerprint": "427e3093369279e8",
+      "fingerprint": "6284eff16b4ad3a9",
       "matches": [
-        "Weekly-Savings-110426-PG-1",
-        "Weekly-Savings-110426-PG-2",
-        "Weekly-Savings-110426-PG-3",
-        "Weekly-Savings-110426-PG-4",
-        "Weekly-Savings-110426-PG-5",
-        "Weekly-Savings-110426-PG-6"
+        "Weekly-Savings-111126-PG-1",
+        "Weekly-Savings-111126-PG-2",
+        "Weekly-Savings-111126-PG-3",
+        "Weekly-Savings-111126-PG-4",
+        "Weekly-Savings-111126-PG-5",
+        "Weekly-Savings-111126-PG-6"
       ],
-      "seen_at": "2026-11-04T11:30:08.463Z",
-      "updated_at": "2026-11-05T07:19:16.950Z"
+      "seen_at": "2026-11-11T15:16:09.090Z",
+      "updated_at": "2026-11-05T07:19:16.950Z",
+      "pending": {
+        "since": "2026-11-11T15:16:09.090Z",
+        "live_before": "2026-11-04|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-5.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-6.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
+        "fires": 1,
+        "fired_at": "2026-11-11T15:16:09.090Z",
+        "session": "https://claude.ai/code/cse_015KDcQCq1NoJP9PzVgRgpC3"
+      }
     },
     "hmart": {
       "fingerprint": "d4da8f6c0c4f5360",
