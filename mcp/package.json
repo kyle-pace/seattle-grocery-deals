@@ -1,0 +1,25 @@
+{
+  "name": "seattle-grocery-deals-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MCP server for Seattle Grocery Deals: lets AI assistants look up this week's flyer sales. A Cloudflare Worker that reads the site's public feed.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test test/*.test.mjs",
+    "try": "node test/try.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.4.0",
+    "agents": "0.33.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
+    "wrangler": "^4.160.1"
+  }
+}

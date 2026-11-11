@@ -9,3 +9,6 @@ mobile/
 
 # simulator builds from polish passes
 apple/GroceryDeals/build-sim/
+
+# Cloudflare Worker local state (mcp/)
+.wrangler/

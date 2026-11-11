@@ -1,0 +1,17 @@
+{
+  // Cloudflare Worker for the MCP server. It is separate from the site (GitHub Pages) and
+  // only reads the site's public feed. Cloudflare Workers Builds deploys it from `main` with
+  // root directory `mcp` (see README.md).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "seattle-grocery-deals-mcp",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "vars": {
+    // The same feed the iPhone app reads.
+    "FEED_URL": "https://seattlegrocery.deals/api/week.json"
+  }
+}
