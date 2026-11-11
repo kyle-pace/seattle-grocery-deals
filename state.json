@@ -46,14 +46,7 @@
         "Weekly-Savings-111126-PG-6"
       ],
       "seen_at": "2026-11-11T15:16:09.090Z",
-      "updated_at": "2026-11-05T07:19:16.950Z",
-      "pending": {
-        "since": "2026-11-11T15:16:09.090Z",
-        "live_before": "2026-11-04|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-5.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-110426-PG-6.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
-        "fires": 1,
-        "fired_at": "2026-11-11T15:16:09.090Z",
-        "session": "https://claude.ai/code/cse_015KDcQCq1NoJP9PzVgRgpC3"
-      }
+      "updated_at": "2026-11-11T21:59:40.379Z"
     },
     "hmart": {
       "fingerprint": "d4da8f6c0c4f5360",
