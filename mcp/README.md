@@ -2,6 +2,8 @@
 
 Lets an AI assistant (Claude, ChatGPT, or anything else that speaks MCP) look up this week's deals: "what's on sale at Uwajimaya?", "who has chicken thighs this week?", "where should I shop if I'm cooking vegetarian?".
 
+Live at `https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp` (since November 11, 2026).
+
 It is a small Cloudflare Worker with no data of its own. Every answer comes from the same public feed the iPhone app reads, `https://seattlegrocery.deals/api/week.json`, so the site stays the one source of truth and a new flyer shows up here within about five minutes of going live. Read-only, no sign-in, and nothing about the person asking is stored.
 
 ## Tools
@@ -36,21 +38,22 @@ To try it against a local build of the site instead of the live feed: `npm run s
 
 ## Deploy
 
-Cloudflare Workers Builds deploys it from `main`, like the labs on kylepace.dev. One-time setup in the Cloudflare dashboard (Workers & Pages > Create > Import a repository):
+Cloudflare Workers Builds deploys it from `main`, like the labs on kylepace.dev. The Worker is `seattle-grocery-deals-mcp`, set up in the Cloudflare dashboard like this:
 
 - Repository: `kyle-pace/seattle-grocery-deals`, branch `main`
 - Root directory: `mcp`
 - Build command: none. Deploy command: `npx wrangler deploy`
 - Build watch paths: include `mcp/*`, so flyer updates don't redeploy it
+- Preview builds off (the `flyer-watch` branch changes every 30 minutes), Cloudflare Access off (assistants need to reach it without a login)
 
-After a deploy, check it: `npm run try -- https://seattle-grocery-deals-mcp.<account>.workers.dev/mcp`.
+After a deploy, check it: `npm run try -- https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`.
 
 It runs on the account's `workers.dev` address because seattlegrocery.deals keeps its DNS at Porkbun. To move it to a custom domain later (for example a kylepace.dev subdomain), add the route in `wrangler.jsonc` and set an `ALLOWED_HOSTNAMES` var to that hostname; the handler only answers hosts it knows.
 
 ## Connect an assistant
 
-Use the address ending in `/mcp`.
+The address is `https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`.
 
 - Claude: Settings > Connectors > Add custom connector, paste the address.
-- Claude Code: `claude mcp add --transport http seattle-grocery-deals <address>`
+- Claude Code: `claude mcp add --transport http seattle-grocery-deals https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`
 - Others: anywhere that takes a "remote MCP server" or "Streamable HTTP" address.
