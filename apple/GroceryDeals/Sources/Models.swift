@@ -307,6 +307,8 @@ extension Deal {
         let cal = Calendar.current
         return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: end)).day ?? 0) + 1
     }
+    /// True once the sale's last day has passed.
+    var ended: Bool { (daysLeft ?? 1) <= 0 }
     /// "Ends today", "Ends tomorrow" or "Ended": loud enough for a badge on the row.
     var endsBadge: String? {
         guard let left = daysLeft else { return nil }

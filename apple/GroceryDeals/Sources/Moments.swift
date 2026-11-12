@@ -72,7 +72,7 @@ struct WatchHits: View {
     let select: (Deal) -> Void
 
     var body: some View {
-        let hits = store.feed.map { feed in alerts.watches.compactMap { alerts.hit($0, in: feed.items) } } ?? []
+        let hits = store.feed.map { feed in alerts.watches.compactMap { alerts.hit($0, in: feed.items.filter { !$0.ended }) } } ?? []
         if !hits.isEmpty {
             SectionHeading(title: Lines.watchesTitle, note: hits.count == 1 ? "1 hit" : "\(hits.count) hits")
             ForEach(hits.prefix(3)) { d in
