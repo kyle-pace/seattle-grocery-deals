@@ -337,3 +337,24 @@
   });
   show();
 })();
+
+// Copy buttons (the address on the AI assistants page): copy data-copy, and say so in the
+// status next to the button, which screen readers announce.
+(function () {
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest && e.target.closest("[data-copy]");
+    if (!btn) return;
+    var text = btn.getAttribute("data-copy");
+    var status = btn.parentNode.querySelector("[data-copy-status]");
+    function say(t) { if (status) { status.textContent = t; clearTimeout(status._t); status._t = setTimeout(function () { status.textContent = ""; }, 4000); } }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); say("Copied"); } catch (err) { say("Couldn't copy here. Select the address and copy it yourself."); }
+      document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say("Copied"); }, fallback);
+    else fallback();
+  });
+})();

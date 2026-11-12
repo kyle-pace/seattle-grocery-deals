@@ -19,7 +19,7 @@ Prices are passed through exactly as the site shows them ("$2.99/lb", "2 for $6.
 ## How it fits together
 
 - `src/deals.js`: the answers, as plain functions over the feed. No network, no MCP.
-- `src/index.js`: the Worker. Fetches the feed (kept in memory for five minutes), describes the three tools, and hands requests to `createMcpHandler` from Cloudflare's Agents SDK, which speaks MCP over Streamable HTTP at the bare address (and at `/mcp`, where it started). Opening the address in a browser shows a short explanation instead. Stateless: a fresh server per request, no sessions, no storage.
+- `src/index.js`: the Worker. Fetches the feed (kept in memory for five minutes), describes the three tools, and hands requests to `createMcpHandler` from Cloudflare's Agents SDK, which speaks MCP over Streamable HTTP at the bare address (and at `/mcp`, where it started). Opening the address in a browser goes to the page about it, `https://seattlegrocery.deals/mcp/` (`mcpPage` in `scripts/build.mjs`), which has the Add to Claude button. Stateless: a fresh server per request, no sessions, no storage.
 - `wrangler.jsonc`: the Worker's settings. `FEED_URL` is where the feed lives.
 - `test/deals.test.mjs`: checks for the answers, on a small made-up feed (`npm test`, no install needed; also runs in the site's build).
 - `test/try.mjs`: connects with the official MCP client and calls every tool (`npm run try`).
@@ -60,6 +60,8 @@ After a deploy, check it: `npm run try -- https://mcp.seattlegrocery.deals`.
 The first address, `https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`, still works.
 
 ## Connect an assistant
+
+The easy way is the page: https://seattlegrocery.deals/mcp/. Its button opens Claude's add-connector dialog with the name and address filled in (a link format Claude doesn't document, so the written steps stay on the page too).
 
 The address is `https://mcp.seattlegrocery.deals`.
 

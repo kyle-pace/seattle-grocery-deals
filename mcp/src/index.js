@@ -122,22 +122,12 @@ function createServer(env) {
   return server;
 }
 
-const HOME = (origin) => `Seattle Grocery Deals MCP server
-
-This lets an AI assistant look up this week's grocery flyer sales from
-https://seattlegrocery.deals/ (Seattle-area specialty grocers, food for cooking).
-
-Connect an MCP client that supports Streamable HTTP to:
-
-  ${origin}
-
-Tools: this_week, search_deals, list_stores. Read-only, no sign-in, and nothing about
-the person asking is stored. Prices come from store flyers and can change.
-Not affiliated with any store. Questions: hello@seattlegrocery.deals
-`;
+// Where a person who opens the server's address in a browser is sent: the page on the site
+// that explains it and has the Add to Claude button (mcpPage in scripts/build.mjs).
+const PAGE = "https://seattlegrocery.deals/mcp/";
 
 // The server answers at the bare address (https://mcp.seattlegrocery.deals) and at /mcp, the
-// path it started on. A person opening the address in a browser gets the short explanation;
+// path it started on. A person opening the address in a browser is sent to the page about it;
 // an MCP client (it POSTs, or asks for an event stream) gets the server.
 const MCP_PATHS = new Set(["/", "/mcp"]);
 
@@ -148,9 +138,7 @@ export default {
       return new Response("Not found. Connect an MCP client to the bare address.\n", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
     }
     const browsing = request.method === "GET" && !(request.headers.get("accept") || "").includes("text/event-stream");
-    if (browsing) {
-      return new Response(HOME(url.origin), { headers: { "content-type": "text/plain; charset=utf-8", "x-robots-tag": "noindex" } });
-    }
+    if (browsing) return Response.redirect(PAGE, 302);
     // A fresh server per request: the handler is stateless, so no sessions or storage.
     return createMcpHandler(() => createServer(env), {
       route: url.pathname,

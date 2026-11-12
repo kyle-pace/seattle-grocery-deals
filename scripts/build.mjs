@@ -462,7 +462,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -1054,7 +1054,8 @@ function aboutPage() {
   const c = cfg.criteria;
   const body = `<div class="page-h"><h1>About</h1></div>
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
-<p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>
+<p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>${cfg.site.mcp_url ? `
+<p>You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.</p>` : ""}
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
 <p>A store is included when it:</p>
@@ -1169,6 +1170,67 @@ function appsPage() {
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
 }
 
+// For AI assistants, at /mcp/: what the site's MCP server is (mcp/ in this repo, a Cloudflare
+// Worker at config/site.json's mcp_url), a button that opens Claude's "add connector" dialog
+// with the name and address filled in, and the address to copy for any other assistant. A
+// browser that opens the server's own address is sent here (mcp/src/index.js).
+// The Claude link is not a documented format (2026-11-11): if it stops opening the dialog,
+// the address and the written steps still work.
+function mcpPage() {
+  const address = cfg.site.mcp_url;
+  if (!address) return;
+  const claude = `https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=${encodeURIComponent(cfg.site.title).replace(/%20/g, "+")}&connectorUrl=${encodeURIComponent(address)}`;
+  const asks = [
+    "What's on sale this week, and where should I shop?",
+    "Who has chicken thighs on sale?",
+    "What are the best produce deals at Uwajimaya?",
+    "I'm cooking vegetarian this week. Which store has the best deals?",
+    "Plan three dinners around what's cheap at H Mart.",
+  ];
+  const body = `<div class="mcp-page">
+<div class="mcp-top">
+  ${buddy("happy", 112)}
+  <div>
+    <h1>Ask your AI assistant what's on sale</h1>
+    <p class="lede">Connect Claude or another AI assistant to this site and it can look through this week's flyers for you: which stores have a good week, who has what you need, and when each sale ends.</p>
+  </div>
+</div>
+<p class="mcp-add"><a class="btn btn-primary" href="${esc(claude)}" data-mcp-add>Add to Claude</a></p>
+<p class="page-sub">Opens Claude with the name and address filled in. Nothing is added until you say so there.</p>
+
+<h2>Any other assistant</h2>
+<p>It works with any assistant that can connect to a remote MCP server (MCP is the common way to give an assistant new tools). Wherever it asks for a connector or server address, paste this one:</p>
+<p class="mcp-addr"><code>${esc(address)}</code><button type="button" class="btn" data-copy="${esc(address)}">${ic("copy")}<span>Copy address</span></button><span class="muted" role="status" data-copy-status></span></p>
+<p>In Claude, that's Customize, then Connectors, then Add custom connector.</p>
+
+<h2>Things to ask</h2>
+<ul class="mcp-asks">${asks.map((a) => `<li>${esc(a)}</li>`).join("")}</ul>
+
+<h2>What it can look up</h2>
+<ul>
+  <li><strong>This week at a glance:</strong> every store ranked by how good its week is, the best single deals, and what's in season.</li>
+  <li><strong>A search of the deals:</strong> by ingredient, store or aisle, standouts only, or vegetarian only. Sales that have ended are left out.</li>
+  <li><strong>The stores:</strong> what each one is, where it is, its flyer dates and a link to its weekly ad.</li>
+</ul>
+<p>It's the same information as this site, from the same flyers. It can't order anything or change anything.</p>
+
+<h2>Good to know</h2>
+<ul>
+  <li>It's free, with no account or sign-in.</li>
+  <li>It keeps nothing about you or what you ask. Your assistant has its own privacy rules for your conversations.</li>
+  <li>Prices come from store flyers and can change, sell out or differ by location. Check in store before you rely on one.</li>
+  <li>It covers the Seattle-area stores on <a href="${url("stores/")}">the Stores page</a> and nothing else. This site is not affiliated with any store.</li>
+</ul>
+</div>`;
+  write("mcp/", page({
+    title: "For AI assistants", path: "mcp/", section: "mcp/", body,
+    description: "Connect Claude or another AI assistant to Seattle Grocery Deals and ask what's on sale this week, who has what you need, and where to shop.",
+    ogTitle: "Ask your AI assistant what's on sale in Seattle",
+    image: "assets/img/og-mcp.png",
+    imageAlt: "Seattle Grocery Deals for AI assistants: the crow with his coin beside the question \"Who has chicken thighs on sale this week?\"",
+  }));
+}
+
 function dataPages() {
   mkdirSync(join(DIST, "data", "weeks"), { recursive: true });
   for (const w of weeks) writeFileSync(join(DIST, "data", "weeks", `${w.week}.json`), JSON.stringify(w, null, 2));
@@ -1270,6 +1332,7 @@ aboutPage();
 accessibilityPage();
 yourListPage();
 appsPage();
+mcpPage();
 for (const s of SEASONS) seasonPage(s);
 dataPages();
 notFound();
