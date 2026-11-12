@@ -11,15 +11,31 @@ It is a small Cloudflare Worker with no data of its own. Every answer comes from
 | Tool | What it answers |
 | --- | --- |
 | `this_week` | The front page in one answer: stores ranked by how good their week is, the 10 best single deals, what's in season. |
+| `plan_trip` | One store for a shopping list: which single store has the most of the items on sale, with its best deal for each and what it's missing. |
 | `search_deals` | Ingredients (several at once, separated by commas), or browse by store, aisle, rating or vegetarian. Ended deals are left out. |
 | `list_stores` | Every store covered: what it is, addresses, flyer dates, weekly ad link, delivery. |
 
 Prices are passed through exactly as the site shows them ("$2.99/lb", "2 for $6.00"); nothing is recomputed here.
 
+## Your stores
+
+People shop one store per trip, at stores they like. Every tool takes `stores` (where the person shops) and `skip_stores` (where they don't), as ids or names. The server still keeps nothing: the stores arrive one of two ways.
+
+- **On the call.** The server's instructions tell the assistant to pass the person's stores every time, and to ask which stores they use before recommending if it doesn't know. An assistant with memory carries them between chats.
+- **In the address.** `https://mcp.seattlegrocery.deals/?stores=uwajimaya,pcc&skip=99-ranch` sets them as the default for that connection (`defaultsFrom` in `src/index.js`); stores on a call win. The page at https://seattlegrocery.deals/mcp/ has a picker that builds this address, starting from the site's own Your stores.
+
+What changes with `stores`, following the app's "Best of your stores" rules (HANDOFF.md, 2026-11-07):
+
+- `this_week` ranks only those stores and takes the best single deals from them. One other store shows under `elsewhere` only when it has 5+ standouts and beats the person's best by 1.5x, or theirs is having a quiet week. A picked store with nothing listed stays, with its weekly ad link.
+- `search_deals` searches only those stores and counts matches at the others under `elsewhere`. `everywhere: true` searches them all; `store` (one store) wins over both.
+- `plan_trip` compares only those stores, and names another under `elsewhere` only if it covers more of the list.
+- `list_stores` still lists every store, the person's first and marked `yours`.
+- `skip_stores` are left out of everything except `list_stores`, where they are marked `skipped`.
+
 ## How it fits together
 
 - `src/deals.js`: the answers, as plain functions over the feed. No network, no MCP.
-- `src/index.js`: the Worker. Fetches the feed (kept in memory for five minutes), describes the three tools, and hands requests to `createMcpHandler` from Cloudflare's Agents SDK, which speaks MCP over Streamable HTTP at the bare address (and at `/mcp`, where it started). Opening the address in a browser goes to the page about it, `https://seattlegrocery.deals/mcp/` (`mcpPage` in `scripts/build.mjs`), which has the Add to Claude button. Stateless: a fresh server per request, no sessions, no storage.
+- `src/index.js`: the Worker. Fetches the feed (kept in memory for five minutes), describes the four tools, and hands requests to `createMcpHandler` from Cloudflare's Agents SDK, which speaks MCP over Streamable HTTP at the bare address (and at `/mcp`, where it started). Opening the address in a browser goes to the page about it, `https://seattlegrocery.deals/mcp/` (`mcpPage` in `scripts/build.mjs`), which has the Add to Claude button. Stateless: a fresh server per request, no sessions, no storage.
 - `wrangler.jsonc`: the Worker's settings. `FEED_URL` is where the feed lives.
 - `test/deals.test.mjs`: checks for the answers, on a small made-up feed (`npm test`, no install needed; also runs in the site's build).
 - `test/try.mjs`: connects with the official MCP client and calls every tool (`npm run try`).

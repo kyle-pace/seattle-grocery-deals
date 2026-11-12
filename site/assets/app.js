@@ -358,3 +358,33 @@
     else fallback();
   });
 })();
+
+// Your stores on the AI assistants page: ticking stores adds them to the server's address
+// (?stores=a,b), in the Add to Claude link, the address shown and its Copy button. The server
+// keeps nothing, so the address is how it knows. Starts from this site's Your stores
+// (sgd.stores) when there are any.
+(function () {
+  var box = document.querySelector("[data-mcp-stores]");
+  var code = document.querySelector("[data-mcp-address]");
+  if (!box || !code) return;
+  var base = code.getAttribute("data-mcp-address");
+  var add = document.querySelector("[data-mcp-add]");
+  var copy = document.querySelector(".mcp-addr [data-copy]");
+  var inputs = box.querySelectorAll("input[type=checkbox]");
+  var saved = [];
+  try { saved = JSON.parse(localStorage.getItem("sgd.stores") || "[]"); } catch (e) { saved = []; }
+  if (!Array.isArray(saved)) saved = [];
+  function update() {
+    var ids = [];
+    for (var i = 0; i < inputs.length; i++) if (inputs[i].checked) ids.push(inputs[i].value);
+    var address = ids.length ? base + "/?stores=" + ids.join(",") : base;
+    code.textContent = address;
+    if (copy) copy.setAttribute("data-copy", address);
+    if (add) add.href = "https://claude.ai/customize/connectors?modal=add-custom-connector&connectorName=" + encodeURIComponent(add.getAttribute("data-mcp-name") || "").replace(/%20/g, "+") + "&connectorUrl=" + encodeURIComponent(address);
+  }
+  for (var i = 0; i < inputs.length; i++) {
+    if (saved.indexOf(inputs[i].value) !== -1) inputs[i].checked = true;
+    inputs[i].addEventListener("change", update);
+  }
+  update();
+})();
