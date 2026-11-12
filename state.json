@@ -46,7 +46,9 @@
         "Weekly-Savings-111126-PG-6"
       ],
       "seen_at": "2026-11-11T15:16:09.090Z",
-      "updated_at": "2026-11-11T21:59:40.379Z"
+      "updated_at": "2026-11-11T21:59:40.379Z",
+      "error": "the pattern matched nothing (page layout may have changed)",
+      "error_at": "2026-11-12T18:49:48.524Z"
     },
     "hmart": {
       "fingerprint": "d4da8f6c0c4f5360",
