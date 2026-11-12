@@ -68,7 +68,7 @@ struct ThisWeekView: View {
                         Analytics.track("Opened Edit Stores", ["source": "this_week"])
                     }
                     let picks = store.topPicks()
-                    SectionHeading(title: "Best single deals", note: "Any store · \(store.standouts.count) standouts")
+                    SectionHeading(title: "Best single deals", note: "Any store · \(store.standouts.filter { !$0.ended }.count) standouts")
                     ForEach(picks) { d in
                         DealRow(deal: d, showWhy: true) { selected = d }
                     }
@@ -143,7 +143,7 @@ private struct YourStoresWeek: View {
     }
 
     private func section(_ e: FeedStore.RankedStore, best: Bool, position: Int, place: String) -> some View {
-        StoreSection(s: e.store, total: store.deals(atStore: e.store.id).count, standouts: e.rank.standouts,
+        StoreSection(s: e.store, total: store.live.filter { $0.store == e.store.id }.count, standouts: e.rank.standouts,
                      deals: store.topDeals(e.rank, at: e.store.id), reason: e.rank.reason, isBest: best,
                      newFlyer: store.isNewFlyer(e.store), select: select) { id in
             Analytics.track("Opened Store Card", ["store": id, "position": position, "section": place,
@@ -255,7 +255,7 @@ private struct StoreSection: View {
                             if !reason.isEmpty {
                                 Text(reason).font(.app(.callout)).foregroundStyle(Palette.body)
                             }
-                            Text(standouts > 0 ? "\(standouts) standouts, \(total) deals" : "\(total) deals")
+                            Text(standouts > 0 ? "\(standouts) \(standouts == 1 ? "standout" : "standouts"), \(total) deals" : "\(total) deals")
                                 .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                         }
                         Spacer(minLength: 0)

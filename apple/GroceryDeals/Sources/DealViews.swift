@@ -25,6 +25,10 @@ struct PriceTag: View {
                 }
             }
             .foregroundStyle(Palette.ink)
+            // Never one character per line: when a neighbor squeezes it, the price shrinks a little
+            // and stays on one line. Callers give it `.layoutPriority(1)` so it rarely has to.
+            .lineLimit(1)
+            .minimumScaleFactor(0.6)
             if savings {
                 // Lead with the US average where there is one; otherwise the store's own percent off.
                 if let us = deal.us, us.under > 0 {

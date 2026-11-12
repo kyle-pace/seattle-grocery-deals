@@ -63,17 +63,17 @@ final class MessageStore {
 
     func didShow(_ m: InAppMessage) {
         guard shown.insert(m.id).inserted else { return }
-        Analytics.track("In-App Message Shown", ["message_id": m.id, "style": m.styleName])
+        Analytics.track("Viewed In-App Message", ["message_id": m.id, "style": m.styleName])
     }
 
     func handle(_ action: InAppMessageAction, on m: InAppMessage) {
         switch action {
         case .open(let link):
-            Analytics.track("In-App Message Tapped", ["message_id": m.id])
+            Analytics.track("Tapped In-App Message", ["message_id": m.id])
             close(m)
             open(link)
         case .close:
-            Analytics.track("In-App Message Dismissed", ["message_id": m.id])
+            Analytics.track("Dismissed In-App Message", ["message_id": m.id])
             close(m)
         }
     }

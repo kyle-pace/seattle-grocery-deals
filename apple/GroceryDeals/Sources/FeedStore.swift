@@ -93,7 +93,7 @@ final class FeedStore {
 
     /// Popular deals that are in this week's feed (and pass the vegetarian filter), with counts.
     var popularDeals: [(deal: Deal, people: Int)] {
-        popular.compactMap { p in items.first { $0.id == p.deal_id }.map { ($0, p.people) } }
+        popular.compactMap { p in live.first { $0.id == p.deal_id }.map { ($0, p.people) } }
     }
 
     // MARK: the edition
@@ -119,6 +119,10 @@ final class FeedStore {
     var items: [Deal] {
         (feed?.items ?? []).filter { (!vegetarianOnly || $0.veg) && (!hideEndingToday || ($0.daysLeft ?? 99) >= 2) }
     }
+    /// Deals still on sale today. This week (the home screen) only shows these: a sale that
+    /// ended stays in the feed until its store's next flyer, and stays on store and aisle
+    /// pages (faded, marked Ended), but it's no use at the top of the app.
+    var live: [Deal] { items.filter { !$0.ended } }
     var standouts: [Deal] { items.filter { $0.tier == .standout } }
     func store(_ id: String) -> Store? { feed?.stores.first { $0.id == id } }
     func storeName(_ id: String) -> String { store(id)?.name ?? id }
@@ -134,6 +138,7 @@ final class FeedStore {
     func topPicks(_ limit: Int = 10, perStore: Int = 2) -> [Deal] {
         var taken: [String: Int] = [:]
         return Array(standouts.filter { d in
+            guard !d.ended else { return false }
             taken[d.store, default: 0] += 1
             return taken[d.store]! <= perStore
         }.prefix(limit))
@@ -191,7 +196,7 @@ final class FeedStore {
         var w = StoreWeek()
         var all: [RankedStore] = []
         for s in feed?.stores ?? [] {
-            if let r = rank(s.id), r.deals > 0, !deals(atStore: s.id).isEmpty { all.append(RankedStore(store: s, rank: r)) }
+            if let r = rank(s.id), r.deals > 0, live.contains(where: { $0.store == s.id }) { all.append(RankedStore(store: s, rank: r)) }
         }
         all.sort { $0.rank.score > $1.rank.score }
         w.ranked = favoriteStores.isEmpty ? all : all.filter { favoriteStores.contains($0.store.id) }
@@ -208,9 +213,8 @@ final class FeedStore {
     }
     /// The deals a store card shows: its top deals from the feed, still on sale and after filters.
     func topDeals(_ r: RankNumbers, at id: String) -> [Deal] {
-        let shown = Set(items.map(\.id))
-        let top = r.top.filter(shown.contains).compactMap { t in items.first { $0.id == t } }
-        return top.isEmpty ? Array(deals(atStore: id).prefix(3)) : top
+        let top = r.top.compactMap { t in live.first { $0.id == t } }
+        return top.isEmpty ? Array(live.filter { $0.store == id }.prefix(3)) : top
     }
     /// True when the store's current flyer started today: "New flyer today".
     func isNewFlyer(_ s: Store) -> Bool { Dates.date(s.from).map(Calendar.current.isDateInToday) ?? false }

@@ -17,7 +17,8 @@ extension FeedStore {
     /// The seasons to show on This week: on sale this week (after the vegetarian filter), not
     /// hidden, in the feed's order.
     var seasons: [Season] {
-        allSeasons.filter { bestDeal($0) != nil && !hiddenSeasons.contains(Self.hideKey($0)) }
+        // No card once its headline sale has ended; it's back when the feed picks another.
+        allSeasons.filter { bestDeal($0).map { !$0.ended } == true && !hiddenSeasons.contains(Self.hideKey($0)) }
     }
 
     func season(_ id: String) -> Season? { allSeasons.first { $0.id == id } }
