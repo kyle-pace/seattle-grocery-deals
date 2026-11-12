@@ -193,7 +193,7 @@ struct ListView: View {
                     if let d { Text("\(store.storeName(d.store)) · \(d.name)").font(.app(.subheadline)).foregroundStyle(Palette.muted).lineLimitUnlessLarge(1) }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                if let d { PriceTag(deal: d, size: 20, relativeTo: .title3) }
+                if let d { PriceTag(deal: d, size: 20, relativeTo: .title3).layoutPriority(1) }
             }
             .contentShape(Rectangle())
             .onTapGesture { if let d { selected = d } }
