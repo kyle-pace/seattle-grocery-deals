@@ -2,14 +2,14 @@
 // connect, list the tools, call each one, and print short results.
 //
 //   npm run dev                      (in another terminal)
-//   npm run try                      (uses http://localhost:8787/mcp)
-//   npm run try -- https://<worker>.workers.dev/mcp
+//   npm run try                      (uses http://localhost:8787)
+//   npm run try -- https://mcp.seattlegrocery.deals
 //
 // Exits non-zero if anything fails, so it works as a smoke test after a deploy.
 
 import { Client, StreamableHTTPClientTransport } from "@modelcontextprotocol/client";
 
-const url = process.argv[2] ?? "http://localhost:8787/mcp";
+const url = process.argv[2] ?? "http://localhost:8787";
 const client = new Client({ name: "try-script", version: "0.1.0" });
 await client.connect(new StreamableHTTPClientTransport(new URL(url)));
 

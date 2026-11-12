@@ -129,26 +129,32 @@ https://seattlegrocery.deals/ (Seattle-area specialty grocers, food for cooking)
 
 Connect an MCP client that supports Streamable HTTP to:
 
-  ${origin}/mcp
+  ${origin}
 
 Tools: this_week, search_deals, list_stores. Read-only, no sign-in, and nothing about
 the person asking is stored. Prices come from store flyers and can change.
 Not affiliated with any store. Questions: hello@seattlegrocery.deals
 `;
 
+// The server answers at the bare address (https://mcp.seattlegrocery.deals) and at /mcp, the
+// path it started on. A person opening the address in a browser gets the short explanation;
+// an MCP client (it POSTs, or asks for an event stream) gets the server.
+const MCP_PATHS = new Set(["/", "/mcp"]);
+
 export default {
   fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (url.pathname === "/mcp") {
-      // A fresh server per request: the handler is stateless, so no sessions or storage.
-      return createMcpHandler(() => createServer(env), {
-        route: "/mcp",
-        ...(env?.ALLOWED_HOSTNAMES ? { allowedHostnames: String(env.ALLOWED_HOSTNAMES).split(",").map((h) => h.trim()) } : {}),
-      })(request, env, ctx);
+    if (!MCP_PATHS.has(url.pathname)) {
+      return new Response("Not found. Connect an MCP client to the bare address.\n", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
     }
-    if (url.pathname === "/" && request.method === "GET") {
+    const browsing = request.method === "GET" && !(request.headers.get("accept") || "").includes("text/event-stream");
+    if (browsing) {
       return new Response(HOME(url.origin), { headers: { "content-type": "text/plain; charset=utf-8", "x-robots-tag": "noindex" } });
     }
-    return new Response("Not found. The MCP endpoint is /mcp\n", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+    // A fresh server per request: the handler is stateless, so no sessions or storage.
+    return createMcpHandler(() => createServer(env), {
+      route: url.pathname,
+      ...(env?.ALLOWED_HOSTNAMES ? { allowedHostnames: String(env.ALLOWED_HOSTNAMES).split(",").map((h) => h.trim()) } : {}),
+    })(request, env, ctx);
   },
 };
