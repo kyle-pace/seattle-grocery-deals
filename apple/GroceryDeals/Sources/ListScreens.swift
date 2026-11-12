@@ -252,6 +252,11 @@ struct SettingsView: View {
     @Environment(FeedStore.self) private var store
     @State private var share = Analytics.isOn
     @State private var replayingTour = false
+    @State private var copiedAddress = false
+
+    /// The page about the MCP server, and the server's own address (config/site.json's mcp_url).
+    private static let assistantsPage = URL(string: "https://seattlegrocery.deals/mcp/")!
+    private static let assistantsAddress = "https://mcp.seattlegrocery.deals"
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -325,6 +330,25 @@ struct SettingsView: View {
                     .tint(Palette.accent)
                     .onChange(of: share) { _, on in Analytics.setSharing(on) }
                 } header: { Text("Privacy") }
+
+                // The site's MCP server (mcp/ in the repo): any AI assistant can look up the same
+                // public deals. The page has the "Add to Claude" button; the address is for the rest.
+                Section {
+                    Link(destination: Self.assistantsPage) {
+                        labeled("Ask an AI assistant", "Connect Claude or another assistant to this week's deals")
+                    }
+                    .foregroundStyle(Palette.ink)
+                    .accessibilityHint("Opens a page in your browser")
+                    Button {
+                        UIPasteboard.general.string = Self.assistantsAddress
+                        copiedAddress = true
+                    } label: {
+                        Label(copiedAddress ? "Copied" : "Copy the connector address", systemImage: copiedAddress ? "checkmark" : "doc.on.doc")
+                    }
+                } header: { Text("AI assistants") } footer: {
+                    Text("It reads the same public deals as the website. Nothing from this app, like your list or your stores, is shared with it.")
+                }
+                .tint(Palette.accent)
 
                 Section {
                     Button("Show the tour again", systemImage: "sparkles.rectangle.stack") { replayingTour = true }
