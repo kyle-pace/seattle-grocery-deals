@@ -24,13 +24,20 @@ DEVICES=$(xcrun devicectl list devices 2>/dev/null | awk '!/simulated/ && (/avai
 [ -n "$DEVICES" ] || { echo "No iPhone or iPad found. Plug it in (or pair it over Wi-Fi in Xcode's Devices window), unlock it, and trust this Mac."; exit 1; }
 command -v xcodegen >/dev/null || { echo "Install XcodeGen first: brew install xcodegen"; exit 1; }
 
-echo "Deals Dev from $(git rev-parse --abbrev-ref HEAD) at $(git rev-parse --short HEAD)$( [ -n "$(git status --porcelain)" ] && echo ', with uncommitted changes'), $(basename "$XCODE")"
+# Each install gets the next build number; the version stays put. The count lives outside the
+# repo so every checkout shares it.
+BUILD_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/kitchen/deals-dev-build"
+LAST=$(cat "$BUILD_FILE" 2>/dev/null || true)
+case "$LAST" in ''|*[!0-9]*) LAST=1 ;; esac
+BUILD=$((LAST + 1))
+echo "Deals Dev from $(git rev-parse --abbrev-ref HEAD) at $(git rev-parse --short HEAD)$( [ -n "$(git status --porcelain)" ] && echo ', with uncommitted changes'), build $BUILD, $(basename "$XCODE")"
 xcodegen generate --quiet
 echo "Building..."
 xcodebuild -project GroceryDeals.xcodeproj -scheme GroceryDeals -configuration Release -destination "generic/platform=iOS" \
   -derivedDataPath build -allowProvisioningUpdates -allowProvisioningDeviceRegistration \
-  BUNDLE_ID_SUFFIX=.dev APP_NAME_SUFFIX=" Dev" APP_ICON_SUFFIX=Dev build > build.log 2>&1 \
+  BUNDLE_ID_SUFFIX=.dev APP_NAME_SUFFIX=" Dev" APP_ICON_SUFFIX=Dev CURRENT_PROJECT_VERSION=$BUILD build > build.log 2>&1 \
   || { grep -E "error:" build.log | sort -u | head; echo "Build failed; see apple/GroceryDeals/build.log"; exit 1; }
+mkdir -p "$(dirname "$BUILD_FILE")" && echo "$BUILD" > "$BUILD_FILE"
 APP=build/Build/Products/Release-iphoneos/GroceryDeals.app
 for DEVICE in $DEVICES; do
   NAME=$(xcrun devicectl list devices 2>/dev/null | grep "$DEVICE" | awk '{print $1}')
