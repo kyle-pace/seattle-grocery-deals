@@ -630,6 +630,7 @@ body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .mcp-top h1 { margin: 0; font-size: clamp(1.75rem, 6vw, 2.5rem); line-height: 1.1; letter-spacing: -0.02em; }
 .mcp-top .lede { margin: var(--s-m) 0 0; }
 @media (max-width: 34rem) { .mcp-top { flex-direction: column; align-items: flex-start; gap: var(--s-s); } .mcp-top .buddy { width: 84px; height: 84px; } }
+.mcp-stores { padding: 0; margin-top: var(--s-s); }
 .mcp-add { margin: var(--s-xl) 0 var(--s-s); }
 .mcp-add .btn { min-height: 52px; padding: 0 1.4rem; font-size: 1.125rem; }
 .mcp-page h2 { margin: 2rem 0 var(--s-s); font-size: 1.25rem; }
