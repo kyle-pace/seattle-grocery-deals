@@ -56,6 +56,36 @@ await call("search_deals", { store: "nowhere mart" }, (d) => (d.error && d.store
 const stores = await call("list_stores", {}, (d) => (d.stores?.length ? null : "no stores"));
 if (stores) console.log(`     ${stores.stores.length} stores: ${stores.stores.map((s) => s.name).join(", ")}`);
 
+// Your stores: pick the two with the best weeks, and check everything stays inside them.
+const mine = (week?.where_to_shop ?? []).slice(0, 2).map((s) => s.id);
+if (mine.length) {
+  const yours = await call("this_week", { stores: mine }, (d) =>
+    d.where_to_shop?.every((s) => mine.includes(s.id)) && d.best_single_deals?.every((x) => mine.includes(x.store_id)) ? null : "not limited to your stores",
+  );
+  if (yours) console.log(`     your stores: ${yours.your_stores?.join(", ")}${yours.elsewhere ? `; elsewhere: ${yours.elsewhere.name}` : ""}`);
+  await call("search_deals", { query: "chicken, tofu", stores: mine }, (d) => (d.deals?.every((x) => mine.includes(x.store_id)) ? null : "searched outside your stores"));
+  await call("this_week", { skip_stores: [mine[0]] }, (d) => (d.where_to_shop?.some((s) => s.id === mine[0]) ? "skipped store still listed" : null));
+}
+
+const trip = await call("plan_trip", { items: "chicken, tofu, bok choy, apples, salmon" }, (d) => (Array.isArray(d.stores) && "best_store" in d ? null : "no plan"));
+if (trip?.best_store) console.log(`     one stop: ${trip.best_store.name}, ${trip.best_store.covers} of ${trip.best_store.of} on sale`);
+for (const s of (trip?.stores ?? []).slice(0, 3)) console.log(`     ${s.name}: ${s.on_sale.map((d) => `${d.item} (${d.price})`).join(", ")}`);
+
+// The address can carry a person's stores (?stores=a,b&skip=c): a second connection that
+// names none on the call should still get only those stores.
+if (mine.length) {
+  const preset = new Client({ name: "try-script", version: "0.1.0" });
+  const withStores = new URL(url);
+  withStores.searchParams.set("stores", mine.join(","));
+  await preset.connect(new StreamableHTTPClientTransport(withStores));
+  const res = await preset.callTool({ name: "this_week", arguments: {} });
+  const d = JSON.parse(res.content?.[0]?.text ?? "{}");
+  const ok = d.where_to_shop?.length && d.where_to_shop.every((s) => mine.includes(s.id));
+  if (!ok) failures++;
+  console.log(`\n${ok ? "ok  " : "FAIL"} this_week at ${withStores.search}: ${d.your_stores?.join(", ") ?? "no your_stores"}`);
+  await preset.close();
+}
+
 await client.close();
 if (failures) {
   console.error(`\n${failures} check(s) failed.`);

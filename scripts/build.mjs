@@ -1183,10 +1183,15 @@ function mcpPage() {
   const asks = [
     "What's on sale this week, and where should I shop?",
     "Who has chicken thighs on sale?",
+    "I need salmon, tofu, bok choy and apples. Which one store has the most of that on sale?",
     "What are the best produce deals at Uwajimaya?",
     "I'm cooking vegetarian this week. Which store has the best deals?",
     "Plan three dinners around what's cheap at H Mart.",
   ];
+  // The stores the server knows (the same ones the feed lists), for the "your stores" picker.
+  // Picking some adds them to the address (?stores=a,b), which is how the server learns them:
+  // it keeps nothing itself. app.js fills the picker from this site's own Your stores.
+  const pickable = cfg.stores.filter((s) => s.active && !s.no_online_flyer).sort((a, b) => a.name.localeCompare(b.name));
   const body = `<div class="mcp-page">
 <div class="mcp-top">
   ${buddy("happy", 112)}
@@ -1195,12 +1200,19 @@ function mcpPage() {
     <p class="lede">Connect Claude or another AI assistant to this site and it can look through this week's flyers for you: which stores have a good week, who has what you need, and when each sale ends.</p>
   </div>
 </div>
-<p class="mcp-add"><a class="btn btn-primary" href="${esc(claude)}" data-mcp-add>Add to Claude</a></p>
+<h2 id="mcp-stores-h">Where do you shop?</h2>
+<p>Pick your stores and your assistant will rank the week for them, and choose one of them for a shopping list. Leave them all off to hear about every store.</p>
+<fieldset class="pick-grid mcp-stores" aria-labelledby="mcp-stores-h" data-mcp-stores>
+${pickable.map((s) => `  <label class="pick"><input type="checkbox" value="${esc(s.id)}"><span><span class="pick-name">${esc(s.name)}</span></span></label>`).join("\n")}
+</fieldset>
+
+<p class="mcp-add"><a class="btn btn-primary" href="${esc(claude)}" data-mcp-add data-mcp-name="${esc(cfg.site.title)}">Add to Claude</a></p>
 <p class="page-sub">Opens Claude with the name and address filled in. Nothing is added until you say so there.</p>
 
 <h2>Any other assistant</h2>
 <p>It works with any assistant that can connect to a remote MCP server (MCP is the common way to give an assistant new tools). Wherever it asks for a connector or server address, paste this one:</p>
-<p class="mcp-addr"><code>${esc(address)}</code><button type="button" class="btn" data-copy="${esc(address)}">${ic("copy")}<span>Copy address</span></button><span class="muted" role="status" data-copy-status></span></p>
+<p class="mcp-addr"><code data-mcp-address="${esc(address)}">${esc(address)}</code><button type="button" class="btn" data-copy="${esc(address)}">${ic("copy")}<span>Copy address</span></button><span class="muted" role="status" data-copy-status></span></p>
+<p>If you picked stores above, they are part of the address. You can also just tell your assistant where you shop.</p>
 <p>In Claude, that's Customize, then Connectors, then Add custom connector.</p>
 
 <h2>Things to ask</h2>
@@ -1209,6 +1221,7 @@ function mcpPage() {
 <h2>What it can look up</h2>
 <ul>
   <li><strong>This week at a glance:</strong> every store ranked by how good its week is, the best single deals, and what's in season.</li>
+  <li><strong>One store for your list:</strong> which single store has the most of what you need on sale, so it's one trip.</li>
   <li><strong>A search of the deals:</strong> by ingredient, store or aisle, standouts only, or vegetarian only. Sales that have ended are left out.</li>
   <li><strong>The stores:</strong> what each one is, where it is, its flyer dates and a link to its weekly ad.</li>
 </ul>
@@ -1217,7 +1230,7 @@ function mcpPage() {
 <h2>Good to know</h2>
 <ul>
   <li>It's free, with no account or sign-in.</li>
-  <li>It keeps nothing about you or what you ask. Your assistant has its own privacy rules for your conversations.</li>
+  <li>It keeps nothing about you or what you ask. Your stores, if you pick any, travel in the address or in what your assistant sends; they aren't saved here. Your assistant has its own privacy rules for your conversations.</li>
   <li>Prices come from store flyers and can change, sell out or differ by location. Check in store before you rely on one.</li>
   <li>It covers the Seattle-area stores on <a href="${url("stores/")}">the Stores page</a> and nothing else. This site is not affiliated with any store.</li>
 </ul>
