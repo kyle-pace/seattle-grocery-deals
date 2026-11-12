@@ -8,10 +8,17 @@
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
+  // Its own address: mcp.seattlegrocery.deals. The domain's DNS stays at Porkbun, so the
+  // hostname is a Cloudflare "custom hostname" on the kylepace.dev zone (a CNAME at Porkbun
+  // points mcp at fallback.kylepace.dev) and this route sends its traffic here. See README.md.
+  "routes": [{ "pattern": "mcp.seattlegrocery.deals/*", "zone_name": "kylepace.dev" }],
   "preview_urls": false,
   "observability": { "enabled": true },
   "vars": {
     // The same feed the iPhone app reads.
-    "FEED_URL": "https://seattlegrocery.deals/api/week.json"
+    "FEED_URL": "https://seattlegrocery.deals/api/week.json",
+    // The hosts the MCP handler answers on (it refuses any other): the real address, the
+    // workers.dev one it started on, and localhost for `npm run dev`.
+    "ALLOWED_HOSTNAMES": "mcp.seattlegrocery.deals,seattle-grocery-deals-mcp.mail-4dd.workers.dev,localhost,127.0.0.1"
   }
 }
