@@ -2,7 +2,7 @@
 
 Lets an AI assistant (Claude, ChatGPT, or anything else that speaks MCP) look up this week's deals: "what's on sale at Uwajimaya?", "who has chicken thighs this week?", "where should I shop if I'm cooking vegetarian?".
 
-Live at `https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp` (since November 11, 2026).
+Live at `https://mcp.seattlegrocery.deals/mcp` (since November 11, 2026).
 
 It is a small Cloudflare Worker with no data of its own. Every answer comes from the same public feed the iPhone app reads, `https://seattlegrocery.deals/api/week.json`, so the site stays the one source of truth and a new flyer shows up here within about five minutes of going live. Read-only, no sign-in, and nothing about the person asking is stored.
 
@@ -47,14 +47,22 @@ Cloudflare Workers Builds deploys it from `main`, like the labs on kylepace.dev.
 - Build token: its own, "seattle-grocery-deals-mcp build token", like the other Workers
 - Preview builds off (the `flyer-watch` branch changes every 30 minutes), Cloudflare Access off (assistants need to reach it without a login)
 
-After a deploy, check it: `npm run try -- https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`.
+After a deploy, check it: `npm run try -- https://mcp.seattlegrocery.deals/mcp`.
 
-It runs on the account's `workers.dev` address because seattlegrocery.deals keeps its DNS at Porkbun. To move it to a custom domain later (for example a kylepace.dev subdomain), add the route in `wrangler.jsonc` and set an `ALLOWED_HOSTNAMES` var to that hostname; the handler only answers hosts it knows.
+### The address
+
+`mcp.seattlegrocery.deals` is served by Cloudflare even though this domain's DNS stays at Porkbun. Three pieces make that work:
+
+- On the kylepace.dev zone in Cloudflare: a placeholder record `fallback.kylepace.dev` (A `192.0.2.1`, proxied) set as the fallback origin, and `mcp.seattlegrocery.deals` added under SSL/TLS > Custom Hostnames.
+- At Porkbun: `mcp` CNAME `fallback.kylepace.dev`, and `_acme-challenge.mcp` CNAME `mcp.seattlegrocery.deals.4608829d295ffc26.dcv.cloudflare.com`, which lets Cloudflare issue and renew the certificate on its own.
+- In `wrangler.jsonc`: the route `mcp.seattlegrocery.deals/*` on the kylepace.dev zone, and `ALLOWED_HOSTNAMES`, the hosts the handler answers on.
+
+The first address, `https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`, still works.
 
 ## Connect an assistant
 
-The address is `https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`.
+The address is `https://mcp.seattlegrocery.deals/mcp`.
 
 - Claude: Settings > Connectors > Add custom connector, paste the address.
-- Claude Code: `claude mcp add --transport http seattle-grocery-deals https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`
+- Claude Code: `claude mcp add --transport http seattle-grocery-deals https://mcp.seattlegrocery.deals/mcp`
 - Others: anywhere that takes a "remote MCP server" or "Streamable HTTP" address.
