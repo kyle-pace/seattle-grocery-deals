@@ -163,19 +163,28 @@ func unitValue(_ d: Deal) -> (value: Double, per: String)? {
     return (m.2 != nil ? v / 100 : v, String(m.3 ?? m.4 ?? "item"))
 }
 
-/// Shows notifications even while the app is open.
+/// Shows notifications even while the app is open, and handles a tapped push.
+///
+/// These are the completion-handler forms on purpose. The `async` forms run off the main thread
+/// here (this class isn't tied to the main actor), so Swift called the system's completion
+/// handler from a background thread, and UIKit stops the app for that: every tapped push
+/// crashed. Now the handler is called right away, on the thread the system called us on.
 final class NotificationPresenter: NSObject, UNUserNotificationCenterDelegate, @unchecked Sendable {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
-        [.banner, .list]
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .list])
     }
 
     /// Tapping a server push ("kind" and "week" in its data) opens This week.
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
         let info = response.notification.request.content.userInfo
-        guard let kind = info["kind"] as? String else { return }
-        let week = info["week"] as? String
-        // "stores": the store ids the push was about ("lams" or "hmart,lams").
-        let stores = (info["stores"] as? String)?.split(separator: ",").map(String.init) ?? []
-        await MainActor.run { PushStore.shared.opened(kind: kind, week: week, stores: stores) }
+        if let kind = info["kind"] as? String {
+            let week = info["week"] as? String
+            // "stores": the store ids the push was about ("lams" or "hmart,lams").
+            let stores = (info["stores"] as? String)?.split(separator: ",").map(String.init) ?? []
+            Task { @MainActor in PushStore.shared.opened(kind: kind, week: week, stores: stores) }
+        }
+        completionHandler()
     }
 }
