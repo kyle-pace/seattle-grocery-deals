@@ -6,5 +6,6 @@
   "suggest_store_url": "https://github.com/kyle-pace/seattle-grocery-deals/issues/new?title=Store+suggestion",
   "support_url": "https://buymeacoffee.com/kylepace",
   "origin": "https://seattlegrocery.deals",
+  "mcp_url": "https://mcp.seattlegrocery.deals",
   "amplitude_api_key": "209f961ae2c60b11c922363aa094ed0a"
 }
