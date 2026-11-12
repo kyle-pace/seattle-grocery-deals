@@ -44,6 +44,7 @@ Cloudflare Workers Builds deploys it from `main`, like the labs on kylepace.dev.
 - Root directory: `mcp`
 - Build command: none. Deploy command: `npx wrangler deploy`
 - Build watch paths: include `mcp/*`, so flyer updates don't redeploy it
+- Build token: its own, "seattle-grocery-deals-mcp build token", like the other Workers
 - Preview builds off (the `flyer-watch` branch changes every 30 minutes), Cloudflare Access off (assistants need to reach it without a login)
 
 After a deploy, check it: `npm run try -- https://seattle-grocery-deals-mcp.mail-4dd.workers.dev/mcp`.
