@@ -60,28 +60,39 @@ final class WalkThrough: XCTestCase {
         if b.exists { b.tap() } else { note("no back button") }
     }
 
+    private func tapFirst(labelBeginning text: String) -> Bool {
+        let found = app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", text)).firstMatch
+        guard found.waitForExistence(timeout: 3) else { note("NOT FOUND: \(text)…"); return false }
+        found.tap()
+        return true
+    }
+
+    private func listButtons(_ title: String) {
+        let labels = app.buttons.allElementsBoundByIndex.prefix(60).map { $0.label.replacingOccurrences(of: "\n", with: " ").prefix(40) }
+        note("\(title) buttons: " + labels.joined(separator: " | "))
+    }
+
     func testWalk() throws {
         app.launch()
+        pause(0.2); shot("launch")
         pause(4)   // the first fetch
         shot("week")
-        app.swipeUp()
-        pause(0.6)
-        shot("week-scrolled")
 
         tab("Aisles"); pause(0.8); shot("aisles")
-        if tapFirst(labelContaining: "Bakery") {
+        if tapFirst(labelBeginning: "Bakery") {
             pause(1); shot("aisle-bakery")
-            if tapFirst(labelContaining: "T&T Supermarket") { pause(0.8); shot("aisle-bakery-tnt") }
-            let chip = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", "All stores")).firstMatch
-            if chip.exists {
-                chip.press(forDuration: 0.1, thenDragTo: app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", "Not ending")).firstMatch)
+            if tapFirst(labelBeginning: "T&T Supermarket") { pause(0.8); shot("aisle-bakery-tnt") }
+            let chip = app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "All stores")).firstMatch
+            let target = app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "Not ending")).firstMatch
+            if chip.exists, target.exists {
+                chip.press(forDuration: 0.1, thenDragTo: target)
                 pause(0.5); shot("aisle-chips-dragged")
             }
             back(); pause(0.6)
         }
 
         tab("Stores"); pause(0.8); shot("stores")
-        if tapFirst(labelContaining: "99 Ranch") { pause(1); shot("store-page"); back(); pause(0.6) }
+        if tapFirst(labelBeginning: "99 Ranch Market") { pause(1); shot("store-page"); back(); pause(0.6) }
 
         tab("List"); pause(0.8); shot("list")
 
@@ -91,6 +102,7 @@ final class WalkThrough: XCTestCase {
         pause(1.2); shot("search-open")
         let field = app.searchFields.firstMatch
         note("search fields: \(app.searchFields.count), keyboards: \(app.keyboards.count)")
+        listButtons("search open")
         if field.exists {
             let focused = (field.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
             note("search field focused on arrival: \(focused); frame \(field.frame); screen \(app.windows.firstMatch.frame)")
@@ -100,14 +112,26 @@ final class WalkThrough: XCTestCase {
             let scope = app.segmentedControls.buttons["Stores"]
             if scope.waitForExistence(timeout: 2) {
                 scope.tap(); pause(0.8); shot("search-beef-stores")
-                if tapFirst(labelContaining: "Search everything") { pause(0.8); shot("search-beef-everything") }
+                if tapFirst(labelBeginning: "Search everything") { pause(0.8); shot("search-beef-everything") }
             } else {
                 note("no scope bar while searching")
+                listButtons("searching")
             }
             field.typeText("\n"); pause(1); shot("search-submitted")
             app.swipeUp(); pause(0.6); shot("search-results-scrolled")
+            app.swipeDown(); pause(0.6)
+            listButtons("after search")
+            // Closing search should go back to the tab we came from (List).
+            for name in ["Close", "Cancel", "Clear text"] {
+                let b = app.buttons[name].firstMatch
+                if b.exists { b.tap(); pause(1); shot("after-\(name.lowercased().replacingOccurrences(of: " ", with: "-"))") }
+            }
         } else {
             note("NO SEARCH FIELD")
         }
+
+        // The tab bar tucks away on scroll; this is how This week looks further down.
+        tab("This week"); pause(0.8)
+        app.swipeUp(); pause(0.6); shot("week-scrolled")
     }
 }
