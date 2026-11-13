@@ -73,10 +73,10 @@ struct SearchView: View {
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)
-            // All / Deals / Stores sits at the top of the results (below): with the field in
-            // the tab bar, the system's scope bar doesn't show (checked on the iPhone and iPad
-            // simulators). It starts over at All with each new search: left on Stores, the next
-            // popular, recent or Spotlight search came up empty with nothing on screen to say why.
+            // All / Deals / Stores sits at the top of the results (below), since a field in
+            // the tab bar has no room for the system's scope bar. It starts over at All with
+            // each new search: left on Stores, the next popular, recent or Spotlight search
+            // came up empty with nothing on screen to say why.
             .onChange(of: router.searchQuery.trimmingCharacters(in: .whitespaces).isEmpty) { _, empty in
                 if empty { scope = .all }
             }
@@ -119,8 +119,10 @@ struct SearchView: View {
         let adding = store.popularDeals.prefix(5)
         if !adding.isEmpty {
             SectionHeading(title: "People are adding", note: "this week")
-            ForEach(adding, id: \.deal.id) { entry in
-                DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
+            WideColumns {
+                ForEach(adding, id: \.deal.id) { entry in
+                    DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
+                }
             }
         }
 
@@ -190,21 +192,25 @@ struct SearchView: View {
         if scope != .stores { SeasonSearchCards(query: q) }
         if !aisles.isEmpty {
             SectionHeading(title: "Aisles")
-            ForEach(aisles) { c in
-                NavigationLink(value: AisleRoute.aisle(c)) {
-                    Tile(title: "\(AisleArt.emoji(c.id))  \(c.label)", line: "\(store.deals(inCategory: c.id).count) deals")
+            WideColumns(minimum: Wide.tile, spacing: Space.m) {
+                ForEach(aisles) { c in
+                    NavigationLink(value: AisleRoute.aisle(c)) {
+                        Tile(title: "\(AisleArt.emoji(c.id))  \(c.label)", line: "\(store.deals(inCategory: c.id).count) deals")
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
         }
         if !stores.isEmpty {
             SectionHeading(title: "Stores", note: "\(stores.count)")
-            ForEach(stores) { s in
-                NavigationLink(value: s) {
-                    Tile(title: s.name, favorite: store.isFavorite(s.id),
-                         line: "\(store.deals(atStore: s.id).count) deals this week", top: s.towns)
+            WideColumns(minimum: Wide.tile, spacing: Space.m) {
+                ForEach(stores) { s in
+                    NavigationLink(value: s) {
+                        Tile(title: s.name, favorite: store.isFavorite(s.id),
+                             line: "\(store.deals(atStore: s.id).count) deals this week", top: s.towns)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
         }
         if !deals.isEmpty {
@@ -212,8 +218,10 @@ struct SearchView: View {
             ForEach(store.aisles.filter { byAisle[$0.id] != nil }) { c in
                 let mine = byAisle[c.id] ?? []
                 SectionHeading(title: c.label, note: mine.count == 1 ? "1 deal" : "\(mine.count) deals")
-                ForEach(mine.prefix(25)) { d in
-                    DealRow(deal: d) { remember(q); selected = d }
+                WideColumns {
+                    ForEach(mine.prefix(25)) { d in
+                        DealRow(deal: d) { remember(q); selected = d }
+                    }
                 }
             }
         }

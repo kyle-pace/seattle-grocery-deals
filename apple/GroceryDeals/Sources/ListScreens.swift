@@ -65,6 +65,8 @@ struct ListView: View {
 
             }
             .scrollContentBackground(.hidden)
+            // iPad: a list-width column, not rows across the whole screen.
+            .readableColumn()
             .background(Palette.ground)
             .navigationTitle(list.title)
             .navigationSubtitle(([list.usesReminders ? "Synced with Reminders" : "In this app"]
@@ -118,6 +120,8 @@ struct ListView: View {
         .frame(minHeight: 50)
         .glassEffect(.regular.interactive(), in: .capsule)
         .padding(.horizontal, Space.l)
+        // iPad: as wide as the list's column, not the whole screen.
+        .pageWidth(Wide.list)
         .padding(.bottom, Space.s)
         .animation(.snappy, value: newItem.isEmpty)
         .sensoryFeedback(.increase, trigger: list.items.count)
