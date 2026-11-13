@@ -34,7 +34,9 @@
   --coin: #f2c14e; --evening: #345a78;
   --bd-fruit: light-dark(#e8743b, #f08a4b); --bd-leaf: light-dark(#2f6b4f, #5faf86); --bd-stem: light-dark(#5b4632, #8a7058); --bd-face: light-dark(#1b1f1d, #111412);
   /* reading width: Atkinson's 0 is wide, so 58ch holds about 85 characters of running text
-     (46ch, about 70, felt cramped on wider windows; owner's call, 2026-11-13) */
+     (46ch, about 70, felt cramped on wider windows; owner's call, 2026-11-13). On big screens
+     the text also steps up to 18px and the column to 61ch (about 730px), about 88 a line,
+     because 640px still read as narrow there (owner's call, 2026-11-13, later). */
   --measure: 58ch;
   /* radius and space */
   --r-s: 10px; --r-m: 14px; --r-l: 18px;
@@ -55,6 +57,7 @@
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body { margin: 0; background: var(--ground); color: var(--ink); font: 1.0625rem/1.45 var(--font); -webkit-font-smoothing: antialiased; }
+@media (min-width: 64rem) { :root { --measure: 61ch; } body { font-size: 1.125rem; line-height: 1.5; } }
 a { color: var(--accent); text-underline-offset: 3px; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 main:focus, [tabindex="-1"]:focus { outline: none; }
