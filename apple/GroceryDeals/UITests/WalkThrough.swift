@@ -97,6 +97,30 @@ final class WalkThrough: XCTestCase {
         }
     }
 
+    private func hittable(_ name: String) -> Bool {
+        app.buttons.matching(identifier: name).allElementsBoundByIndex.contains { $0.isHittable }
+    }
+
+    /// iPad: after a search, is there a way back to the other tabs?
+    func testPadLeaveSearch() throws {
+        app.launch()
+        pause(4)
+        tab("Stores"); pause(1)
+        tab("Search"); pause(2.5)
+        let field = app.searchFields.firstMatch
+        guard field.waitForExistence(timeout: 3) else { note("NO SEARCH FIELD"); return }
+        field.typeText("Beef\n"); pause(1.5); shot("leave-1-submitted")
+        note("after submit: This week tappable \(hittable("This week")), keyboards \(app.keyboards.count)")
+        note("top buttons: " + ["Close", "Cancel", "Clear text", "Search", "Toggle sidebar", "Done"].map { "\($0)=\(hittable($0))" }.joined(separator: " "))
+        let clear = app.buttons["Clear text"].firstMatch
+        if clear.exists { clear.tap(); pause(1.5); shot("leave-2-cleared") }
+        note("after clear: This week tappable \(hittable("This week")), keyboards \(app.keyboards.count)")
+        let hide = app.keyboards.buttons["Hide keyboard"].firstMatch
+        if hide.exists { hide.tap(); pause(1.5); shot("leave-3-keyboard-hidden") }
+        note("after hiding the keyboard: This week tappable \(hittable("This week")), search fields \(app.searchFields.count)")
+        if hittable("This week") { tab("This week"); pause(1); shot("leave-4-this-week") }
+    }
+
     func testWalk() throws {
         app.launch()
         pause(0.2); shot("launch")
