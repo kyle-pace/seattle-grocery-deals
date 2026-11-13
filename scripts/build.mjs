@@ -1144,12 +1144,20 @@ function privacyPage() {
 <p>The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site. Flyer links take you to each store's own site, which has its own privacy rules.</p>
 
 <h2 id="app">The app</h2>
+<h3>Getting the deals</h3>
+<p>The app downloads each week's deals from this site, the same public list anyone can see. Like any website, the server sees your device's IP address when it sends them; nothing about you is in the request. The widget and the deals that show up when you search from your Home Screen use that same list, kept on your device.</p>
 <h3>Usage, only if you say yes</h3>
 <p>The app asks the first time you open it whether to share anonymous usage. Until you answer yes, nothing is sent and no ID is made. If you say yes, it sends the screens you open, the features you use, which deals you open, add or watch, and your app version, device model and iOS version. It never sends anything you type, like list items or searches, your name, email, contacts or location, your IP address or your advertising ID. Change your answer any time in Settings, under Privacy.</p>
 <h3>Your list and your stores</h3>
 <p>They're kept on your device. If you choose to use a Reminders list instead, it lives in Apple's Reminders and syncs the way your Reminders already do.</p>
 <h3>Notifications</h3>
 <p>Alerts are off until you turn them on. "New deals are in" comes through Firebase Cloud Messaging and Apple: your device signs up for the stores you picked, Firebase keeps that sign-up so it can deliver, and no list of devices is kept here. Alerts for a sale ending or a price you're watching are worked out on your device.</p>
+<h3>Notes in the app</h3>
+<p>Now and then the app shows a short note, like a heads-up about something new. It checks <a href="https://firebase.google.com/support/privacy">Firebase</a> (Google) for these when it opens, and Firebase gets a random ID for this copy of the app to do that. The ID isn't linked to you, and Firebase's analytics isn't used.</p>
+<h3>Feedback</h3>
+<p>If you send feedback from the app, it opens an email to hello@seattlegrocery.deals with the app version and iOS version filled in. Your email address is used only to reply.</p>
+<h3>Removing it all</h3>
+<p>Deleting the app removes everything it saved on your device. A Reminders list you chose stays in Reminders, since it's yours.</p>
 
 <h2 id="assistants">AI assistants</h2>
 <p>The <a href="${url("mcp/")}">server for AI assistants</a> keeps nothing about you or what you ask. If you tell it your stores, they travel with each request and aren't saved. Your assistant has its own privacy rules for your conversations.</p>
