@@ -26,6 +26,20 @@ apple/testflight.sh --dry-run  # show the version and tag only
 
 Xcode Cloud's **TestFlight** workflow starts on any tag beginning with `v`, so weekly data merges and everyday pushes to `main` never make a TestFlight build. It archives the `GroceryDeals` scheme (Release, so the bundle ID is `deals.seattlegrocery`, never `.dev`) on the latest release Xcode and uploads to App Store Connect for internal testers. The version is `MARKETING_VERSION` in `project.yml`; a second build of the same version is tagged `v<version>-2` and so on. **Xcode Cloud sets the build number** (its own counter), not the commit count the old local script used, so don't upload from this Mac any more: a local upload would collide with those numbers.
 
+### External testers
+
+A second Xcode Cloud workflow, **TestFlight External**, builds tags that start with `beta-` and sends them to the **External Testers** group. Apple reviews the first external build of each version (usually within a day); later builds of the same version mostly go straight out.
+
+```bash
+apple/testflight.sh --external            # tag beta-<version> and push
+apple/testflight.sh --external --dry-run  # show the tag and the notes for testers
+```
+
+- Notes for testers ("What to Test") come from `GroceryDeals/TestFlight/WhatToTest.en-US.txt`, next to `ci_scripts`. Update it before each external build.
+- The two workflows differ in three settings: the start condition (tags beginning with `v` or with `beta-`), the archive's distribution (**TestFlight (Internal Testing Only)** or **TestFlight and App Store**), and the post-action (**TestFlight Internal Testing** or **TestFlight External Testing** with the External Testers group). A build from the internal workflow can never be given to external testers, so external builds have to come from the second one.
+- External testing also needs App Store Connect's Test Information (beta description, feedback email, privacy policy link) and a contact for Apple's reviewer.
+- Each external build is a second Xcode Cloud run, on the same 25 free hours a month.
+
 How it fits together:
 - `GroceryDeals/ci_scripts/ci_post_clone.sh` clones KitchenUI's `main` next to the repo, where `project.yml` expects the local package (`../../../KitchenUI`). Push KitchenUI changes before tagging.
 - The `GroceryDeals` scheme is shared (committed under `xcshareddata`) because Xcode Cloud only sees shared schemes; it's defined in `project.yml`.

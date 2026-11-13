@@ -1,13 +1,27 @@
 #!/bin/sh
-# Send Grocery Deals to TestFlight. Tags the current commit as v<version> and pushes the tag;
-# Xcode Cloud's "TestFlight" workflow builds every tag that starts with "v", archives it and
-# uploads it to App Store Connect. Xcode Cloud sets the build number.
-# Usage: apple/testflight.sh            tag and push
-#        apple/testflight.sh --dry-run  show the version and tag, do nothing
+# Send Grocery Deals to TestFlight. Tags the current commit and pushes the tag; Xcode Cloud
+# builds it, archives it and uploads it to App Store Connect. Xcode Cloud sets the build number.
 #
-# The version comes from MARKETING_VERSION in project.yml. A second TestFlight build of the
-# same version gets v<version>-2, then -3 and so on.
+#   v<version>     the "TestFlight" workflow: internal testers only (you and the team)
+#   beta-<version> the "TestFlight External" workflow: the External Testers group, after
+#                  Apple's beta review. Notes for testers come from TestFlight/WhatToTest.en-US.txt
+#
+# Usage: apple/testflight.sh                       internal build: tag and push
+#        apple/testflight.sh --external            external build: tag and push
+#        apple/testflight.sh [--external] --dry-run  show the version and tag, do nothing
+#
+# The version comes from MARKETING_VERSION in project.yml. A second build of the same version
+# gets <tag>-2, then -3 and so on (each kind counts on its own).
 set -e
+PREFIX=v
+DRY=no
+for arg in "$@"; do
+  case "$arg" in
+    --external) PREFIX=beta- ;;
+    --dry-run) DRY=yes ;;
+    *) echo "Unknown option: $arg"; exit 1 ;;
+  esac
+done
 cd "$(dirname "$0")/GroceryDeals"
 
 # Xcode Cloud builds the committed .xcodeproj, so make sure it matches project.yml.
@@ -31,15 +45,20 @@ if [ -z "$(git branch -r --contains HEAD)" ]; then
 fi
 
 VERSION=$(sed -n 's/^ *MARKETING_VERSION: *"\{0,1\}\([^"]*\)"\{0,1\} *$/\1/p' project.yml | head -1)
-TAG="v$VERSION"
+TAG="$PREFIX$VERSION"
 N=2
 while git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; do
-  TAG="v$VERSION-$N"
+  TAG="$PREFIX$VERSION-$N"
   N=$((N + 1))
 done
 
+if [ "$PREFIX" = beta- ]; then
+  [ -s TestFlight/WhatToTest.en-US.txt ] || { echo "Write the notes for testers in apple/GroceryDeals/TestFlight/WhatToTest.en-US.txt first."; exit 1; }
+  echo "External testers will see this under What to Test:"
+  sed 's/^/  /' TestFlight/WhatToTest.en-US.txt
+fi
 echo "Grocery Deals $VERSION from $(git rev-parse --short HEAD): tag $TAG"
-[ "$1" = "--dry-run" ] && exit 0
+[ "$DRY" = yes ] && exit 0
 
 git tag -a "$TAG" -m "TestFlight $VERSION"
 git push -q origin "$TAG"
