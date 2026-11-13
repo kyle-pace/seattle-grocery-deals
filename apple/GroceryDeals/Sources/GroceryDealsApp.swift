@@ -88,7 +88,10 @@ struct RootView: View {
             ListProgressBar(list.title, done: list.items.filter(\.done).count, total: list.items.count) { tab = .list }
         }
         .tint(Palette.accent)
-        .onChange(of: tab, initial: true) { _, t in Analytics.screen(t.rawValue) }
+        .onChange(of: tab, initial: true) { _, t in
+            Analytics.screen(t.rawValue)
+            if t == .search, UIDevice.current.userInterfaceIdiom == .pad { router.searchFocusRequest += 1 }
+        }
         // A tapped "New deals are in": fetch the latest deals, then open the store when the
         // push was about one store's new flyer, or This week when it was about several.
         // Initial too: a push that launches the app is tapped before this view exists, and a
