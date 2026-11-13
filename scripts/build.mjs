@@ -1132,11 +1132,11 @@ function privacyPage() {
   const updated = "November 13, 2026";
   const body = `<div class="privacy-page">
 <div class="page-h"><h1>Privacy</h1><p class="page-sub">For the website and the app. Updated ${updated}.</p></div>
-<div class="note-card"><p>No accounts, no ads, nothing sold. Nothing asks for your name, email or location. The site and the app count which screens get used, privately, and you can turn that off.</p></div>
+<div class="note-card"><p>No accounts, no ads, nothing sold. Nothing asks for your name, email or location. The site and the app collect anonymous usage, like which screens get opened, and you can turn that off.</p></div>
 
 <h2 id="site">The website</h2>
-<h3>What's counted</h3>
-<p>The site uses <a href="https://amplitude.com">Amplitude</a> to count which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so repeat visits count once, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. How Amplitude handles that data is in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
+<h3>Anonymous usage</h3>
+<p>The site uses <a href="https://amplitude.com">Amplitude</a> to see which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so it can tell a return visit from a new one, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. How Amplitude handles that data is in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <h3>What stays in your browser</h3>
 <p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
@@ -1334,7 +1334,7 @@ function howMap() {
     app: ["The app", "iPhone and iPad"],
     mcp: ["Assistant server", "Cloudflare Worker"],
     ai: ["AI assistants", "Claude and others"],
-    amp: ["Counting", "Amplitude, private"],
+    amp: ["Usage", "Amplitude, anonymous"],
   };
   const r2 = (n) => Math.round(n * 100) / 100;
   const draw = (key, W, H, boxes, edges, labels, t) => {
@@ -1380,7 +1380,7 @@ function howMap() {
     };
     const labels = (p) => {
       const bus = (p.bot("pages") + p.top("browser")) / 2;
-      return [[p.cx("pages") + 30, bus - 8, "week.json"], [p.cx("push", -62), p.top("app") - 34, "push", "end"], [p.cx("amp", 57), p.top("amp") - 20, "counts only"]];
+      return [[p.cx("pages") + 30, bus - 8, "week.json"], [p.cx("push", -62), p.top("app") - 34, "push", "end"], [p.cx("amp", 57), p.top("amp") - 20, "anonymous"]];
     };
     return draw("wide", 14 + 2 * 303 + w + 14, 16 + 4 * 116 + h + 12, boxes, edges, labels, { rx: 14, pad: 18, ty: 28, sy: 47, title: 16, sub: 13, coin: 13, arrow: 11 });
   })();
@@ -1453,7 +1453,7 @@ function howPage() {
     ["Notifications", "Tells people their store has new deals", "Firebase and Apple"],
     ...(cfg.site.mcp_url ? [["Assistant server", "Answers AI assistants from the feed", "Cloudflare Worker"]] : []),
     ["App", "The same deals on iPhone and iPad", "SwiftUI"],
-    ["Counting", "Page views and taps, kept private", "Amplitude"],
+    ["Usage", "Page views and taps, anonymous", "Amplitude"],
   ];
   const body = `<div class="how-page">
 <div class="how-top">
@@ -1490,7 +1490,7 @@ ${places.map(([icon, title, text, href, go]) => `  <li class="card how-place">${
   <li><strong>No database.</strong> Each week is one file in the code, and <a href="${url("data/weeks/")}">every week is public</a>.</li>
   <li><strong>No accounts.</strong> With no sign-in, there is nothing about you to store.</li>
 </ul>
-<p>The one thing that flows back is a count. The site and the app tally page views and taps with Amplitude, set up to be private, and "People are adding" on This week comes from how often each deal is added to a list. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
+<p>The one thing that flows back is anonymous usage. The site and the app send page views and taps to Amplitude, set up to be private, and "People are adding" on This week comes from how often each deal is added to a list. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
 
 <h2 class="how-h">The parts</h2>
 <dl class="how-parts">
