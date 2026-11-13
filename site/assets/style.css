@@ -678,3 +678,24 @@ body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .how-parts dd { margin: 0; color: var(--text-body); }
 .how-parts .how-on { color: var(--muted); font-size: 0.9375rem; }
 @media (min-width: 40rem) { .how-parts > div { grid-template-columns: 11rem 1fr 11rem; gap: var(--s-l); align-items: baseline; } }
+/* the diagram: wide drawing from 44rem, tall drawing below it */
+.how-map { margin: var(--s-xl) 0 0; }
+.how-map svg { display: block; width: 100%; height: auto; font-family: var(--font); }
+.how-map-wide { display: none !important; }
+.how-map-tall { max-width: 24rem; }
+@media (min-width: 44rem) { .how-map-wide { display: block !important; } .how-map-tall { display: none !important; } }
+.how-map figcaption { margin-top: var(--s-m); font-size: 0.9375rem; color: var(--muted); max-width: var(--measure); }
+.hm-box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.hm-stop { stroke: var(--accent); stroke-width: 2; }
+.hm-t { font-weight: 700; fill: var(--ink); }
+.hm-s { fill: var(--muted); }
+.hm-l { font-weight: 700; fill: var(--accent); }
+.hm-e { fill: none; stroke-linejoin: round; }
+.hm-hot { stroke: var(--accent); stroke-width: 3.5; }
+.hm-plain { stroke: var(--muted); stroke-width: 2; }
+.hm-soft { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 2 6; stroke-linecap: round; }
+.hm-head-hot { fill: var(--accent); }
+.hm-head { fill: var(--muted); }
+.hm-coin { fill: var(--coin); stroke: #b8862a; stroke-width: 2.5; }
+.hm-n { font-weight: 800; fill: #0f1a24; }
+.how-route { margin-top: var(--s-l); }
