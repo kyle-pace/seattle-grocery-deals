@@ -79,7 +79,9 @@ final class WalkThrough: XCTestCase {
         shot("week")
 
         tab("Aisles"); pause(0.8); shot("aisles")
-        if tapFirst(labelBeginning: "Bakery") {
+        let bakery = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@ AND label CONTAINS[c] %@", "Bakery", "deals")).firstMatch
+        if bakery.waitForExistence(timeout: 3) {
+            bakery.tap()
             pause(1); shot("aisle-bakery")
             if tapFirst(labelBeginning: "T&T Supermarket") { pause(0.8); shot("aisle-bakery-tnt") }
             let chip = app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "All stores")).firstMatch
@@ -99,9 +101,9 @@ final class WalkThrough: XCTestCase {
         // Search: the field should be at the bottom on iPhone, with the keyboard up.
         tab("Search")
         pause(0.4); shot("search-just-opened")
-        pause(1.2); shot("search-open")
+        pause(2.5); shot("search-open")
         let field = app.searchFields.firstMatch
-        note("search fields: \(app.searchFields.count), keyboards: \(app.keyboards.count)")
+        note("search fields: \(app.searchFields.count), keyboards: \(app.keyboards.count), keys: \(app.keyboards.keys.count)")
         listButtons("search open")
         if field.exists {
             let focused = (field.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
