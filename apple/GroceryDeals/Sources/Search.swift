@@ -49,20 +49,17 @@ struct SearchView: View {
         NavigationStack(path: $path) {
             Page {
                 let q = router.searchQuery.trimmingCharacters(in: .whitespaces)
-                if q.isEmpty { landing } else { results(q) }
+                if store.feed == nil { LoadingDeals() } else if q.isEmpty { landing } else { results(q) }
             }
             .navigationTitle("Search")
-            // Always show the field: in the default spot it hid under the title until you
-            // pulled down, which made the Search tab look like it had no search box.
-            .searchable(text: $router.searchQuery, isPresented: $searching, placement: .navigationBarDrawer(displayMode: .always), prompt: "Deals, stores, aisles")
+            // The field sits where iOS 26 puts a search tab's field: at the bottom on iPhone,
+            // in place of the tab bar, within reach of a thumb. (It was pinned under the
+            // title, where the page opened with a small title and jumped to the large one on
+            // the first scroll.) RootView's `tabViewSearchActivation` opens the keyboard.
+            .searchable(text: $router.searchQuery, isPresented: $searching, prompt: "Deals, stores, aisles")
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)
-            .searchSuggestions {
-                ForEach(store.suggestions(router.searchQuery), id: \.self) { s in
-                    Label(s, systemImage: "magnifyingglass").searchCompletion(s)
-                }
-            }
             .searchScopes($scope, activation: .onSearchPresentation) {
                 ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
             }
@@ -156,6 +153,18 @@ struct SearchView: View {
         let stores = scope == .deals ? [] : store.searchStores(q)
         let deals = scope == .stores ? [] : store.search(q)
         let byAisle = Dictionary(grouping: deals, by: \.category)
+
+        // Ways to finish what's being typed, as chips over the results. They used to be the
+        // system's suggestion list, which covered the results with a black page.
+        let ideas = store.suggestions(q).filter { $0.caseInsensitiveCompare(q) != .orderedSame }
+        if scope != .stores, !ideas.isEmpty {
+            ChipRow {
+                ForEach(ideas, id: \.self) { s in
+                    FilterChip(s, systemImage: "magnifyingglass", isOn: false) { router.searchQuery = s; remember(s) }
+                }
+            }
+            .padding(.top, Space.m)
+        }
 
         // "pers", "fuyu", "hachiya": the season card first.
         if scope != .stores { SeasonSearchCards(query: q) }

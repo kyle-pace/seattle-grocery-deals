@@ -15,6 +15,7 @@ struct AddToListIntent: AppIntent {
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let text = item.trimmingCharacters(in: .whitespacesAndNewlines)
         let feed = FeedStore()
+        feed.useSavedWeek()
         let list = ListStore()
         // Before the person has chosen in the app, items go to the in-app list.
         list.add(text)

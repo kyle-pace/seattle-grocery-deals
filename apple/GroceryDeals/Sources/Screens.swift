@@ -303,16 +303,20 @@ struct StoresView: View {
         NavigationStack(path: $path) {
             Page {
                 MessageCard(place: "stores")
-                let mine = store.rankedStores.filter { store.isFavorite($0.id) }
-                if !mine.isEmpty {
-                    SectionHeading(title: "Your stores", note: "\(mine.count)")
-                    ForEach(mine) { s in tile(s) }
-                    SectionHeading(title: "More stores")
+                if store.feed == nil {
+                    LoadingDeals()
+                } else {
+                    let mine = store.rankedStores.filter { store.isFavorite($0.id) }
+                    if !mine.isEmpty {
+                        SectionHeading(title: "Your stores", note: "\(mine.count)")
+                        ForEach(mine) { s in tile(s) }
+                        SectionHeading(title: "More stores")
+                    }
+                    ForEach(store.rankedStores.filter { !store.isFavorite($0.id) }) { s in tile(s) }
                 }
-                ForEach(store.rankedStores.filter { !store.isFavorite($0.id) }) { s in tile(s) }
             }
             .navigationTitle("Stores")
-            .navigationSubtitle("\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
+            .navigationSubtitle(store.feed == nil ? "" : "\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
             .settingsButton()
             .navigationDestination(for: Store.self) { StoreDetail(s: $0, openStore: openStore) }
         }

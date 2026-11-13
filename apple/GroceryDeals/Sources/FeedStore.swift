@@ -12,7 +12,15 @@ final class FeedStore {
     private(set) var popular: [Popular.Item] = []
 
     private(set) var feed: Feed? { didSet { cache = nil } }
+    /// True while the deals are being fetched. It starts out true when there's no recent week
+    /// saved on this iPhone, so the first screen says it's loading instead of showing old deals.
     private(set) var loading = false
+    /// Held back while the first fetch runs: a saved week that's more than a week old. Shown
+    /// only if the fetch fails. With nothing saved, the week bundled with the app stands in.
+    @ObservationIgnored private var fallback: Feed?
+    @ObservationIgnored private var refreshing = false
+    /// When the deals last came from the site, this launch.
+    @ObservationIgnored private var lastFresh: Date?
     /// The last refresh couldn't reach the site, so we're showing a saved week.
     private(set) var offline = false
     /// Hides deals that end today (and ended ones) everywhere, like Vegetarian. The website's
@@ -63,18 +71,59 @@ final class FeedStore {
         favoriteStores = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
         vegetarianOnly = UserDefaults.standard.bool(forKey: "sgd.vegOnly")
         hideEndingToday = UserDefaults.standard.bool(forKey: "sgd.hideEndingToday")
-        feed = Self.cached() ?? Self.bundled()
+        // The first thing on screen is live deals, not a stand-in. A first launch has nothing
+        // saved, and the week bundled with the app can be weeks old by the time it's installed:
+        // it used to show until the fetch came back. Now the app starts on "Reading this week's
+        // flyers…" and shows the bundled or an old saved week only if the site can't be reached.
+        // This week's saved copy still shows at once, and the fetch replaces it.
+        let saved = Self.cached()
+        let recent = saved.map(Self.isThisWeek) ?? false
+        feed = recent ? saved : nil
+        fallback = recent ? nil : saved
+        loading = !recent
+    }
+
+    /// Weeks start on Fridays, and the next one begins when the first store posts a flyer that
+    /// day. A saved week that started up to seven days ago is still close to what the site has.
+    private static func isThisWeek(_ feed: Feed) -> Bool {
+        (Dates.daysLeft(through: feed.week) ?? -99) > -7
+    }
+
+    /// For Siri and Shortcuts, which answer from what's on the phone without waiting for the site.
+    func useSavedWeek() {
+        if feed == nil { feed = fallback ?? Self.bundled() }
+    }
+
+    /// Coming back to the app: fetch again when the deals on screen came in more than ten
+    /// minutes ago. Stores post new flyers through the week, and the app can sit open for days.
+    func refreshIfStale(after seconds: TimeInterval = 600) async {
+        if let lastFresh, Date.now.timeIntervalSince(lastFresh) < seconds { return }
+        await refresh()
     }
 
     func refresh() async {
+        guard !refreshing else { return }
+        refreshing = true
         loading = true
-        defer { loading = false }
+        defer {
+            // Nothing came back and nothing is on screen: the saved or bundled week, with the
+            // offline note above it.
+            if feed == nil { feed = fallback ?? Self.bundled() }
+            fallback = nil
+            loading = false
+            refreshing = false
+        }
         Task { await refreshPopular() }
         do {
-            let (data, response) = try await URLSession.shared.data(from: Self.feedURL)
+            // Fifteen seconds, not the system's sixty: a first launch on a bad connection
+            // shouldn't sit on the loading screen for a minute before the saved deals show.
+            var request = URLRequest(url: Self.feedURL)
+            request.timeoutInterval = 15
+            let (data, response) = try await URLSession.shared.data(for: request)
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { offline = true; return }
             let fresh = try JSONDecoder().decode(Feed.self, from: data)
             offline = false
+            lastFresh = .now
             if feed == nil || fresh.week >= feed!.week {
                 feed = fresh
                 try? data.write(to: Self.cacheURL, options: .atomic)

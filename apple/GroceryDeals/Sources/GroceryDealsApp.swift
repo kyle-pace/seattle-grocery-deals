@@ -34,6 +34,7 @@ struct GroceryDealsApp: App {
                     if p == .active {
                         list.reload()
                         MessageStore.shared.refresh()
+                        Task { await store.refreshIfStale() }
                     }
                 }
         }
@@ -80,6 +81,9 @@ struct RootView: View {
         }
         .tabViewStyle(.sidebarAdaptable)
         .tabBarMinimizeBehavior(.onScrollDown)
+        // Picking the Search tab puts the cursor in the field and brings up the keyboard;
+        // closing search goes back to the tab you came from.
+        .tabViewSearchActivation(.searchTabSelection)
         .listAccessory(show: tab != .list && !list.items.isEmpty) {
             ListProgressBar(list.title, done: list.items.filter(\.done).count, total: list.items.count) { tab = .list }
         }

@@ -60,7 +60,7 @@ struct AislesView: View {
             }
             .background(Palette.ground)
             .navigationTitle("Aisles")
-            .navigationSubtitle("\(store.items.count) deals in \(store.aisles.count) aisles")
+            .navigationSubtitle(store.feed == nil ? "" : "\(store.items.count) deals in \(store.aisles.count) aisles")
             .settingsButton()
             .refreshable { await store.refresh() }
             .navigationDestination(for: AisleRoute.self) { route in
