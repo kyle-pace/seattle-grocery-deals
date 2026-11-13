@@ -124,7 +124,7 @@ func toggle(_ deal: Deal, added: Bool, list: ListStore, store: FeedStore) {
         // vs "Japanese Sweet Potato" at T&T): swap this deal in rather than add a second line.
         let same = list.openItems.filter { item in
             guard let id = item.dealID, id != deal.id, let key = deal.key else { return false }
-            return store.items.first { $0.id == id }?.key == key
+            return store.deal(id)?.key == key
         }
         for item in same { list.remove(item) }
         list.request(name, deal: deal, storeName: store.storeName(deal.store))
@@ -135,6 +135,29 @@ func toggle(_ deal: Deal, added: Bool, list: ListStore, store: FeedStore) {
 /// "Fuyu Persimmon (California), Jumbo" -> "Fuyu Persimmon"
 /// "Yam - Japanese #1" -> "Japanese Yam"
 func shortName(_ name: String) -> String {
+    ShortNames.shared.value(for: name) { makeShortName(name) }
+}
+
+/// Short names are asked for on every row and, in Search, for every deal on every keystroke,
+/// and working one out takes a regular expression. Each name is worked out once.
+private final class ShortNames: @unchecked Sendable {
+    static let shared = ShortNames()
+    private let lock = NSLock()
+    private var known: [String: String] = [:]
+
+    func value(for name: String, make: () -> String) -> String {
+        lock.lock()
+        defer { lock.unlock() }
+        if let hit = known[name] { return hit }
+        // A few weeks of deals at most; start over rather than grow without end.
+        if known.count > 5_000 { known.removeAll(keepingCapacity: true) }
+        let made = make()
+        known[name] = made
+        return made
+    }
+}
+
+private func makeShortName(_ name: String) -> String {
     var s = String(name.split(whereSeparator: { $0 == "," || $0 == "(" }).first ?? Substring(name))
         .replacingOccurrences(of: #"\s*#\s*\d+\b"#, with: "", options: .regularExpression)
         .trimmingCharacters(in: .whitespaces)

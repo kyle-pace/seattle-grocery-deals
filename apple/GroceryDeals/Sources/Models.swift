@@ -302,11 +302,7 @@ struct Deal: Codable, Sendable, Identifiable, Hashable {
 /// When a deal ends, said the same way on every row (and on the website's rows).
 extension Deal {
     /// Days left counting today: 1 means it ends today, 0 or less means it has ended.
-    var daysLeft: Int? {
-        guard let end = Dates.date(ends) else { return nil }
-        let cal = Calendar.current
-        return (cal.dateComponents([.day], from: cal.startOfDay(for: .now), to: cal.startOfDay(for: end)).day ?? 0) + 1
-    }
+    var daysLeft: Int? { Dates.daysLeft(through: ends) }
     /// True once the sale's last day has passed.
     var ended: Bool { (daysLeft ?? 1) <= 0 }
     /// "Ends today", "Ends tomorrow" or "Ended": loud enough for a badge on the row.
@@ -331,7 +327,56 @@ enum Dates {
         return f
     }()
 
-    static func date(_ s: String?) -> Date? { s.flatMap { iso.date(from: $0) } }
+    /// Every row asks when its deal ends, several times per draw, and a week only has a
+    /// handful of different dates. Reading the same text with a DateFormatter hundreds of times
+    /// per screen is what made tab switches hitch (the Nov 12 recording), so each date is read
+    /// once and each "days left" is worked out once per day. Locked: deals are read off the
+    /// main thread too (the widget, Spotlight).
+    private final class Memo: @unchecked Sendable {
+        let lock = NSLock()
+        var dates: [String: Date?] = [:]
+        var left: [String: Int] = [:]
+        /// `left` counts from `today`, and is good until `tomorrow`.
+        var today = Date.distantPast
+        var tomorrow = Date.distantPast
+    }
+    private static let memo = Memo()
+
+    /// Call with the lock held.
+    private static func parsed(_ s: String) -> Date? {
+        if let known = memo.dates[s] { return known }
+        let d = iso.date(from: s)
+        memo.dates.updateValue(d, forKey: s)
+        return d
+    }
+
+    static func date(_ s: String?) -> Date? {
+        guard let s else { return nil }
+        memo.lock.lock()
+        defer { memo.lock.unlock() }
+        return parsed(s)
+    }
+
+    /// Days left counting today, for a last day like "2026-11-12": 1 means it's today, 0 or
+    /// less means it has passed. Nil when there's no date.
+    static func daysLeft(through s: String?) -> Int? {
+        guard let s else { return nil }
+        let now = Date.now
+        memo.lock.lock()
+        defer { memo.lock.unlock() }
+        if now < memo.today || now >= memo.tomorrow {
+            let cal = Calendar.current
+            memo.today = cal.startOfDay(for: now)
+            memo.tomorrow = cal.date(byAdding: .day, value: 1, to: memo.today) ?? memo.today.addingTimeInterval(86_400)
+            memo.left.removeAll(keepingCapacity: true)
+        }
+        if let known = memo.left[s] { return known }
+        guard let end = parsed(s) else { return nil }
+        let cal = Calendar.current
+        let left = (cal.dateComponents([.day], from: memo.today, to: cal.startOfDay(for: end)).day ?? 0) + 1
+        memo.left[s] = left
+        return left
+    }
 
     /// "2026-09" -> "Sep 2026"
     static func month(_ s: String) -> String {

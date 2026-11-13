@@ -53,6 +53,7 @@ struct RootView: View {
     @State private var openSeason: Season?
     @State private var onboarding = Welcome.start != nil
     @State private var router = DealsRouter.shared
+    @State private var opener = StoreOpener()
     @Environment(FeedStore.self) private var store
     @Environment(ListStore.self) private var list
     @Environment(AlertsStore.self) private var alerts
@@ -65,13 +66,17 @@ struct RootView: View {
 
     var body: some View {
         @Bindable var list = list
+        // Every tab gets the same closure each time this view is redrawn. A fresh closure
+        // looks like a change to SwiftUI, so all five tabs were rebuilt on every tab switch
+        // and every list change (this view reads `tab` and the list).
+        let open = opener.passing(self.openStore)
         TabView(selection: $tab) {
-            Tab("This week", systemImage: "newspaper", value: .week) { ThisWeekView(openStore: openStore) }
-            Tab("Aisles", systemImage: "square.grid.2x2", value: .aisles) { AislesView(path: $aislePath, openStore: openStore) }
-            Tab("Stores", systemImage: "storefront", value: .stores) { StoresView(path: $storePath, openStore: openStore) }
-            Tab("List", systemImage: "checklist", value: .list) { ListView(openStore: openStore) }
+            Tab("This week", systemImage: "newspaper", value: .week) { ThisWeekView(openStore: open) }
+            Tab("Aisles", systemImage: "square.grid.2x2", value: .aisles) { AislesView(path: $aislePath, openStore: open) }
+            Tab("Stores", systemImage: "storefront", value: .stores) { StoresView(path: $storePath, openStore: open) }
+            Tab("List", systemImage: "checklist", value: .list) { ListView(openStore: open) }
                 .badge(list.openItems.count)
-            Tab(value: .search, role: .search) { SearchView(router: router, openStore: openStore) }
+            Tab(value: .search, role: .search) { SearchView(router: router, openStore: open) }
         }
         .tabViewStyle(.sidebarAdaptable)
         .tabBarMinimizeBehavior(.onScrollDown)
@@ -103,7 +108,7 @@ struct RootView: View {
         // Keep "ends tomorrow" notifications in step with the list and the deals.
         .task(id: "\(feedVersion)|\(list.openItems.map(\.text).joined(separator: ","))|\(alerts.endingSoon)") {
             let matches = list.openItems.compactMap { item -> (text: String, deal: Deal, store: String)? in
-                let d = item.dealID.flatMap { id in store.items.first { $0.id == id } } ?? matchDeal(item.text, in: store.items)
+                let d = store.deal(item.dealID) ?? matchDeal(item.text, in: store.items)
                 return d.map { (item.text, $0, store.storeName($0.store)) }
             }
             await alerts.scheduleEndingSoon(matches)
@@ -174,6 +179,20 @@ struct RootView: View {
         guard let s = store.store(id) else { return }
         storePath = [s]
         tab = .stores
+    }
+}
+
+/// Holds one "open this store" closure for the life of the root view, so the tabs are handed
+/// the very same closure on every redraw and SwiftUI can tell nothing changed for them. It
+/// calls whatever the root view passed in last.
+@MainActor
+private final class StoreOpener {
+    private var latest: (String) -> Void = { _ in }
+    private lazy var stable: (String) -> Void = { [unowned self] id in self.latest(id) }
+
+    func passing(_ open: @escaping (String) -> Void) -> (String) -> Void {
+        latest = open
+        return stable
     }
 }
 

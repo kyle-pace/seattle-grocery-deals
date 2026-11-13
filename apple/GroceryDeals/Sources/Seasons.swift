@@ -23,12 +23,6 @@ extension FeedStore {
 
     func season(_ id: String) -> Season? { allSeasons.first { $0.id == id } }
 
-    /// A deal from this week by id, after the vegetarian filter.
-    func deal(_ id: String?) -> Deal? {
-        guard let id else { return nil }
-        return items.first { $0.id == id }
-    }
-
     func bestDeal(_ s: Season) -> Deal? { deal(s.best) }
     func deals(_ ids: [String]) -> [Deal] { ids.compactMap { deal($0) } }
 

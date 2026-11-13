@@ -128,7 +128,7 @@ struct ListView: View {
         var order: [String] = []
         var byKey: [String: [ListStore.Item]] = [:]
         for item in list.openItems {
-            guard let id = item.dealID, let key = store.items.first(where: { $0.id == id })?.key else { continue }
+            guard let id = item.dealID, let key = store.deal(id)?.key else { continue }
             if byKey[key] == nil { order.append(key) }
             byKey[key, default: []].append(item)
         }
@@ -167,7 +167,7 @@ struct ListView: View {
     }
 
     private func deal(for item: ListStore.Item) -> Deal? {
-        if let id = item.dealID, let d = store.items.first(where: { $0.id == id }) { return d }
+        if let id = item.dealID, let d = store.deal(id) { return d }
         let version = "\(store.feed?.week ?? "")|\(store.feed?.updated ?? "")|\(store.vegetarianOnly)|\(store.hideEndingToday)|\(store.items.count)"
         return matches.deal(item.text, version: version) { store.items }
     }
