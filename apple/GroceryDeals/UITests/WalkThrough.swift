@@ -78,7 +78,6 @@ final class WalkThrough: XCTestCase {
         note("tile exists \(tile.exists) hittable \(tile.exists && tile.isHittable) frame \(tile.exists ? tile.frame : .zero)")
         if tile.exists { tile.tap(); pause(1.5); shot("pad-store-page") }
         note("nav bars: " + app.navigationBars.allElementsBoundByIndex.map { $0.identifier }.joined(separator: " | "))
-        listButtons("store page")
         back(); pause(1); shot("pad-after-back")
         tab("List"); pause(1); shot("pad-list")
         tab("Search")
@@ -95,7 +94,6 @@ final class WalkThrough: XCTestCase {
             let scope = app.segmentedControls.buttons["Stores"]
             if scope.waitForExistence(timeout: 2) { scope.tap(); pause(0.8); shot("pad-search-stores") }
             field.typeText("\n"); pause(1); shot("pad-search-submitted")
-            listButtons("pad after search")
         }
     }
 
