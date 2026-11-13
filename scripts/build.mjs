@@ -462,7 +462,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -519,7 +519,8 @@ function topPicks(list) {
 // One store on This week as a card: a header row into the store, its best few deals that
 // aren't already top picks, and a way to see the rest. Rows carry data-hl like the picks.
 function storeCard(s, items, hlAll, hlVeg) {
-  const mine = items.filter((i) => i.store === s.id);
+  // Only sales still on, as on the app's This week (ended ones stay on the store's own page).
+  const mine = items.filter((i) => i.store === s.id && !isEnded(i));
   const r = RANKS[s.id];
   const f = latest.flyers.find((x) => x.store === s.id);
   const veg = mine.filter(isVegetarian);
@@ -539,7 +540,12 @@ function homePage() {
   const items = analyzed.get(latest.week);
   const end = EDITION_END;
   const veg = items.filter(isVegetarian);
-  const standouts = items.filter((i) => i.a.tier === "standout");
+  // This week only counts and shows sales still on, as in the app (FeedStore.live): an ended
+  // sale stays in the week until its store's next flyer, faded on store, aisle and search
+  // pages, but it's no use at the top. `items` still gives each row its place in the week.
+  const live = items.filter((i) => !isEnded(i));
+  const liveVeg = live.filter(isVegetarian);
+  const standouts = live.filter((i) => i.a.tier === "standout");
   const vegStandouts = standouts.filter(isVegetarian);
   // The picks for everyone, plus the vegetarian picks, so the section stays full when
   // "Vegetarian" is on. data-hl says which list a row belongs to.
@@ -549,7 +555,8 @@ function homePage() {
   const read = latest.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
   const soonPool = items.filter((i) => i.valid_through).slice(0, 60);
   // Stores with deals, best first by rank score (app.js reorders for Your stores and Vegetarian).
-  const shops = [...new Set(items.map((i) => i.store))].map((id) => cfg.storeById[id])
+  // A store whose listed sales have all ended drops out until its next flyer.
+  const shops = [...new Set(live.map((i) => i.store))].map((id) => cfg.storeById[id])
     .sort((a, b) => RANKS[b.id].score - RANKS[a.id].score);
   // Every store someone can pick (ones the routine reads), and the ones with no deals listed this week (their flyer
   // couldn't be read, or hasn't changed): picked ones still show, with a link to their ad.
@@ -560,12 +567,12 @@ function homePage() {
   const adding = (POPULAR.items ?? []).map((p) => {
     const rank = +p.deal_id.slice(p.deal_id.lastIndexOf("-") + 1);
     return { i: items[rank], rank, store: p.deal_id.slice(0, p.deal_id.lastIndexOf("-")), people: p.people };
-  }).filter((a) => a.i && a.i.store === a.store).slice(0, 3);
+  }).filter((a) => a.i && a.i.store === a.store && !isEnded(a.i)).slice(0, 3);
 
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
   <p class="page-intro">Sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
-  <p class="page-sub">${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))} from ${plural(storeCount(items), "store")}</p>
+  <p class="page-sub">${vegText(plural(live.length, "deal"), plural(liveVeg.length, "vegetarian deal"))} from ${plural(storeCount(live), "store")}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
 <div class="wrap" data-filterable>
@@ -627,7 +634,7 @@ ${soonPool.length ? `<section class="block ending" data-ending hidden aria-label
   const home = cfg.site.origin + cfg.site.base_path;
   write("", page({ title: "", path: "", body, wrap: false, pageId: "home",
     ogTitle: "Seattle Grocery Deals: this week's sales, sorted",
-    description: `${plural(items.length, "sale")} this week at ${storeCount(items)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
+    description: `${plural(live.length, "sale")} this week at ${storeCount(live)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
     jsonld: [
       { "@context": "https://schema.org", "@type": "WebSite", name: cfg.site.title, alternateName: ["SGD", "seattlegrocery.deals"], url: home, description: cfg.site.tagline, inLanguage: "en-US" },
       { "@context": "https://schema.org", "@type": "Organization", name: cfg.site.title, url: home, logo: `${home}assets/logo-512.png`, sameAs: [cfg.site.repo_url] },
@@ -968,7 +975,8 @@ ${s.facts.map((f) => `  <li>${esc(f).replace(/\*\*(.+?)\*\*/g, "<strong>$1</stro
 function seasonStories() {
   return SEASONS_NOW.map((s) => {
     const d = seasonWeek(s, latest.week);
-    if (!d.best) return "";
+    // No card once its headline sale has ended; it's back when the week has another.
+    if (!d.best || isEnded(d.best)) return "";
     // As the app's SeasonCard: "Fuyu $1.28/lb at T&T Supermarket", then "Through Thu · 6 stores
     // have them". The X hides it for this season (app.js, sgd.hiddenSeasons); the buddy in the
     // top bar still opens the page.
@@ -1056,6 +1064,7 @@ function aboutPage() {
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
 <p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>${cfg.site.mcp_url ? `
 <p>You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.</p>` : ""}
+<p>Curious how a flyer gets from a store's website to this page? <a href="${url("how-it-works/")}">How it works</a>.</p>
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
 <p>A store is included when it:</p>
@@ -1148,8 +1157,8 @@ function accessibilityPage() {
 // Screenshots are off for now; captures stay in site/assets/img/app/ for later.
 function appsPage() {
   const features = [
-    ["newspaper", "This week, sorted", "The same deals as this site, top picks first. Browse by aisle, search across stores, or hide meat and seafood with Vegetarian."],
-    ["storefront", "Your stores first", "Pick the stores you actually shop at and they lead everywhere, each with a link to its weekly ad."],
+    ["newspaper", "This week, sorted", "The same deals as this site, with the best stores to shop this week first. Browse by aisle, search across stores, or hide meat and seafood with Vegetarian."],
+    ["storefront", "Best of your stores", "Pick the stores you actually shop at and This week ranks just those, so you know where to go. Each one links to its weekly ad."],
     ["list", "A list that knows the sale", "Tap + on a deal and it goes on your list with the price, the store and the day the sale ends. Keep it in the app, or in a Reminders list you already share."],
     ["bell", "Alerts you choose", "New deals, a sale about to end, or something you're watching getting cheaper. Each one is off until you turn it on."],
     ["widget", "Widget and Siri", "Best This Week on your Home Screen. Ask Siri what's on sale, or add to your list without opening the app."],
@@ -1159,12 +1168,12 @@ function appsPage() {
   <h1>Seattle Grocery Deals</h1>
   <p class="app-tag">This week's grocery sales, in your pocket.</p>
   <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
-  <p class="app-platforms">For iPhone</p>
+  <p class="app-platforms">For iPhone and iPad</p>
   <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h2>${esc(title)}</h2><p>${esc(text)}</p></div></li>`).join("")}</ul>
   <p class="app-note">No account, and your list stays on your phone. More in <a href="${url("about/")}#privacy">About</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
@@ -1241,6 +1250,197 @@ ${pickable.map((s) => `  <label class="pick"><input type="checkbox" value="${esc
     ogTitle: "Ask your AI assistant what's on sale in Seattle",
     image: "assets/img/og-mcp.png",
     imageAlt: "Seattle Grocery Deals for AI assistants: the crow with his coin beside the question \"Who has chicken thighs on sale this week?\"",
+  }));
+}
+
+// The diagram at the top of How it works: the same parts drawn twice from one list, wide
+// (three columns) for big screens and tall (one column, then two) for phones, so there is no
+// sideways scrolling and the text stays readable. Colors come from the site's CSS (.how-map).
+// The gold numbers match the page's steps. Both drawings are decorative to screen readers:
+// the figure has one label and the steps below say the same thing in words.
+function howMap() {
+  const nodes = {
+    flyers: ["Store flyers", "Each store's own website", 1],
+    watcher: ["Flyer watcher", "GitHub Actions, every 30 min", 2],
+    reader: ["Flyer reader", "Claude Code routine", 3],
+    data: ["Week data file", "One file per week, on GitHub", 4],
+    build: ["Build", "GitHub Actions, checks first", 5],
+    pages: ["Website and feed", "GitHub Pages", 0, "Site and feed"],
+    push: ["Notifications", "Firebase, then Apple", 6],
+    browser: ["This site", "In your browser"],
+    app: ["The app", "iPhone and iPad"],
+    mcp: ["Assistant server", "Cloudflare Worker"],
+    ai: ["AI assistants", "Claude and others"],
+    amp: ["Counting", "Amplitude, private"],
+  };
+  const r2 = (n) => Math.round(n * 100) / 100;
+  const draw = (key, W, H, boxes, edges, labels, t) => {
+    const b = (id) => boxes[id];
+    const cx = (id, off = 0) => b(id).x + b(id).w / 2 + off;
+    const pt = { cx, top: (id) => b(id).y, bot: (id) => b(id).y + b(id).h, left: (id) => b(id).x, right: (id) => b(id).x + b(id).w, cy: (id) => b(id).y + b(id).h / 2 };
+    const lines = edges(pt).map(([cls, pts]) => `<polyline class="hm-e hm-${cls}" points="${pts.map((p) => p.map((n) => r2(n)).join(",")).join(" ")}" marker-end="url(#hm-${key}-${cls === "hot" ? "hot" : "plain"})"/>`).join("");
+    const rects = Object.entries(boxes).map(([id, { x, y, w, h }]) => {
+      const [long, sub, n, short] = nodes[id];
+      const title = (key === "tall" && short) || long;
+      return `<rect class="hm-box${n ? " hm-stop" : ""}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${t.rx}"/>`
+        + `<text class="hm-t" x="${x + t.pad}" y="${y + t.ty}" font-size="${t.title}">${esc(title)}</text>`
+        + `<text class="hm-s" x="${x + t.pad}" y="${y + t.sy}" font-size="${t.sub}">${esc(sub)}</text>`
+        + (n ? `<circle class="hm-coin" cx="${x + 2}" cy="${y + 2}" r="${t.coin}"/><text class="hm-n" x="${x + 2}" y="${y + 2 + t.coin * 0.38}" font-size="${t.coin * 1.15}" text-anchor="middle">${n}</text>` : "");
+    }).join("");
+    const notes = labels(pt).map(([x, y, text, anchor = "start"]) => `<text class="hm-l" x="${r2(x)}" y="${r2(y)}" font-size="${t.sub}" text-anchor="${anchor}">${esc(text)}</text>`).join("");
+    const head = (id, cls) => `<marker id="hm-${key}-${id}" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="${t.arrow}" markerHeight="${t.arrow}" orient="auto"><path class="${cls}" d="M0 0L10 5L0 10z"/></marker>`;
+    return `<svg class="how-map-${key}" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-hidden="true" focusable="false"><defs>${head("hot", "hm-head-hot")}${head("plain", "hm-head")}</defs>${lines}${rects}${notes}</svg>`;
+  };
+
+  // Wide: three columns, five rows. The route snakes right, then left, then fans out.
+  const wide = (() => {
+    const w = 250, h = 64, col = (c) => 14 + c * 303, row = (r) => 16 + r * 116;
+    const at = (c, r) => ({ x: col(c), y: row(r), w, h });
+    const boxes = { flyers: at(0, 0), watcher: at(1, 0), reader: at(2, 0), push: at(0, 1), build: at(1, 1), data: at(2, 1), pages: at(1, 2), app: at(0, 3), browser: at(1, 3), mcp: at(2, 3), amp: at(1, 4), ai: at(2, 4) };
+    const edges = (p) => {
+      const bus = (p.bot("pages") + p.top("browser")) / 2, low = (p.bot("app") + p.top("amp")) / 2;
+      return [
+        ["plain", [[p.cx("pages"), bus], [p.cx("mcp"), bus], [p.cx("mcp"), p.top("mcp")]]],
+        ["plain", [[p.cx("pages"), p.bot("pages")], [p.cx("browser"), p.top("browser")]]],
+        ["plain", [[p.cx("mcp"), p.bot("mcp")], [p.cx("ai"), p.top("ai")]]],
+        ["soft", [[p.cx("app"), p.bot("app")], [p.cx("app"), low], [p.cx("amp", -45), low], [p.cx("amp", -45), p.top("amp")]]],
+        ["soft", [[p.cx("browser", 45), p.bot("browser")], [p.cx("amp", 45), p.top("amp")]]],
+        ["hot", [[p.right("flyers"), p.cy("flyers")], [p.left("watcher"), p.cy("watcher")]]],
+        ["hot", [[p.right("watcher"), p.cy("watcher")], [p.left("reader"), p.cy("reader")]]],
+        ["hot", [[p.cx("reader"), p.bot("reader")], [p.cx("data"), p.top("data")]]],
+        ["hot", [[p.left("data"), p.cy("data")], [p.right("build"), p.cy("build")]]],
+        ["hot", [[p.left("build"), p.cy("build")], [p.right("push"), p.cy("push")]]],
+        ["hot", [[p.cx("build"), p.bot("build")], [p.cx("pages"), p.top("pages")]]],
+        ["hot", [[p.cx("pages"), bus], [p.cx("app", 50), bus], [p.cx("app", 50), p.top("app")]]],
+        ["hot", [[p.cx("push", -50), p.bot("push")], [p.cx("app", -50), p.top("app")]]],
+      ];
+    };
+    const labels = (p) => {
+      const bus = (p.bot("pages") + p.top("browser")) / 2;
+      return [[p.cx("pages") + 30, bus - 8, "week.json"], [p.cx("push", -62), p.top("app") - 34, "push", "end"], [p.cx("amp", 57), p.top("amp") - 20, "counts only"]];
+    };
+    return draw("wide", 14 + 2 * 303 + w + 14, 16 + 4 * 116 + h + 12, boxes, edges, labels, { rx: 14, pad: 18, ty: 28, sy: 47, title: 16, sub: 13, coin: 13, arrow: 11 });
+  })();
+
+  // Tall: the route straight down, then two columns for where it comes out.
+  const tall = (() => {
+    const X = 18, FW = 290, HW = 139, RX = X + FW - HW, h = 54, row = (r) => 14 + r * 84;
+    const full = (r) => ({ x: X, y: row(r), w: FW, h }), L = (r) => ({ x: X, y: row(r), w: HW, h }), R = (r) => ({ x: RX, y: row(r), w: HW, h });
+    const boxes = { flyers: full(0), watcher: full(1), reader: full(2), data: full(3), build: full(4), pages: L(5), push: R(5), browser: L(6), app: R(6), mcp: L(7), amp: R(7), ai: L(8) };
+    const edges = (p) => {
+      const g1 = (p.bot("pages") + p.top("browser")) / 2, g2 = (p.bot("browser") + p.top("mcp")) / 2, rail = 6;
+      return [
+        ["plain", [[p.cx("pages", -30), p.bot("pages")], [p.cx("browser", -30), p.top("browser")]]],
+        ["plain", [[p.left("pages"), p.cy("pages")], [rail, p.cy("pages")], [rail, p.cy("mcp")], [p.left("mcp"), p.cy("mcp")]]],
+        ["plain", [[p.cx("mcp"), p.bot("mcp")], [p.cx("ai"), p.top("ai")]]],
+        ["soft", [[p.cx("app"), p.bot("app")], [p.cx("amp"), p.top("amp")]]],
+        ["soft", [[p.cx("browser", 30), p.bot("browser")], [p.cx("browser", 30), g2], [p.cx("amp", -40), g2], [p.cx("amp", -40), p.top("amp")]]],
+        ...["flyers", "watcher", "reader", "data"].map((id, i, a) => { const next = [...a, "build"][i + 1]; return ["hot", [[p.cx(id), p.bot(id)], [p.cx(next), p.top(next)]]]; }),
+        ["hot", [[p.cx("pages"), p.bot("build")], [p.cx("pages"), p.top("pages")]]],
+        ["hot", [[p.cx("push"), p.bot("build")], [p.cx("push"), p.top("push")]]],
+        ["hot", [[p.cx("pages", 30), p.bot("pages")], [p.cx("pages", 30), g1], [p.cx("app", -35), g1], [p.cx("app", -35), p.top("app")]]],
+        ["hot", [[p.cx("push", 35), p.bot("push")], [p.cx("app", 35), p.top("app")]]],
+      ];
+    };
+    const labels = (p) => [[p.cx("app", -25), p.top("app") - 7, "feed"], [p.cx("app", 42), p.top("app") - 11, "push"]];
+    return draw("tall", X + FW + 12, 14 + 8 * 84 + h + 10, boxes, edges, labels, { rx: 12, pad: 14, ty: 23, sy: 40, title: 14, sub: 11.5, coin: 11, arrow: 9 });
+  })();
+
+  return `<figure class="how-map" role="img" aria-label="Diagram of the whole system. A flyer watcher checks each store's flyer page and starts the flyer reader, which writes the week's data file. A build turns that file into the website and a feed on GitHub Pages. The site in your browser, the app and the assistant server all read that feed, and the build also sends notifications to the app. The site and the app send private counts to Amplitude. The steps below describe each part.">
+${wide}
+${tall}
+<figcaption>The whole system on one page. The blue line is the route a new flyer takes, and the numbers match the steps below.</figcaption>
+</figure>`;
+}
+
+// How it works, at /how-it-works/: the route one flyer takes from a store's site to a phone,
+// in plain words (the same flow as docs/architecture.svg). Linked from the footer and About.
+// If the flow changes (the watcher, the routine, the build, the notify job, the MCP server),
+// change this page too. Share image: node scripts/how-og.mjs.
+function howPage() {
+  const desktop = cfg.stores.filter((s) => s.active && s.watch?.desktop).map((s) => s.name);
+  const listed = (names) => names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names.join("");
+  const stops = [
+    ["A store posts its new flyer", "The store's own website",
+      `<p>Each store puts its weekly ad on its own site: a page, a set of images or a PDF. That is the only source. This site never uses flyer aggregators, and it links back to every flyer it reads.</p>`],
+    ["The watcher notices", "GitHub Actions, every 30 minutes",
+      `<p>A small script visits each store's flyer page and takes a fingerprint of it: the addresses of the flyer images or PDF, or the printed sale dates. A fingerprint that differs from the last one means a new flyer. A page that fails to load never counts as a change.</p>`],
+    ["Claude reads the flyer", "A Claude Code routine, in the cloud",
+      `<p>The watcher starts an AI agent and tells it which stores changed. It opens each flyer and reads every page, writing down each grocery item with the price exactly as printed. A price it can't read clearly is left out, never guessed. Snacks, drinks and ready-made meals are skipped.</p>${desktop.length ? `
+<p class="how-aside">${esc(listed(desktop))} sit behind a bot check that a cloud reader can't pass. The site doesn't try to get around it. Those flyers are read from a regular desktop browser instead.</p>` : ""}`],
+    ["The rows become data, and get checked", "Scripts in the site's code",
+      `<p>Scripts turn those rows into the week's data file. Each item is matched to a shared catalog, so chicken thighs at one store can be compared with chicken thighs at another, and with past weeks. A validator then checks the math: unit prices, percent off, dates.</p>
+<p>Anything odd gets flagged, like a price three times its last listing. The agent fixes what the flyer can settle, the update is saved to the site's public code, and whatever is left goes to the owner to check by hand.</p>`],
+    ["The site rebuilds itself", "GitHub Actions and GitHub Pages",
+      `<p>Every saved change starts a rebuild, and so does every hour. The build ranks the deals, picks the standouts by <a href="${url("about/")}#how">the rules on About</a>, and writes every page as plain HTML. It also writes one feed file, <a href="${url("api/week.json")}">week.json</a>, with the same deals for anything that isn't a web page. There is no database: the data files are the record.</p>`],
+    ["New deals are in", "Firebase Cloud Messaging, then Apple",
+      `<p>Once the new pages are live, a last job works out which stores got a new flyer in that update and sends a notification to the people who picked those stores in the app. A marker per flyer makes sure nobody hears about the same one twice.</p>`],
+  ];
+  const places = [
+    ["newspaper", "This site", `Plain pages from GitHub Pages. Your list, your stores and your display settings are kept in your browser and nowhere else.`, url(), "See this week"],
+    ["widget", "The app", `For iPhone and iPad, coming soon. It fetches the same feed when you open it, and matches your list and price watches on the phone.`, url("app/"), "About the app"],
+    ...(cfg.site.mcp_url ? [["search", "AI assistants", `A small Cloudflare Worker reads the same feed and answers questions from Claude or another assistant. It keeps nothing.`, url("mcp/"), "Connect an assistant"]] : []),
+  ];
+  const parts = [
+    ["Flyer watcher", "Spots a new flyer", "GitHub Actions"],
+    ["Flyer update", "Reads the flyer and writes the data", "Claude Code routine"],
+    ["Item catalog", "Matches the same item across stores and weeks", "A file in the code"],
+    ["Build", "Checks, ranks, writes the pages and the feed", "GitHub Actions"],
+    ["Website and feed", "Serves the pages and week.json", "GitHub Pages"],
+    ["Notifications", "Tells people their store has new deals", "Firebase and Apple"],
+    ...(cfg.site.mcp_url ? [["Assistant server", "Answers AI assistants from the feed", "Cloudflare Worker"]] : []),
+    ["App", "The same deals on iPhone and iPad", "SwiftUI"],
+    ["Counting", "Page views and taps, kept private", "Amplitude"],
+  ];
+  const body = `<div class="how-page">
+<div class="how-top">
+  ${buddy("thinking", 112)}
+  <div>
+    <h1>How it works</h1>
+    <p class="lede">A new flyer goes from a store's website to this site, the app and your phone with nobody pressing a button. Here is the route one flyer takes.</p>
+  </div>
+</div>
+
+${howMap()}
+
+<h2 class="how-h">The route, step by step</h2>
+<ol class="how-route">
+${stops.map(([title, where, html], i) => `  <li class="how-stop">
+    <span class="how-n" aria-hidden="true">${i + 1}</span>
+    <div class="how-body">
+      <h2>${esc(title)}</h2>
+      <p class="how-where"><span class="sr-only">Where it runs: </span>${esc(where)}</p>
+      ${html}
+    </div>
+  </li>`).join("\n")}
+</ol>
+
+<h2 class="how-h">Where it comes out</h2>
+<p>Everything reads the same data, so the site, the app and an assistant always agree on a price.</p>
+<ul class="how-places">
+${places.map(([icon, title, text, href, go]) => `  <li class="card how-place">${ic(icon)}<h3>${esc(title)}</h3><p>${text}</p><a class="go" href="${esc(href)}">${esc(go)}</a></li>`).join("\n")}
+</ul>
+
+<h2 class="how-h">What isn't here, on purpose</h2>
+<ul>
+  <li><strong>No servers of its own.</strong> Every step runs on a service that already exists, so there is nothing to keep awake at night.</li>
+  <li><strong>No database.</strong> Each week is one file in the code, and <a href="${url("data/weeks/")}">every week is public</a>.</li>
+  <li><strong>No accounts.</strong> With no sign-in, there is nothing about you to store.</li>
+</ul>
+<p>The one thing that flows back is a count. The site and the app tally page views and taps with Amplitude, set up to be private, and "People are adding" on This week comes from how often each deal is added to a list. More in <a href="${url("about/")}">About and privacy</a>.</p>
+
+<h2 class="how-h">The parts</h2>
+<dl class="how-parts">
+${parts.map(([part, job, on]) => `  <div><dt>${esc(part)}</dt><dd>${esc(job)}</dd><dd class="how-on">${esc(on)}</dd></div>`).join("\n")}
+</dl>
+<p>The code for all of it is public: <a href="${esc(cfg.site.repo_url)}">see the source on GitHub</a>.</p>
+</div>`;
+  write("how-it-works/", page({
+    title: "How it works", path: "how-it-works/", section: "about/", body,
+    description: "How a store's new flyer becomes a deal on Seattle Grocery Deals: a watcher, an AI reader, checks, a rebuild and a notification, with no servers of its own.",
+    ogTitle: "How Seattle Grocery Deals works",
+    image: "assets/img/og-how.png",
+    imageAlt: "How Seattle Grocery Deals works: the crow beside a route of six stops, from a store's flyer to your phone.",
   }));
 }
 
@@ -1349,6 +1549,7 @@ accessibilityPage();
 yourListPage();
 appsPage();
 mcpPage();
+howPage();
 for (const s of SEASONS) seasonPage(s);
 dataPages();
 notFound();
