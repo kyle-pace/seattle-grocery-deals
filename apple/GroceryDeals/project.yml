@@ -31,6 +31,10 @@ schemes:
         GroceryDeals: all
     run:
       config: Debug
+    test:
+      config: Debug
+      targets:
+        - DealsUITests
     archive:
       config: Release
 targets:
@@ -108,3 +112,19 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
+  # A walk through every tab that saves screenshots (UITests/WalkThrough.swift). Run it on an
+  # iPhone and an iPad simulator after UI changes.
+  DealsUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - UITests
+    dependencies:
+      - target: GroceryDeals
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery$(BUNDLE_ID_SUFFIX).uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1,2"
+        SWIFT_VERSION: "5.0"
+        TEST_TARGET_NAME: GroceryDeals
