@@ -25,8 +25,11 @@ final class PushStore {
     private var wantsNewDeals = false
     /// The stores picked in onboarding or Settings, mirrored from FeedStore.
     private var stores: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
-    /// Phones on the dev Firebase project (Kyle's, for now) also join the test topic.
+    /// On the dev Firebase project. TestFlight builds use it too until a prod project exists.
     private var devProject = false
+    /// Deals Dev (bundle ID ending in .dev), the build install-on-iphone.sh puts on the owner's
+    /// devices. Only it joins the test topic, so people on TestFlight never get test sends.
+    private static var isDevApp: Bool { Bundle.main.bundleIdentifier?.hasSuffix(".dev") ?? false }
     private static let subscribedKey = "sgd.push.topics"
 
     func configure() {
@@ -73,14 +76,14 @@ final class PushStore {
         Analytics.track("Opened Push", ["kind": kind, "week": week ?? "", "stores": stores.joined(separator: ",")])
     }
 
-    /// Topics this phone should be in. On the dev project it also joins the test topic, so
-    /// test sends from the workflow reach only development phones. (install-on-iphone.sh
-    /// builds Release, so this goes by project, not by Debug or Release.)
+    /// Topics this phone should be in. Deals Dev on the dev project also joins the test topic,
+    /// so test sends from the workflow reach only development phones. (install-on-iphone.sh
+    /// builds Release, so this goes by bundle ID, not by Debug or Release.)
     private var wanted: Set<String> {
         guard wantsNewDeals else { return [] }
         // Picked stores get their own topics; no picks means every store (new-deals).
         var topics: Set<String> = stores.isEmpty ? ["new-deals"] : Set(stores.map { "store-\($0)" })
-        if devProject { topics.insert("new-deals-test") }
+        if devProject && Self.isDevApp { topics.insert("new-deals-test") }
         return topics
     }
 
