@@ -66,7 +66,21 @@
       var c = g.querySelector("[data-group-count]");
       if (c) c.textContent = n;
     });
-    // Store cards on This week: Best of your stores, then the store picker on top.
+    // Store cards on This week: the first three deals that pass the filters, are still on today
+    // (the page can be built before midnight and read after) and aren't already in Best single
+    // deals. The build sends enough for every filter mix. A card left with none steps out of
+    // the ranking (rankStores) rather than sit empty beside a full one.
+    var mode = vegOnly ? "v" : "a";
+    all("[data-store-card]").forEach(function (card) {
+      var n = 0;
+      all("[data-card-row]", card).forEach(function (el) {
+        var ok = !el.hidden && (el.dataset.pick || "").indexOf(mode) < 0 && !(el.dataset.ends && el.dataset.ends < today) && n < 3;
+        el.hidden = !ok;
+        if (ok) n++;
+      });
+      card.toggleAttribute("data-none", n === 0);
+    });
+    // Then Best of your stores, then the store picker on top.
     rankStores();
     if (home && storeSel && storeSel.value) all("[data-store-card]", home).forEach(function (li) {
       if (li.dataset.storeCard !== storeSel.value) li.hidden = true;
@@ -112,7 +126,9 @@
     var cards = all("[data-store-card]", yours);
     cards.forEach(function (li) { list.appendChild(li); li.classList.remove("store-card-best"); });
     // A store with no vegetarian deals can't be best when Vegetarian is on.
-    var usable = cards.filter(function (li) { return !(vegOnly && li.hasAttribute("data-meat-only")); });
+    // A store with nothing left under the filters (Vegetarian, When it ends) or still on today
+    // can't be ranked: it has no card, and a picked one is named in a note instead.
+    var usable = cards.filter(function (li) { return !li.hasAttribute("data-none"); });
     usable.sort(function (a, b) { return num(b, "score") - num(a, "score"); });
     var mine = picked.length ? usable.filter(function (li) { return picked.indexOf(li.dataset.storeCard) >= 0; }) : usable;
     cards.forEach(function (li) { li.hidden = mine.indexOf(li) < 0; });
@@ -137,7 +153,10 @@
     elsewhere.hidden = !ahead;
     if (ahead) { other.hidden = false; elseList.appendChild(other); }
     var note = yours.querySelector("[data-quiet-note]");
-    note.hidden = !(picked.length && (quiet || !best));
+    var none = cards.filter(function (li) { return li.hasAttribute("data-none") && picked.indexOf(li.dataset.storeCard) >= 0; })
+      .map(function (li) { return li.dataset.name; });
+    // "No deals listed at your stores yet" isn't true when the filters are what emptied them.
+    note.hidden = !(picked.length && (quiet || (!best && !none.length)));
     if (!note.hidden) {
       var names = mine.map(function (li) { return li.dataset.name; });
       note.innerHTML = "";
@@ -145,6 +164,13 @@
       b.textContent = best ? "A quiet week at " + (names.length > 2 ? "your stores" : names.join(" and ")) : "No deals listed at your stores yet";
       note.appendChild(b);
       note.appendChild(document.createTextNode(" " + (ahead ? other.dataset.name + " has " + num(other, "standouts") + " standouts, if you can get there." : "New flyers come in through the week, so check back soon.")));
+    }
+    var fnote = yours.querySelector("[data-filtered-note]");
+    if (fnote) {
+      var what = (vegOnly ? " vegetarian" : "") + (endsMin === 2 ? " that isn't ending today" : endsMin ? " with " + endsMin + "+ days left" : vegOnly ? "" : " on sale today");
+      var who = none.length > 2 ? none.slice(0, -1).join(", ") + " and " + none[none.length - 1] : none.join(" and ");
+      fnote.textContent = none.length ? who + (none.length === 1 ? " has" : " have") + " nothing" + what + "." : "";
+      fnote.hidden = !none.length;
     }
     // Picked stores with no deals listed this week.
     all("[data-unread-card]", yours).forEach(function (li) { li.hidden = picked.indexOf(li.dataset.unreadCard) < 0; });

@@ -212,9 +212,12 @@ html.veg-on [data-meat-only] { display: none; }
 .list { padding-bottom: 1rem; }
 
 /* store cards on This week */
-.store-cards { list-style: none; margin: var(--s-xs) 0 0; padding: 0; display: grid; gap: var(--s-m); align-items: start; }
+/* Cards side by side are the same height, with "See all" along the bottom. */
+.store-cards { list-style: none; margin: var(--s-xs) 0 0; padding: 0; display: grid; gap: var(--s-m); align-items: stretch; }
 @media (min-width: 44rem) { .store-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.store-card { overflow: hidden; }
+.store-card { overflow: hidden; display: flex; flex-direction: column; }
+.store-card > .see-all { margin-top: auto; }
+.filtered-note { margin: var(--s-s) 0 0; color: var(--muted); }
 .store-card-h { margin: 0 !important; font-size: inherit !important; }
 .store-card-h a { display: flex; align-items: center; gap: var(--s-s); min-height: 44px; padding: var(--s-l); background: color-mix(in srgb, var(--raised) 50%, transparent); color: var(--ink); text-decoration: none; }
 .store-card-h a:hover .store-card-name { text-decoration: underline; }

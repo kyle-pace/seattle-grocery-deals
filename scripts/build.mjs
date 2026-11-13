@@ -37,6 +37,8 @@ const DAY_LABELS = { mon: "Mon", tue: "Tue", wed: "Wed", thu: "Thu", fri: "Fri",
 const TIER_LABELS = { standout: "Standout", good: "Good deal", sale: "On sale" };
 const PER_LABEL = { lb: "/lb", each: " each", dozen: "/dozen", l: "/L", gal: "/gal" };
 const CATS = cfg.criteria.categories;
+// Deals on each store card on This week.
+const CARD_ROWS = 3;
 // How many standouts the home page shows before "See all".
 const HOME_BEST = 10;
 // At most this many top picks from any one store.
@@ -524,10 +526,17 @@ function storeCard(s, items, hlAll, hlVeg) {
   const r = RANKS[s.id];
   const f = latest.flyers.find((x) => x.store === s.id);
   const veg = mine.filter(isVegetarian);
-  const bestA = mine.filter((i) => !hlAll.includes(i)).slice(0, 3);
-  const bestV = veg.filter((i) => !hlVeg.includes(i)).slice(0, 3);
-  const rows = mine.filter((i) => bestA.includes(i) || bestV.includes(i))
-    .map((i) => dealRow(i, items.indexOf(i), { store: false }).replace('<li class="deal" ', `<li class="deal" data-hl="${(bestA.includes(i) ? "a" : "") + (bestV.includes(i) ? "v" : "")}" `));
+  // A card shows three deals, picked in the browser (app.js) by the filters that are on. So it
+  // never sits half empty beside a full one, the build sends the best three for every mix the
+  // page offers: Vegetarian off or on, times Ends any day, Not ending today and 3+ days left.
+  // Best single deals aren't repeated here (data-pick says which list they lead).
+  const left = (i) => (i.valid_through ? Math.round((Date.parse(i.valid_through) - Date.parse(TODAY)) / 86400000) + 1 : Infinity);
+  const pool = new Set();
+  for (const [list, picks] of [[mine, hlAll], [veg, hlVeg]]) {
+    for (const min of [0, 2, 3]) list.filter((i) => !picks.includes(i) && left(i) >= min).slice(0, CARD_ROWS).forEach((i) => pool.add(i));
+  }
+  const rows = mine.filter((i) => pool.has(i))
+    .map((i) => dealRow(i, items.indexOf(i), { store: false }).replace('<li class="deal" ', `<li class="deal" data-card-row data-pick="${(hlAll.includes(i) ? "a" : "") + (hlVeg.includes(i) ? "v" : "")}" `));
   // data-score and data-quiet (and their vegetarian twins) let app.js rank Your stores.
   return `<li class="card store-card" data-store-card="${esc(s.id)}" data-name="${esc(s.name)}" data-score="${r.score}" data-score-v="${r.veg.score}" data-standouts="${r.standouts}" data-standouts-v="${r.veg.standouts}"${r.quiet ? " data-quiet" : ""}${r.veg.quiet ? " data-quiet-v" : ""}${f?.valid_from ? ` data-from="${f.valid_from}"` : ""}${veg.length ? "" : " data-meat-only"}>
   <h3 class="store-card-h"><a href="${url(`stores/${s.id}/`)}" data-open-store>${ic("storefront")}<span class="store-card-t"><span class="store-card-badges"><span class="badge tone-accent" data-best-badge hidden>Best this week</span><span class="badge tone-info" data-new-flyer hidden>New flyer today</span></span><span class="store-card-name">${esc(s.name)}</span><span class="store-card-why">${vegText(esc(r.reason), esc(r.veg.reason))}</span><span class="store-card-n">${vegText(dealCounts(mine), dealCounts(veg))}</span></span>${ic("chevron")}</a></h3>
@@ -561,7 +570,9 @@ function homePage() {
   // Every store someone can pick (ones the routine reads), and the ones with no deals listed this week (their flyer
   // couldn't be read, or hasn't changed): picked ones still show, with a link to their ad.
   const pickable = cfg.stores.filter((s) => s.active && !s.no_online_flyer && latest.flyers.some((f) => f.store === s.id)).sort((a, b) => a.name.localeCompare(b.name));
-  const unread = pickable.filter((s) => !RANKS[s.id]);
+  // Picked stores with no card get a line instead: no deals listed, or every sale listed has ended
+  // and the next flyer isn't in yet.
+  const unread = pickable.filter((s) => !live.some((i) => i.store === s.id));
   const edition = fmtDate(latest.week, { weekday: false });
   // People are adding: the top three from /api/popular.json (ids are "<store>-<rank>").
   const adding = (POPULAR.items ?? []).map((p) => {
@@ -596,10 +607,11 @@ ${pickable.map((s) => `      <label class="pick"><input type="checkbox" value="$
   </details>
   <div class="card quiet-note" data-quiet-note hidden></div>
   <ul class="store-cards" data-rank-list>${shops.map((s) => storeCard(s, items, hlAll, hlVeg)).join("\n")}</ul>
+  <p class="small filtered-note" data-filtered-note hidden></p>
   <ul class="unread-cards" data-unread-list>${unread.map((s) => {
     const f = latest.flyers.find((x) => x.store === s.id);
     const ad = s.flyer_url ?? f?.links?.[0]?.url ?? s.website;
-    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${f?.status === "stale" ? "Its new flyer isn't up yet." : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
+    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) ? "This week's sales have ended. Its new flyer isn't in yet." : f?.status === "stale" ? "Its new flyer isn't up yet." : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
   }).join("")}</ul>
   <div class="elsewhere" data-elsewhere hidden>
     <div class="sec-h"><h3 class="sec-label">Elsewhere this week</h3><p>Not one of your stores, but clearly ahead</p></div>
