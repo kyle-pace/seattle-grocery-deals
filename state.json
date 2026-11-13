@@ -48,16 +48,23 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-12T18:49:48.524Z"
+      "error_at": "2026-11-13T00:10:54.355Z"
     },
     "hmart": {
-      "fingerprint": "d4da8f6c0c4f5360",
+      "fingerprint": "70c6fc305572432e",
       "matches": [
-        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915601404-R52NYWP6CQBA1KLSHAK1/110626+WA+HMart+Weekly.jpg",
-        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915604576-UA45DMH61MZJOU2WKPJE/110626+WA+HMart+Weekly_eng.jpg"
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521337521-BDOA41XAM7LIOJA3NCS9/111326+WA+HMart+Weekly.jpg",
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521340305-Z9FJLWSCG0IJHTQZ9L08/111326+WA+HMart+Weekly_eng.jpg"
       ],
-      "seen_at": "2026-11-05T21:55:52.245Z",
-      "updated_at": "2026-11-06T02:17:17.260Z"
+      "seen_at": "2026-11-13T00:10:54.355Z",
+      "updated_at": "2026-11-06T02:17:17.260Z",
+      "pending": {
+        "since": "2026-11-13T00:10:54.355Z",
+        "live_before": "2026-11-06|https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915604576-UA45DMH61MZJOU2WKPJE/110626+WA+HMart+Weekly_eng.jpg https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915601404-R52NYWP6CQBA1KLSHAK1/110626+WA+HMart+Weekly.jpg https://www.hmartus.com/weekly-sale-wa",
+        "fires": 1,
+        "fired_at": "2026-11-13T00:10:54.355Z",
+        "session": "https://claude.ai/code/cse_015KDcQFrGrjdKQcczS4zvDq"
+      }
     },
     "99-ranch": {
       "fingerprint": "931e374866e5ebad",
