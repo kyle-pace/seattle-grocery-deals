@@ -17,6 +17,8 @@ enum Welcome {
             UserDefaults.standard.removeObject(forKey: forceKey)
             return .welcome
         }
+        // Simulator screenshots and the UI walk-through: -onboarding skip goes straight to the app.
+        if DebugArgs.value("-onboarding") == "skip" { return nil }
         guard Analytics.choice == nil else { return nil }
         if DebugArgs.value("-onboarding") == "question" { return .question }
         if FeedStore.hasSavedWeek {

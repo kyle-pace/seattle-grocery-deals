@@ -16,3 +16,15 @@ fi
 echo "Cloning KitchenUI next to the repo..."
 git -c http.extraHeader="$KITCHEN_AUTH" clone --depth 1 https://github.com/kyle-pace/kitchen-ui.git "$PARENT/KitchenUI"
 echo "KitchenUI at $(git -C "$PARENT/KitchenUI" rev-parse --short HEAD)"
+
+# The week bundled with the app only shows when the very first launch can't reach the site.
+# Ship the current one, not whatever was last committed. If the site can't be reached or the
+# answer doesn't look like a week, the committed copy stays.
+WEEK="$CI_PRIMARY_REPOSITORY_PATH/apple/GroceryDeals/Resources/week.json"
+if curl -fsS --max-time 30 https://seattlegrocery.deals/api/week.json -o "$WEEK.new" && grep -q '"items"' "$WEEK.new"; then
+  mv "$WEEK.new" "$WEEK"
+  echo "Bundled week refreshed from the site."
+else
+  rm -f "$WEEK.new"
+  echo "warning: couldn't refresh the bundled week; shipping the committed copy."
+fi

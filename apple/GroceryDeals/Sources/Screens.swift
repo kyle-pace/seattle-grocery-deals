@@ -136,7 +136,7 @@ struct ThisWeekView: View {
                         Analytics.track("Opened Edit Stores", ["source": "this_week"])
                     }
                     let picks = store.topPicks()
-                    SectionHeading(title: "Best single deals", note: "Any store · \(store.standouts.filter { !$0.ended }.count) standouts")
+                    SectionHeading(title: "Best single deals", note: "Any store · \(store.liveStandouts.count) standouts")
                     WideColumns {
                         ForEach(picks) { d in
                             DealRow(deal: d, showWhy: true) { selected = d }
@@ -218,7 +218,7 @@ private struct YourStoresWeek: View {
     }
 
     private func section(_ e: FeedStore.RankedStore, best: Bool, position: Int, place: String) -> some View {
-        StoreSection(s: e.store, total: store.live.filter { $0.store == e.store.id }.count, standouts: e.rank.standouts,
+        StoreSection(s: e.store, total: store.liveDeals(atStore: e.store.id).count, standouts: e.rank.standouts,
                      deals: store.topDeals(e.rank, at: e.store.id), reason: e.rank.reason, isBest: best,
                      newFlyer: store.isNewFlyer(e.store), select: select) { id in
             Analytics.track("Opened Store Card", ["store": id, "position": position, "section": place,
@@ -378,20 +378,24 @@ struct StoresView: View {
         NavigationStack(path: $path) {
             Page {
                 MessageCard(place: "stores")
-                let mine = store.rankedStores.filter { store.isFavorite($0.id) }
-                if !mine.isEmpty {
-                    SectionHeading(title: "Your stores", note: "\(mine.count)")
-                    WideColumns(minimum: Wide.tile, spacing: Space.m) {
-                        ForEach(mine) { s in tile(s) }
+                if store.feed == nil {
+                    LoadingDeals()
+                } else {
+                    let mine = store.rankedStores.filter { store.isFavorite($0.id) }
+                    if !mine.isEmpty {
+                        SectionHeading(title: "Your stores", note: "\(mine.count)")
+                        WideColumns(minimum: Wide.tile, spacing: Space.m) {
+                            ForEach(mine) { s in tile(s) }
+                        }
+                        SectionHeading(title: "More stores")
                     }
-                    SectionHeading(title: "More stores")
-                }
-                WideColumns(minimum: Wide.tile, spacing: Space.m) {
-                    ForEach(store.rankedStores.filter { !store.isFavorite($0.id) }) { s in tile(s) }
+                    WideColumns(minimum: Wide.tile, spacing: Space.m) {
+                        ForEach(store.rankedStores.filter { !store.isFavorite($0.id) }) { s in tile(s) }
+                    }
                 }
             }
             .navigationTitle("Stores")
-            .navigationSubtitle("\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
+            .navigationSubtitle(store.feed == nil ? "" : "\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
             .settingsButton()
             .navigationDestination(for: Store.self) { StoreDetail(s: $0, openStore: openStore) }
         }

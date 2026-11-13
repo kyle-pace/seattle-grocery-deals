@@ -25,6 +25,10 @@ enum Lines {
     static func noResultsDetail(_ q: String) -> String {
         "Add \u{201C}\(q)\u{201D} to your list and it'll show up there when it goes on sale."
     }
+    static let noStoreTitle = "No store by that name"
+    static func noStoreDetail(_ q: String) -> String {
+        "Stores looks at store names and towns. Search everything to see deals for \u{201C}\(q)\u{201D}."
+    }
     static let emptyListTitle = "Your list is empty"
     static let emptyListDetail = "Tap + on any deal, or type your own in the field below."
     static func tripDone(_ n: Int) -> String { n == 1 ? "Trip done. 1 for 1." : "Trip done. \(n) for \(n)." }

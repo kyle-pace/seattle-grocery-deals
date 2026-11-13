@@ -11,20 +11,30 @@ final class FeedStore {
     /// What people are adding this week; empty until enough people have added the same deals.
     private(set) var popular: [Popular.Item] = []
 
-    private(set) var feed: Feed?
+    private(set) var feed: Feed? { didSet { cache = nil } }
+    /// True while the deals are being fetched. It starts out true when there's no recent week
+    /// saved on this iPhone, so the first screen says it's loading instead of showing old deals.
     private(set) var loading = false
+    /// Held back while the first fetch runs: a saved week that's more than a week old. Shown
+    /// only if the fetch fails. With nothing saved, the week bundled with the app stands in.
+    @ObservationIgnored private var fallback: Feed?
+    @ObservationIgnored private var refreshing = false
+    /// When the deals last came from the site, this launch.
+    @ObservationIgnored private var lastFresh: Date?
     /// The last refresh couldn't reach the site, so we're showing a saved week.
     private(set) var offline = false
     /// Hides deals that end today (and ended ones) everywhere, like Vegetarian. The website's
     /// "Not ending today" filter does the same (app.js, sgd.endsMin).
     var hideEndingToday: Bool {
         didSet {
+            cache = nil
             UserDefaults.standard.set(hideEndingToday, forKey: "sgd.hideEndingToday")
             Analytics.track("Toggled Hide Ending Today", ["on": hideEndingToday])
         }
     }
     var vegetarianOnly: Bool {
         didSet {
+            cache = nil
             UserDefaults.standard.set(vegetarianOnly, forKey: "sgd.vegOnly")
             Analytics.track("Toggled Vegetarian Only", ["on": vegetarianOnly])
             Analytics.setUser(["veg_only": vegetarianOnly])
@@ -35,6 +45,7 @@ final class FeedStore {
     /// store is ever hidden.
     var favoriteStores: Set<String> {
         didSet {
+            cache = nil
             UserDefaults.standard.set(Array(favoriteStores).sorted(), forKey: "sgd.favoriteStores")
             Analytics.setUser(["favorite_stores": favoriteStores.count])
             // "New deals are in" follows the stores someone picked.
@@ -60,18 +71,59 @@ final class FeedStore {
         favoriteStores = Set(UserDefaults.standard.stringArray(forKey: "sgd.favoriteStores") ?? [])
         vegetarianOnly = UserDefaults.standard.bool(forKey: "sgd.vegOnly")
         hideEndingToday = UserDefaults.standard.bool(forKey: "sgd.hideEndingToday")
-        feed = Self.cached() ?? Self.bundled()
+        // The first thing on screen is live deals, not a stand-in. A first launch has nothing
+        // saved, and the week bundled with the app can be weeks old by the time it's installed:
+        // it used to show until the fetch came back. Now the app starts on "Reading this week's
+        // flyers…" and shows the bundled or an old saved week only if the site can't be reached.
+        // This week's saved copy still shows at once, and the fetch replaces it.
+        let saved = Self.cached()
+        let recent = saved.map(Self.isThisWeek) ?? false
+        feed = recent ? saved : nil
+        fallback = recent ? nil : saved
+        loading = !recent
+    }
+
+    /// Weeks start on Fridays, and the next one begins when the first store posts a flyer that
+    /// day. A saved week that started up to seven days ago is still close to what the site has.
+    private static func isThisWeek(_ feed: Feed) -> Bool {
+        (Dates.daysLeft(through: feed.week) ?? -99) > -7
+    }
+
+    /// For Siri and Shortcuts, which answer from what's on the phone without waiting for the site.
+    func useSavedWeek() {
+        if feed == nil { feed = fallback ?? Self.bundled() }
+    }
+
+    /// Coming back to the app: fetch again when the deals on screen came in more than ten
+    /// minutes ago. Stores post new flyers through the week, and the app can sit open for days.
+    func refreshIfStale(after seconds: TimeInterval = 600) async {
+        if let lastFresh, Date.now.timeIntervalSince(lastFresh) < seconds { return }
+        await refresh()
     }
 
     func refresh() async {
+        guard !refreshing else { return }
+        refreshing = true
         loading = true
-        defer { loading = false }
+        defer {
+            // Nothing came back and nothing is on screen: the saved or bundled week, with the
+            // offline note above it.
+            if feed == nil { feed = fallback ?? Self.bundled() }
+            fallback = nil
+            loading = false
+            refreshing = false
+        }
         Task { await refreshPopular() }
         do {
-            let (data, response) = try await URLSession.shared.data(from: Self.feedURL)
+            // Fifteen seconds, not the system's sixty: a first launch on a bad connection
+            // shouldn't sit on the loading screen for a minute before the saved deals show.
+            var request = URLRequest(url: Self.feedURL)
+            request.timeoutInterval = 15
+            let (data, response) = try await URLSession.shared.data(for: request)
             guard (response as? HTTPURLResponse)?.statusCode == 200 else { offline = true; return }
             let fresh = try JSONDecoder().decode(Feed.self, from: data)
             offline = false
+            lastFresh = .now
             if feed == nil || fresh.week >= feed!.week {
                 feed = fresh
                 try? data.write(to: Self.cacheURL, options: .atomic)
@@ -93,7 +145,8 @@ final class FeedStore {
 
     /// Popular deals that are in this week's feed (and pass the vegetarian filter), with counts.
     var popularDeals: [(deal: Deal, people: Int)] {
-        popular.compactMap { p in live.first { $0.id == p.deal_id }.map { ($0, p.people) } }
+        let d = derived
+        return popular.compactMap { p in d.liveByID[p.deal_id].map { ($0, p.people) } }
     }
 
     // MARK: the edition
@@ -109,50 +162,149 @@ final class FeedStore {
     /// new flyer comes out, so there's no one date for the week; every row says when it ends.
     var editionLine: String {
         guard feed != nil else { return "" }
-        let stores = Set(items.map(\.store)).count
+        let stores = derived.byStore.count
         return "\(items.count) deals from \(stores) \(stores == 1 ? "store" : "stores")"
     }
 
     // MARK: lookups
 
-    /// Deals after the vegetarian filter, best first.
-    var items: [Deal] {
-        (feed?.items ?? []).filter { (!vegetarianOnly || $0.veg) && (!hideEndingToday || ($0.daysLeft ?? 99) >= 2) }
+    /// The lists and lookups every screen asks for, worked out once per change instead of on
+    /// every ask. Before this, `items`, `live`, `aisles` and `rankedStores` each went through
+    /// all the week's deals again every time a view read them, often inside a loop over stores
+    /// or aisles, and every tab did that on every tab switch: about half a second of work each
+    /// time with 640 deals (the Nov 12 recording). Built on first use; thrown away when the
+    /// feed, a filter or Your stores changes, and at midnight (what has ended depends on today).
+    private final class Derived {
+        let goodUntil: Date
+        /// After the filters, best first, with ended sales after the ones still on.
+        let items: [Deal]
+        let live: [Deal]
+        let standouts: [Deal]
+        let liveStandouts: [Deal]
+        let byID: [String: Deal]
+        let liveByID: [String: Deal]
+        let byStore: [String: [Deal]]
+        let liveByStore: [String: [Deal]]
+        let byCategory: [String: [Deal]]
+        /// Every deal in the feed by item key, before the filters (for "Also on sale").
+        let byKey: [String: [Deal]]
+        /// Stores with anything in the feed at all, before the filters.
+        let listed: Set<String>
+        let stores: [String: Store]
+        let aisles: [Category]
+        let rankedStores: [Store]
+        /// Filled in the first time This week asks (`storeWeek`).
+        var storeWeek: StoreWeek?
+
+        init(feed: Feed?, vegetarianOnly: Bool, hideEndingToday: Bool, favorites: Set<String>) {
+            let cal = Calendar.current
+            let today = cal.startOfDay(for: .now)
+            goodUntil = cal.date(byAdding: .day, value: 1, to: today) ?? today.addingTimeInterval(86_400)
+
+            var live: [Deal] = [], ended: [Deal] = []
+            var byKey: [String: [Deal]] = [:]
+            var listed = Set<String>()
+            for d in feed?.items ?? [] {
+                listed.insert(d.store)
+                if let key = d.key { byKey[key, default: []].append(d) }
+                let left = d.daysLeft
+                guard !vegetarianOnly || d.veg, !hideEndingToday || (left ?? 99) >= 2 else { continue }
+                if (left ?? 1) <= 0 { ended.append(d) } else { live.append(d) }
+            }
+            // A sale that has ended stays on store, aisle and search pages until the store's
+            // next flyer, but under the ones you can still buy (the website does the same).
+            let items = live + ended
+
+            var byID: [String: Deal] = [:], liveByID: [String: Deal] = [:]
+            var byStore: [String: [Deal]] = [:], liveByStore: [String: [Deal]] = [:]
+            var byCategory: [String: [Deal]] = [:]
+            var standoutCount: [String: Int] = [:]
+            for d in items {
+                if byID[d.id] == nil { byID[d.id] = d }
+                byStore[d.store, default: []].append(d)
+                byCategory[d.category, default: []].append(d)
+                if d.tier == .standout { standoutCount[d.store, default: 0] += 1 }
+            }
+            for d in live {
+                if liveByID[d.id] == nil { liveByID[d.id] = d }
+                liveByStore[d.store, default: []].append(d)
+            }
+
+            var stores: [String: Store] = [:]
+            for s in feed?.stores ?? [] where stores[s.id] == nil { stores[s.id] = s }
+
+            self.items = items
+            self.live = live
+            standouts = items.filter { $0.tier == .standout }
+            liveStandouts = live.filter { $0.tier == .standout }
+            self.byID = byID
+            self.liveByID = liveByID
+            self.byStore = byStore
+            self.liveByStore = liveByStore
+            self.byCategory = byCategory
+            self.byKey = byKey
+            self.listed = listed
+            self.stores = stores
+            aisles = (feed?.categories ?? []).filter { byCategory[$0.id] != nil }
+            // Your stores first, then most standouts, then most deals.
+            rankedStores = (feed?.stores ?? []).sorted {
+                let fa = favorites.contains($0.id), fb = favorites.contains($1.id)
+                if fa != fb { return fa }
+                let sa = standoutCount[$0.id] ?? 0, sb = standoutCount[$1.id] ?? 0
+                return sa != sb ? sa > sb : (byStore[$0.id]?.count ?? 0) > (byStore[$1.id]?.count ?? 0)
+            }
+        }
     }
+
+    /// Not observed: it's filled in while views are reading, and only ever holds what the
+    /// observed properties below it already decide.
+    @ObservationIgnored private var cache: Derived?
+
+    private var derived: Derived {
+        // Reading these is what gets a view redrawn when one of them changes, cache or no cache.
+        let feed = self.feed, veg = vegetarianOnly, hide = hideEndingToday, favorites = favoriteStores
+        if let cache, Date.now < cache.goodUntil { return cache }
+        let fresh = Derived(feed: feed, vegetarianOnly: veg, hideEndingToday: hide, favorites: favorites)
+        cache = fresh
+        return fresh
+    }
+
+    /// Deals after the vegetarian and "Not ending today" filters, best first, ended sales last.
+    var items: [Deal] { derived.items }
     /// Deals still on sale today. This week (the home screen) only shows these: a sale that
     /// ended stays in the feed until its store's next flyer, and stays on store and aisle
-    /// pages (faded, marked Ended), but it's no use at the top of the app.
-    var live: [Deal] { items.filter { !$0.ended } }
-    var standouts: [Deal] { items.filter { $0.tier == .standout } }
-    func store(_ id: String) -> Store? { feed?.stores.first { $0.id == id } }
+    /// pages (marked Ended, under the rest), but it's no use at the top of the app.
+    var live: [Deal] { derived.live }
+    var standouts: [Deal] { derived.standouts }
+    /// Standouts still on sale today.
+    var liveStandouts: [Deal] { derived.liveStandouts }
+    func store(_ id: String) -> Store? { derived.stores[id] }
     func storeName(_ id: String) -> String { store(id)?.name ?? id }
     func label(forCategory id: String) -> String { feed?.categories.first { $0.id == id }?.label ?? id }
-    func deals(inCategory id: String) -> [Deal] { items.filter { $0.category == id } }
-    func deals(atStore id: String) -> [Deal] { items.filter { $0.store == id } }
+    func deals(inCategory id: String) -> [Deal] { derived.byCategory[id] ?? [] }
+    func deals(atStore id: String) -> [Deal] { derived.byStore[id] ?? [] }
+    /// A store's deals that are still on sale today.
+    func liveDeals(atStore id: String) -> [Deal] { derived.liveByStore[id] ?? [] }
+    /// A deal from this week by id, after the filters.
+    func deal(_ id: String?) -> Deal? {
+        guard let id else { return nil }
+        return derived.byID[id]
+    }
     /// The same item on sale elsewhere this week (matched by item key).
     func alsoOnSale(_ d: Deal) -> [Deal] {
         guard let key = d.key else { return [] }
-        return (feed?.items ?? []).filter { $0.key == key && $0.id != d.id }
+        return (derived.byKey[key] ?? []).filter { $0.id != d.id }
     }
     /// The best standouts, at most `perStore` from any one store so no store takes over.
     func topPicks(_ limit: Int = 10, perStore: Int = 2) -> [Deal] {
         var taken: [String: Int] = [:]
-        return Array(standouts.filter { d in
-            guard !d.ended else { return false }
+        return Array(liveStandouts.filter { d in
             taken[d.store, default: 0] += 1
             return taken[d.store]! <= perStore
         }.prefix(limit))
     }
     /// Your stores first, then most standouts, then most deals.
-    var rankedStores: [Store] {
-        (feed?.stores ?? []).sorted {
-            let fa = favoriteStores.contains($0.id), fb = favoriteStores.contains($1.id)
-            if fa != fb { return fa }
-            let a = deals(atStore: $0.id), b = deals(atStore: $1.id)
-            let sa = a.filter { $0.tier == .standout }.count, sb = b.filter { $0.tier == .standout }.count
-            return sa != sb ? sa > sb : a.count > b.count
-        }
-    }
+    var rankedStores: [Store] { derived.rankedStores }
     func isFavorite(_ id: String) -> Bool { favoriteStores.contains(id) }
     /// Adds or removes a store from Your stores. `source` says where (onboarding, sheet,
     /// settings, store page) for the "Changed Your Stores" event.
@@ -193,10 +345,12 @@ final class FeedStore {
         var unread: [Store] = []
     }
     var storeWeek: StoreWeek {
+        let d = derived
+        if let known = d.storeWeek { return known }
         var w = StoreWeek()
         var all: [RankedStore] = []
         for s in feed?.stores ?? [] {
-            if let r = rank(s.id), r.deals > 0, live.contains(where: { $0.store == s.id }) { all.append(RankedStore(store: s, rank: r)) }
+            if let r = rank(s.id), r.deals > 0, d.liveByStore[s.id] != nil { all.append(RankedStore(store: s, rank: r)) }
         }
         all.sort { $0.rank.score > $1.rank.score }
         w.ranked = favoriteStores.isEmpty ? all : all.filter { favoriteStores.contains($0.store.id) }
@@ -207,20 +361,21 @@ final class FeedStore {
             w.elsewhere = other
         }
         // Only stores with nothing in the feed at all: one hidden by Vegetarian isn't "unread".
-        let listed = Set((feed?.items ?? []).map(\.store))
-        w.unread = (feed?.stores ?? []).filter { favoriteStores.contains($0.id) && !listed.contains($0.id) }
+        w.unread = (feed?.stores ?? []).filter { favoriteStores.contains($0.id) && !d.listed.contains($0.id) }
+        d.storeWeek = w
         return w
     }
     /// The deals a store card shows: its top deals from the feed, still on sale and after filters.
     func topDeals(_ r: RankNumbers, at id: String) -> [Deal] {
-        let top = r.top.compactMap { t in live.first { $0.id == t } }
-        return top.isEmpty ? Array(live.filter { $0.store == id }.prefix(3)) : top
+        let d = derived
+        let top = r.top.compactMap { d.liveByID[$0] }
+        return top.isEmpty ? Array((d.liveByStore[id] ?? []).prefix(3)) : top
     }
     /// True when the store's current flyer started today: "New flyer today".
     func isNewFlyer(_ s: Store) -> Bool { Dates.date(s.from).map(Calendar.current.isDateInToday) ?? false }
 
     /// Aisles that have deals this week, in the feed's order.
-    var aisles: [Category] { (feed?.categories ?? []).filter { c in items.contains { $0.category == c.id } } }
+    var aisles: [Category] { derived.aisles }
 
     /// What people might be typing: aisles, stores and short deal names that start with (or
     /// contain) the query, best deals first. For `.searchSuggestions`.

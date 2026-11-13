@@ -1502,7 +1502,10 @@ function appFeed() {
         // in the app as "28% under the US average" and "Lowest we've listed".
         us: i.a.us ? { avg: unitPriceText({ value: i.a.us.price, per: i.a.us.per }), under: Math.round((1 - i.a.us.ratio) * 100), period: i.a.us.period ?? null } : null,
         lowest: i.a.tags.some((t) => t.kind === "low"),
-        why: i.highlight?.reason ?? i.a.tags.filter((t) => t.kind !== "pct").map((t) => t.text).join(". "),
+        // The app's savings pill already says "% off" or "under US avg", so the reason skips
+        // both, like the site's rows. (With the US average left in it read "About 35% under
+        // US avg.. Cheapest of 4 stores": its own period plus the joining one.)
+        why: i.highlight?.reason ?? i.a.tags.filter((t) => !["pct", "us"].includes(t.kind)).map((t) => t.text).join(". "),
         veg: isVegetarian(i), ends: i.valid_through, notes: i.notes ?? null };
     }),
     // Seasonal items on this week (persimmons first): the This week card and season screen.

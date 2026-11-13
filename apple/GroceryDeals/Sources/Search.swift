@@ -15,6 +15,8 @@ final class DealsRouter {
     var tabRequest: String?
     /// Bumped to ask the root view to switch to the Search tab.
     var searchRequest = 0
+    /// Bumped to put the cursor in the Search tab's field (iPad, when the tab is picked).
+    var searchFocusRequest = 0
     /// A deal to open as a sheet (from Spotlight).
     var dealID: String?
     /// How many deal sheets are open, so the "where should your list live?" question opens
@@ -37,6 +39,7 @@ struct SearchView: View {
     @Environment(ListStore.self) private var list
     @Bindable var router: DealsRouter
     @State private var scope: Scope = .all
+    @FocusState private var fieldFocused: Bool
     @State private var selected: Deal?
     @State private var path = NavigationPath()
     @AppStorage("sgd.recentSearches") private var recentsRaw = ""
@@ -48,22 +51,34 @@ struct SearchView: View {
         NavigationStack(path: $path) {
             Page {
                 let q = router.searchQuery.trimmingCharacters(in: .whitespaces)
-                if q.isEmpty { landing } else { results(q) }
+                if store.feed == nil { LoadingDeals() } else if q.isEmpty { landing } else { results(q) }
             }
             .navigationTitle("Search")
-            // Always show the field: in the default spot it hid under the title until you
-            // pulled down, which made the Search tab look like it had no search box.
-            .searchable(text: $router.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Deals, stores, aisles")
+            // The field sits where iOS 26 puts a search tab's field: at the bottom on iPhone,
+            // in place of the tab bar, within reach of a thumb. (It was pinned under the
+            // title, where the page opened with a small title and jumped to the large one on
+            // the first scroll.) RootView's `tabViewSearchActivation` opens the keyboard.
+            .searchable(text: $router.searchQuery, prompt: "Deals, stores, aisles")
+            // iPad: the field sits in the top bar, and picking the tab doesn't put the cursor
+            // in it the way it does on iPhone, so RootView asks for it. The short wait lets the
+            // field exist first when the tab is opened for the first time.
+            .searchFocused($fieldFocused)
+            .onChange(of: router.searchFocusRequest, initial: true) {
+                guard router.searchFocusRequest > 0 else { return }
+                Task {
+                    try? await Task.sleep(for: .milliseconds(200))
+                    fieldFocused = true
+                }
+            }
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)
-            .searchSuggestions {
-                ForEach(store.suggestions(router.searchQuery), id: \.self) { s in
-                    Label(s, systemImage: "magnifyingglass").searchCompletion(s)
-                }
-            }
-            .searchScopes($scope, activation: .onSearchPresentation) {
-                ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+            // All / Deals / Stores sits at the top of the results (below), since a field in
+            // the tab bar has no room for the system's scope bar. It starts over at All with
+            // each new search: left on Stores, the next popular, recent or Spotlight search
+            // came up empty with nothing on screen to say why.
+            .onChange(of: router.searchQuery.trimmingCharacters(in: .whitespaces).isEmpty) { _, empty in
+                if empty { scope = .all }
             }
             .onSubmit(of: .search) {
                 remember(router.searchQuery)
@@ -154,6 +169,25 @@ struct SearchView: View {
         let deals = scope == .stores ? [] : store.search(q)
         let byAisle = Dictionary(grouping: deals, by: \.category)
 
+        Picker("Show", selection: $scope) {
+            ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+        }
+        .pickerStyle(.segmented)
+        .frame(maxWidth: 420)
+        .padding(.top, Space.m)
+
+        // Ways to finish what's being typed, as chips over the results. They used to be the
+        // system's suggestion list, which covered the results with a black page.
+        let ideas = store.suggestions(q).filter { $0.caseInsensitiveCompare(q) != .orderedSame }
+        if scope != .stores, !ideas.isEmpty {
+            ChipRow {
+                ForEach(ideas, id: \.self) { s in
+                    FilterChip(s, systemImage: "magnifyingglass", isOn: false) { router.searchQuery = s; remember(s) }
+                }
+            }
+            .padding(.top, Space.m)
+        }
+
         // "pers", "fuyu", "hachiya": the season card first.
         if scope != .stores { SeasonSearchCards(query: q) }
         if !aisles.isEmpty {
@@ -192,13 +226,24 @@ struct SearchView: View {
             }
         }
         if aisles.isEmpty && stores.isEmpty && deals.isEmpty && (scope == .stores || store.seasons(matching: q).isEmpty) {
-            EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
-                       message: Lines.noResultsDetail(q), actionTitle: "Add to list", actionImage: "plus") {
-                list.request(q)
-                Announce.say("Added \(q) to your list")
-                router.searchQuery = ""
+            if scope == .stores {
+                // Stores only looks at store names and towns. With "Beef" typed it said
+                // "Nothing in the paper for that" and offered to add beef to the list, while
+                // All had 21 beef deals (the Nov 12 recording).
+                EmptyState(.crow, mood: .surprised, title: Lines.noStoreTitle,
+                           message: Lines.noStoreDetail(q), actionTitle: "Search everything", actionImage: "magnifyingglass") {
+                    scope = .all
+                }
+                .padding(.top, Space.l)
+            } else {
+                EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
+                           message: Lines.noResultsDetail(q), actionTitle: "Add to list", actionImage: "plus") {
+                    list.request(q)
+                    Announce.say("Added \(q) to your list")
+                    router.searchQuery = ""
+                }
+                .padding(.top, Space.l)
             }
-            .padding(.top, Space.l)
         }
     }
 
