@@ -15,6 +15,8 @@ final class DealsRouter {
     var tabRequest: String?
     /// Bumped to ask the root view to switch to the Search tab.
     var searchRequest = 0
+    /// Bumped to put the cursor in the Search tab's field (iPad, when the tab is picked).
+    var searchFocusRequest = 0
     /// A deal to open as a sheet (from Spotlight).
     var dealID: String?
     /// How many deal sheets are open, so the "where should your list live?" question opens
@@ -37,6 +39,7 @@ struct SearchView: View {
     @Environment(ListStore.self) private var list
     @Bindable var router: DealsRouter
     @State private var scope: Scope = .all
+    @FocusState private var fieldFocused: Bool
     @State private var selected: Deal?
     @State private var path = NavigationPath()
     @AppStorage("sgd.recentSearches") private var recentsRaw = ""
@@ -56,6 +59,17 @@ struct SearchView: View {
             // title, where the page opened with a small title and jumped to the large one on
             // the first scroll.) RootView's `tabViewSearchActivation` opens the keyboard.
             .searchable(text: $router.searchQuery, prompt: "Deals, stores, aisles")
+            // iPad: the field sits in the top bar, and picking the tab doesn't put the cursor
+            // in it the way it does on iPhone, so RootView asks for it. The short wait lets the
+            // field exist first when the tab is opened for the first time.
+            .searchFocused($fieldFocused)
+            .onChange(of: router.searchFocusRequest, initial: true) {
+                guard router.searchFocusRequest > 0 else { return }
+                Task {
+                    try? await Task.sleep(for: .milliseconds(200))
+                    fieldFocused = true
+                }
+            }
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)
