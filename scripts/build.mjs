@@ -462,7 +462,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -1064,6 +1064,7 @@ function aboutPage() {
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
 <p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>${cfg.site.mcp_url ? `
 <p>You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.</p>` : ""}
+<p>Curious how a flyer gets from a store's website to this page? <a href="${url("how-it-works/")}">How it works</a>.</p>
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
 <p>A store is included when it:</p>
@@ -1252,6 +1253,94 @@ ${pickable.map((s) => `  <label class="pick"><input type="checkbox" value="${esc
   }));
 }
 
+// How it works, at /how-it-works/: the route one flyer takes from a store's site to a phone,
+// in plain words (the same flow as docs/architecture.svg). Linked from the footer and About.
+// If the flow changes (the watcher, the routine, the build, the notify job, the MCP server),
+// change this page too. Share image: node scripts/how-og.mjs.
+function howPage() {
+  const desktop = cfg.stores.filter((s) => s.active && s.watch?.desktop).map((s) => s.name);
+  const listed = (names) => names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names.at(-1)}` : names.join("");
+  const stops = [
+    ["A store posts its new flyer", "The store's own website",
+      `<p>Each store puts its weekly ad on its own site: a page, a set of images or a PDF. That is the only source. This site never uses flyer aggregators, and it links back to every flyer it reads.</p>`],
+    ["The watcher notices", "GitHub Actions, every 30 minutes",
+      `<p>A small script visits each store's flyer page and takes a fingerprint of it: the addresses of the flyer images or PDF, or the printed sale dates. A fingerprint that differs from the last one means a new flyer. A page that fails to load never counts as a change.</p>`],
+    ["Claude reads the flyer", "A Claude Code routine, in the cloud",
+      `<p>The watcher starts an AI agent and tells it which stores changed. It opens each flyer and reads every page, writing down each grocery item with the price exactly as printed. A price it can't read clearly is left out, never guessed. Snacks, drinks and ready-made meals are skipped.</p>${desktop.length ? `
+<p class="how-aside">${esc(listed(desktop))} sit behind a bot check that a cloud reader can't pass. The site doesn't try to get around it. Those flyers are read from a regular desktop browser instead.</p>` : ""}`],
+    ["The rows become data, and get checked", "Scripts in the site's code",
+      `<p>Scripts turn those rows into the week's data file. Each item is matched to a shared catalog, so chicken thighs at one store can be compared with chicken thighs at another, and with past weeks. A validator then checks the math: unit prices, percent off, dates.</p>
+<p>Anything odd gets flagged, like a price three times its last listing. The agent fixes what the flyer can settle, the update is saved to the site's public code, and whatever is left goes to the owner to check by hand.</p>`],
+    ["The site rebuilds itself", "GitHub Actions and GitHub Pages",
+      `<p>Every saved change starts a rebuild, and so does every hour. The build ranks the deals, picks the standouts by <a href="${url("about/")}#how">the rules on About</a>, and writes every page as plain HTML. It also writes one feed file, <a href="${url("api/week.json")}">week.json</a>, with the same deals for anything that isn't a web page. There is no database: the data files are the record.</p>`],
+    ["New deals are in", "Firebase Cloud Messaging, then Apple",
+      `<p>Once the new pages are live, a last job works out which stores got a new flyer in that update and sends a notification to the people who picked those stores in the app. A marker per flyer makes sure nobody hears about the same one twice.</p>`],
+  ];
+  const places = [
+    ["newspaper", "This site", `Plain pages from GitHub Pages. Your list, your stores and your display settings are kept in your browser and nowhere else.`, url(), "See this week"],
+    ["widget", "The app", `For iPhone and iPad, coming soon. It fetches the same feed when you open it, and matches your list and price watches on the phone.`, url("app/"), "About the app"],
+    ...(cfg.site.mcp_url ? [["search", "AI assistants", `A small Cloudflare Worker reads the same feed and answers questions from Claude or another assistant. It keeps nothing.`, url("mcp/"), "Connect an assistant"]] : []),
+  ];
+  const parts = [
+    ["Flyer watcher", "Spots a new flyer", "GitHub Actions"],
+    ["Flyer update", "Reads the flyer and writes the data", "Claude Code routine"],
+    ["Item catalog", "Matches the same item across stores and weeks", "A file in the code"],
+    ["Build", "Checks, ranks, writes the pages and the feed", "GitHub Actions"],
+    ["Website and feed", "Serves the pages and week.json", "GitHub Pages"],
+    ["Notifications", "Tells people their store has new deals", "Firebase and Apple"],
+    ...(cfg.site.mcp_url ? [["Assistant server", "Answers AI assistants from the feed", "Cloudflare Worker"]] : []),
+    ["App", "The same deals on iPhone and iPad", "SwiftUI"],
+    ["Counting", "Page views and taps, kept private", "Amplitude"],
+  ];
+  const body = `<div class="how-page">
+<div class="how-top">
+  ${buddy("thinking", 112)}
+  <div>
+    <h1>How it works</h1>
+    <p class="lede">A new flyer goes from a store's website to this site, the app and your phone with nobody pressing a button. Here is the route one flyer takes.</p>
+  </div>
+</div>
+
+<ol class="how-route">
+${stops.map(([title, where, html], i) => `  <li class="how-stop">
+    <span class="how-n" aria-hidden="true">${i + 1}</span>
+    <div class="how-body">
+      <h2>${esc(title)}</h2>
+      <p class="how-where"><span class="sr-only">Where it runs: </span>${esc(where)}</p>
+      ${html}
+    </div>
+  </li>`).join("\n")}
+</ol>
+
+<h2 class="how-h">Where it comes out</h2>
+<p>Everything reads the same data, so the site, the app and an assistant always agree on a price.</p>
+<ul class="how-places">
+${places.map(([icon, title, text, href, go]) => `  <li class="card how-place">${ic(icon)}<h3>${esc(title)}</h3><p>${text}</p><a class="go" href="${esc(href)}">${esc(go)}</a></li>`).join("\n")}
+</ul>
+
+<h2 class="how-h">What isn't here, on purpose</h2>
+<ul>
+  <li><strong>No servers of its own.</strong> Every step runs on a service that already exists, so there is nothing to keep awake at night.</li>
+  <li><strong>No database.</strong> Each week is one file in the code, and <a href="${url("data/weeks/")}">every week is public</a>.</li>
+  <li><strong>No accounts.</strong> With no sign-in, there is nothing about you to store.</li>
+</ul>
+<p>The one thing that flows back is a count. The site and the app tally page views and taps with Amplitude, set up to be private, and "People are adding" on This week comes from how often each deal is added to a list. More in <a href="${url("about/")}">About and privacy</a>.</p>
+
+<h2 class="how-h">The parts</h2>
+<dl class="how-parts">
+${parts.map(([part, job, on]) => `  <div><dt>${esc(part)}</dt><dd>${esc(job)}</dd><dd class="how-on">${esc(on)}</dd></div>`).join("\n")}
+</dl>
+<p>The code for all of it is public: <a href="${esc(cfg.site.repo_url)}">see the source on GitHub</a>.</p>
+</div>`;
+  write("how-it-works/", page({
+    title: "How it works", path: "how-it-works/", section: "about/", body,
+    description: "How a store's new flyer becomes a deal on Seattle Grocery Deals: a watcher, an AI reader, checks, a rebuild and a notification, with no servers of its own.",
+    ogTitle: "How Seattle Grocery Deals works",
+    image: "assets/img/og-how.png",
+    imageAlt: "How Seattle Grocery Deals works: the crow beside a route of six stops, from a store's flyer to your phone.",
+  }));
+}
+
 function dataPages() {
   mkdirSync(join(DIST, "data", "weeks"), { recursive: true });
   for (const w of weeks) writeFileSync(join(DIST, "data", "weeks", `${w.week}.json`), JSON.stringify(w, null, 2));
@@ -1354,6 +1443,7 @@ accessibilityPage();
 yourListPage();
 appsPage();
 mcpPage();
+howPage();
 for (const s of SEASONS) seasonPage(s);
 dataPages();
 notFound();
