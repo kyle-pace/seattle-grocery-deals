@@ -37,6 +37,7 @@ struct SearchView: View {
     @Environment(ListStore.self) private var list
     @Bindable var router: DealsRouter
     @State private var scope: Scope = .all
+    @State private var searching = false
     @State private var selected: Deal?
     @State private var path = NavigationPath()
     @AppStorage("sgd.recentSearches") private var recentsRaw = ""
@@ -53,7 +54,7 @@ struct SearchView: View {
             .navigationTitle("Search")
             // Always show the field: in the default spot it hid under the title until you
             // pulled down, which made the Search tab look like it had no search box.
-            .searchable(text: $router.searchQuery, placement: .navigationBarDrawer(displayMode: .always), prompt: "Deals, stores, aisles")
+            .searchable(text: $router.searchQuery, isPresented: $searching, placement: .navigationBarDrawer(displayMode: .always), prompt: "Deals, stores, aisles")
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)
@@ -65,6 +66,10 @@ struct SearchView: View {
             .searchScopes($scope, activation: .onSearchPresentation) {
                 ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
             }
+            // The All / Deals / Stores bar only shows while the field is active. Left on Stores
+            // after that, a popular search, a recent one or a search from Spotlight came up
+            // empty with nothing on screen to say why.
+            .onChange(of: searching) { _, on in if !on { scope = .all } }
             .onSubmit(of: .search) {
                 remember(router.searchQuery)
                 Analytics.track("Searched", ["query_length": router.searchQuery.count, "results": store.search(router.searchQuery).count, "screen": "search"])
@@ -184,13 +189,24 @@ struct SearchView: View {
             }
         }
         if aisles.isEmpty && stores.isEmpty && deals.isEmpty && (scope == .stores || store.seasons(matching: q).isEmpty) {
-            EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
-                       message: Lines.noResultsDetail(q), actionTitle: "Add to list", actionImage: "plus") {
-                list.request(q)
-                Announce.say("Added \(q) to your list")
-                router.searchQuery = ""
+            if scope == .stores {
+                // Stores only looks at store names and towns. With "Beef" typed it said
+                // "Nothing in the paper for that" and offered to add beef to the list, while
+                // All had 21 beef deals (the Nov 12 recording).
+                EmptyState(.crow, mood: .surprised, title: Lines.noStoreTitle,
+                           message: Lines.noStoreDetail(q), actionTitle: "Search everything", actionImage: "magnifyingglass") {
+                    scope = .all
+                }
+                .padding(.top, Space.l)
+            } else {
+                EmptyState(.crow, mood: .surprised, title: Lines.pick(Lines.noResultsTitle),
+                           message: Lines.noResultsDetail(q), actionTitle: "Add to list", actionImage: "plus") {
+                    list.request(q)
+                    Announce.say("Added \(q) to your list")
+                    router.searchQuery = ""
+                }
+                .padding(.top, Space.l)
             }
-            .padding(.top, Space.l)
         }
     }
 
