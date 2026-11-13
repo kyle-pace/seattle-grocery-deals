@@ -1064,7 +1064,6 @@ function aboutPage() {
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
 <p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>${cfg.site.mcp_url ? `
 <p>You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.</p>` : ""}
-<p>Curious how a flyer gets from a store's website to this page? <a href="${url("how-it-works/")}">How it works</a>.</p>
 <h2>Which stores</h2>
 <p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
 <p>A store is included when it:</p>
@@ -1106,6 +1105,8 @@ function aboutPage() {
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <p>Your "Vegetarian" choice and the analytics setting are saved only in your browser and are never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
 <p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>
+<h2>How it's made</h2>
+<p>Curious how a flyer gets from a store's website to this page? <a href="${url("how-it-works/")}">How it works</a> follows one from start to finish.</p>
 <h2>Accessibility</h2>
 <p>The site aims for WCAG 2.2 AA and has display settings for theme, text size, contrast, font, spacing, motion and links. More on the <a href="${url("accessibility/")}">accessibility page</a>.</p>`;
   write("about/", page({ title: "About", path: "about/", body, description: "How Seattle Grocery Deals reads Seattle grocery flyers, how standouts are chosen, and what the site does and doesn't collect." }));
