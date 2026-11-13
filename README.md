@@ -20,6 +20,7 @@ Live site: https://seattlegrocery.deals/
 - `site/assets/`: styles, the filter script, the list (`list.js`, kept in the browser), the logo, and the Atkinson Hyperlegible Next font (SIL Open Font License, see `fonts/OFL-atkinson-hyperlegible-next.txt`).
 - `.github/workflows/pages.yml`: validates, builds and deploys to GitHub Pages on every push to `main`.
 - `mcp/`: an MCP server so AI assistants can look up the week's deals. A separate Cloudflare Worker that reads the site's `/api/week.json`; see [mcp/README.md](mcp/README.md). The page about it is `/mcp/` (`mcpPage` in `scripts/build.mjs`, address in `config/site.json` as `mcp_url`, share image from `node scripts/mcp-og.mjs`).
+- `/how-it-works/` on the site explains the whole flow in plain words (`howPage` in `scripts/build.mjs`, share image from `node scripts/how-og.mjs`).
 
 ## Commands
 

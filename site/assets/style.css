@@ -642,3 +642,60 @@ body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .mcp-asks { list-style: none; padding: 0; }
 .mcp-asks li { padding: 0.55rem 0 0.55rem var(--s-l); margin: 0; border-left: 3px solid var(--coin); }
 .mcp-asks li + li { margin-top: var(--s-s); }
+
+/* ---------- How it works (/how-it-works/): a route with numbered stops, the crow's coin as the marker ---------- */
+.how-page { max-width: 52rem; padding: var(--s-xl) 0 var(--s-l); }
+.how-top { display: flex; gap: var(--s-l); align-items: center; }
+.how-top .buddy { width: 112px; height: 112px; }
+.how-top h1 { margin: 0; font-size: clamp(1.75rem, 6vw, 2.5rem); line-height: 1.1; letter-spacing: -0.02em; }
+.how-top .lede { margin: var(--s-m) 0 0; }
+@media (max-width: 34rem) { .how-top { flex-direction: column; align-items: flex-start; gap: var(--s-s); } .how-top .buddy { width: 84px; height: 84px; } }
+.how-page p, .how-page li { max-width: var(--measure); color: var(--text-body); }
+.how-page li strong { color: var(--ink); }
+.how-page > ul:not([class]) li { margin: 0.4rem 0; }
+.how-h { margin: 2.5rem 0 var(--s-s) !important; }
+.how-route { list-style: none; margin: var(--s-xl) 0 0; padding: 0; }
+.how-stop { position: relative; display: grid; grid-template-columns: 2.75rem 1fr; gap: var(--s-l); padding-bottom: var(--s-xl); max-width: none !important; }
+/* the line between stops; the last stop has none */
+.how-stop::before { content: ""; position: absolute; left: calc(1.375rem - 2px); top: 2.75rem; bottom: 0; width: 4px; border-radius: 2px; background: var(--accent); }
+.how-stop:last-child { padding-bottom: 0; }
+.how-stop:last-child::before { display: none; }
+.how-n { position: relative; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--coin); color: #0f1a24; font-weight: 800; font-size: 1.1875rem; box-shadow: inset 0 0 0 3px #b8862a; }
+.how-body h2 { margin: 0.45rem 0 0; font-size: 1.25rem; }
+.how-body p { margin: var(--s-s) 0 0; }
+.how-where { margin: 0.15rem 0 0 !important; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent) !important; }
+.how-aside { padding-left: var(--s-m); border-left: 3px solid var(--line); font-size: 0.9375rem; color: var(--muted) !important; }
+.how-places { list-style: none; margin: var(--s-m) 0 0; padding: 0; display: grid; gap: var(--s-m); grid-template-columns: 1fr; }
+@media (min-width: 44rem) { .how-places { grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); } }
+.how-place { display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; padding: var(--s-l); max-width: none !important; }
+.how-place .ic { width: 22px; height: 22px; color: var(--accent); }
+.how-place h3 { margin: 0.2rem 0 0; font-size: 1.0625rem; line-height: 1.3; }
+.how-place p { margin: 0; font-size: 0.9375rem; flex: 1; }
+.how-place .go { font-weight: 600; margin-top: 0.3rem; padding-block: 0.3rem; }
+.how-parts { margin: var(--s-m) 0 var(--s-l); border-top: 1px solid var(--line); }
+.how-parts > div { display: grid; grid-template-columns: 1fr; gap: 0.1rem; padding: 0.65rem 0; border-bottom: 1px solid var(--divider); }
+.how-parts dt { font-weight: 700; color: var(--ink); }
+.how-parts dd { margin: 0; color: var(--text-body); }
+.how-parts .how-on { color: var(--muted); font-size: 0.9375rem; }
+@media (min-width: 40rem) { .how-parts > div { grid-template-columns: 11rem 1fr 11rem; gap: var(--s-l); align-items: baseline; } }
+/* the diagram: wide drawing from 44rem, tall drawing below it */
+.how-map { margin: var(--s-xl) 0 0; }
+.how-map svg { display: block; width: 100%; height: auto; font-family: var(--font); }
+.how-map-wide { display: none !important; }
+.how-map-tall { max-width: 24rem; }
+@media (min-width: 44rem) { .how-map-wide { display: block !important; } .how-map-tall { display: none !important; } }
+.how-map figcaption { margin-top: var(--s-m); font-size: 0.9375rem; color: var(--muted); max-width: var(--measure); }
+.hm-box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.hm-stop { stroke: var(--accent); stroke-width: 2; }
+.hm-t { font-weight: 700; fill: var(--ink); }
+.hm-s { fill: var(--muted); }
+.hm-l { font-weight: 700; fill: var(--accent); }
+.hm-e { fill: none; stroke-linejoin: round; }
+.hm-hot { stroke: var(--accent); stroke-width: 3.5; }
+.hm-plain { stroke: var(--muted); stroke-width: 2; }
+.hm-soft { stroke: var(--muted); stroke-width: 2; stroke-dasharray: 2 6; stroke-linecap: round; }
+.hm-head-hot { fill: var(--accent); }
+.hm-head { fill: var(--muted); }
+.hm-coin { fill: var(--coin); stroke: #b8862a; stroke-width: 2.5; }
+.hm-n { font-weight: 800; fill: #0f1a24; }
+.how-route { margin-top: var(--s-l); }
