@@ -48,7 +48,7 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-13T00:10:54.355Z"
+      "error_at": "2026-11-13T07:11:19.716Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -57,14 +57,7 @@
         "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521340305-Z9FJLWSCG0IJHTQZ9L08/111326+WA+HMart+Weekly_eng.jpg"
       ],
       "seen_at": "2026-11-13T00:10:54.355Z",
-      "updated_at": "2026-11-06T02:17:17.260Z",
-      "pending": {
-        "since": "2026-11-13T00:10:54.355Z",
-        "live_before": "2026-11-06|https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915604576-UA45DMH61MZJOU2WKPJE/110626+WA+HMart+Weekly_eng.jpg https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1793915601404-R52NYWP6CQBA1KLSHAK1/110626+WA+HMart+Weekly.jpg https://www.hmartus.com/weekly-sale-wa",
-        "fires": 1,
-        "fired_at": "2026-11-13T00:10:54.355Z",
-        "session": "https://claude.ai/code/cse_015KDcQFrGrjdKQcczS4zvDq"
-      }
+      "updated_at": "2026-11-13T07:11:19.716Z"
     },
     "99-ranch": {
       "fingerprint": "931e374866e5ebad",
@@ -81,7 +74,9 @@
         "img.awsprod.99ranch.com/ec905b0c927340278f495dd44d0fb8d0.jpeg"
       ],
       "seen_at": "2026-11-06T09:48:12.675Z",
-      "updated_at": "2026-11-06T17:25:15.917Z"
+      "updated_at": "2026-11-06T17:25:15.917Z",
+      "error": "HTTP 404",
+      "error_at": "2026-11-13T07:11:19.716Z"
     },
     "viet-wah": {
       "fingerprint": "2455b36f70fa5e18",
@@ -93,13 +88,19 @@
       "updated_at": "2026-11-06T17:25:15.917Z"
     },
     "asian-family-market": {
-      "fingerprint": "6147c2b17664ca1a",
+      "fingerprint": "1c9b8c9069ab3950",
       "matches": [
-        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-10-09\",\"end_date\":\"2026-10-31\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/3ed3ef456_final.png\",\"display_order\":0}]",
-        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-11-05\",\"end_date\":\"2026-11-13\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/8517b98fb_bell__116_131.png\",\"display_order\":0},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/be0356eb8_Bellevue1106_18.png\",\"display_order\":1},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/26c7aabde_BELL__1106_142.png\",\"display_order\":2}]"
+        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-11-02\",\"end_date\":\"2026-11-30\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/1c7f24fce_WA__1113_122.png\",\"display_order\":0},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/0a090d559_WA__1113_128.png\",\"display_order\":1},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/8760a59fc_Bellevue1113_19.png\",\"display_order\":2}]"
       ],
-      "seen_at": "2026-11-06T02:17:17.260Z",
-      "updated_at": "2026-11-06T09:48:12.675Z"
+      "seen_at": "2026-11-13T07:11:19.716Z",
+      "updated_at": "2026-11-06T09:48:12.675Z",
+      "pending": {
+        "since": "2026-11-13T07:11:19.716Z",
+        "live_before": "2026-11-06|https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/8517b98fb_bell__116_131.png https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/be0356eb8_Bellevue1106_18.png https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/26c7aabde_BELL__1106_142.png",
+        "fires": 1,
+        "fired_at": "2026-11-13T07:11:19.716Z",
+        "session": "https://claude.ai/code/cse_015KDcQBzGxDSxpqe3s4We2j"
+      }
     }
   }
 }
