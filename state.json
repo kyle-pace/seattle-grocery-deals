@@ -1,14 +1,21 @@
 {
   "stores": {
     "lams": {
-      "fingerprint": "4f8bd587b3180b24",
+      "fingerprint": "d82b4f7ed2ec4526",
       "matches": [
-        "wp-content/uploads/2019/06/892485648_1315953007299355_6751413021937486291_n.jpg",
-        "wp-content/uploads/2019/06/892860290_1814336116882700_4748373572081284081_n.jpg",
-        "wp-content/uploads/2025/04/890198256_1124791023858672_8558554805588745947_n.jpg"
+        "wp-content/uploads/2019/06/895793207_1828572185734601_4082958586970654446_n.jpg",
+        "wp-content/uploads/2019/06/904220307_1828572252401261_7944845589310910027_n.jpg",
+        "wp-content/uploads/2025/04/904097666_1828572195734600_3877936444997397916_n.jpg"
       ],
-      "seen_at": "2026-11-06T22:20:45.609Z",
-      "updated_at": "2026-11-07T02:20:09.009Z"
+      "seen_at": "2026-11-13T21:56:28.127Z",
+      "updated_at": "2026-11-07T02:20:09.009Z",
+      "pending": {
+        "since": "2026-11-13T21:56:28.127Z",
+        "live_before": "2026-11-06|https://www.lamsseafood.com/wp-content/uploads/2019/06/892860290_1814336116882700_4748373572081284081_n.jpg https://www.lamsseafood.com/wp-content/uploads/2019/06/892485648_1315953007299355_6751413021937486291_n.jpg https://www.lamsseafood.com/wp-content/uploads/2025/04/890198256_1124791023858672_8558554805588745947_n.jpg https://lamsseafood.com/specials",
+        "fires": 1,
+        "fired_at": "2026-11-13T21:56:28.127Z",
+        "session": "https://claude.ai/code/cse_015KDcQCDesDbap9qXRdRwsN"
+      }
     },
     "uwajimaya": {
       "fingerprint": "ca0e01cd1333b30a",
@@ -35,7 +42,7 @@
       "seen_at": "2026-11-03T02:37:26.412Z",
       "updated_at": "2026-11-05T07:19:16.950Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-13T15:40:01.504Z"
+      "error_at": "2026-11-13T21:56:28.127Z"
     },
     "met-market": {
       "fingerprint": "6284eff16b4ad3a9",
@@ -50,7 +57,7 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-13T15:40:01.504Z"
+      "error_at": "2026-11-13T21:56:28.127Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -75,14 +82,7 @@
         "img.awsprod.99ranch.com/f83ed0c85e8c47c5a274ff10ad5f1d58.jpeg"
       ],
       "seen_at": "2026-11-13T15:40:01.504Z",
-      "updated_at": "2026-11-06T17:25:15.917Z",
-      "pending": {
-        "since": "2026-11-13T15:40:01.504Z",
-        "live_before": "2026-11-06|https://img.awsprod.99ranch.com/62b321af862a4b43bc6952a6516d7813.jpeg https://img.awsprod.99ranch.com/e8430316b8b448d780c2407e806544ea.jpeg https://img.awsprod.99ranch.com/358d590464ae4f80b495e4e922c42f6c.jpeg https://img.awsprod.99ranch.com/810ee99672ad4a03abfe91e87699a946.jpeg https://img.awsprod.99ranch.com/ec905b0c927340278f495dd44d0fb8d0.jpeg https://img.awsprod.99ranch.com/7e0df7cfc86c4b9da5a45f0e89ec2c29.jpeg https://img.awsprod.99ranch.com/af66b8bd8b6849c3a44ff1c4a129c56e.jpeg https://img.awsprod.99ranch.com/4a6b3b1dc94e4eb993d93abe0b8f8e27.jpeg https://img.awsprod.99ranch.com/554f522e9bb64632b6e5c9fb43ef65bf.jpeg https://img.awsprod.99ranch.com/53db34eb5b86457298c87ce16a273202.jpeg https://www.99ranch.com/stores/promotions/1791",
-        "fires": 1,
-        "fired_at": "2026-11-13T15:40:01.504Z",
-        "session": "https://claude.ai/code/cse_015KDcQEJ3rS2Nf8JoYtjnrH"
-      }
+      "updated_at": "2026-11-13T21:56:28.127Z"
     },
     "viet-wah": {
       "fingerprint": "b1f6e7c472c01c72",
@@ -91,14 +91,7 @@
         "single-post/weekly-ad-nov-6-12-2026"
       ],
       "seen_at": "2026-11-13T15:40:01.504Z",
-      "updated_at": "2026-11-06T17:25:15.917Z",
-      "pending": {
-        "since": "2026-11-13T15:40:01.504Z",
-        "live_before": "2026-11-06|https://static.wixstatic.com/media/d268df_9a96e5c646a64cc99b5b9cec84cb7cfd~mv2.jpg https://www.vietwah.com/single-post/weekly-ad-nov-6-12-2026",
-        "fires": 1,
-        "fired_at": "2026-11-13T15:40:01.504Z",
-        "session": "https://claude.ai/code/cse_015KDcQEJ3rS2Nf8JoYtjnrH"
-      }
+      "updated_at": "2026-11-13T21:56:28.127Z"
     },
     "asian-family-market": {
       "fingerprint": "1c9b8c9069ab3950",
