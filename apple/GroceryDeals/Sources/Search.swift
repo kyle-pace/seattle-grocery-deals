@@ -37,7 +37,6 @@ struct SearchView: View {
     @Environment(ListStore.self) private var list
     @Bindable var router: DealsRouter
     @State private var scope: Scope = .all
-    @State private var searching = false
     @State private var selected: Deal?
     @State private var path = NavigationPath()
     @AppStorage("sgd.recentSearches") private var recentsRaw = ""
@@ -56,17 +55,17 @@ struct SearchView: View {
             // in place of the tab bar, within reach of a thumb. (It was pinned under the
             // title, where the page opened with a small title and jumped to the large one on
             // the first scroll.) RootView's `tabViewSearchActivation` opens the keyboard.
-            .searchable(text: $router.searchQuery, isPresented: $searching, prompt: "Deals, stores, aisles")
+            .searchable(text: $router.searchQuery, prompt: "Deals, stores, aisles")
             // Keep the navigation bar (and so the back button) while searching: without this,
             // tapping a result with the search active pushed a page with no way back.
             .searchPresentationToolbarBehavior(.avoidHidingContent)
-            .searchScopes($scope, activation: .onSearchPresentation) {
-                ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+            // All / Deals / Stores sits at the top of the results (below): with the field in
+            // the tab bar, the system's scope bar doesn't show (checked on the iPhone and iPad
+            // simulators). It starts over at All with each new search: left on Stores, the next
+            // popular, recent or Spotlight search came up empty with nothing on screen to say why.
+            .onChange(of: router.searchQuery.trimmingCharacters(in: .whitespaces).isEmpty) { _, empty in
+                if empty { scope = .all }
             }
-            // The All / Deals / Stores bar only shows while the field is active. Left on Stores
-            // after that, a popular search, a recent one or a search from Spotlight came up
-            // empty with nothing on screen to say why.
-            .onChange(of: searching) { _, on in if !on { scope = .all } }
             .onSubmit(of: .search) {
                 remember(router.searchQuery)
                 Analytics.track("Searched", ["query_length": router.searchQuery.count, "results": store.search(router.searchQuery).count, "screen": "search"])
@@ -153,6 +152,13 @@ struct SearchView: View {
         let stores = scope == .deals ? [] : store.searchStores(q)
         let deals = scope == .stores ? [] : store.search(q)
         let byAisle = Dictionary(grouping: deals, by: \.category)
+
+        Picker("Show", selection: $scope) {
+            ForEach(Scope.allCases, id: \.self) { Text($0.rawValue).tag($0) }
+        }
+        .pickerStyle(.segmented)
+        .frame(maxWidth: 420)
+        .padding(.top, Space.m)
 
         // Ways to finish what's being typed, as chips over the results. They used to be the
         // system's suggestion list, which covered the results with a black page.
