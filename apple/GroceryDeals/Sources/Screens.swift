@@ -1,6 +1,7 @@
 import SwiftUI
 
-/// Screen background and side margins shared by every tab.
+/// Screen background and side margins shared by every tab. On iPad the content sits in a
+/// centered column at most `Wide.page` wide, like the site's page.
 struct Page<Content: View>: View {
     @ViewBuilder var content: Content
     var body: some View {
@@ -8,8 +9,75 @@ struct Page<Content: View>: View {
             LazyVStack(alignment: .leading, spacing: 0) { content }
                 .padding(.horizontal, Space.l)
                 .padding(.bottom, Space.xl)
+                .pageWidth()
         }
         .background(Palette.ground)
+    }
+}
+
+// MARK: iPad and other wide windows
+
+/// Sizes for a regular-width window (iPad, a wide Stage Manager window). In a compact width
+/// (iPhone, Split View, Slide Over) every screen keeps its iPhone layout; these only add the
+/// wide versions: more columns instead of stretched rows, and text that stops at a readable width.
+enum Wide {
+    /// The whole page stops widening here and centers, like the site's 70rem column.
+    static let page: CGFloat = 1100
+    /// The narrowest a column of deal rows or store cards gets before another column is added
+    /// (about the width of a row on an iPhone).
+    static let column: CGFloat = 340
+    /// Store tiles and search tiles: a little narrower, so more fit across.
+    static let tile: CGFloat = 300
+    /// Paragraphs stop widening here: about 70 characters a line.
+    static let reading: CGFloat = 620
+    /// A season card in a row of several.
+    static let card: CGFloat = 440
+    /// One-column lists (the shopping list): centered, at most this wide.
+    static let list: CGFloat = 720
+}
+
+extension View {
+    /// Centers scrolling content in a column at most `maxWidth` wide. Nothing changes on an
+    /// iPhone, which is narrower than that.
+    func pageWidth(_ maxWidth: CGFloat = Wide.page) -> some View {
+        frame(maxWidth: maxWidth).frame(maxWidth: .infinity)
+    }
+
+    /// For a List: keeps it a centered column at most `maxWidth` wide in a wide window, so a
+    /// row's name and its details don't end up a screen apart. Does nothing on an iPhone.
+    /// (Henwood's readableColumn.)
+    func readableColumn(_ maxWidth: CGFloat = Wide.list) -> some View { modifier(ReadableColumn(maxWidth: maxWidth)) }
+}
+
+private struct ReadableColumn: ViewModifier {
+    let maxWidth: CGFloat
+    @State private var width: CGFloat = 0
+    func body(content: Content) -> some View {
+        content
+            .contentMargins(.horizontal, max(0, (width - maxWidth) / 2), for: .scrollContent)
+            // Whole points, so a fraction of a point can't keep redrawing the screen.
+            .onGeometryChange(for: CGFloat.self) { $0.size.width.rounded() } action: { width = $0 }
+    }
+}
+
+/// Deal rows, store cards and tiles: one column on iPhone, and on iPad as many columns as fit
+/// at `minimum` or wider (two on an iPad in portrait, up to three in landscape), the way the
+/// site goes two across. One column again at the accessibility text sizes, where rows stack
+/// the price under the name.
+struct WideColumns<Content: View>: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.dynamicTypeSize) private var typeSize
+    var minimum: CGFloat = Wide.column
+    var spacing: CGFloat = Space.xl
+    @ViewBuilder var content: Content
+
+    var body: some View {
+        if sizeClass == .regular && !typeSize.isAccessibilitySize {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: minimum), spacing: spacing, alignment: .top)],
+                      alignment: .leading, spacing: 0) { content }
+        } else {
+            content
+        }
     }
 }
 
@@ -69,15 +137,19 @@ struct ThisWeekView: View {
                     }
                     let picks = store.topPicks()
                     SectionHeading(title: "Best single deals", note: "Any store · \(store.standouts.filter { !$0.ended }.count) standouts")
-                    ForEach(picks) { d in
-                        DealRow(deal: d, showWhy: true) { selected = d }
+                    WideColumns {
+                        ForEach(picks) { d in
+                            DealRow(deal: d, showWhy: true) { selected = d }
+                        }
                     }
                     // What people are adding (Amplitude, counts only), once enough people have.
                     let adding = store.popularDeals.prefix(3)
                     if !adding.isEmpty {
                         SectionHeading(title: "People are adding", note: "this week")
-                        ForEach(adding, id: \.deal.id) { entry in
-                            DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
+                        WideColumns {
+                            ForEach(adding, id: \.deal.id) { entry in
+                                DealRow(deal: entry.deal, people: entry.people) { selected = entry.deal }
+                            }
                         }
                     }
                 } else if store.loading {
@@ -132,8 +204,11 @@ private struct YourStoresWeek: View {
         if !picked.isEmpty, w.quiet || w.ranked.isEmpty {
             QuietNote(names: w.ranked.map(\.store.name), none: w.ranked.isEmpty, elsewhere: w.elsewhere)
         }
-        ForEach(Array(w.ranked.enumerated()), id: \.element.id) { i, e in
-            section(e, best: i == 0 && w.ranked.count > 1 && !w.quiet, position: i + 1, place: picked.isEmpty ? "all" : "yours")
+        // Side by side on iPad, like the site's store cards.
+        WideColumns(spacing: Space.m) {
+            ForEach(Array(w.ranked.enumerated()), id: \.element.id) { i, e in
+                section(e, best: i == 0 && w.ranked.count > 1 && !w.quiet, position: i + 1, place: picked.isEmpty ? "all" : "yours")
+            }
         }
         ForEach(w.unread) { s in UnreadStoreRow(s: s) }
         if let e = w.elsewhere {
@@ -306,10 +381,14 @@ struct StoresView: View {
                 let mine = store.rankedStores.filter { store.isFavorite($0.id) }
                 if !mine.isEmpty {
                     SectionHeading(title: "Your stores", note: "\(mine.count)")
-                    ForEach(mine) { s in tile(s) }
+                    WideColumns(minimum: Wide.tile, spacing: Space.m) {
+                        ForEach(mine) { s in tile(s) }
+                    }
                     SectionHeading(title: "More stores")
                 }
-                ForEach(store.rankedStores.filter { !store.isFavorite($0.id) }) { s in tile(s) }
+                WideColumns(minimum: Wide.tile, spacing: Space.m) {
+                    ForEach(store.rankedStores.filter { !store.isFavorite($0.id) }) { s in tile(s) }
+                }
             }
             .navigationTitle("Stores")
             .navigationSubtitle("\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
@@ -363,6 +442,7 @@ struct StoreDetail: View {
                     }
                     Text(s.about).font(.app(.callout)).foregroundStyle(Palette.body)
                         .lineLimit(aboutOpen ? nil : 3)
+                        .frame(maxWidth: Wide.reading, alignment: .leading)
                     if !aboutOpen && s.about.count > 140 {
                         Button("Read more") { withAnimation(.snappy) { aboutOpen = true } }
                             .font(.app(.callout, .semibold)).tint(Palette.accent).frame(minHeight: 44)
@@ -391,13 +471,17 @@ struct StoreDetail: View {
                     let rows = deals.filter { $0.category == a.id }
                     SectionHeader(a.label, trailing: "\(rows.count)")
                         .padding(.top, Space.l)
-                    ForEach(rows) { d in
-                        DealRow(deal: d, showStore: false) { selected = d }
+                    WideColumns {
+                        ForEach(rows) { d in
+                            DealRow(deal: d, showStore: false) { selected = d }
+                        }
                     }
                 }
             } else {
-                ForEach(deals) { d in
-                    DealRow(deal: d, showStore: false) { selected = d }
+                WideColumns {
+                    ForEach(deals) { d in
+                        DealRow(deal: d, showStore: false) { selected = d }
+                    }
                 }
             }
             if deals.isEmpty {
