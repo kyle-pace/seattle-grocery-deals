@@ -702,3 +702,13 @@ body.page-list { padding-bottom: calc(4rem + env(safe-area-inset-bottom)); }
 .hm-coin { fill: var(--coin); stroke: #b8862a; stroke-width: 2.5; }
 .hm-n { font-weight: 800; fill: #0f1a24; }
 .how-route { margin-top: var(--s-l); }
+
+/* ---------- About (parts and a jump list) and Privacy ---------- */
+.about-jump ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--s-s); padding: 0; margin: var(--s-l) 0 0; }
+.about-jump a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--s-l); border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); font-weight: 600; text-decoration: none; }
+.about-jump a:hover { text-decoration: underline; }
+main h2.about-part { margin-top: 2.75rem; padding-top: var(--s-l); border-top: 1px solid var(--line); font-size: 1.625rem; }
+main .wrap > h3, .privacy-page h3 { font-size: 1.125rem; line-height: 1.3; margin: 1.5rem 0 0.35rem; }
+.privacy-page { max-width: 44rem; padding-bottom: var(--s-l); }
+.privacy-page p { max-width: var(--measure); color: var(--text-body); }
+.privacy-page .note-card p { margin: 0; color: var(--ink); }

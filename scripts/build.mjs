@@ -464,7 +464,7 @@ ${head}` : ""}${map ? `
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About and privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -1072,23 +1072,26 @@ ${listTools()}
 
 function aboutPage() {
   const c = cfg.criteria;
+  const mail = "hello@seattlegrocery.deals";
+  const jump = [["shown", "What you'll see"], ["know", "Good to know"], ["contact", "Get in touch"]];
   const body = `<div class="page-h"><h1>About</h1></div>
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
-<p>There's an iPhone app on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.</p>${cfg.site.mcp_url ? `
-<p>You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.</p>` : ""}
-<h2>Which stores</h2>
-<p>The big chains, such as Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target, are left out on purpose. Their own apps already show their deals. This site covers the stores those apps skip.</p>
-<p>A store is included when it:</p>
+<p>There's an app for iPhone and iPad on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.${cfg.site.mcp_url ? ` You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.` : ""}</p>
+<nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}<li><a href="${url("privacy/")}">Privacy</a></li></ul></nav>
+
+<h2 class="about-part" id="shown">What you'll see</h2>
+<h3>Which stores</h3>
+<p>The stores the big chains' apps skip. Safeway, QFC, Fred Meyer, Albertsons, Costco, Walmart and Target are left out on purpose, because their own apps already show their deals. A store is included when it:</p>
 <ul>
   <li>publishes a weekly flyer or specials page online;</li>
   <li>is not a mainstream supermarket, discount or big-box chain; and</li>
   <li>sells something that's hard to find at those chains, such as a cuisine, a specialty like seafood, or co-op produce.</li>
 </ul>
-<h2>What's listed</h2>
-<p>Groceries for cooking: produce, meat, seafood, dairy and eggs, tofu, pantry staples and bread, from every flyer that could be read. Snacks, drinks, frozen desserts and ready-made meals like frozen pizza and instant noodles are left out. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
-<h2 id="vegetarian">Vegetarian</h2>
-<p>The "Vegetarian" filter hides meat, poultry and seafood, and anything made with them, such as fish sauce, broth or pork dumplings. Dairy and eggs stay. It works from each item's category and name, so when a name doesn't make it clear, as with many dumplings and frozen meals, the item is hidden to be safe. It doesn't check for other animal ingredients, like gelatin in a pudding or lard in a pastry, unless the name says so. Check the label if it matters to you.</p>
-<h2 id="how">How deals are highlighted</h2>
+<h3>What's listed</h3>
+<p>Groceries for cooking: produce, meat, seafood, dairy and eggs, tofu, pantry staples and bread. Snacks, drinks, frozen desserts and ready-made meals like frozen pizza and instant noodles are left out. Prices are never guessed. Anything that could not be read clearly is left out, and regular prices or percent off appear only when the store printed them.</p>
+<h3 id="vegetarian">Vegetarian</h3>
+<p>The "Vegetarian" filter hides meat, poultry and seafood, and anything made with them, such as fish sauce, broth or pork dumplings. Dairy and eggs stay. It works from each item's category and name, so when a name doesn't make it clear, the item is hidden to be safe. It doesn't catch other animal ingredients, like gelatin or lard, unless the name says so. Check the label if it matters to you.</p>
+<h3 id="how">How deals are highlighted</h3>
 <p>${tierBadge("standout")} deals are any of these:</p>
 <ul>
   <li>At least ${c.standout.min_percent_off_priority}% off a printed regular price for produce, meat, seafood and staples, or ${c.standout.min_percent_off_other}% off for anything else.</li>
@@ -1097,31 +1100,70 @@ function aboutPage() {
   <li>Hand-picked, with a short note on why.</li>
 </ul>
 <p>${tierBadge("good")} means at least ${c.good.min_percent_off}% off, under ${Math.round(c.good.max_us_average_ratio * 100)}% of the US average, matching the lowest price we've listed, or the cheapest of several stores this week.</p>
-<p>Each deal shows one savings pill under its price. For staples with a national price, it's how far under the US average it is, like <span class="pill tone-info">${ic("flag")}28% under US avg</span>. Otherwise it's the percent off the store printed, like <span class="pill tone-good">38% off</span>.</p>
-<p>Everything else is still on sale and still listed. Many stores print no regular price, so an unmarked item can still be a good buy.</p>
-<h2>Where to shop and comparing stores</h2>
-<p>This week's store cards and the Stores page rank stores by how many standouts they have this week. "Compare" puts the same item side by side when it's on sale at more than one store, by price per unit.</p>
-<h2>Delivery</h2>
+<p>Under each price is one savings pill: how far under the US average it is, like <span class="pill tone-info">${ic("flag")}28% under US avg</span>, or the percent off the store printed, like <span class="pill tone-good">38% off</span>. Everything else is still on sale and still listed; many stores print no regular price, so an unmarked item can still be a good buy.</p>
+<h3>Where to shop</h3>
+<p>Most people shop one store per trip, so This week ranks stores before deals. Pick your stores and it ranks just those; pick none and it ranks them all. A store's week scores higher for standouts most of all, then good deals, and more for produce, meat, seafood, dairy and staples than for frozen or bakery items. If a store you don't shop at is having a far better week, it's mentioned separately. Sales that have ended drop off.</p>
+<p><a href="${url("compare/")}">Compare</a> puts the same item side by side when it's on sale at more than one store, by price per unit.</p>
+<h3>Delivery</h3>
 <p>Stores marked "Delivers" deliver groceries themselves. Delivery areas, minimums and fees vary, so check with the store.</p>
-<h2>Flyers</h2>
-<p>Each store is tracked by one general Seattle-area flyer, not by location. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and does not copy them.</p>
-<h2>Check in store</h2>
-<p>Prices come from store flyers and can change, sell out, or differ by location. Check in store before you rely on a price. This site is not affiliated with any store, and store names belong to their owners.</p>
-<h2>Suggest a store</h2>
-<p>Know a Seattle-area store that fits and has a public weekly flyer? <a href="${esc(cfg.site.suggest_store_url)}">Open a suggestion on GitHub</a> (needs a free GitHub account).</p>
-<h2>For stores</h2>
-<p>If you run a store listed here and want a price corrected or the store removed, <a href="${esc(cfg.site.repo_url)}/issues/new?title=Store+request">open a request on GitHub</a>. Requests are handled within a week.</p>
-<h2>Privacy</h2>
-<p>There are no accounts, ads or sign-ups, and nothing you do here is sold.</p>
-<p>The site uses <a href="https://amplitude.com">Amplitude</a> to count which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so repeat visits count once, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. Its handling of that data is described in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
+
+<h2 class="about-part" id="know">Good to know</h2>
+<p>Each store is tracked by one general Seattle-area flyer, so other locations may have different prices. Prices can also change or sell out, so check in store before you rely on one. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and doesn't copy them, and it isn't affiliated with any store; store names belong to their owners.</p>
+<p>There are no accounts, ads or sign-ups, and nothing you do here is sold. Your list, your stores and your settings stay in your browser. The details are on the <a href="${url("privacy/")}">privacy page</a>.</p>
+
+<h2 class="about-part" id="contact">Get in touch</h2>
+<h3>Suggest a store</h3>
+<p>Know a Seattle-area store that fits and has a public weekly flyer? Email <a href="mailto:${mail}?subject=Store%20suggestion">${mail}</a>, or <a href="${esc(cfg.site.suggest_store_url)}">open a suggestion on GitHub</a>.</p>
+<h3>For stores</h3>
+<p>If you run a store listed here and want a price corrected or the store removed, email <a href="mailto:${mail}?subject=Store%20request">${mail}</a>. Requests are handled within a week. You can also <a href="${esc(cfg.site.repo_url)}/issues/new?title=Store+request">open a request on GitHub</a>.</p>
+<h3>More</h3>
+<ul>
+  <li><a href="${url("how-it-works/")}">How it works</a>: how a flyer gets from a store's website to this page, and <a href="${url("data/weeks/")}">the weekly data</a>, which is public.</li>
+  <li><a href="${url("accessibility/")}">Accessibility</a>: the site aims for WCAG 2.2 AA and has display settings for theme, text size, contrast, font, spacing, motion and links.</li>
+  <li><a href="${url("privacy/")}">Privacy</a>: what the site and the app collect, and how to turn it off.</li>
+</ul>`;
+  write("about/", page({ title: "About", path: "about/", body, description: "Which Seattle stores Seattle Grocery Deals covers, what's listed, how standouts and store rankings are chosen, and how to get in touch." }));
+}
+
+// Privacy, at /privacy/: the website and the app in one place. Also the privacy policy URL for
+// App Store Connect. If analytics, push or storage change (client/analytics.js, Analytics.swift,
+// Push.swift, the sgd.* browser keys), change this page too, and its date.
+function privacyPage() {
+  const updated = "November 13, 2026";
+  const body = `<div class="privacy-page">
+<div class="page-h"><h1>Privacy</h1><p class="page-sub">For the website and the app. Updated ${updated}.</p></div>
+<div class="note-card"><p>No accounts, no ads, nothing sold. Nothing asks for your name, email or location. The site and the app count which screens get used, privately, and you can turn that off.</p></div>
+
+<h2 id="site">The website</h2>
+<h3>What's counted</h3>
+<p>The site uses <a href="https://amplitude.com">Amplitude</a> to count which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so repeat visits count once, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. How Amplitude handles that data is in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
-<p>Your "Vegetarian" choice and the analytics setting are saved only in your browser and are never sent anywhere. The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site.</p>
-<p>The data is public: <a href="${url("data/weeks/")}">weekly JSON files</a> and the <a href="${url("schema/week.schema.json")}">schema</a>.</p>
-<h2>How it's made</h2>
-<p>Curious how a flyer gets from a store's website to this page? <a href="${url("how-it-works/")}">How it works</a> follows one from start to finish.</p>
-<h2>Accessibility</h2>
-<p>The site aims for WCAG 2.2 AA and has display settings for theme, text size, contrast, font, spacing, motion and links. More on the <a href="${url("accessibility/")}">accessibility page</a>.</p>`;
-  write("about/", page({ title: "About", path: "about/", body, description: "How Seattle Grocery Deals reads Seattle grocery flyers, how standouts are chosen, and what the site does and doesn't collect." }));
+<h3>What stays in your browser</h3>
+<p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
+<h3>Other sites it loads from</h3>
+<p>The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site. Flyer links take you to each store's own site, which has its own privacy rules.</p>
+
+<h2 id="app">The app</h2>
+<h3>Usage, only if you say yes</h3>
+<p>The app asks the first time you open it whether to share anonymous usage. Until you answer yes, nothing is sent and no ID is made. If you say yes, it sends the screens you open, the features you use, which deals you open, add or watch, and your app version, device model and iOS version. It never sends anything you type, like list items or searches, your name, email, contacts or location, your IP address or your advertising ID. Change your answer any time in Settings, under Privacy.</p>
+<h3>Your list and your stores</h3>
+<p>They're kept on your device. If you choose to use a Reminders list instead, it lives in Apple's Reminders and syncs the way your Reminders already do.</p>
+<h3>Notifications</h3>
+<p>Alerts are off until you turn them on. "New deals are in" comes through Firebase Cloud Messaging and Apple: your device signs up for the stores you picked, Firebase keeps that sign-up so it can deliver, and no list of devices is kept here. Alerts for a sale ending or a price you're watching are worked out on your device.</p>
+
+<h2 id="assistants">AI assistants</h2>
+<p>The <a href="${url("mcp/")}">server for AI assistants</a> keeps nothing about you or what you ask. If you tell it your stores, they travel with each request and aren't saved. Your assistant has its own privacy rules for your conversations.</p>
+
+<h2 id="contact">Questions</h2>
+<p>Email <a href="mailto:hello@seattlegrocery.deals?subject=Privacy">hello@seattlegrocery.deals</a>. If anything here changes, this page and its date will change with it.</p>
+</div>`;
+  write("privacy/", page({
+    title: "Privacy", path: "privacy/", section: "about/", body,
+    description: "What Seattle Grocery Deals and its app collect: no accounts, ads or tracking you can't turn off, and your list stays with you.",
+    ogTitle: "Privacy at Seattle Grocery Deals",
+    image: "assets/img/og-privacy.png",
+    imageAlt: "Privacy at Seattle Grocery Deals: the crow beside the words No accounts, no ads, nothing sold.",
+  }));
 }
 
 // Accessibility statement, linked from the footer and the About page.
@@ -1183,7 +1225,7 @@ function appsPage() {
   <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
   <p class="app-platforms">For iPhone and iPad</p>
   <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h2>${esc(title)}</h2><p>${esc(text)}</p></div></li>`).join("")}</ul>
-  <p class="app-note">No account, and your list stays on your phone. More in <a href="${url("about/")}#privacy">About</a>.</p>
+  <p class="app-note">No account, and your list stays on your phone. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
   write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
@@ -1440,7 +1482,7 @@ ${places.map(([icon, title, text, href, go]) => `  <li class="card how-place">${
   <li><strong>No database.</strong> Each week is one file in the code, and <a href="${url("data/weeks/")}">every week is public</a>.</li>
   <li><strong>No accounts.</strong> With no sign-in, there is nothing about you to store.</li>
 </ul>
-<p>The one thing that flows back is a count. The site and the app tally page views and taps with Amplitude, set up to be private, and "People are adding" on This week comes from how often each deal is added to a list. More in <a href="${url("about/")}">About and privacy</a>.</p>
+<p>The one thing that flows back is a count. The site and the app tally page views and taps with Amplitude, set up to be private, and "People are adding" on This week comes from how often each deal is added to a list. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
 
 <h2 class="how-h">The parts</h2>
 <dl class="how-parts">
@@ -1558,6 +1600,7 @@ comparePage();
 weekPages();
 storePages();
 aboutPage();
+privacyPage();
 accessibilityPage();
 yourListPage();
 appsPage();
