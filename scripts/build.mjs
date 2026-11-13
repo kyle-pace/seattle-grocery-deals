@@ -519,7 +519,8 @@ function topPicks(list) {
 // One store on This week as a card: a header row into the store, its best few deals that
 // aren't already top picks, and a way to see the rest. Rows carry data-hl like the picks.
 function storeCard(s, items, hlAll, hlVeg) {
-  const mine = items.filter((i) => i.store === s.id);
+  // Only sales still on, as on the app's This week (ended ones stay on the store's own page).
+  const mine = items.filter((i) => i.store === s.id && !isEnded(i));
   const r = RANKS[s.id];
   const f = latest.flyers.find((x) => x.store === s.id);
   const veg = mine.filter(isVegetarian);
@@ -539,7 +540,12 @@ function homePage() {
   const items = analyzed.get(latest.week);
   const end = EDITION_END;
   const veg = items.filter(isVegetarian);
-  const standouts = items.filter((i) => i.a.tier === "standout");
+  // This week only counts and shows sales still on, as in the app (FeedStore.live): an ended
+  // sale stays in the week until its store's next flyer, faded on store, aisle and search
+  // pages, but it's no use at the top. `items` still gives each row its place in the week.
+  const live = items.filter((i) => !isEnded(i));
+  const liveVeg = live.filter(isVegetarian);
+  const standouts = live.filter((i) => i.a.tier === "standout");
   const vegStandouts = standouts.filter(isVegetarian);
   // The picks for everyone, plus the vegetarian picks, so the section stays full when
   // "Vegetarian" is on. data-hl says which list a row belongs to.
@@ -549,7 +555,8 @@ function homePage() {
   const read = latest.flyers.filter((f) => f.status === "full" || f.status === "partial").length;
   const soonPool = items.filter((i) => i.valid_through).slice(0, 60);
   // Stores with deals, best first by rank score (app.js reorders for Your stores and Vegetarian).
-  const shops = [...new Set(items.map((i) => i.store))].map((id) => cfg.storeById[id])
+  // A store whose listed sales have all ended drops out until its next flyer.
+  const shops = [...new Set(live.map((i) => i.store))].map((id) => cfg.storeById[id])
     .sort((a, b) => RANKS[b.id].score - RANKS[a.id].score);
   // Every store someone can pick (ones the routine reads), and the ones with no deals listed this week (their flyer
   // couldn't be read, or hasn't changed): picked ones still show, with a link to their ad.
@@ -560,12 +567,12 @@ function homePage() {
   const adding = (POPULAR.items ?? []).map((p) => {
     const rank = +p.deal_id.slice(p.deal_id.lastIndexOf("-") + 1);
     return { i: items[rank], rank, store: p.deal_id.slice(0, p.deal_id.lastIndexOf("-")), people: p.people };
-  }).filter((a) => a.i && a.i.store === a.store).slice(0, 3);
+  }).filter((a) => a.i && a.i.store === a.store && !isEnded(a.i)).slice(0, 3);
 
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
   <p class="page-intro">Sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
-  <p class="page-sub">${vegText(plural(items.length, "deal"), plural(veg.length, "vegetarian deal"))} from ${plural(storeCount(items), "store")}</p>
+  <p class="page-sub">${vegText(plural(live.length, "deal"), plural(liveVeg.length, "vegetarian deal"))} from ${plural(storeCount(live), "store")}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
 <div class="wrap" data-filterable>
@@ -627,7 +634,7 @@ ${soonPool.length ? `<section class="block ending" data-ending hidden aria-label
   const home = cfg.site.origin + cfg.site.base_path;
   write("", page({ title: "", path: "", body, wrap: false, pageId: "home",
     ogTitle: "Seattle Grocery Deals: this week's sales, sorted",
-    description: `${plural(items.length, "sale")} this week at ${storeCount(items)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
+    description: `${plural(live.length, "sale")} this week at ${storeCount(live)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
     jsonld: [
       { "@context": "https://schema.org", "@type": "WebSite", name: cfg.site.title, alternateName: ["SGD", "seattlegrocery.deals"], url: home, description: cfg.site.tagline, inLanguage: "en-US" },
       { "@context": "https://schema.org", "@type": "Organization", name: cfg.site.title, url: home, logo: `${home}assets/logo-512.png`, sameAs: [cfg.site.repo_url] },
@@ -968,7 +975,8 @@ ${s.facts.map((f) => `  <li>${esc(f).replace(/\*\*(.+?)\*\*/g, "<strong>$1</stro
 function seasonStories() {
   return SEASONS_NOW.map((s) => {
     const d = seasonWeek(s, latest.week);
-    if (!d.best) return "";
+    // No card once its headline sale has ended; it's back when the week has another.
+    if (!d.best || isEnded(d.best)) return "";
     // As the app's SeasonCard: "Fuyu $1.28/lb at T&T Supermarket", then "Through Thu · 6 stores
     // have them". The X hides it for this season (app.js, sgd.hiddenSeasons); the buddy in the
     // top bar still opens the page.
@@ -1148,8 +1156,8 @@ function accessibilityPage() {
 // Screenshots are off for now; captures stay in site/assets/img/app/ for later.
 function appsPage() {
   const features = [
-    ["newspaper", "This week, sorted", "The same deals as this site, top picks first. Browse by aisle, search across stores, or hide meat and seafood with Vegetarian."],
-    ["storefront", "Your stores first", "Pick the stores you actually shop at and they lead everywhere, each with a link to its weekly ad."],
+    ["newspaper", "This week, sorted", "The same deals as this site, with the best stores to shop this week first. Browse by aisle, search across stores, or hide meat and seafood with Vegetarian."],
+    ["storefront", "Best of your stores", "Pick the stores you actually shop at and This week ranks just those, so you know where to go. Each one links to its weekly ad."],
     ["list", "A list that knows the sale", "Tap + on a deal and it goes on your list with the price, the store and the day the sale ends. Keep it in the app, or in a Reminders list you already share."],
     ["bell", "Alerts you choose", "New deals, a sale about to end, or something you're watching getting cheaper. Each one is off until you turn it on."],
     ["widget", "Widget and Siri", "Best This Week on your Home Screen. Ask Siri what's on sale, or add to your list without opening the app."],
@@ -1159,12 +1167,12 @@ function appsPage() {
   <h1>Seattle Grocery Deals</h1>
   <p class="app-tag">This week's grocery sales, in your pocket.</p>
   <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
-  <p class="app-platforms">For iPhone</p>
+  <p class="app-platforms">For iPhone and iPad</p>
   <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h2>${esc(title)}</h2><p>${esc(text)}</p></div></li>`).join("")}</ul>
   <p class="app-note">No account, and your list stays on your phone. More in <a href="${url("about/")}#privacy">About</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals iPhone app: this week's deals, your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
