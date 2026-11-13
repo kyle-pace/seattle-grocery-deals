@@ -34,18 +34,15 @@ final class WalkThrough: XCTestCase {
 
     private func pause(_ seconds: TimeInterval) { Thread.sleep(forTimeInterval: seconds) }
 
-    /// Taps a tab: in the tab bar on iPhone, in the top bar or sidebar on iPad.
+    /// Taps a tab: in the tab bar on iPhone, in the top bar on iPad (which also lists every tab
+    /// a second time, in a sidebar that's closed, so take the one that can be tapped).
     private func tab(_ name: String) {
         let started = Date()
-        let inBar = app.tabBars.buttons[name]
-        if inBar.waitForExistence(timeout: 3) {
-            inBar.tap()
-        } else {
-            let any = app.buttons[name].firstMatch
-            guard any.waitForExistence(timeout: 2) else { note("NO TAB \(name)"); return }
-            any.tap()
-        }
-        note(String(format: "tab %@: tap returned after %.2fs", name, Date().timeIntervalSince(started)))
+        _ = app.buttons[name].firstMatch.waitForExistence(timeout: 3)
+        let all = app.buttons.matching(identifier: name).allElementsBoundByIndex
+        guard let target = all.first(where: { $0.isHittable }) ?? all.first else { note("NO TAB \(name)"); return }
+        target.tap()
+        note(String(format: "tab %@: %d found, tapped one at %@, %.2fs", name, all.count, "\(target.frame)", Date().timeIntervalSince(started)))
     }
 
     private func tapFirst(labelContaining text: String, in query: XCUIElementQuery? = nil) -> Bool {
@@ -70,6 +67,36 @@ final class WalkThrough: XCTestCase {
     private func listButtons(_ title: String) {
         let labels = app.buttons.allElementsBoundByIndex.prefix(60).map { $0.label.replacingOccurrences(of: "\n", with: " ").prefix(40) }
         note("\(title) buttons: " + labels.joined(separator: " | "))
+    }
+
+    /// A short one for the iPad: Stores, a store page, List, then Search.
+    func testPad() throws {
+        app.launch()
+        pause(4)
+        tab("Stores"); pause(1)
+        let tile = app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "99 Ranch Market")).firstMatch
+        note("tile exists \(tile.exists) hittable \(tile.exists && tile.isHittable) frame \(tile.exists ? tile.frame : .zero)")
+        if tile.exists { tile.tap(); pause(1.5); shot("pad-store-page") }
+        note("nav bars: " + app.navigationBars.allElementsBoundByIndex.map { $0.identifier }.joined(separator: " | "))
+        listButtons("store page")
+        back(); pause(1); shot("pad-after-back")
+        tab("List"); pause(1); shot("pad-list")
+        tab("Search")
+        pause(0.3); shot("pad-search-0.3")
+        pause(1); shot("pad-search-1.3")
+        pause(2); shot("pad-search-3.3")
+        note("search fields: \(app.searchFields.count), keyboards: \(app.keyboards.count)")
+        let field = app.searchFields.firstMatch
+        if field.exists {
+            let focused = (field.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
+            note("focused \(focused) frame \(field.frame)")
+            if !focused { field.tap(); pause(0.6) }
+            field.typeText("Beef"); pause(1); shot("pad-search-beef")
+            let scope = app.segmentedControls.buttons["Stores"]
+            if scope.waitForExistence(timeout: 2) { scope.tap(); pause(0.8); shot("pad-search-stores") }
+            field.typeText("\n"); pause(1); shot("pad-search-submitted")
+            listButtons("pad after search")
+        }
     }
 
     func testWalk() throws {
