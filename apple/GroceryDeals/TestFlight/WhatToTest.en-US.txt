@@ -1,9 +1,12 @@
-Thanks for trying Grocery Deals. It shows this week's sales at Seattle's Asian markets, seafood shops and co-ops, read from each store's own flyer.
+Thanks for trying Seattle Grocery Deals! It gathers this week's sales from Seattle-area Asian markets, seafood shops and co-ops, read from each store's own flyer, so you know where to shop before you go.
 
-Worth trying:
-- Pick the stores you shop at, then see which one has the best week on This week.
-- Add a few deals to your list, or connect it to a Reminders list you share.
-- Search for something you buy often, like "pork" or "bok choy".
-- Watch a price and see if you get a nudge when it drops.
+Things to try:
+- Pick the stores you actually shop at, then check This week to see which one has the best week.
+- Tap + on a few deals to build a list, or connect it to a Reminders list you share.
+- Search for something you buy often, like pork belly or bok choy.
+- Watch a price and get a nudge when it drops.
+- Turn on "New deals are in" to hear when your stores post a new flyer.
 
-Tell me what's confusing, what's missing, or a store you'd like added. Take a screenshot in the app to send feedback, or write to hello@seattlegrocery.deals.
+Good to know: it covers 13 Seattle-area stores, and each one updates as soon as its new flyer is out. Prices come straight from the flyers, so double-check in store.
+
+Tell me what's confusing, what's missing, or which store to add next. Take a screenshot in the app to send feedback through TestFlight, or email hello@seattlegrocery.deals.
