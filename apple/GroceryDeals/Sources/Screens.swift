@@ -178,7 +178,10 @@ struct ThisWeekView: View {
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             .sheet(isPresented: $editingStores) { YourStoresSheet() }
             // Simulator screenshots: -deal <name> opens the first deal whose name contains it.
-            .task { if let q = DebugArgs.value("-deal") { selected = store.items.first { $0.name.localizedCaseInsensitiveContains(q) } } }
+            // Simulator screenshots: -deal "pork chop" opens that deal once the deals are in.
+            .task(id: store.items.count) {
+                if selected == nil, let q = DebugArgs.value("-deal") { selected = store.items.first { $0.name.localizedCaseInsensitiveContains(q) } }
+            }
         }
     }
 }
