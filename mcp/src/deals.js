@@ -432,3 +432,54 @@ export function planTrip(feed, opts = {}, today = seattleToday()) {
     source: `${SITE}/`,
   };
 }
+
+// Farmers markets and independent shops (https://seattlegrocery.deals/api/places.json): places
+// with no weekly flyer, so no prices. Filter by kind, a word search over names, neighborhoods
+// and what each is known for ("goat", "halal", "Ballard"), and markets open in the next week.
+export function findPlaces(feed, opts = {}) {
+  const want = words(opts.query ?? "");
+  const kind = opts.kind && opts.kind !== "any" ? opts.kind : null;
+  const type = opts.shop_type || null;
+  const text = (p) => words([p.name, p.neighborhood, p.address, p.about, p.type && feed.shop_types?.[p.type], ...(p.carries ?? [])].join(" "));
+  let list = feed.places.filter((p) => p.kind !== "hub");
+  if (kind) list = list.filter((p) => p.kind === kind);
+  if (type) list = list.filter((p) => p.type === type);
+  if (opts.open_this_week) list = list.filter((p) => p.kind === "market" && p.open_next_7_days?.length);
+  if (opts.fresh_bucks) list = list.filter((p) => p.fresh_bucks);
+  if (opts.delivers) list = list.filter((p) => p.services?.delivery || p.services?.ships);
+  if (want.length) {
+    const scored = list.map((p) => {
+      const t = new Set(text(p));
+      return { p, hits: want.filter((w) => t.has(w) || [...t].some((x) => x.startsWith(w))).length };
+    }).filter((x) => x.hits);
+    scored.sort((a, b) => b.hits - a.hits || a.p.name.localeCompare(b.p.name));
+    list = scored.map((x) => x.p);
+  }
+  const out = (p) => ({
+    name: p.name, kind: p.kind, ...(p.type ? { type: feed.shop_types?.[p.type] ?? p.type } : {}),
+    neighborhood: p.neighborhood, address: p.address, about: p.about,
+    ...(p.carries ? { known_for: p.carries } : {}),
+    ...(p.hours ? { hours: p.hours } : {}),
+    ...(p.kind === "market" ? { open_next_7_days: p.open_next_7_days } : {}),
+    ...(p.special?.length ? { special_days: p.special } : {}),
+    ...(p.closed?.length ? { closed: p.closed } : {}),
+    ...(p.programs?.length ? { ebt_programs: p.programs.map((k) => feed.programs?.[k] ?? k) } : {}),
+    ...(p.fresh_bucks ? { fresh_bucks: true } : {}),
+    ...(p.services ? { services: p.services } : {}),
+    ...(p.status === "moving" ? { moving: p.status_note } : {}),
+    ...(p.website ? { website: p.website } : {}),
+    ...(p.newsletter ? { newsletter: p.newsletter.url } : {}),
+    ...(p.weekly ? { this_week: p.weekly.url } : {}),
+    page: p.url,
+  });
+  const limit = Math.min(Math.max(opts.limit ?? 20, 1), 60);
+  return {
+    checked: feed.checked,
+    note: feed.note,
+    count: list.length,
+    places: list.slice(0, limit).map(out),
+    ...(list.length > limit ? { more: list.length - limit } : {}),
+    ...(!list.length ? { not_found: "Nothing matched. This covers a hand-picked list of farmers markets and independent shops, not every store in Seattle." } : {}),
+    source: `${SITE}/shops/`,
+  };
+}

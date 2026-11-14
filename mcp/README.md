@@ -14,6 +14,7 @@ It is a small Cloudflare Worker with no data of its own. Every answer comes from
 | `plan_trip` | One store for a shopping list: which single store has the most of the items on sale, with its best deal for each and what it's missing. |
 | `search_deals` | Ingredients (several at once, separated by commas), or browse by store, aisle, rating or vegetarian. Ended deals are left out. |
 | `list_stores` | Every store covered: what it is, addresses, flyer dates, weekly ad link, delivery. |
+| `find_places` | Farmers markets and independent shops with no flyer: what each is known for, hours, markets open in the next 7 days, EBT matching, Fresh Bucks, ordering and delivery. Reads `/api/places.json`. |
 
 Prices are passed through exactly as the site shows them ("$2.99/lb", "2 for $6.00"); nothing is recomputed here.
 
