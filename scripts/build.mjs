@@ -591,7 +591,7 @@ function homePage() {
 
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
-  <p class="page-intro">Sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
+  <p class="page-intro">Groceries cost more than they used to, and some of the best prices in town are in flyers you'd never see. Here are this week's sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
   <p class="page-sub">${vegText(plural(live.length, "deal"), plural(liveVeg.length, "vegetarian deal"))} from ${plural(storeCount(live), "store")}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
@@ -1085,7 +1085,7 @@ function aboutPage() {
   const mail = "hello@seattlegrocery.deals";
   const jump = [["shown", "What you'll see"], ["know", "Good to know"], ["contact", "Get in touch"]];
   const body = `<div class="page-h"><h1>About</h1></div>
-<p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
+<p>Groceries cost more than they used to, and some of the best prices in town are in flyers you'd never see. As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
 <p>There's a free app for iPhone and iPad, now in beta, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">get the app</a>.${cfg.site.mcp_url ? ` You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.` : ""}</p>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}<li><a href="${url("privacy/")}">Privacy</a></li></ul></nav>
 
@@ -1223,7 +1223,7 @@ function foodHelpPage() {
 
 <h2 class="about-part" id="fresh-bucks">Fresh Bucks</h2>
 <p>The City of Seattle's own produce benefit: $60 a month for fruits and vegetables, for Seattle households under an income limit. It has its own rules, separate from SNAP, so you don't need Basic Food to apply. It's accepted at more than 55 places in Seattle, including farmers markets, independent grocers and Seattle Safeway stores.</p>
-<p>New households are picked at random from a waitlist as funding allows. <a href="https://www.seattlefreshbucks.org/apply">Check if you qualify and join the waitlist</a>.</p>
+<p>New households are picked at random from a waitlist as funding allows. <a href="https://www.seattlefreshbucks.org/">Check if you qualify and join the waitlist</a>.</p>
 
 <h2 class="about-part" id="kids">Families with kids</h2>
 <h3>WIC</h3>
