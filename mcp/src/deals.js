@@ -94,12 +94,14 @@ const quiet = (r) => !r || ((r.standouts ?? 0) < 3 && (r.good ?? 0) < 6);
 // Does this deal match the words asked for? A word matches when it's in the deal's name, item
 // key, aisle or store, or starts a word in the name ("mushroom" finds "mushrooms, king
 // oyster"; 4+ letters only).
-function matcher(feed) {
+// `nameOnly` leaves the aisle and store out: a shopping list's "eggs" means eggs, not everything
+// in Dairy & eggs (plan_trip once counted soy milk and yogurt as eggs).
+function matcher(feed, { nameOnly = false } = {}) {
   const storeName = (id) => feed.stores.find((s) => s.id === id)?.name ?? id;
   const aisleName = (id) => feed.categories.find((c) => c.id === id)?.label ?? id;
   return (item) => {
     const nameWords = words(`${item.name} ${item.key ?? ""}`);
-    const allWords = new Set([...nameWords, ...words(`${aisleName(item.category)} ${storeName(item.store)}`)]);
+    const allWords = new Set([...nameWords, ...(nameOnly ? [] : words(`${aisleName(item.category)} ${storeName(item.store)}`))]);
     const has = (w) => allWords.has(w) || (w.length >= 4 && nameWords.some((n) => n.startsWith(w)));
     return (askWords) => askWords.every(has);
   };
@@ -373,7 +375,7 @@ export function planTrip(feed, opts = {}, today = seattleToday()) {
   const pool = live(feed, today, false)
     .filter((i) => !yours.skipIds.has(i.store) && (!opts.vegetarian || i.veg))
     .sort((a, b) => a.rank - b.rank);
-  const matches = matcher(feed);
+  const matches = matcher(feed, { nameOnly: true });
   // store id -> ask text -> its best (first by site rank) matching deal
   const byStore = new Map();
   for (const i of pool) {

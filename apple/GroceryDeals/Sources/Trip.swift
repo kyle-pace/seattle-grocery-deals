@@ -59,12 +59,13 @@ struct TripPlan: Sendable {
 }
 
 extension FeedStore {
-    /// The best deal still on for each thing asked for, by the server's matching: every word of
-    /// the ask has to be in the deal's name or item key (or its aisle or store), and a word of
-    /// four letters or more can be the start of a name word ("persim" finds persimmons).
+    /// Whether a deal is the thing asked for, by the server's plan_trip matching: every word
+    /// of the ask has to be in the deal's name or item key, and a word of four letters or more
+    /// can be the start of a name word ("persim" finds persimmons). The aisle and the store
+    /// don't count: a list's "eggs" means eggs, not everything in Dairy & eggs.
     private func matcher(for deal: Deal) -> ([String]) -> Bool {
         let nameWords = dealWords("\(deal.name) \(deal.key ?? "")")
-        let all = Set(nameWords + dealWords("\(label(forCategory: deal.category)) \(storeName(deal.store))"))
+        let all = Set(nameWords)
         return { ask in ask.allSatisfy { w in all.contains(w) || (w.count >= 4 && nameWords.contains { $0.hasPrefix(w) }) } }
     }
 
@@ -78,14 +79,9 @@ extension FeedStore {
             .map { (text: $0, words: dealWords($0)) }
 
         var byStore: [String: [String: Deal]] = [:]
-        var storeWords: [String: [String]] = [:]
         for deal in live.sorted(by: { $0.rank < $1.rank }) {
             let has = matcher(for: deal)
-            let own = storeWords[deal.store] ?? dealWords(storeName(deal.store))
-            storeWords[deal.store] = own
-            for a in asks where byStore[deal.store]?[a.text] == nil {
-                // The store's own name shouldn't count as having an item ("market" at every market).
-                guard has(a.words), !a.words.allSatisfy(own.contains) else { continue }
+            for a in asks where byStore[deal.store]?[a.text] == nil && has(a.words) {
                 byStore[deal.store, default: [:]][a.text] = deal
             }
         }
@@ -116,9 +112,7 @@ extension FeedStore {
     func bestDeal(for item: String) -> (deal: Deal, yours: Bool)? {
         let ask = dealWords(item)
         guard !ask.isEmpty else { return nil }
-        let hits = live.sorted { $0.rank < $1.rank }.filter { d in
-            matcher(for: d)(ask) && !ask.allSatisfy(dealWords(storeName(d.store)).contains)
-        }
+        let hits = live.sorted { $0.rank < $1.rank }.filter { matcher(for: $0)(ask) }
         if let mine = hits.first(where: { favoriteStores.contains($0.store) }) { return (mine, true) }
         return hits.first.map { ($0, favoriteStores.isEmpty) }
     }
