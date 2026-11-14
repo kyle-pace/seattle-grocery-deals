@@ -6,7 +6,7 @@ The iPhone and iPad app (SwiftUI). It replaced an earlier Expo app (decided 2026
 
 Two channels, both TestFlight (owner's call, 2026-11-13; the rule for all his apps is in the principles block of `AGENTS.md`):
 
-1. **Internal TestFlight** (`apple/testflight.sh`, tags beginning with `v`): the main channel. Every build worth trying on a device goes here. These builds show Settings, Developer: `ci_post_clone.sh` marks them (`KitchenInternalBuild` in Info.plist) and KitchenUI's `BuildKind` reads it. Needs KitchenUI's `internal-dev-menu` change on its `main`.
+1. **Internal TestFlight** (`apple/testflight.sh`, tags beginning with `v`): the main channel. Every build worth trying on a device goes here. These builds show Settings, Developer: `ci_post_clone.sh` marks them (`KitchenInternalBuild` in Info.plist) and gives them the DEV app icon and KitchenUI's `BuildKind` reads it. Needs KitchenUI's `internal-dev-menu` change on its `main`.
 2. **Public TestFlight** (`apple/testflight.sh --external`, tags beginning with `beta-`): from a commit that has already run on internal.
 
 Before tagging, build and run on the Mac's iPhone and iPad simulators, so Xcode Cloud's hours aren't spent on compile errors. Installing Deals Dev straight onto a device (next section) is no longer routine: use it only when TestFlight can't do the job. Today that means test pushes (`new-deals-test` only reaches the `.dev` app), debugging on the device, or a quick loop the owner asks for. Don't assume the Deals Dev on the owner's devices is current.
