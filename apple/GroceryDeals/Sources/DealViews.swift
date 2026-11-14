@@ -220,6 +220,15 @@ struct DealRow: View {
             .accessibilityAction(named: list.contains(deal) ? "Remove from list" : "Add to list") {
                 toggle(deal, added: list.contains(deal), list: list, store: store)
             }
+            // Touch and hold: share the deal without opening it.
+            .contextMenu {
+                ShareLink(item: deal.shareURL, message: Text(deal.shareText(at: store.storeName(deal.store)))) {
+                    Label("Share deal", systemImage: "square.and.arrow.up")
+                }
+                Button(list.contains(deal) ? "Remove from list" : "Add to list", systemImage: list.contains(deal) ? "minus.circle" : "plus.circle") {
+                    toggle(deal, added: list.contains(deal), list: list, store: store)
+                }
+            }
             AddButton(deal: deal)
         }
         .padding(.vertical, Space.m)
@@ -253,6 +262,15 @@ struct DealRow: View {
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
         if let people { parts.append("\(people) people added this this week") }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
+    }
+}
+
+extension Deal {
+    /// Where a shared deal points: its store's page on the site (the site has no page per deal).
+    var shareURL: URL { URL(string: "https://seattlegrocery.deals/stores/\(store)/")! }
+    /// "Fuyu Persimmon: $1.28/lb at T&T Supermarket, through Thu, Nov 19"
+    func shareText(at storeName: String) -> String {
+        "\(name): \(text) at \(storeName)" + (ended ? "" : ends.map { ", through \(Dates.short($0))" } ?? "")
     }
 }
 
@@ -306,8 +324,7 @@ struct DealDetail: View {
                             }
                             .buttonStyle(.glass)
                         }
-                        ShareLink(item: URL(string: "https://seattlegrocery.deals/stores/\(deal.store)/")!,
-                                  message: Text("\(deal.name): \(deal.text) at \(store.storeName(deal.store))")) {
+                        ShareLink(item: deal.shareURL, message: Text(deal.shareText(at: store.storeName(deal.store)))) {
                             Label("Share", systemImage: "square.and.arrow.up").font(.app(.subheadline, .semibold)).frame(maxWidth: .infinity, minHeight: 44)
                         }
                         .buttonStyle(.glass)

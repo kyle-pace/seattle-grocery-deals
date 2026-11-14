@@ -65,6 +65,12 @@ struct RootView: View {
         return "\(f.week)|\(f.updated ?? "")|\(f.items.count)"
     }
 
+    /// Changes whenever something the widgets show does.
+    private var sharedVersion: String {
+        let lines = list.openItems.map { "\($0.id)\($0.text)" }.joined(separator: ",")
+        return "\(feedVersion)|\(store.favoriteStores.sorted().joined(separator: ","))|\(store.vegetarianOnly)|\(store.hideEndingToday)|\(list.title)|\(lines)"
+    }
+
     var body: some View {
         @Bindable var list = list
         // Every tab gets the same closure each time this view is redrawn. A fresh closure
@@ -120,12 +126,23 @@ struct RootView: View {
             }
             await alerts.scheduleEndingSoon(matches)
         }
+        // The widgets follow Your stores, the filters and the list (Shared/SharedState.swift).
+        .task(id: sharedVersion) { Sharing.publish(store, list) }
+        // "What's on sale at Uwajimaya in Deals": Siri learns the store names from the feed.
+        .task(id: store.feed?.stores.map(\.id).joined(separator: ",") ?? "") {
+            if store.feed != nil { DealsShortcuts.updateAppShortcutParameters() }
+        }
+        // grocerydeals:// links from the widgets and from a deal's Reminders item.
+        .onOpenURL { router.open($0) }
+        // A store page, from Siri's Open Store or a link.
+        .onChange(of: router.storeID, initial: true) { openPendingStore(dropIfMissing: false) }
         .handlesSpotlight(router)
         .onChange(of: router.searchRequest, initial: true) { if router.searchRequest > 0 { tab = .search } }
         // A deal from Spotlight can be newer than the deals saved on the phone: it waits for the
         // refresh instead of being dropped (it was, when the app opened from Spotlight).
         .onChange(of: router.dealID, initial: true) { openPendingDeal(dropIfMissing: false) }
         .onChange(of: feedVersion) {
+            openPendingStore(dropIfMissing: true)
             openPendingDeal(dropIfMissing: true)
             openPendingSeason(dropIfMissing: true)
         }
@@ -169,6 +186,16 @@ struct RootView: View {
             router.dealID = nil
         } else if dropIfMissing {
             router.dealID = nil   // ended, or gone from the latest deals
+        }
+    }
+
+    private func openPendingStore(dropIfMissing: Bool) {
+        guard let id = router.storeID else { return }
+        if store.store(id) != nil {
+            openStore(id)
+            router.storeID = nil
+        } else if dropIfMissing {
+            router.storeID = nil
         }
     }
 

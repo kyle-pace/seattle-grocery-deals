@@ -125,6 +125,13 @@ struct ListView: View {
         .padding(.bottom, Space.s)
         .animation(.snappy, value: newItem.isEmpty)
         .sensoryFeedback(.increase, trigger: list.items.count)
+        // The Add to List control and the list widget's + land here with the keyboard up. The
+        // tab switch comes first, so wait a beat for the field to be on screen.
+        .task(id: DealsRouter.shared.addRequest) {
+            guard DealsRouter.shared.addRequest > 0 else { return }
+            try? await Task.sleep(for: .milliseconds(400))
+            typing = true
+        }
     }
 
     /// Open items that are the same thing (same item key) from different stores' deals.
@@ -261,6 +268,12 @@ struct SettingsView: View {
     /// The page about the MCP server, and the server's own address (config/site.json's mcp_url).
     private static let assistantsPage = URL(string: "https://seattlegrocery.deals/mcp/")!
     private static let assistantsAddress = "https://mcp.seattlegrocery.deals"
+    /// The address with Your stores on it (`?stores=uwajimaya,pcc`), so an assistant ranks
+    /// those first without being told. The server keeps nothing: the address carries them.
+    private var assistantsAddress: String {
+        let ids = store.favoriteStores.sorted()
+        return ids.isEmpty ? Self.assistantsAddress : "\(Self.assistantsAddress)/?stores=\(ids.joined(separator: ","))"
+    }
 
     var body: some View {
         @Bindable var alerts = alerts
@@ -347,13 +360,16 @@ struct SettingsView: View {
                     .foregroundStyle(Palette.ink)
                     .accessibilityHint("Opens a page in your browser")
                     Button {
-                        UIPasteboard.general.string = Self.assistantsAddress
+                        UIPasteboard.general.string = assistantsAddress
                         copiedAddress = true
+                        Analytics.track("Copied Connector Address", ["stores_picked": store.favoriteStores.count])
                     } label: {
                         Label(copiedAddress ? "Copied" : "Copy the connector address", systemImage: copiedAddress ? "checkmark" : "doc.on.doc")
                     }
                 } header: { Text("AI assistants") } footer: {
-                    Text("It reads the same public deals as the website. Nothing from this app, like your list or your stores, is shared with it.")
+                    Text(store.favoriteStores.isEmpty
+                         ? "It reads the same public deals as the website. Nothing from this app, like your list, is shared with it."
+                         : "It reads the same public deals as the website. The address you copy names your stores, so answers rank those first. Your list stays on this device.")
                 }
                 .tint(Palette.accent)
 
