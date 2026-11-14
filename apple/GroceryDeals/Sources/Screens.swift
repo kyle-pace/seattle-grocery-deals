@@ -398,6 +398,10 @@ struct StoresView: View {
             .navigationSubtitle(store.feed == nil ? "" : "\(store.rankedStores.filter { !store.deals(atStore: $0.id).isEmpty }.count) with deals this week")
             .settingsButton()
             .navigationDestination(for: Store.self) { StoreDetail(s: $0, openStore: openStore) }
+            // Simulator screenshots: -tab Stores -store tnt opens that store's page.
+            .task(id: store.feed?.week ?? "") {
+                if let id = DebugArgs.value("-store"), path.isEmpty, let s = store.feed?.stores.first(where: { $0.id == id }) { path = [s] }
+            }
         }
     }
 
@@ -487,6 +491,12 @@ struct StoreDetail: View {
                         DealRow(deal: d, showStore: false) { selected = d }
                     }
                 }
+            }
+            // At the bottom and only when there's enough to it: recipes that use two or more of
+            // this store's deals (from recipes.json, nothing asked of any server).
+            if q.isEmpty, !deals.isEmpty, let shelf = store.storeShelf(for: s.id) {
+                RecipeIdeas(shelf: shelf, bleed: Space.l)
+                    .padding(.top, Space.l)
             }
             if deals.isEmpty {
                 EmptyState(.crow, mood: q.isEmpty ? .sleepy : .surprised,

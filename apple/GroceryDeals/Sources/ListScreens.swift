@@ -63,6 +63,16 @@ struct ListView: View {
                     .listRowBackground(Palette.surface)
                 }
 
+                // Recipes that use two or more things on the list that are on sale, asked of
+                // recipe search only when the person taps (ListRecipes, below).
+                let ids = store.recipeIDs(for: list.openItems.compactMap { deal(for: $0) })
+                if ids.count >= 2 {
+                    Section { ListRecipes(ids: ids) }
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                }
+
             }
             .scrollContentBackground(.hidden)
             // iPad: a list-width column, not rows across the whole screen.
@@ -96,6 +106,12 @@ struct ListView: View {
                 if old > 0 && now == 0 && !list.items.isEmpty { celebrate = true }
             }
             .refreshable { list.reload() }
+            // Simulator screenshots: -listSample "napa cabbage,tofu" fills an empty in-app list.
+            .task {
+                guard let sample = DebugArgs.value("-listSample"), list.items.isEmpty else { return }
+                if !list.usesReminders { list.useApp(prompt: "debug") }
+                for text in sample.split(separator: ",") { list.request(String(text).trimmingCharacters(in: .whitespaces)) }
+            }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             .sheet(isPresented: $choosing) { RemindersPicker(prompt: "list_tab") }
         }
@@ -559,6 +575,90 @@ struct YourStoresSheet: View {
                 }
         }
         .presentationDetents([.large])
+    }
+}
+
+/// "Recipes with your list", under the list: recipes that use two or more of the things on it
+/// that are on sale this week. The only part of the app that asks a server other than
+/// seattlegrocery.deals, so it waits for a tap and says what it sends: the recipe search's ids
+/// for those ingredients (from recipes.json), never what was typed. A changed list goes back to
+/// the button.
+struct ListRecipes: View {
+    let ids: [String]
+    @Environment(FeedStore.self) private var store
+    @State private var state: Phase = .idle
+
+    private enum Phase: Equatable {
+        case idle, loading, none, failed
+        case loaded(RecipeShelf, for: [String])
+    }
+
+    var body: some View {
+        Group {
+            switch state {
+            case .loaded(let shelf, _):
+                RecipeIdeas(shelf: shelf, bleed: Space.l)
+            case .none:
+                note("None of these recipes use two of them yet.", button: nil)
+            case .failed:
+                note("Couldn't reach recipe search.", button: "Try again")
+            case .idle, .loading:
+                ask
+            }
+        }
+        .padding(.horizontal, Space.l)
+        .padding(.bottom, Space.l)
+        .onChange(of: ids) { _, now in
+            if case .loaded(_, let asked) = state, asked == now { return }
+            state = .idle
+        }
+        .onChange(of: store.vegetarianOnly) { state = .idle }
+    }
+
+    private var ask: some View {
+        VStack(alignment: .leading, spacing: Space.s) {
+            SectionHeading(title: "Recipes with your list")
+            Text("Ideas that use two or more things on your list that are on sale. Sends just those \(ids.count) ingredients to recipe search, nothing you typed.")
+                .font(.app(.subheadline)).foregroundStyle(Palette.body)
+                .frame(maxWidth: Wide.reading, alignment: .leading)
+            Button(action: find) {
+                Label(state == .loading ? "Finding recipes…" : "Find recipes", systemImage: "fork.knife")
+                    .font(.app(.headline)).frame(minHeight: 44).padding(.horizontal, Space.s)
+            }
+            .buttonStyle(.glass)
+            .disabled(state == .loading)
+        }
+    }
+
+    private func note(_ text: String, button: String?) -> some View {
+        VStack(alignment: .leading, spacing: Space.s) {
+            SectionHeading(title: "Recipes with your list")
+            Text(text).font(.app(.subheadline)).foregroundStyle(Palette.body)
+            if let button {
+                Button(button, action: find).font(.app(.headline)).buttonStyle(.glass).frame(minHeight: 44)
+            }
+        }
+    }
+
+    private func find() {
+        let asked = ids
+        let veg = store.vegetarianOnly
+        state = .loading
+        Task {
+            do {
+                let answer = try await RecipeSearch.recipes(with: asked, vegetarian: veg)
+                let ideas = answer.recipes.filter { !veg || $0.veg }
+                Analytics.track("Opened List Recipes", ["ingredient_count": asked.count, "result_count": ideas.count])
+                guard ideas.count > 0 else { state = .none; return }
+                let shelf = RecipeShelf(title: "Recipes with your list", note: "uses 2 or more", ideas: ideas, total: answer.total,
+                                        more: RecipeSearch.searchLink(with: asked), from: "list")
+                withAnimation(.snappy(duration: 0.25)) { state = .loaded(shelf, for: asked) }
+                Announce.say("\(ideas.count) recipe ideas")
+            } catch {
+                Analytics.track("Opened List Recipes", ["ingredient_count": asked.count, "failed": true])
+                state = .failed
+            }
+        }
     }
 }
 
