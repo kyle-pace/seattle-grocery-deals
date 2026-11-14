@@ -736,3 +736,35 @@ main .wrap > h3, .privacy-page h3 { font-size: 1.125rem; line-height: 1.3; margi
 .privacy-page { max-width: var(--measure); padding-bottom: var(--s-l); }
 .privacy-page p { max-width: var(--measure); color: var(--text-body); }
 .privacy-page .note-card p { margin: 0; color: var(--ink); }
+
+/* Quiet deal rows (2026-11-13, like the app's DealRow): a small sticker, the name with a star for
+   standouts, one line with the price and details, and the add button. */
+.deal-art { flex: none; width: 40px; height: 40px; display: grid; place-items: center; }
+.deal-art img { width: 40px; height: 40px; filter: drop-shadow(0 1px 1.5px rgb(0 0 0 / 0.18)); }
+.deal-main { flex: 1; }
+.deal-star { display: inline-flex; margin-right: 5px; vertical-align: -1px; color: var(--warn-mark); }
+.deal-star .ic { width: 14px; height: 14px; fill: currentColor; }
+.deal-price { color: var(--ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.deal-save { font-weight: 600; }
+.tone-good-text { color: var(--good-text); }
+.tone-info-text { color: var(--info-text); }
+.ends-b { font-weight: 600; color: var(--bad-text); }
+.ends-b.ends-over { color: var(--muted); }
+.deal > .amt, .deal-corner { display: none; }
+.deal-ended .deal-art { opacity: 0.55; }
+@media (max-width: 30rem) { .deal-art, .deal-art img { width: 36px; height: 36px; } }
+
+/* This week's store cards: the same rows as flyer cards to swipe through, sticker big and tilted,
+   price before the name, the savings or "Standout" in the corner. */
+.store-card .deals { display: flex; gap: var(--s-m); overflow-x: auto; scroll-snap-type: x mandatory; padding: var(--s-l); scrollbar-width: none; }
+.store-card .deals::-webkit-scrollbar { display: none; }
+.store-card .deal { position: relative; flex: 0 0 152px; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 6px; padding: 0; border: 0; scroll-snap-align: start; }
+.store-card .deal-art { width: 100%; height: 124px; padding-top: 18px; box-sizing: border-box; border-radius: var(--r-l); background: color-mix(in srgb, var(--raised) 70%, transparent); }
+.store-card .deal-art img { width: 72px; height: 72px; transform: rotate(var(--tilt, 0deg)); }
+.store-card .deal > .amt { display: grid; order: 1; justify-items: start; text-align: left; margin: 0; padding: 0 2px; }
+.store-card .amt-price { font-size: 1.25rem; }
+.store-card .deal-main { order: 2; padding: 0 2px; }
+.store-card .deal-name { font-size: 0.9375rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
+.store-card .deal-meta, .store-card .deal-why, .store-card .deal-note, .store-card .deal-people, .store-card .deal-star { display: none; }
+.store-card .deal-corner { display: block; position: absolute; top: 8px; left: 8px; margin: 0; }
+.store-card .add-btn { position: absolute; top: 76px; right: 4px; }

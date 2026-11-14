@@ -9,6 +9,8 @@ import { writePopular } from "./popular.mjs";
 // so This week can show it like the app. Set in the build steps at the bottom.
 let POPULAR = { items: [] };
 import { buddy, seasonBuddy, seasonIcon } from "./buddy.mjs";
+// The drawings on deal rows and This week's standout cards (KitchenCatalog's stickers).
+import { shapes as stickerShapes, svg as stickerSvg } from "../vendor/kitchen-catalog/stickers.mjs";
 import { loadSeasons, seasonOn, seasonDeals, seasonLog, seasonEnd, fill } from "./seasons.mjs";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
@@ -167,7 +169,7 @@ function endsInfo(d) {
   if (!d) return { badge: "", detail: "" };
   const left = Math.round((Date.parse(d) - Date.parse(TODAY)) / 86400000) + 1;
   const word = left <= 0 ? "Ended" : left === 1 ? "Ends today" : left === 2 ? "Ends tomorrow" : "";
-  if (word) return { badge: badge(left <= 0 ? "neutral" : "bad", "clock", word), detail: "", ended: left <= 0 };
+  if (word) return { badge: badge(left <= 0 ? "neutral" : "bad", "clock", word), word, detail: "", ended: left <= 0 };
   return { badge: "", detail: `Through ${left <= 7 ? DAY_ABBR[new Date(d + "T12:00:00Z").getUTCDay()] : fmtDate(d, { weekday: false })}` };
 }
 
@@ -190,8 +192,8 @@ function priceParts(i) {
 // staples only), otherwise the store's own percent off. The regular price stays off rows.
 function savings(i) {
   const under = i.a.us && i.a.us.ratio < 1 ? Math.round((1 - i.a.us.ratio) * 100) : 0;
-  if (under > 0) return { html: `<span class="pill tone-info">${ic("flag")}${under}% under US avg</span>`, spoken: `${under}% under the US average` };
-  if (i.percent_off != null) return { html: `<span class="pill tone-good">${i.percent_off}% off</span>`, spoken: `${i.percent_off}% off` };
+  if (under > 0) return { html: `<span class="pill tone-info">${ic("flag")}${under}% under US avg</span>`, spoken: `${under}% under the US average`, text: `${under}% under US avg`, tone: "info" };
+  if (i.percent_off != null) return { html: `<span class="pill tone-good">${i.percent_off}% off</span>`, spoken: `${i.percent_off}% off`, text: `${i.percent_off}% off`, tone: "good" };
   return null;
 }
 
@@ -206,30 +208,45 @@ function rowAttrs(i, rank) {
   return `data-store="${esc(i.store)}" data-category="${esc(i.category)}" data-tier="${i.a.tier}" data-veg="${isVegetarian(i) ? 1 : 0}" data-rank="${rank}" data-price="${i.price}" data-off="${i.percent_off ?? 0}" data-name="${esc(i.item.toLowerCase())}" data-text="${esc(`${i.item} ${storeName(i.store)}`.toLowerCase())}" data-unit="${unit}"`;
 }
 
-// One deal, laid out like the app's DealRow: tier badge, name, store and details, why it's a
-// deal, and the price with one savings pill. why: show the reason. store: name the store.
-// ends: say when it ends (every row does, since stores update on their own days).
+// One deal, laid out like the app's DealRow (quiet rows since 2026-11-13): a small sticker, the
+// name with a star for standouts, one line with the price, store, details, savings and when it
+// ends, and the add button. The site has no deal sheet, so the savings stay on the row, as text.
+// Inside a store card on This week the same markup shows as a flyer card (style.css): sticker
+// big, price first, the savings or "Standout" in the corner (deal-corner).
+// why: show the reason. store: name the store. ends: say when it ends.
 function dealRow(i, rank, { why = false, store = true, ends = true, people = 0 } = {}) {
   const p = priceParts(i);
   const sv = savings(i);
   const low = why && i.a.tags.some((t) => t.kind === "low");
-  const end = ends ? endsInfo(i.valid_through) : { badge: "", detail: "" };
-  const badges = tierBadge(i.a.tier) + (i.valid_through && ends ? `<span class="ends-b" data-ends-badge${end.badge ? "" : " hidden"}>${end.badge}</span>` : "") + (low ? badge("good", "down", "Lowest we've listed") : "");
+  const end = ends ? endsInfo(i.valid_through) : { word: "", detail: "" };
+  const price = `${p.lead ? p.lead + " " : ""}${p.cur ? "$" : ""}${p.num}${p.unit}`;
   const metaParts = [
+    `<b class="deal-price">${esc(price)}</b>`,
     store ? `<a href="${url(`stores/${i.store}/`)}">${esc(storeName(i.store))}</a>` : "",
     ...p.detail.map(esc),
     i.member_price ? "member price" : "",
+    sv ? `<span class="deal-save tone-${sv.tone}-text">${esc(sv.text)}</span>` : "",
   ].filter(Boolean);
-  // The end date carries its own separator, so hiding it (when the badge says it) leaves no stray dot.
-  const sep = metaParts.length ? " · " : "";
-  const meta = metaParts.join(" &middot; ") + (ends && i.valid_through ? `<span data-ends-detail${sep ? " data-sep" : ""}${end.detail ? "" : " hidden"}>${esc(end.detail ? sep + end.detail : "")}</span>` : "");
-  // The pill and badges already say "% off", "under US avg" and "lowest", so the reason skips them.
-  const reason = why ? (i.highlight?.reason ?? i.a.tags.filter((t) => !["pct", "us", "low", "member"].includes(t.kind)).map((t) => t.text).join(". ")) : "";
+  // The end date and the ends word carry their own separators, so hiding one (app.js swaps them
+  // as the days pass) leaves no stray dot.
+  const meta = metaParts.join(" &middot; ") + (ends && i.valid_through
+    ? `<span data-ends-detail data-sep${end.detail ? "" : " hidden"}>${esc(end.detail ? " · " + end.detail : "")}</span>` +
+      `<span class="ends-b${end.ended ? " ends-over" : ""}" data-ends-badge data-sep${end.word ? "" : " hidden"}>${esc(end.word ? " · " + end.word : "")}</span>`
+    : "");
+  // Savings and "lowest" used to be badges; the reason skips what the row already says.
+  const reasonText = why ? (i.highlight?.reason ?? i.a.tags.filter((t) => !["pct", "us", "low", "member"].includes(t.kind)).map((t) => t.text).join(". ")) : "";
+  const reason = [low ? "Lowest we've listed" : "", reasonText].filter(Boolean).join(". ");
+  const sticker = stickerFor(i, cfg);
+  const tilt = [-5, 4, -3, 6][[...i.item].reduce((n, c) => (n + c.charCodeAt(0)) % 4, 0)];
+  const art = sticker ? `<span class="deal-art" aria-hidden="true"><img src="${url(`assets/stickers/${sticker}.svg`)}" alt="" width="40" height="40" loading="lazy" decoding="async" style="--tilt: ${tilt}deg"></span>` : `<span class="deal-art" aria-hidden="true"></span>`;
+  const star = i.a.tier === "standout" ? `<span class="deal-star">${ic("star")}<span class="sr-only">Standout: </span></span>` : i.a.tier === "good" ? `<span class="sr-only">Good deal: </span>` : "";
+  const corner = sv ? sv.html : i.a.tier === "standout" ? tierBadge("standout") : "";
   // What the list keeps if this deal is added (app.js, sgd.list): enough to show it after the
   // week's data has moved on. The id survives rebuilds: store, name and price.
   const li = { id: `${i.store}|${i.item}|${i.price}`, name: i.item, store: i.store, storeName: storeName(i.store), price: priceText(i), ends: i.valid_through ?? null, key: i.item_key ?? null };
   return `<li class="deal${end.ended ? " deal-ended" : ""}" ${rowAttrs(i, rank)}${i.valid_through ? ` data-ends="${i.valid_through}"` : ""} data-li="${esc(JSON.stringify(li))}">
-  <div class="deal-main">${badges ? `<p class="deal-badges">${badges}</p>` : ""}<p class="deal-name">${esc(i.item)}</p>${meta ? `<p class="deal-meta">${meta}</p>` : ""}${sv ? `<p class="deal-pill">${sv.html}</p>` : ""}${people ? `<p class="deal-people">${ic("people")}${plural(people, "person", "people")} added this</p>` : ""}${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
+  ${art}
+  <div class="deal-main"><p class="deal-name">${star}${esc(i.item)}</p><p class="deal-meta">${meta}</p>${corner ? `<p class="deal-corner" aria-hidden="true">${corner}</p>` : ""}${people ? `<p class="deal-people">${ic("people")}${plural(people, "person", "people")} added this</p>` : ""}${reason ? `<p class="deal-why">${esc(reason)}</p>` : ""}${i.notes ? `<p class="deal-note">${esc(i.notes)}</p>` : ""}</div>
   ${amount(i, { pill: false })}
   <button type="button" class="add-btn" data-add aria-pressed="false" aria-label="Add ${esc(i.item)} at ${esc(storeName(i.store))} to your list">${ic("plus")}${ic("check")}</button>
 </li>`;
@@ -1603,6 +1620,12 @@ function appFeed() {
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST, { recursive: true });
 cpSync(join(ROOT, "site", "assets"), join(DIST, "assets"), { recursive: true });
+// One SVG per sticker, for the deal rows and cards (dealRow).
+mkdirSync(join(DIST, "assets", "stickers"), { recursive: true });
+for (const name of Object.keys(cfg.stickers.stickers)) {
+  const list = stickerShapes(cfg.stickers, name);
+  if (list) writeFileSync(join(DIST, "assets", "stickers", `${name}.svg`), stickerSvg(list));
+}
 // Bundle Amplitude (npm packages) into an ES module with split chunks, so Session Replay's
 // code downloads only for the visits it records. The site has no other bundler.
 const analyticsOut = buildSync({
