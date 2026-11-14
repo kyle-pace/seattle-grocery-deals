@@ -1155,7 +1155,9 @@ function privacyPage() {
 <h2 id="app">The app</h2>
 <h3>Getting the deals</h3>
 <p>The app downloads each week's deals from this site, the same public list anyone can see. Like any website, the server sees your device's IP address when it sends them; nothing about you is in the request. The widget and the deals that show up when you search from your Home Screen use that same list, kept on your device.</p>
-<p>Recipe ideas on a deal come in the same way, as one list that's the same for everyone, so looking at a deal doesn't tell anyone what you looked at. Each idea's photo loads from the recipe's own site when it comes on screen, and that site sees your device's IP address, as with any picture on the web. Tapping an idea opens the recipe on its site.</p>
+<p>Recipe ideas on a deal, a season or a store's page come in the same way, as one list that's the same for everyone, so looking at them doesn't tell anyone what you looked at. Each idea's photo loads from the recipe's own site when it comes on screen, and that site sees your device's IP address, as with any picture on the web. Tapping an idea opens the recipe on its site.</p>
+<h3>Recipes with your list</h3>
+<p>Under your list, "Find recipes" asks <a href="https://kylepace.dev/recipe-search/about/">recipe search</a> for recipes that use two or more things on it. It only asks when you tap, and it sends only the names of the ingredients on your list that matched this week's deals (like "napa cabbage" and "tofu"), never anything you typed and nothing about you. Recipe search answers and keeps nothing.</p>
 <h3>Usage, only if you say yes</h3>
 <p>The app asks the first time you open it whether to share anonymous usage. Until you answer yes, nothing is sent and no ID is made. If you say yes, it sends the screens you open, the features you use, which deals you open, add or watch, and your app version, device model and iOS version. It never sends anything you type, like list items or searches, your name, email, contacts or location, your IP address or your advertising ID. Change your answer any time in Settings, under Privacy.</p>
 <h3>Your list and your stores</h3>

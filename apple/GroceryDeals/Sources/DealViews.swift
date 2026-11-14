@@ -277,6 +277,8 @@ struct DealDetail: View {
     @Environment(\.dismiss) private var dismiss
     @State private var priming = false
     @State private var scrolled = false
+    /// Half height to start. For simulator screenshots, -dealDetent large opens it full height.
+    @State private var detent: PresentationDetent = DebugArgs.value("-dealDetent") == "large" ? .large : .medium
     let deal: Deal
     var openStore: ((String) -> Void)? = nil
 
@@ -314,8 +316,8 @@ struct DealDetail: View {
                     }
 
                     // Swipe the sheet up: what to cook with it (the recipe search's ideas).
-                    if let ideas = store.recipeIdeas(for: deal.key) {
-                        RecipeIdeas(ideas: ideas, itemKey: deal.key ?? "", from: "deal")
+                    if let shelf = store.recipeShelf(for: deal.key, from: "deal") {
+                        RecipeIdeas(shelf: shelf)
                     }
 
                     let others = store.alsoOnSale(deal)
@@ -351,7 +353,7 @@ struct DealDetail: View {
             .safeAreaBar(edge: .bottom, spacing: 0) { actions }
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
         }
-        .presentationDetents([.medium, .large])
+        .presentationDetents([.medium, .large], selection: $detent)
         .presentationBackground(Palette.ground)
         .asksWhereListLives(inDealSheet: true)
         .onAppear { DealsRouter.shared.openDealSheets += 1 }
@@ -440,41 +442,49 @@ struct DealDetail: View {
     }
 }
 
-/// "Recipe ideas" for an ingredient on sale: a row of cards to swipe through, each a recipe's
-/// photo, name and site, opening the recipe on its own site in Safari's viewer. The last card
-/// goes to the recipe search for the rest. At the largest text sizes it's a plain list with no
-/// photos, so names aren't cut short. Used on the deal sheet and the season screen.
+/// A row of recipe ideas (a `RecipeShelf`): cards to swipe through, each a recipe's photo, name
+/// and site, opening the recipe on its own site in Safari's viewer. Six at a time; "Something
+/// else" shows the next six, round and round. When the shelf has a link to the rest, the last
+/// card opens the recipe search. At the largest text sizes it's a plain list with no photos,
+/// so names aren't cut short. Used on the deal sheet, the season screen, a store's page and
+/// the list.
 struct RecipeIdeas: View {
-    let ideas: RecipeFeed.Ingredient
-    /// The deal's item key, for analytics.
-    let itemKey: String
-    /// "deal" or "season": where it's shown, for analytics.
-    let from: String
+    let shelf: RecipeShelf
     /// Extra room on each side when the row should run to the screen edges.
     var bleed: CGFloat = 20
+    /// False inside a List, which already gives its rows a heading.
+    var heading = true
     @Environment(\.dynamicTypeSize) private var textSize
-    @State private var opening: Page?
+    @State private var page = 0
+    @State private var opening: SafariPage?
 
-    private struct Page: Identifiable {
+    private struct SafariPage: Identifiable {
         let url: URL
         var id: URL { url }
     }
 
+    static let pageSize = 6
     private static let cardWidth: CGFloat = 168
+
+    private var pages: Int { max(1, (shelf.ideas.count + Self.pageSize - 1) / Self.pageSize) }
+    private var shown: ArraySlice<RecipeFeed.Idea> {
+        let start = min(page, pages - 1) * Self.pageSize
+        return shelf.ideas[start..<min(start + Self.pageSize, shelf.ideas.count)]
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: Space.s) {
-            SectionHeading(title: "Recipe ideas", note: "with \(ideas.ingredient.lowercased())")
+            if heading { SectionHeading(title: shelf.title, note: shelf.note) }
             if textSize.isAccessibilitySize {
                 VStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(ideas.recipes.enumerated()), id: \.element.id) { n, idea in row(idea, n) }
-                    moreRow
+                    ForEach(Array(shown.enumerated()), id: \.element.id) { n, idea in row(idea, n) }
+                    if shelf.more != nil { moreRow }
                 }
             } else {
                 ScrollView(.horizontal) {
                     HStack(alignment: .top, spacing: Space.m) {
-                        ForEach(Array(ideas.recipes.enumerated()), id: \.element.id) { n, idea in card(idea, n) }
-                        moreCard
+                        ForEach(Array(shown.enumerated()), id: \.element.id) { n, idea in card(idea, n) }
+                        if shelf.more != nil { moreCard }
                     }
                     .padding(.horizontal, bleed)
                     .scrollTargetLayout()
@@ -482,25 +492,53 @@ struct RecipeIdeas: View {
                 .scrollTargetBehavior(.viewAligned)
                 .scrollIndicators(.hidden)
                 .padding(.horizontal, -bleed)
+                // A new page starts back at the first card.
+                .id(page)
+                .transition(.opacity)
             }
-            Text("Each one opens on the cook's own site.")
-                .font(.app(.footnote)).foregroundStyle(Palette.muted)
+            AdaptiveStack(spacing: Space.xs) {
+                Text("Each one opens on the cook's own site.")
+                    .font(.app(.footnote)).foregroundStyle(Palette.muted)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if pages > 1 { somethingElse }
+            }
         }
         .fullScreenCover(item: $opening) { page in
             SafariView(url: page.url) { opening = nil }.ignoresSafeArea()
         }
     }
 
-    private func open(_ idea: RecipeFeed.Idea, _ position: Int) {
+    private var somethingElse: some View {
+        Button {
+            withAnimation(.snappy(duration: 0.25)) { page = (page + 1) % pages }
+            track("Shuffled Recipe Ideas", ["page": page + 1])
+            Announce.say("\(shown.count) more ideas")
+        } label: {
+            Label("Something else", systemImage: "arrow.triangle.2.circlepath")
+                .font(.app(.subheadline, .semibold)).frame(minHeight: 44)
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(Palette.accent)
+        .accessibilityHint("Shows other recipe ideas")
+    }
+
+    private func track(_ event: String, _ props: [String: Any] = [:]) {
+        var all: [String: Any] = ["from": shelf.from]
+        if let key = shelf.key { all["key"] = key }
+        if let store = shelf.store { all["store"] = store }
+        Analytics.track(event, all.merging(props) { _, new in new })
+    }
+
+    private func open(_ idea: RecipeFeed.Idea, _ n: Int) {
         guard let url = idea.link else { return }
-        Analytics.track("Opened Recipe", ["key": itemKey, "site": idea.site, "position": position + 1, "from": from])
-        opening = Page(url: url)
+        track("Opened Recipe", ["site": idea.site, "position": page * Self.pageSize + n + 1, "page": page + 1])
+        opening = SafariPage(url: url)
     }
 
     private func openMore() {
-        guard let url = ideas.moreLink else { return }
-        Analytics.track("Opened Recipe Search", ["key": itemKey, "from": from])
-        opening = Page(url: url)
+        guard let url = shelf.more else { return }
+        track("Opened Recipe Search")
+        opening = SafariPage(url: url)
     }
 
     private func card(_ idea: RecipeFeed.Idea, _ n: Int) -> some View {
@@ -509,6 +547,10 @@ struct RecipeIdeas: View {
                 photo(idea)
                 Text(idea.name).font(.app(.subheadline, .semibold)).foregroundStyle(Palette.ink)
                     .lineLimit(3).multilineTextAlignment(.leading)
+                if let uses = idea.usesLine {
+                    Text(uses).font(.app(.footnote)).foregroundStyle(Palette.body)
+                        .lineLimit(2).multilineTextAlignment(.leading)
+                }
                 Text(byline(idea)).font(.app(.footnote)).foregroundStyle(Palette.muted)
                     .lineLimit(2).multilineTextAlignment(.leading)
             }
@@ -563,7 +605,7 @@ struct RecipeIdeas: View {
     }
 
     private var moreLabel: String {
-        ideas.total > ideas.recipes.count ? "See all \(ideas.total) recipes" : "Search more recipes"
+        shelf.total > shelf.ideas.count ? "See all \(shelf.total) recipes" : "Search more recipes"
     }
 
     // The large-text version: one recipe a line, name over site.
@@ -571,6 +613,9 @@ struct RecipeIdeas: View {
         Button { open(idea, n) } label: {
             VStack(alignment: .leading, spacing: 2) {
                 Text(idea.name).font(.app(.callout, .semibold)).foregroundStyle(Palette.ink).multilineTextAlignment(.leading)
+                if let uses = idea.usesLine {
+                    Text(uses).font(.app(.subheadline)).foregroundStyle(Palette.body).multilineTextAlignment(.leading)
+                }
                 Text(byline(idea)).font(.app(.subheadline)).foregroundStyle(Palette.muted).multilineTextAlignment(.leading)
             }
             .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)

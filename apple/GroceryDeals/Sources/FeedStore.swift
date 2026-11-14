@@ -8,10 +8,13 @@ final class FeedStore {
     static let feedURL = URL(string: "https://seattlegrocery.deals/api/week.json")!
     static let popularURL = URL(string: "https://seattlegrocery.deals/api/popular.json")!
 
-    static let recipesURL = URL(string: "https://seattlegrocery.deals/api/recipes.json")!
+    /// Simulator screenshots can point it at a file built on the Mac: -recipesURL file:///…/recipes.json
+    static let recipesURL = DebugArgs.value("-recipesURL").flatMap(URL.init(string:))
+        ?? URL(string: "https://seattlegrocery.deals/api/recipes.json")!
 
-    /// Recipe ideas by item key; empty until the file arrives (and on older site builds).
+    /// Recipe ideas by item key and by store; empty until the file arrives.
     private(set) var recipes: [String: RecipeFeed.Ingredient] = [:]
+    private(set) var storeRecipes: [String: RecipeFeed.StoreIdeas] = [:]
 
     /// What people are adding this week; empty until enough people have added the same deals.
     private(set) var popular: [Popular.Item] = []
@@ -152,18 +155,36 @@ final class FeedStore {
     /// Fetches /api/recipes.json (rebuilt with the deals). Quietly keeps the last ideas on failure.
     func refreshRecipes() async {
         guard let (data, response) = try? await URLSession.shared.data(from: Self.recipesURL),
-              (response as? HTTPURLResponse)?.statusCode == 200,
+              (response as? HTTPURLResponse).map({ $0.statusCode == 200 }) ?? Self.recipesURL.isFileURL,
               let fresh = try? JSONDecoder().decode(RecipeFeed.self, from: data) else { return }
         recipes = fresh.by_key
+        storeRecipes = fresh.by_store ?? [:]
     }
 
-    /// Recipe ideas for an item key ("pork-chops"), vegetarian ones only when Vegetarian is on.
-    /// Nil when there are none, so the section isn't shown.
-    func recipeIdeas(for key: String?) -> RecipeFeed.Ingredient? {
+    /// Ideas for an item key ("pork-chops"), vegetarian ones only when Vegetarian is on. Nil
+    /// when there are none, so the row isn't shown.
+    func recipeShelf(for key: String?, from: String) -> RecipeShelf? {
         guard let key, let found = recipes[key] else { return nil }
-        let ideas = Array(found.recipes.filter { !vegetarianOnly || $0.veg }.prefix(6))
+        let ideas = found.recipes.filter { !vegetarianOnly || $0.veg }
         guard !ideas.isEmpty else { return nil }
-        return RecipeFeed.Ingredient(ingredient: found.ingredient, more: found.more, total: found.total, recipes: ideas)
+        return RecipeShelf(title: "Recipe ideas", note: "with \(found.ingredient.lowercased())", ideas: ideas,
+                           total: found.total, more: URL(string: found.more), from: from, key: key)
+    }
+
+    /// A store's "Cook from this week": recipes that use two or more of its deals. Nil under three.
+    func storeShelf(for storeID: String) -> RecipeShelf? {
+        guard let found = storeRecipes[storeID] else { return nil }
+        let ideas = found.recipes.filter { !vegetarianOnly || $0.veg }
+        guard ideas.count >= 3 else { return nil }
+        return RecipeShelf(title: "Cook from this week", note: "with its deals", ideas: ideas, total: found.total,
+                           more: nil, from: "store", store: storeID)
+    }
+
+    /// The recipe search's ids for these deals' ingredients, each once, in order. Only deals
+    /// with ideas have one; nothing typed is ever in here.
+    func recipeIDs(for deals: [Deal]) -> [String] {
+        var seen = Set<String>()
+        return deals.compactMap { d in d.key.flatMap { recipes[$0]?.id } }.filter { seen.insert($0).inserted }
     }
 
     /// Popular deals that are in this week's feed (and pass the vegetarian filter), with counts.
