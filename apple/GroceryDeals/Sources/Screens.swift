@@ -277,14 +277,14 @@ private struct QuietNote: View {
     }
 }
 
-/// A picked store with no deals listed this week: its flyer couldn't be read or isn't up yet.
+/// A picked store with no deals listed this week: its flyer couldn't be read, isn't up yet, or (desktop-only stores) hasn't been read yet.
 private struct UnreadStoreRow: View {
     let s: Store
     var body: some View {
         HStack(spacing: Space.m) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
-                Text(s.status == "stale" ? "Its new flyer isn't up yet." : "We couldn't read this week's flyer.")
+                Text(s.status == "stale" ? (s.read_by_hand == true ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer.")
                     .font(.app(.subheadline)).foregroundStyle(Palette.muted)
             }
             Spacer(minLength: 0)

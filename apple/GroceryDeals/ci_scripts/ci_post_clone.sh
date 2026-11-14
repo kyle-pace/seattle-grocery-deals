@@ -28,3 +28,17 @@ else
   rm -f "$WEEK.new"
   echo "warning: couldn't refresh the bundled week; shipping the committed copy."
 fi
+
+# Internal TestFlight builds carry the developer menu (KitchenUI's BuildKind). The internal
+# workflow starts on tags beginning with v and archives as internal-only, which Apple never
+# lets reach external testers or the App Store; mark those builds here. Public builds
+# (beta- tags) are never marked.
+case "$CI_TAG" in
+  v*)
+    for PLIST in apple/GroceryDeals/Sources/Info.plist; do
+      /usr/libexec/PlistBuddy -c "Add :KitchenInternalBuild bool true" "$CI_PRIMARY_REPOSITORY_PATH/$PLIST" \
+        && echo "Marked $PLIST as an internal build." \
+        || echo "warning: couldn't mark $PLIST; this build won't show the developer menu."
+    done
+    ;;
+esac

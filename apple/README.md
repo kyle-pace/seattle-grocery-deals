@@ -2,7 +2,16 @@
 
 The iPhone and iPad app (SwiftUI). It replaced an earlier Expo app (decided 2026-10-24: Apple devices first, so widgets, Siri, the Watch and Liquid Glass are native).
 
-## Build and install on your iPhone
+## Build channels
+
+Two channels, both TestFlight (owner's call, 2026-11-13; the rule for all his apps is in the principles block of `AGENTS.md`):
+
+1. **Internal TestFlight** (`apple/testflight.sh`, tags beginning with `v`): the main channel. Every build worth trying on a device goes here. These builds show Settings, Developer: `ci_post_clone.sh` marks them (`KitchenInternalBuild` in Info.plist) and KitchenUI's `BuildKind` reads it. Needs KitchenUI's `internal-dev-menu` change on its `main`.
+2. **Public TestFlight** (`apple/testflight.sh --external`, tags beginning with `beta-`): from a commit that has already run on internal.
+
+Before tagging, build and run on the Mac's iPhone and iPad simulators, so Xcode Cloud's hours aren't spent on compile errors. Installing Deals Dev straight onto a device (next section) is no longer routine: use it only when TestFlight can't do the job. Today that means test pushes (`new-deals-test` only reaches the `.dev` app), debugging on the device, or a quick loop the owner asks for. Don't assume the Deals Dev on the owner's devices is current.
+
+## Build and install on your iPhone (the exception)
 
 From anywhere on the Mac: `phone deals` (or `phone` for both apps; see KitchenUI's `tools/phone`). In this repo:
 
@@ -63,7 +72,7 @@ App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. Fir
 - `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website: no IP, carrier, vendor ID or city. Off until the person says yes in onboarding (Amplitude isn't created before that); the switch in Settings changes the answer.
 - `Sources/Push.swift`: Firebase Cloud Messaging, push only (no Firebase Analytics). Configures Firebase from `Resources/GoogleService-Info-Dev.plist` (and `-Prod` once that project exists), hands the APNs token over, and subscribes to `new-deals` when "New deals are in" is on (plus `new-deals-test` on the dev project). Tapping a push opens This week. Without a config file the app keeps the local Friday reminder.
 - `Sources/Welcome.swift`: first-run onboarding, built on KitchenUI's `Onboarding`: welcome, your stores, alerts, how it works, then the usage question. Everything but the question can be skipped (Skip on a middle step skips that step only). Installs that ran 0.1.0 (sharing by default) skip onboarding and stay opted in; anyone who had turned the old switch off stays off. Settings has "Show the tour again". Simulator: `-onboarding question` jumps to the question on a fresh install.
-- `Sources/DealsDevMenu.swift`: Settings, Developer (Debug and development-signed builds only, never TestFlight or the App Store; KitchenUI's `BuildKind`): onboarding and analytics tools from KitchenUI, plus reload or drop the saved week, ask where the list lives again, empty the in-app list, test notification, re-check or remove price watches, reset everything.
+- `Sources/DealsDevMenu.swift`: Settings, Developer (Debug, development-signed and internal TestFlight builds, never public TestFlight or the App Store; KitchenUI's `BuildKind`): onboarding and analytics tools from KitchenUI, plus reload or drop the saved week, ask where the list lives again, empty the in-app list, test notification, re-check or remove price watches, reset everything.
 - `Sources/GroceryDealsApp.swift`: app entry, native tabs (Liquid Glass on iOS 26, sidebar on iPad), and Spotlight hand-off. The "where should your list live?" half sheet is in `ListScreens.swift`.
 
 ## Stages

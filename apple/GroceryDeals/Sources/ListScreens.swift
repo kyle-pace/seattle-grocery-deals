@@ -266,6 +266,9 @@ struct SettingsView: View {
         @Bindable var alerts = alerts
         NavigationStack {
             Form {
+                // One Group so every row takes the app's harbor-blue surface. Without it the
+                // rows are the system's neutral gray, which looks muddy on the blue ground.
+                Group {
                 Section {
                     Toggle(isOn: Binding(get: { alerts.friday }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.friday = on } } })) {
                         if PushStore.shared.available {
@@ -359,6 +362,8 @@ struct SettingsView: View {
                 }
 
                 DevMenuSection { DealsDevMenu() }
+                }
+                .listRowBackground(Palette.surface)
             }
             .scrollContentBackground(.hidden)
             .background(Palette.ground)
@@ -533,7 +538,7 @@ struct YourStoresPicker: View {
     /// "7 standouts this week", or why there's nothing.
     private func weekLine(_ s: Store) -> String {
         guard let r = store.rank(s.id), r.deals > 0 else {
-            return s.status == "stale" ? "New flyer not up yet" : s.readThisWeek ? "No deals this week" : "Flyer not read this week"
+            return s.status == "stale" ? (s.read_by_hand == true ? "New flyer not read yet" : "New flyer not up yet") : s.readThisWeek ? "No deals this week" : "Flyer not read this week"
         }
         return r.standouts > 0 ? "\(r.standouts) standout\(r.standouts == 1 ? "" : "s") this week" : "\(r.deals) deals this week"
     }
