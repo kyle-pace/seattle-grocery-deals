@@ -57,6 +57,8 @@ How it fits together:
 - Packages resolve from the committed `Package.resolved` (Xcode Cloud turns automatic resolution off), so commit it after changing package versions.
 - Free plan: 25 compute hours a month across all the account's apps.
 
+Xcode Cloud can't register bundle IDs. Every app and extension bundle ID has to exist at https://developer.apple.com/account/resources/identifiers/list before its first cloud build, or the export fails with "Automatic signing cannot register bundle identifier" (Deals Dev's widget, `deals.seattlegrocery.dev.widget`, was registered by hand on 2026-11-14 for that reason). A new extension target means registering its ID there first.
+
 App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26, uploaded from the Mac. Deals Dev is a second app record for `deals.seattlegrocery.dev`, never released; it only exists for internal TestFlight.
 
 ## Code
