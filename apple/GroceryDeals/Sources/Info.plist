@@ -33,6 +33,8 @@
 	<true/>
 	<key>DealsAppGroup</key>
 	<string>group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)</string>
+	<key>DealsLinkScheme</key>
+	<string>grocerydeals</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
