@@ -330,6 +330,11 @@ struct DealDetail: View {
                         .buttonStyle(.glass)
                     }
 
+                    // Swipe the sheet up: what to cook with it (the recipe search's ideas).
+                    if let ideas = store.recipeIdeas(for: deal.key) {
+                        RecipeIdeas(ideas: ideas, itemKey: deal.key ?? "", from: "deal")
+                    }
+
                     let others = store.alsoOnSale(deal)
                     if !others.isEmpty {
                         SectionHeading(title: "Also on sale")
@@ -449,6 +454,163 @@ struct DealDetail: View {
             alerts.watch(deal, week: store.feed?.week)
             Announce.say("Watching the price")
         }
+    }
+}
+
+/// "Recipe ideas" for an ingredient on sale: a row of cards to swipe through, each a recipe's
+/// photo, name and site, opening the recipe on its own site in Safari's viewer. The last card
+/// goes to the recipe search for the rest. At the largest text sizes it's a plain list with no
+/// photos, so names aren't cut short. Used on the deal sheet and the season screen.
+struct RecipeIdeas: View {
+    let ideas: RecipeFeed.Ingredient
+    /// The deal's item key, for analytics.
+    let itemKey: String
+    /// "deal" or "season": where it's shown, for analytics.
+    let from: String
+    /// Extra room on each side when the row should run to the screen edges.
+    var bleed: CGFloat = 20
+    @Environment(\.dynamicTypeSize) private var textSize
+    @State private var opening: Page?
+
+    private struct Page: Identifiable {
+        let url: URL
+        var id: URL { url }
+    }
+
+    private static let cardWidth: CGFloat = 168
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Space.s) {
+            SectionHeading(title: "Recipe ideas", note: "with \(ideas.ingredient.lowercased())")
+            if textSize.isAccessibilitySize {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(Array(ideas.recipes.enumerated()), id: \.element.id) { n, idea in row(idea, n) }
+                    moreRow
+                }
+            } else {
+                ScrollView(.horizontal) {
+                    HStack(alignment: .top, spacing: Space.m) {
+                        ForEach(Array(ideas.recipes.enumerated()), id: \.element.id) { n, idea in card(idea, n) }
+                        moreCard
+                    }
+                    .padding(.horizontal, bleed)
+                    .scrollTargetLayout()
+                }
+                .scrollTargetBehavior(.viewAligned)
+                .scrollIndicators(.hidden)
+                .padding(.horizontal, -bleed)
+            }
+            Text("Each one opens on the cook's own site.")
+                .font(.app(.footnote)).foregroundStyle(Palette.muted)
+        }
+        .fullScreenCover(item: $opening) { page in
+            SafariView(url: page.url) { opening = nil }.ignoresSafeArea()
+        }
+    }
+
+    private func open(_ idea: RecipeFeed.Idea, _ position: Int) {
+        guard let url = idea.link else { return }
+        Analytics.track("Opened Recipe", ["key": itemKey, "site": idea.site, "position": position + 1, "from": from])
+        opening = Page(url: url)
+    }
+
+    private func openMore() {
+        guard let url = ideas.moreLink else { return }
+        Analytics.track("Opened Recipe Search", ["key": itemKey, "from": from])
+        opening = Page(url: url)
+    }
+
+    private func card(_ idea: RecipeFeed.Idea, _ n: Int) -> some View {
+        Button { open(idea, n) } label: {
+            VStack(alignment: .leading, spacing: Space.xs) {
+                photo(idea)
+                Text(idea.name).font(.app(.subheadline, .semibold)).foregroundStyle(Palette.ink)
+                    .lineLimit(3).multilineTextAlignment(.leading)
+                Text(byline(idea)).font(.app(.footnote)).foregroundStyle(Palette.muted)
+                    .lineLimit(2).multilineTextAlignment(.leading)
+            }
+            .frame(width: Self.cardWidth, alignment: .topLeading)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(idea.spoken)
+        .accessibilityHint("Opens the recipe on \(idea.site)")
+        .accessibilityAddTraits(.isLink)
+    }
+
+    /// The recipe's own photo from its own site, 4 by 3. No photo, or one that won't load,
+    /// leaves the plain panel with a fork and knife.
+    private func photo(_ idea: RecipeFeed.Idea) -> some View {
+        Rectangle().fill(Palette.surface)
+            .frame(width: Self.cardWidth, height: Self.cardWidth * 0.75)
+            .overlay {
+                AsyncImage(url: idea.photo) { phase in
+                    if let image = phase.image {
+                        image.resizable().scaledToFill()
+                    } else {
+                        Image(systemName: "fork.knife").font(.app(.title2)).foregroundStyle(Palette.muted)
+                    }
+                }
+            }
+            .clipShape(.rect(cornerRadius: Radius.medium))
+            .overlay { RoundedRectangle(cornerRadius: Radius.medium).strokeBorder(Palette.line, lineWidth: 1) }
+            .accessibilityHidden(true)
+    }
+
+    private func byline(_ idea: RecipeFeed.Idea) -> String {
+        idea.minutes.map { "\(idea.site), \($0) min" } ?? idea.site
+    }
+
+    private var moreCard: some View {
+        Button { openMore() } label: {
+            VStack(spacing: Space.s) {
+                Image(systemName: "magnifyingglass").font(.app(.title2))
+                Text(moreLabel).font(.app(.subheadline, .semibold)).multilineTextAlignment(.center)
+            }
+            .foregroundStyle(Palette.accent)
+            .padding(Space.s)
+            .frame(width: Self.cardWidth, height: Self.cardWidth * 0.75)
+            .overlay { RoundedRectangle(cornerRadius: Radius.medium).strokeBorder(Palette.line, lineWidth: 1) }
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Opens the recipe search")
+        .accessibilityAddTraits(.isLink)
+    }
+
+    private var moreLabel: String {
+        ideas.total > ideas.recipes.count ? "See all \(ideas.total) recipes" : "Search more recipes"
+    }
+
+    // The large-text version: one recipe a line, name over site.
+    private func row(_ idea: RecipeFeed.Idea, _ n: Int) -> some View {
+        Button { open(idea, n) } label: {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(idea.name).font(.app(.callout, .semibold)).foregroundStyle(Palette.ink).multilineTextAlignment(.leading)
+                Text(byline(idea)).font(.app(.subheadline)).foregroundStyle(Palette.muted).multilineTextAlignment(.leading)
+            }
+            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+            .padding(.vertical, Space.s)
+            .contentShape(.rect)
+        }
+        .buttonStyle(.plain)
+        .overlay(alignment: .bottom) { Rectangle().fill(Palette.divider).frame(height: 1) }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(idea.spoken)
+        .accessibilityHint("Opens the recipe on \(idea.site)")
+        .accessibilityAddTraits(.isLink)
+    }
+
+    private var moreRow: some View {
+        Button { openMore() } label: {
+            Label(moreLabel, systemImage: "magnifyingglass")
+                .font(.app(.callout, .semibold)).foregroundStyle(Palette.accent)
+                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        }
+        .buttonStyle(.plain)
+        .accessibilityHint("Opens the recipe search")
+        .accessibilityAddTraits(.isLink)
     }
 }
 

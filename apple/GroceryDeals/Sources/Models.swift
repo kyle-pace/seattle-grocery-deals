@@ -183,6 +183,48 @@ struct Popular: Codable, Sendable {
     let items: [Item]
 }
 
+/// Recipe ideas for the ingredients on sale (/api/recipes.json, written by the site build in
+/// scripts/recipes.mjs from the recipe search index). Each idea is a name and a link to the
+/// recipe on its own site. The file is the same for everyone: opening a deal asks no server
+/// anything.
+struct RecipeFeed: Codable, Sendable {
+    struct Idea: Codable, Sendable, Hashable, Identifiable {
+        let name: String
+        let url: String
+        /// "The Woks of Life"
+        let site: String
+        let minutes: Int?
+        let cuisine: String?
+        /// The recipe's own photo, on its own site.
+        let image: String?
+        /// No meat or seafood in the ingredient list (a best guess).
+        let veg: Bool
+        var id: String { url }
+        var link: URL? { webURL(url) }
+        var photo: URL? { image.flatMap(webURL) }
+        /// "The Woks of Life, 30 minutes", for VoiceOver.
+        var spoken: String { [name, "from \(site)", minutes.map { "\($0) minutes" }].compactMap { $0 }.joined(separator: ", ") }
+    }
+    /// One ingredient's ideas, by the deal's item key ("pork-chops").
+    struct Ingredient: Codable, Sendable, Hashable {
+        /// "Pork chops", as the recipe index names it.
+        let ingredient: String
+        /// The rest, on the recipe search page.
+        let more: String
+        let total: Int
+        let recipes: [Idea]
+        var moreLink: URL? { webURL(more) }
+    }
+    let week: String
+    let by_key: [String: Ingredient]
+}
+
+/// Safari's viewer only opens web addresses (anything else crashes it).
+private func webURL(_ text: String) -> URL? {
+    guard let url = URL(string: text), ["http", "https"].contains(url.scheme?.lowercased() ?? "") else { return nil }
+    return url
+}
+
 struct Category: Codable, Sendable, Identifiable, Hashable {
     let id: String
     let label: String
