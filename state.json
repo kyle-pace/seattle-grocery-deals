@@ -35,7 +35,7 @@
       "seen_at": "2026-11-03T02:37:26.412Z",
       "updated_at": "2026-11-05T07:19:16.950Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-14T02:17:10.879Z"
+      "error_at": "2026-11-14T09:21:24.025Z"
     },
     "met-market": {
       "fingerprint": "6284eff16b4ad3a9",
@@ -50,7 +50,7 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-14T02:17:10.879Z"
+      "error_at": "2026-11-14T09:21:24.025Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -78,19 +78,19 @@
       "updated_at": "2026-11-13T21:56:28.127Z"
     },
     "viet-wah": {
-      "fingerprint": "2455b36f70fa5e18",
+      "fingerprint": "b1f6e7c472c01c72",
       "matches": [
-        "single-post/weekly-ad-nov-6-12-2026",
-        "single-post/weekly-ad-oct-30-nov-5-2026"
+        "single-post/weekly-ad-nov-13-19-2026",
+        "single-post/weekly-ad-nov-6-12-2026"
       ],
-      "seen_at": "2026-11-14T02:17:10.879Z",
+      "seen_at": "2026-11-14T09:21:24.025Z",
       "updated_at": "2026-11-13T21:56:28.127Z",
       "pending": {
-        "since": "2026-11-14T02:17:10.879Z",
+        "since": "2026-11-14T09:21:24.025Z",
         "live_before": "2026-11-13|https://static.wixstatic.com/media/d268df_0f61dd01112c4547813bd8df554f9d3f~mv2.jpg https://www.vietwah.com/single-post/weekly-ad-nov-13-19-2026",
         "fires": 1,
-        "fired_at": "2026-11-14T02:17:10.879Z",
-        "session": "https://claude.ai/code/cse_015KDcQDKriJW6cftSgJzbZv"
+        "fired_at": "2026-11-14T09:21:24.025Z",
+        "session": "https://claude.ai/code/cse_015KDcQBaWDNGWgcZ7rx13He"
       }
     },
     "asian-family-market": {
