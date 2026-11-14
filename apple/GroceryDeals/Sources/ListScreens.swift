@@ -613,6 +613,8 @@ struct ListRecipes: View {
             state = .idle
         }
         .onChange(of: store.vegetarianOnly) { state = .idle }
+        // Simulator screenshots: -listRecipes find taps Find recipes.
+        .task { if DebugArgs.value("-listRecipes") == "find", state == .idle { find() } }
     }
 
     private var ask: some View {
