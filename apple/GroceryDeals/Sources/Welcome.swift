@@ -257,6 +257,7 @@ struct DealsOnboarding: View {
                             Spacer(minLength: 0)
                         }
                         .padding(.horizontal, Space.l)
+                        .padding(.vertical, Space.s)
                         .frame(minHeight: 56)
                         .contentShape(Rectangle())
                     }
@@ -461,6 +462,7 @@ private struct AlertToggle: View {
         }
         .tint(Palette.accent)
         .padding(.horizontal, Space.l)
+        .padding(.vertical, Space.m)
         .frame(minHeight: 64)
         .sensoryFeedback(.selection, trigger: isOn)
     }
@@ -475,10 +477,14 @@ private struct StepScreen<Top: View, Content: View, Buttons: View>: View {
     var body: some View {
         VStack(spacing: 0) {
             top.padding(.horizontal, Space.l).padding(.top, Space.s)
-            ScrollView {
-                content.padding(.vertical, Space.l).frame(maxWidth: .infinity)
+            // A short step sits centered between the top row and the buttons, not stranded at the top.
+            GeometryReader { area in
+                ScrollView {
+                    content.padding(.vertical, Space.l).frame(maxWidth: .infinity)
+                        .frame(minHeight: area.size.height)
+                }
+                .scrollBounceBehavior(.basedOnSize)
             }
-            .scrollBounceBehavior(.basedOnSize)
             VStack(spacing: Space.m) { buttons }
                 .controlSize(.large)
                 .padding(.horizontal, Space.xl)
