@@ -3,17 +3,22 @@ import SwiftUI
 // The Aisles tab: every aisle as a tile, standouts first, then one page per aisle with store
 // chips, sorting and its own search field.
 
-/// A small picture for each aisle: its store section's sticker from KitchenCatalog (the same
-/// drawings as the deal rows; they replaced emoji on 2026-11-13 so the app has one look).
-/// Decorative only.
+/// A small picture for each aisle. Emoji on purpose: colorful, free, and there are no product
+/// photos yet (see "Product images" in HANDOFF.md). Decorative only.
 enum AisleArt {
-    static func sticker(_ id: String, size: CGFloat) -> some View {
-        Image("Stickers/section-\(id)")
-            .resizable()
-            .scaledToFit()
-            .frame(width: size, height: size)
-            .shadow(color: .black.opacity(0.18), radius: 1.5, y: 1)
-            .accessibilityHidden(true)
+    static func emoji(_ id: String) -> String {
+        switch id {
+        case "produce": "🥬"
+        case "meat": "🥩"
+        case "seafood": "🐟"
+        case "dairy-eggs": "🥚"
+        case "pantry": "🍚"
+        case "frozen": "🥟"
+        case "bakery": "🥖"
+        case "prepared": "🍱"
+        case "snacks-drinks": "🍵"
+        default: "🧺"
+        }
     }
 }
 
@@ -121,7 +126,9 @@ private struct AisleTile: View {
         let standouts = deals.filter { $0.tier == .standout }.count
         VStack(alignment: .leading, spacing: Space.xs) {
             HStack(alignment: .top) {
-                AisleArt.sticker(category.id, size: textSize.isAccessibilitySize ? 36 : 48)
+                Text(AisleArt.emoji(category.id))
+                    .font(.system(size: textSize.isAccessibilitySize ? 30 : 40))
+                    .accessibilityHidden(true)
                 Spacer(minLength: 0)
                 if standouts > 0 {
                     Text("\(standouts)★")

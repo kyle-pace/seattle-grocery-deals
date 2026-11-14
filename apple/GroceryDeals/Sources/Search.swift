@@ -141,7 +141,7 @@ struct SearchView: View {
             ForEach(store.aisles) { c in
                 NavigationLink(value: AisleRoute.aisle(c)) {
                     HStack(spacing: 5) {
-                        AisleArt.sticker(c.id, size: 22)
+                        Text(AisleArt.emoji(c.id)).accessibilityHidden(true)
                         Text(c.label)
                         Text("\(store.deals(inCategory: c.id).count)").opacity(0.65)
                     }
@@ -195,7 +195,7 @@ struct SearchView: View {
             WideColumns(minimum: Wide.tile, spacing: Space.m) {
                 ForEach(aisles) { c in
                     NavigationLink(value: AisleRoute.aisle(c)) {
-                        Tile(title: c.label, line: "\(store.deals(inCategory: c.id).count) deals")
+                        Tile(title: "\(AisleArt.emoji(c.id))  \(c.label)", line: "\(store.deals(inCategory: c.id).count) deals")
                     }
                     .buttonStyle(.plain)
                 }

@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 /// "$4.99/lb" in plain bold type, with a smaller dollar sign and unit. With `savings`, the
 /// regular price and the percent off sit underneath; the percent off is the one bit of color.
@@ -181,29 +180,36 @@ struct DealRow: View {
     /// A short extra line after the details, like "about $3.41/lb" on the season screen.
     var note: String? = nil
     let open: () -> Void
+
     var body: some View {
         HStack(alignment: .center, spacing: Space.m) {
             Button(action: open) {
-                // A quiet row (2026-11-13, from the owner's look at grocery apps on Mobbin): a small
-                // upright sticker, the name, one line with the price and details, and a single
-                // button on the right. Badges and the percent off live on the deal sheet; a
-                // standout keeps a gold star, the one thing worth scanning a list for.
-                HStack(alignment: .center, spacing: Space.m) {
-                    Sticker(deal: deal, size: 40, tilt: false).hiddenWhenTextIsLarge()
-                    VStack(alignment: .leading, spacing: 2) {
-                        HStack(alignment: .firstTextBaseline, spacing: 5) {
-                            if deal.tier == .standout {
-                                Image(systemName: "star.fill").imageScale(.small).foregroundStyle(Palette.text(.warn))
-                            }
-                            Text(deal.name).font(.app(.headline)).foregroundStyle(Palette.ink).lineLimitUnlessLarge(2)
+                AdaptiveStack(spacing: Space.m) {
+                    VStack(alignment: .leading, spacing: 3) {
+                        // Wraps: side by side, "Standout" and "Ends tomorrow" were wider than
+                        // the words column and squeezed the price into one character per line.
+                        FlowLayout(spacing: 6) {
+                            TierBadge(tier: deal.tier)
+                            EndsBadge(deal: deal)
                         }
-                        details
+                        Text(deal.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                        meta
+                        // The savings pill sits with the words, not under the price: under the
+                        // price it made that column as wide as the pill and squeezed names and
+                        // the "why" text into a narrow column.
+                        if (deal.us?.under ?? 0) > 0 || deal.off != nil {
+                            SavingsPill(deal: deal).padding(.top, 2)
+                        }
                         if let people { PeopleCount(people).padding(.top, 2) }
                         if showWhy, !deal.why.isEmpty {
                             Text(deal.why).font(.app(.subheadline)).foregroundStyle(Palette.body).padding(.top, 2)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    // The price never wraps; the words column gives way instead.
+                    PriceTag(deal: deal)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .layoutPriority(1)
                 }
                 .contentShape(Rectangle())
             }
@@ -216,17 +222,8 @@ struct DealRow: View {
             }
             AddButton(deal: deal)
         }
-        .padding(.vertical, Space.s)
+        .padding(.vertical, Space.m)
         .overlay(alignment: .bottom) { Rectangle().fill(Palette.divider).frame(height: 1) }
-    }
-
-    /// "$2.49/lb · T&T Supermarket · Through Thu", the price in bold, and "Ends today" in red.
-    private var details: some View {
-        let rest = metaParts.map { " · " + $0 }.joined()
-        let ends = deal.endsBadge.map { " · " + $0 } ?? ""
-        return Text("\(Text(deal.shortPrice).font(.app(.subheadline, .bold)).foregroundStyle(Palette.ink))\(rest)\(Text(ends).foregroundStyle(deal.ended ? Palette.muted : Palette.text(.bad)))")
-            .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-            .monospacedDigit()
     }
 
     private var metaParts: [String] {
@@ -255,107 +252,6 @@ struct DealRow: View {
         else if let off = deal.off { parts.append("\(off)% off") }
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
         if let people { parts.append("\(people) people added this this week") }
-        return parts.filter { !$0.isEmpty }.joined(separator: ". ")
-    }
-}
-
-/// The deal's sticker: a small drawing of the item, tilted a little like a sticker on a flyer.
-/// The drawings are KitchenCatalog's (stickers/stickers.json); `npm run sync-catalog` copies them
-/// into Assets.xcassets/Stickers. The feed names each deal's sticker (`deal.sticker`: the item's
-/// own, a more general item's, or its aisle's). Feeds built before 2026-11-14 don't, and a newer
-/// feed can name one this build doesn't have, so the item key and then the aisle stand in.
-/// Decorative: the row's words already say what it is.
-struct Sticker: View {
-    let deal: Deal
-    /// 40 pt upright in list rows; big and tilted on This week's deal cards.
-    var size: CGFloat = 40
-    var tilt = true
-
-    var body: some View {
-        if let name = Self.name(for: deal) {
-            Image(name)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size, height: size)
-                .rotationEffect(.degrees(tilt ? Self.tilt(deal.id) : 0))
-                // Lifts the white border off a white card in light mode.
-                .shadow(color: .black.opacity(0.18), radius: 1.5, y: 1)
-                .accessibilityHidden(true)
-        }
-    }
-
-    /// The first of the feed's sticker, the item key and the aisle that this build has a drawing for.
-    static func name(for deal: Deal) -> String? {
-        for candidate in [deal.sticker, deal.key, "section-\(deal.category)"] {
-            guard let candidate else { continue }
-            let name = "Stickers/\(candidate)"
-            if UIImage(named: name) != nil { return name }
-        }
-        return nil
-    }
-
-    /// A slight lean, the same every time for the same deal, so a list doesn't look stamped.
-    static func tilt(_ id: String) -> Double {
-        [-5, 4, -3, 6][id.unicodeScalars.reduce(0) { ($0 + Int($1.value)) % 4 }]
-    }
-}
-
-/// A deal as a flyer card: the sticker big on a tinted tile with the add button in its corner,
-/// then the price before the name, the way grocery apps lay out product cards. This week's store
-/// cards show their standouts as a row of these to swipe through.
-struct DealCard: View {
-    @Environment(FeedStore.self) private var store
-    let deal: Deal
-    let open: () -> Void
-    static let width: CGFloat = 152
-    private static let tile: CGFloat = 124
-
-    var body: some View {
-        Button(action: open) {
-            VStack(alignment: .leading, spacing: 6) {
-                // A little low on the tile, so the corner badge sits above it, not on it.
-                Sticker(deal: deal, size: 72)
-                    .padding(.top, 18)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: Self.tile)
-                    .background(Palette.raised.opacity(0.7), in: RoundedRectangle(cornerRadius: Radius.large))
-                    .overlay(alignment: .topLeading) { corner.padding(Space.s) }
-                PriceTag(deal: deal, size: 20, leading: true)
-                    .padding(.horizontal, 2)
-                Text(deal.name)
-                    .font(.app(.subheadline, .bold)).foregroundStyle(Palette.ink)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2, reservesSpace: true)
-                    .padding(.horizontal, 2)
-                if let ends = deal.endsBadge {
-                    Text(ends).font(.app(.footnote, .semibold))
-                        .foregroundStyle(deal.ended ? Palette.muted : Palette.text(.bad))
-                        .padding(.horizontal, 2)
-                }
-            }
-            .frame(width: Self.width, alignment: .leading)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(spoken)
-        .accessibilityHint("Opens the deal")
-        // On the tile's bottom corner; outside the card's button, so it adds without opening.
-        .overlay(alignment: .topTrailing) {
-            AddButton(deal: deal).padding(.top, Self.tile - 48).padding(.trailing, 4)
-        }
-    }
-
-    /// "38% off" when the flyer printed a regular price, else a standout's star.
-    @ViewBuilder private var corner: some View {
-        if let off = deal.off { OffPill(percent: off) }
-        else if deal.tier == .standout { TierBadge(tier: .standout) }
-    }
-
-    private var spoken: String {
-        var parts = [deal.tier == .standout ? "Standout" : "", deal.name, deal.spoken]
-        if let off = deal.off { parts.append("\(off)% off") }
-        if let ends = deal.endsBadge { parts.append(ends) }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
     }
 }

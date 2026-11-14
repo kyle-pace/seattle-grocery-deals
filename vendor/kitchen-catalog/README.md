@@ -6,7 +6,3 @@ KitchenCatalog, then run `npm run sync-catalog` from this repo and commit the re
 
 Used for ranking: each deal's `popularity` (everyday, common or specialty) comes from its
 catalog item, found by `item_key` or a strong name match. See `analyze` in `scripts/lib.mjs`.
-
-Also copied: `stickers.json` and `stickers.mjs`, the small drawings on the app's deal rows. The build
-names one per deal in the feed (`stickerFor` in `scripts/lib.mjs`), and `npm run sync-catalog` writes
-them into the app's asset catalog (`apple/GroceryDeals/Resources/Assets.xcassets/Stickers`).

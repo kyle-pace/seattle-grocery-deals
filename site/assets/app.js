@@ -280,9 +280,7 @@
     var word = left <= 0 ? "Ended" : left === 1 ? "Ends today" : left === 2 ? "Ends tomorrow" : "";
     var b = row.querySelector("[data-ends-badge]"), det = row.querySelector("[data-ends-detail]");
     if (b) {
-      // Quiet rows (2026-11-13): the words, in red, on the details line; gray once it's over.
-      b.textContent = word ? (b.hasAttribute("data-sep") ? " \u00b7 " : "") + word : "";
-      b.classList.toggle("ends-over", left <= 0);
+      b.innerHTML = word ? '<span class="badge tone-' + (left <= 0 ? "neutral" : "bad") + '">' + CLOCK + word + "</span>" : "";
       b.hidden = !word;
     }
     if (det) {

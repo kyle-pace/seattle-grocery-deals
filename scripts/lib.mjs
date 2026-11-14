@@ -3,7 +3,6 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { load as loadCatalog, match as matchCatalog } from "../vendor/kitchen-catalog/catalog.mjs";
-import { load as loadStickers, resolve as resolveSticker, sectionSticker } from "../vendor/kitchen-catalog/stickers.mjs";
 
 export const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 export const WEEKS_DIR = join(ROOT, "data", "weeks");
@@ -24,9 +23,7 @@ export function loadConfig() {
   // Deals' own item keys -> catalog ids, through the catalog's "also" (older ids).
   const catalogIdByKey = {};
   for (const [id, item] of Object.entries(catalog.items)) for (const old of item.also ?? []) catalogIdByKey[old] ??= id;
-  // The drawings the app shows on deal rows (stickerFor, below).
-  const stickers = loadStickers(join(ROOT, "vendor", "kitchen-catalog", "stickers.json"));
-  return { stores, storeById, criteria, items, benchmarks: benchmarksFile.benchmarks, benchmarksFile, site, leaveOut, catalog, catalogIdByKey, stickers };
+  return { stores, storeById, criteria, items, benchmarks: benchmarksFile.benchmarks, benchmarksFile, site, leaveOut, catalog, catalogIdByKey };
 }
 
 export function weekFiles() {
@@ -130,19 +127,6 @@ export function catalogItem(item, cfg) {
   }
   catalogCache.set(item, found);
   return found;
-}
-
-// The sticker (a small drawing) for a deal's row in the app: its catalog item's own, else a more
-// general item's, else its store section's, else its category's. The catalog item is found the
-// same way as catalogItem: by item key, else a strong match on the name. Null when there is none.
-export function stickerFor(item, cfg) {
-  const k = item.item_key;
-  let id = k && (cfg.catalog.items[k] ? k : cfg.catalogIdByKey[k]);
-  if (!id) {
-    const m = matchCatalog(cfg.catalog, item.item);
-    if (m?.strength === "strong") id = m.id;
-  }
-  return (id ? resolveSticker(cfg.catalog, cfg.stickers, id) : null) ?? sectionSticker(cfg.stickers, item.category);
 }
 
 // "everyday", "common" or "specialty": how many people buy it.
