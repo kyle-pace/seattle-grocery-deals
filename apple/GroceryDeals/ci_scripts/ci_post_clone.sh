@@ -32,9 +32,13 @@ fi
 # Internal TestFlight builds carry the developer menu (KitchenUI's BuildKind). The internal
 # workflow starts on tags beginning with v and archives as internal-only, which Apple never
 # lets reach external testers or the App Store; mark those builds here. Public builds
-# (beta- tags) are never marked.
-case "$CI_TAG" in
-  v*)
+# (beta- tags, or any other workflow) are never marked. A manual start of the internal workflow
+# from a branch has no tag, so the workflow's name ("TestFlight") counts too.
+INTERNAL_BUILD=no
+case "$CI_TAG" in v*) INTERNAL_BUILD=yes ;; esac
+[ "$CI_WORKFLOW" = "TestFlight" ] && INTERNAL_BUILD=yes
+case "$INTERNAL_BUILD" in
+  yes)
     for PLIST in apple/GroceryDeals/Sources/Info.plist; do
       /usr/libexec/PlistBuddy -c "Add :KitchenInternalBuild bool true" "$CI_PRIMARY_REPOSITORY_PATH/$PLIST" \
         && echo "Marked $PLIST as an internal build." \
