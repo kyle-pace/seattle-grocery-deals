@@ -9,6 +9,7 @@ import { McpServer } from "@modelcontextprotocol/server";
 import { createMcpHandler } from "agents/mcp/server";
 import { z } from "zod";
 import { listStores, planTrip, searchDeals, thisWeek } from "./deals.js";
+import { REPORT_PATHS, handleReports } from "./reports.js";
 
 const VERSION = "0.2.0";
 const DEFAULT_FEED = "https://seattlegrocery.deals/api/week.json";
@@ -191,6 +192,13 @@ const MCP_PATHS = new Set(["/", "/mcp"]);
 export default {
   fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // "Think this is wrong?" reports from the site and the app (src/reports.js).
+    if (REPORT_PATHS.has(url.pathname)) {
+      const knownStore = async (id) => {
+        try { return (await loadFeed(env)).stores.some((s) => s.id === id); } catch { return true; }
+      };
+      return handleReports(request, env, { knownStore });
+    }
     if (!MCP_PATHS.has(url.pathname)) {
       return new Response("Not found. Connect an MCP client to the bare address.\n", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
     }

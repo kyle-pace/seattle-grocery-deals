@@ -247,6 +247,42 @@
     if (none) none.hidden = tiles.some(function (li) { return !li.hidden; });
   });
 
+  // "Think this is wrong?" on a picked store with no deals: sends just the store's id to the
+  // server (mcp/src/reports.js), and the flyer watcher checks it and tells the owner. Sent as
+  // text/plain so the browser doesn't need a preflight. Remembered per store for the edition,
+  // so a reload doesn't offer it again.
+  var reportList = document.querySelector("[data-report-url]");
+  if (reportList) {
+    var REPORTED = "sgd.reported";
+    var weekEl = document.querySelector("[data-edition]");
+    var reportWeek = weekEl ? weekEl.dataset.week : "";
+    var reported = load(REPORTED, {});
+    var thanks = function (btn) {
+      btn.hidden = true;
+      btn.parentNode.querySelector("[data-report-status]").textContent = "Thanks, we'll check it.";
+    };
+    all("[data-report]", reportList).forEach(function (btn) {
+      if (reported[btn.dataset.report] === reportWeek) thanks(btn);
+      btn.addEventListener("click", function () {
+        var store = btn.dataset.report, status = btn.parentNode.querySelector("[data-report-status]");
+        btn.disabled = true;
+        status.textContent = "Sending\u2026";
+        fetch(reportList.dataset.reportUrl, { method: "POST", headers: { "content-type": "text/plain" }, body: JSON.stringify({ store: store, about: "flyer" }) })
+          .then(function (r) {
+            if (!r.ok) throw new Error(r.status);
+            reported[store] = reportWeek;
+            save(REPORTED, reported);
+            thanks(btn);
+            track("Reported Flyer Status", { store: store });
+          })
+          .catch(function () {
+            btn.disabled = false;
+            status.textContent = "Couldn't send that. Try again in a bit.";
+          });
+      });
+    });
+  }
+
   // Dates: hide expired content and show "ending soon" against today in Seattle.
   var today = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles" }).format(new Date());
   function daysUntil(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - Date.parse(today + "T00:00:00Z")) / 86400000); }

@@ -286,6 +286,7 @@ private struct UnreadStoreRow: View {
                 Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
                 Text(s.status == "stale" ? (s.read_by_hand == true ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer.")
                     .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                ReportFlyerButton(store: s.id)
             }
             Spacer(minLength: 0)
             if let url = s.flyerLinkURL {
@@ -296,6 +297,72 @@ private struct UnreadStoreRow: View {
         .padding(.vertical, Space.s)
         .overlay(RoundedRectangle(cornerRadius: Radius.large).strokeBorder(Palette.line, style: StrokeStyle(lineWidth: 2, dash: [6, 4])))
         .padding(.top, Space.m)
+    }
+}
+
+/// "Think this is wrong?" under a picked store with no deals, for when its new flyer is out
+/// but the app hasn't caught up. Sends just the store's id (FlyerReport); the flyer watcher
+/// checks the store and tells the owner. Once sent, it says thanks for a week.
+private struct ReportFlyerButton: View {
+    let store: String
+    enum Phase { case idle, sending, sent, failed }
+    @State private var phase: Phase
+
+    init(store: String) {
+        self.store = store
+        _phase = State(initialValue: FlyerReport.recentlyReported(store) ? .sent : .idle)
+    }
+
+    var body: some View {
+        if phase == .sent {
+            Text("Thanks, we'll check it.").font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                .frame(minHeight: 44, alignment: .leading)
+        } else {
+            Button {
+                phase = .sending
+                Task {
+                    let ok = await FlyerReport.send(store: store)
+                    phase = ok ? .sent : .failed
+                    if ok { UIAccessibility.post(notification: .announcement, argument: "Thanks, we'll check it.") }
+                }
+            } label: {
+                Text(phase == .failed ? "Couldn't send that. Try again?" : "Think this is wrong?").underline()
+            }
+            .buttonStyle(.plain)
+            .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+            .frame(minHeight: 44, alignment: .leading)
+            .disabled(phase == .sending)
+            .accessibilityHint("Lets us know this store's flyer status looks wrong, so we check it.")
+        }
+    }
+}
+
+/// Sends a "Think this is wrong?" report to the same server the website uses
+/// (mcp.seattlegrocery.deals/report, mcp/src/reports.js). Only the store's id goes; the server
+/// keeps a count and a time per store for a week.
+@MainActor
+enum FlyerReport {
+    static let url = URL(string: "https://mcp.seattlegrocery.deals/report")!
+    private static let key = "sgd.reportedFlyers"
+
+    static func recentlyReported(_ store: String) -> Bool {
+        let sent = UserDefaults.standard.dictionary(forKey: key) as? [String: Double] ?? [:]
+        guard let at = sent[store] else { return false }
+        return Date().timeIntervalSince1970 - at < 7 * 24 * 3600
+    }
+
+    static func send(store: String) async -> Bool {
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "content-type")
+        req.httpBody = try? JSONSerialization.data(withJSONObject: ["store": store, "about": "flyer"])
+        guard let (_, res) = try? await URLSession.shared.data(for: req),
+              let http = res as? HTTPURLResponse, (200..<300).contains(http.statusCode) else { return false }
+        var sent = UserDefaults.standard.dictionary(forKey: key) as? [String: Double] ?? [:]
+        sent[store] = Date().timeIntervalSince1970
+        UserDefaults.standard.set(sent, forKey: key)
+        Analytics.track("Reported Flyer Status", ["store": store])
+        return true
     }
 }
 
