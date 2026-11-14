@@ -201,6 +201,9 @@ struct Store: Codable, Sendable, Identifiable, Hashable {
     let website: String?
     let flyer_url: String?
     let delivery: String?
+    /// True for stores whose flyer is read from a desktop browser, not by the watcher, so a new flyer can be up before it is read.
+    /// Older feeds don't have it.
+    let read_by_hand: Bool?
     let status: String?
     let from: String?
     let through: String?
