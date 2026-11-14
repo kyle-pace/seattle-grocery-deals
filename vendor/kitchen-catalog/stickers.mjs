@@ -16,6 +16,7 @@ export const COLORS = {
   w: "#f4efe2", t: "#e6d6b0", T: "#cdb98c", c: "#fbe7a1", // cream, tan, dark tan, pale yellow
   o: "#ff9a3d", r: "#f0483e", p: "#ff8a73", y: "#ffd23f", // orange, red, salmon pink, yellow
   b: "#a8744f", B: "#6b4a35", u: "#4fb0ea", v: "#9b6bd6", // brown, dark brown, blue, purple
+  U: "#4a63c9", m: "#e84a8a", // deep blue, magenta
   e: "#b8c2cc", N: "#2c3b36", // metal gray, nori
 };
 /** Line and dot roles: d = dark detail line, l = light line, k = dark dot. */

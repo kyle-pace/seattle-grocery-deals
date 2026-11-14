@@ -270,9 +270,11 @@ struct DealRow: View {
 /// Decorative: the row's words already say what it is.
 struct Sticker: View {
     let deal: Deal
-    var size: CGFloat = 56
+    /// 44 pt on iPhone, where the name needs the room; 56 pt where the row is wide (iPad).
+    @Environment(\.horizontalSizeClass) private var width
 
     var body: some View {
+        let size: CGFloat = width == .regular ? 56 : 44
         if let name = Self.name(for: deal) {
             Image(name)
                 .resizable()

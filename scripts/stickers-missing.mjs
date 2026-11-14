@@ -29,4 +29,4 @@ for (const week of weeks) {
 const pct = (n) => `${Math.round((100 * n) / rows)}%`;
 console.log(`${rows} flyer lines over ${weeks.length} weeks: ${pct(own)} show their own sticker, ${pct(parent)} a more general item's, ${pct(section)} their section's.`);
 console.log("No sticker of their own yet (times listed, what shows now):");
-for (const [id, e] of [...missing].sort((a, b) => b[1].count - a[1].count).slice(0, 60)) console.log(`  ${String(e.count).padStart(3)}  ${id}  (${e.shows ?? "nothing"})`);
+for (const [id, e] of [...missing].sort((a, b) => b[1].count - a[1].count).slice(0, Number(process.argv[3]) || 60)) console.log(`  ${String(e.count).padStart(3)}  ${id}  (${e.shows ?? "nothing"})`);
