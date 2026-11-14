@@ -64,9 +64,19 @@ extension FeedStore {
     /// can be the start of a name word ("persim" finds persimmons). The aisle and the store
     /// don't count: a list's "eggs" means eggs, not everything in Dairy & eggs.
     private func matcher(for deal: Deal) -> ([String]) -> Bool {
-        let nameWords = dealWords("\(deal.name) \(deal.key ?? "")")
-        let all = Set(nameWords)
-        return { ask in ask.allSatisfy { w in all.contains(w) || (w.count >= 4 && nameWords.contains { $0.hasPrefix(w) }) } }
+        Self.has(dealWords("\(deal.name) \(deal.key ?? "")"))
+    }
+
+    /// The same test against the main name only (up to the first comma or bracket). A deal that
+    /// passes it ("Baby Bok Choy") beats one that only mentions the item further along
+    /// ("Wontons, Pork / Spinach / Bok Choy"), even when the mention ranks higher.
+    private func mainMatcher(for deal: Deal) -> ([String]) -> Bool {
+        Self.has(dealWords(String(deal.name.split(whereSeparator: { $0 == "," || $0 == "(" }).first ?? "")))
+    }
+
+    private static func has(_ words: [String]) -> ([String]) -> Bool {
+        let all = Set(words)
+        return { ask in ask.allSatisfy { w in all.contains(w) || (w.count >= 4 && words.contains { $0.hasPrefix(w) }) } }
     }
 
     /// Which one store has the most of `items` on sale. Follows Vegetarian and "Not ending
@@ -79,10 +89,15 @@ extension FeedStore {
             .map { (text: $0, words: dealWords($0)) }
 
         var byStore: [String: [String: Deal]] = [:]
+        var mainHit = Set<String>()
         for deal in live.sorted(by: { $0.rank < $1.rank }) {
-            let has = matcher(for: deal)
-            for a in asks where byStore[deal.store]?[a.text] == nil && has(a.words) {
-                byStore[deal.store, default: [:]][a.text] = deal
+            let has = matcher(for: deal), main = mainMatcher(for: deal)
+            for a in asks where has(a.words) {
+                let key = "\(deal.store)|\(a.text)", isMain = main(a.words)
+                if byStore[deal.store]?[a.text] == nil || (isMain && !mainHit.contains(key)) {
+                    byStore[deal.store, default: [:]][a.text] = deal
+                }
+                if isMain { mainHit.insert(key) }
             }
         }
 
@@ -113,8 +128,12 @@ extension FeedStore {
         let ask = dealWords(item)
         guard !ask.isEmpty else { return nil }
         let hits = live.sorted { $0.rank < $1.rank }.filter { matcher(for: $0)(ask) }
-        if let mine = hits.first(where: { favoriteStores.contains($0.store) }) { return (mine, true) }
-        return hits.first.map { ($0, favoriteStores.isEmpty) }
+        // The item itself before a product that mentions it; your stores before the rest.
+        let main = hits.filter { mainMatcher(for: $0)(ask) }
+        for pool in [main, hits] {
+            if let mine = pool.first(where: { favoriteStores.contains($0.store) }) { return (mine, true) }
+        }
+        return (main.first ?? hits.first).map { ($0, favoriteStores.isEmpty) }
     }
 }
 

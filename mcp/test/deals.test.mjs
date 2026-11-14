@@ -187,3 +187,12 @@ test("plan_trip matches the item's name, not its aisle", () => {
   // Search still finds an aisle by its name.
   assert.ok(searchDeals(big, { query: "eggs" }, TODAY).deals.length > 0);
 });
+
+test("plan_trip prefers the item itself over a product that mentions it", () => {
+  const feed = { ...big, items: [
+    item("uwajimaya-90", 1, "Wontons, Pork / Spinach / Bok Choy", "uwajimaya", "frozen", { tier: "standout" }),
+    item("uwajimaya-91", 9, "Baby Bok Choy", "uwajimaya", "produce"),
+  ] };
+  const r = planTrip(feed, { items: "bok choy" }, TODAY);
+  assert.equal(r.stores[0].on_sale[0].name, "Baby Bok Choy");
+});

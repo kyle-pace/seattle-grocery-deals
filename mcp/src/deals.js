@@ -378,6 +378,11 @@ export function planTrip(feed, opts = {}, today = seattleToday()) {
   const matches = matcher(feed, { nameOnly: true });
   // store id -> ask text -> its best (first by site rank) matching deal
   const byStore = new Map();
+  // A deal whose main name has the item ("Baby Bok Choy") beats one that only mentions it further
+  // along ("Wontons, Pork / Spinach / Bok Choy"), even when the mention ranks higher on the site.
+  const mainWords = (i) => words(String(i.name).split(/[,(]/)[0]);
+  const isMain = (i, a) => { const m = mainWords(i); return a.words.every((w) => m.includes(w) || (w.length >= 4 && m.some((n) => n.startsWith(w)))); };
+  const mainHit = new Set();
   for (const i of pool) {
     const has = matches(i);
     for (const a of asks) {
@@ -385,7 +390,10 @@ export function planTrip(feed, opts = {}, today = seattleToday()) {
       if (!has(a.words) || a.words.every((w) => words(feed.stores.find((s) => s.id === i.store)?.name ?? "").includes(w))) continue;
       if (!byStore.has(i.store)) byStore.set(i.store, new Map());
       const got = byStore.get(i.store);
-      if (!got.has(a.text)) got.set(a.text, i);
+      const key = `${i.store}|${a.text}`;
+      const main = isMain(i, a);
+      if (!got.has(a.text) || (main && !mainHit.has(key))) got.set(a.text, i);
+      if (main) mainHit.add(key);
     }
   }
 
