@@ -239,7 +239,7 @@ html.veg-on [data-meat-only] { display: none; }
 .store-card-h { margin: 0 !important; font-size: inherit !important; }
 .store-card-h a { display: flex; align-items: center; gap: var(--s-s); min-height: 44px; padding: var(--s-l); background: color-mix(in srgb, var(--raised) 50%, transparent); color: var(--ink); text-decoration: none; }
 .store-card-h a:hover .store-card-name { text-decoration: underline; }
-.store-card-h .ic-storefront { width: 20px; height: 20px; color: var(--accent); }
+.store-card-h .ic-storefront { width: 20px; height: 20px; color: var(--accent); align-self: flex-start; margin-top: 2px; }
 .store-card-h .ic-chevron { width: 15px; height: 15px; color: var(--muted); }
 .store-card-t { flex: 1; min-width: 0; display: grid; gap: 2px; }
 .store-card-name { font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
@@ -277,6 +277,7 @@ html.veg-on [data-meat-only] { display: none; }
 .unread-card > span { display: grid; }
 .unread-card a { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
 .elsewhere { margin-top: var(--s-xl); }
+.elsewhere .sec-h { justify-content: flex-start; }
 
 /* the crow and the persimmon (KitchenUI Buddy, scripts/buddy.mjs) */
 .buddy { flex: none; overflow: visible; }
