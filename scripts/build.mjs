@@ -474,7 +474,7 @@ ${section === "app/" ? "" : `<aside class="app-banner" data-app-banner hidden ar
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("map/")}">Map</a><a href="${url("markets/")}">Farmers markets</a><a href="${url("shops/")}">Shops worth a trip</a><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Help paying for food</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("map/")}">Map</a><a href="${url("markets/")}">Farmers markets</a><a href="${url("shops/")}">Shops worth a trip</a><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Food benefit programs</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -867,7 +867,7 @@ ${pageHead(esc(s.name), sub)}
 <div class="about-store"><p class="lede clamp" id="about-${esc(s.id)}" data-clamp>${esc(s.about)}</p><button type="button" class="linkish" data-clamp-toggle aria-controls="about-${esc(s.id)}" aria-expanded="false" hidden>Read more</button></div>
 ${actions}
 ${s.delivery || s.delivery_apps || s.order_online ? `<div class="note-card"><b>Delivery and ordering</b><span>${[s.delivery && esc(s.delivery), s.delivery_apps && `Delivery through ${esc(s.delivery_apps)}.`, s.order_online && (s.order_online.url ? `Order online: <a href="${esc(s.order_online.url)}">${esc(s.order_online.how)}</a>.` : `Order online: ${esc(s.order_online.how)}.`)].filter(Boolean).join(" ")}</span></div>` : ""}
-${s.fresh_bucks ? `<div class="note-card"><b>Fresh Bucks</b><span>Accepted here for fruits and vegetables. <a href="${url("food-help/")}#fresh-bucks" data-no-track>About Fresh Bucks and other food help</a></span></div>` : ""}
+${s.fresh_bucks ? `<div class="note-card"><b>Fresh Bucks</b><span>Accepted here for fruits and vegetables. <a href="${url("food-help/")}#fresh-bucks" data-no-track>About Fresh Bucks and other food benefits</a></span></div>` : ""}
 ${flyerNote}
 ${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals this week</h2><p>${vegText(dealCounts(mine), dealCounts(mine.filter(isVegetarian)))}</p></div>` : !s.no_online_flyer ? emptyState({ mood: "sleepy", title: f && f.status === "unreadable" ? "Couldn't read this week's flyer" : "No deals this week", msg: adUrl ? "The weekly ad might still have something." : "Its new deals show up here as soon as its next flyer is out.", link: adUrl ? [esc(adUrl), "Open the weekly ad"] : [url(), "See this week's deals"] }) : ""}
 </div>
@@ -1113,7 +1113,7 @@ function aboutPage() {
 
 <h2 class="about-part" id="know">Good to know</h2>
 <p>Each store is tracked by one general Seattle-area flyer, so other locations may have different prices. Prices can also change or sell out, so check in store before you rely on one. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and doesn't copy them, and it isn't affiliated with any store; store names belong to their owners.</p>
-<p>If your grocery budget is tight, <a href="${url("food-help/")}" data-no-track>Help paying for food</a> explains Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks and other programs in Seattle.</p>
+<p>If your grocery budget is tight, the <a href="${url("food-help/")}" data-no-track>Food benefit programs</a> page explains Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks and other programs in Seattle.</p>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold. Your list, your stores and your settings stay in your browser. The details are on the <a href="${url("privacy/")}">privacy page</a>.</p>
 
 <h2 class="about-part" id="contact">Get in touch</h2>
@@ -1142,7 +1142,7 @@ function privacyPage() {
 <h2 id="site">The website</h2>
 <h3>Anonymous usage</h3>
 <p>The site uses <a href="https://amplitude.com">Amplitude</a> to see which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so it can tell a return visit from a new one, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. How Amplitude handles that data is in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
-<p>The <a href="${url("food-help/")}" data-no-track>Help paying for food</a> page is left out on purpose: it doesn't load Amplitude at all, and clicks on links to it aren't recorded.</p>
+<p>The <a href="${url("food-help/")}" data-no-track>Food benefit programs</a> page is left out on purpose: it doesn't load Amplitude at all, and clicks on links to it aren't recorded.</p>
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <h3>What stays in your browser</h3>
 <p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
@@ -1181,7 +1181,7 @@ function privacyPage() {
   }));
 }
 
-// Help paying for food, at /food-help/: Basic Food (SNAP), farmers market matching, Fresh Bucks
+// Food benefit programs, at /food-help/: Basic Food (SNAP), farmers market matching, Fresh Bucks
 // and other programs, in plain words with links to each official page. Owner's call
 // (2026-11-14): part of the site's focus, but not prominent, since it won't apply to most people.
 // Privacy: this page loads no analytics at all, and links to it carry data-no-track so the clicks
@@ -1192,7 +1192,7 @@ function foodHelpPage() {
   const CHECKED = "November 14, 2026";
   const jump = [["basic-food", "Basic Food (SNAP)"], ["markets", "At farmers markets"], ["fresh-bucks", "Fresh Bucks"], ["kids", "Families with kids"], ["older-adults", "Older adults"], ["food-banks", "Food banks"]];
   const body = `<div class="privacy-page help-page">
-<div class="page-h"><h1>Help paying for food</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
+<div class="page-h"><h1>Food benefit programs</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
 <div class="note-card"><p>Groceries cost more than they used to. These programs help, and several of them work at the farmers markets and neighborhood grocers this site follows. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}</ul></nav>
 
@@ -1236,11 +1236,11 @@ function foodHelpPage() {
 <p>Nothing on this page is recorded or counted: it doesn't load analytics, and clicks on links to it from other pages aren't recorded either. Seattle Grocery Deals isn't part of any of these programs and can't tell you whether you qualify; the official pages linked above can. Details change, so if something here is out of date, email <a href="mailto:hello@seattlegrocery.deals?subject=Help%20paying%20for%20food">hello@seattlegrocery.deals</a>.</p>
 </div>`;
   write("food-help/", page({
-    title: "Help paying for food", path: "food-help/", section: "about/", body, analytics: false,
+    title: "Food benefit programs", path: "food-help/", section: "about/", body, analytics: false,
     description: "Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks, WIC and more in Seattle, in plain words with links to apply.",
-    ogTitle: "Help paying for food in Seattle",
+    ogTitle: "Food benefit programs in Seattle",
     image: "assets/img/og-food-help.png",
-    imageAlt: "Help paying for food: the crow beside the words SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.",
+    imageAlt: "Food benefit programs: the crow beside the words SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.",
   }));
 }
 
