@@ -1,5 +1,5 @@
-// Makes the share images for Farmers markets and Shops worth a trip (site/assets/img/og-markets.png
-// and og-shops.png, 1200 by 630): the crow and what each page covers, in the site's dark colors.
+// Makes the share images for Farmers markets, Shops worth a trip and the map (site/assets/img/
+// og-markets.png, og-shops.png and og-map.png, 1200 by 630): the crow and what each page covers, in the site's dark colors.
 // Run by hand when they change:
 //   node scripts/places-og.mjs
 // Needs Playwright with Chromium on the machine (not a dependency of the site). If Playwright's
@@ -49,6 +49,7 @@ const browser = await chromium.launch(process.env.CHROME ? { executablePath: pro
 const page = await browser.newPage({ viewport: { width: W, height: H } });
 for (const [file, c] of [
   ["og-markets.png", { ask: "Farmers markets", d: "Who's open this week, with each market's hours, newsletter and EBT matching.", path: "markets" }],
+  ["og-map.png", { ask: "The map", d: "Every deal store, farmers market and shop, with filters for delivery, ordering online and EBT.", path: "map" }],
   ["og-shops.png", { ask: "Shops worth a trip", d: "Butchers, fishmongers and grocers from around the world, and what each is known for.", path: "shops" }],
 ]) {
   const out = join(ROOT, "site", "assets", "img", file);

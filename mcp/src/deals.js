@@ -245,6 +245,8 @@ function storeOut(feed, s, vegetarian) {
   if (s.status && s.status !== "full") out.flyer_status = s.status;
   out.locations = (s.locations ?? []).map((l) => (l.address ? `${l.label}: ${l.address}` : l.label));
   if (s.delivery) out.delivery = s.delivery;
+  if (s.delivery_apps) out.delivery_apps = s.delivery_apps;
+  if (s.order_online) out.order_online = s.order_online;
   if (s.flyer_url) out.weekly_ad = s.flyer_url;
   out.page = `${SITE}/stores/${s.id}/`;
   return out;

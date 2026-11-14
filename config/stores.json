@@ -98,7 +98,8 @@
           "lon": -122.21224,
           "flyer": true
         }
-      ]
+      ],
+      "delivery_apps": "Instacart"
     },
     {
       "id": "pcc",
@@ -250,7 +251,8 @@
       "watch": {
         "url": "https://www.pccmarkets.com/weeklyad/flyerview",
         "desktop": true
-      }
+      },
+      "delivery_apps": "Instacart, DoorDash and Shipt"
     },
     {
       "id": "central-coop",
@@ -296,7 +298,11 @@
           "flyer": true
         }
       ],
-      "fresh_bucks": true
+      "fresh_bucks": true,
+      "delivery_apps": "Instacart",
+      "order_online": {
+        "how": "Instacart, for delivery or curbside pickup"
+      }
     },
     {
       "id": "smith-brothers",
@@ -422,7 +428,11 @@
           "lon": -122.48969,
           "flyer": true
         }
-      ]
+      ],
+      "delivery_apps": "Instacart, and Amazon from some stores",
+      "order_online": {
+        "how": "Its own app, for same-day delivery"
+      }
     },
     {
       "id": "red-apple",
@@ -558,7 +568,12 @@
           "lon": -122.31303,
           "flyer": false
         }
-      ]
+      ],
+      "delivery_apps": "Instacart",
+      "order_online": {
+        "how": "Instacart",
+        "url": "https://www.instacart.com/store/HMart"
+      }
     },
     {
       "id": "tnt",
@@ -791,7 +806,12 @@
           "lon": -122.33384,
           "flyer": false
         }
-      ]
+      ],
+      "delivery_apps": "Instacart",
+      "order_online": {
+        "how": "Instacart",
+        "url": "https://www.instacart.com/store/99-ranch-market"
+      }
     },
     {
       "id": "viet-wah",
@@ -831,7 +851,12 @@
           "lon": -122.17801,
           "flyer": true
         }
-      ]
+      ],
+      "delivery_apps": "Mercato",
+      "order_online": {
+        "how": "Mercato, for delivery or pickup",
+        "url": "https://www.mercato.com/shop/viet-wah-asian-food-market"
+      }
     },
     {
       "id": "seafood-city",

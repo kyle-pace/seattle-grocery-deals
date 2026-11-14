@@ -42,3 +42,13 @@ three on wide screens, so it doesn't read as a grid of identical cards.
 no small labels above headings (section names are the site's existing `sec-h` style); no
 colored dots; details are joined with commas, not middle dots; copy talks about the places, not
 the interface.
+
+## The map (/map/), November 2026
+
+**Subject and reader.** Someone deciding where to shop: what's near, who delivers, who's open today.
+**The one bold element.** The map itself, full width and tall, with lettered pins (D, M, B, F, W, N)
+so a kind reads without color. **Colors.** No new ones: pins use the tone marks (`--accent`,
+`--good-mark`, `--bad-mark`, `--info-mark`, `--warn-mark`, `--neutral-mark`) with `--surface` letters,
+which flip together in dark mode. **Layout.** Search, two rows of filter chips (they scroll sideways
+on phones so the map stays near the top), the map, a legend, then the same ruled directory as the
+shops page.

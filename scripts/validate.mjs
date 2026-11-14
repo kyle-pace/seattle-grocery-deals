@@ -42,6 +42,8 @@ function checkConfig() {
     if (!Array.isArray(s.locations)) err(w, "locations must be a list (empty for delivery-only)");
     if (s.fresh_bucks !== undefined && typeof s.fresh_bucks !== "boolean") err(w, "fresh_bucks must be true or false (true only when the City lists the store as a Fresh Bucks retailer)");
     if (s.delivery !== undefined && (typeof s.delivery !== "string" || s.delivery.length < 10 || s.delivery.length > 200)) err(w, "delivery must be 10 to 200 characters saying how the store delivers");
+    if (s.delivery_apps !== undefined && (typeof s.delivery_apps !== "string" || s.delivery_apps.length < 4 || s.delivery_apps.length > 80)) err(w, "delivery_apps must name the apps that deliver from the store, like \"Instacart\"");
+    if (s.order_online !== undefined && (typeof s.order_online?.how !== "string" || (s.order_online.url !== undefined && !/^https:\/\//.test(s.order_online.url)))) err(w, "order_online needs how, and an https url if it has one");
     for (const [i, l] of (s.locations || []).entries()) {
       const lw = `${w} locations[${i}]`;
       if (!l.label || !l.address) err(lw, "needs label and address");

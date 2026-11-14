@@ -447,8 +447,8 @@ ${analytics ? `<script type="module" src="${ANALYTICS_SRC}"></script>` : ""}${ex
 <script src="${asset(extraScript)}" defer></script>` : ""}${head ? `
 ${head}` : ""}${map ? `
 <link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
-<script src="${asset("assets/leaflet/leaflet.js")}" defer></script>
-<script src="${asset("assets/map.js")}" defer></script>` : ""}${jsonld ? `
+<script src="${asset("assets/leaflet/leaflet.js")}" defer></script>${map === true ? `
+<script src="${asset("assets/map.js")}" defer></script>` : ""}` : ""}${jsonld ? `
 <script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>` : ""}
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ""}${pageId ? ` data-page="${pageId}"` : ""}>
@@ -474,7 +474,7 @@ ${section === "app/" ? "" : `<aside class="app-banner" data-app-banner hidden ar
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("markets/")}">Farmers markets</a><a href="${url("shops/")}">Shops worth a trip</a><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Help paying for food</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("map/")}">Map</a><a href="${url("markets/")}">Farmers markets</a><a href="${url("shops/")}">Shops worth a trip</a><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Food benefit programs</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -796,22 +796,14 @@ function storePages() {
     .map((s) => ({ s, n: items.filter((i) => i.store === s.id && i.a.tier === "standout").length, c: items.filter((i) => i.store === s.id).length }))
     .sort((a, b) => b.n - a.n || b.c - a.c).map((x) => x.s);
   const others = active.filter((s) => s.no_online_flyer);
-  const toggles = active.filter((s) => s.locations.length)
-    .map((s) => `<label class="check"><input type="checkbox" value="${esc(s.id)}" data-map-store checked> ${esc(s.name)}</label>`).join("");
   write("stores/", page({
-    title: "Stores and map", path: "stores/", map: true,
-    description: `The Seattle-area grocery stores we list sales for, with a map: ${tracked.slice(0, 4).map((s) => s.name).join(", ")} and ${tracked.length - 4} more.`,
+    title: "Stores", path: "stores/",
+    description: `The Seattle-area grocery stores we list sales for: ${tracked.slice(0, 4).map((s) => s.name).join(", ")} and ${tracked.length - 4} more.`,
     body: `${pageHead("Stores", "The Asian markets, seafood shops and co-ops we read as each new flyer comes out, with the most standouts first. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.")}
 <div class="tools chiprow"><button type="button" class="fchip" aria-pressed="false" data-deliv-toggle>${ic("truck")}<span>Delivers</span></button></div>
 <ul class="tiles" data-store-tiles>${tracked.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
 ${emptyState({ mood: "surprised", title: "No stores match", msg: "None of these stores deliver. Turn off Delivers to see them all.", attrs: "data-deliv-empty hidden" })}
-<section class="block" aria-labelledby="h-map">
-  <div class="sec-h"><h2 id="h-map">Map</h2></div>
-  <div id="store-map" class="map" role="region" aria-label="Map of store locations"></div>
-  ${MAP_LEGEND}
-  <details class="map-toggles"><summary>Show or hide stores on the map</summary><div class="grid">${toggles}</div></details>
-  ${mapData(active, items)}
-</section>
+<div class="note-card"><b>The map</b><span>Every store here, plus farmers markets and shops worth a trip, with filters for delivery, online ordering and EBT. <a href="${url("map/")}">Open the map</a></span></div>
 ${others.length ? `<section class="block" aria-labelledby="h-other">
   <div class="sec-h"><h2 id="h-other">Other markets worth knowing</h2><p>Good local markets with no online flyer, so their prices are not tracked</p></div>
   <ul class="tiles">${others.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
@@ -874,8 +866,8 @@ ${crumbs(["stores/", "Stores"])}
 ${pageHead(esc(s.name), sub)}
 <div class="about-store"><p class="lede clamp" id="about-${esc(s.id)}" data-clamp>${esc(s.about)}</p><button type="button" class="linkish" data-clamp-toggle aria-controls="about-${esc(s.id)}" aria-expanded="false" hidden>Read more</button></div>
 ${actions}
-${s.delivery ? `<div class="note-card"><b>Delivery</b><span>${esc(s.delivery)}</span></div>` : ""}
-${s.fresh_bucks ? `<div class="note-card"><b>Fresh Bucks</b><span>Accepted here for fruits and vegetables. <a href="${url("food-help/")}#fresh-bucks" data-no-track>About Fresh Bucks and other food help</a></span></div>` : ""}
+${s.delivery || s.delivery_apps || s.order_online ? `<div class="note-card"><b>Delivery and ordering</b><span>${[s.delivery && esc(s.delivery), s.delivery_apps && `Delivery through ${esc(s.delivery_apps)}.`, s.order_online && (s.order_online.url ? `Order online: <a href="${esc(s.order_online.url)}">${esc(s.order_online.how)}</a>.` : `Order online: ${esc(s.order_online.how)}.`)].filter(Boolean).join(" ")}</span></div>` : ""}
+${s.fresh_bucks ? `<div class="note-card"><b>Fresh Bucks</b><span>Accepted here for fruits and vegetables. <a href="${url("food-help/")}#fresh-bucks" data-no-track>About Fresh Bucks and other food benefits</a></span></div>` : ""}
 ${flyerNote}
 ${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals this week</h2><p>${vegText(dealCounts(mine), dealCounts(mine.filter(isVegetarian)))}</p></div>` : !s.no_online_flyer ? emptyState({ mood: "sleepy", title: f && f.status === "unreadable" ? "Couldn't read this week's flyer" : "No deals this week", msg: adUrl ? "The weekly ad might still have something." : "Its new deals show up here as soon as its next flyer is out.", link: adUrl ? [esc(adUrl), "Open the weekly ad"] : [url(), "See this week's deals"] }) : ""}
 </div>
@@ -1121,7 +1113,7 @@ function aboutPage() {
 
 <h2 class="about-part" id="know">Good to know</h2>
 <p>Each store is tracked by one general Seattle-area flyer, so other locations may have different prices. Prices can also change or sell out, so check in store before you rely on one. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and doesn't copy them, and it isn't affiliated with any store; store names belong to their owners.</p>
-<p>If your grocery budget is tight, <a href="${url("food-help/")}" data-no-track>Help paying for food</a> explains Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks and other programs in Seattle.</p>
+<p>If your grocery budget is tight, the <a href="${url("food-help/")}" data-no-track>Food benefit programs</a> page explains Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks and other programs in Seattle.</p>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold. Your list, your stores and your settings stay in your browser. The details are on the <a href="${url("privacy/")}">privacy page</a>.</p>
 
 <h2 class="about-part" id="contact">Get in touch</h2>
@@ -1150,7 +1142,7 @@ function privacyPage() {
 <h2 id="site">The website</h2>
 <h3>Anonymous usage</h3>
 <p>The site uses <a href="https://amplitude.com">Amplitude</a> to see which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so it can tell a return visit from a new one, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. How Amplitude handles that data is in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
-<p>The <a href="${url("food-help/")}" data-no-track>Help paying for food</a> page is left out on purpose: it doesn't load Amplitude at all, and clicks on links to it aren't recorded.</p>
+<p>The <a href="${url("food-help/")}" data-no-track>Food benefit programs</a> page is left out on purpose: it doesn't load Amplitude at all, and clicks on links to it aren't recorded.</p>
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <h3>What stays in your browser</h3>
 <p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
@@ -1189,7 +1181,7 @@ function privacyPage() {
   }));
 }
 
-// Help paying for food, at /food-help/: Basic Food (SNAP), farmers market matching, Fresh Bucks
+// Food benefit programs, at /food-help/: Basic Food (SNAP), farmers market matching, Fresh Bucks
 // and other programs, in plain words with links to each official page. Owner's call
 // (2026-11-14): part of the site's focus, but not prominent, since it won't apply to most people.
 // Privacy: this page loads no analytics at all, and links to it carry data-no-track so the clicks
@@ -1200,7 +1192,7 @@ function foodHelpPage() {
   const CHECKED = "November 14, 2026";
   const jump = [["basic-food", "Basic Food (SNAP)"], ["markets", "At farmers markets"], ["fresh-bucks", "Fresh Bucks"], ["kids", "Families with kids"], ["older-adults", "Older adults"], ["food-banks", "Food banks"]];
   const body = `<div class="privacy-page help-page">
-<div class="page-h"><h1>Help paying for food</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
+<div class="page-h"><h1>Food benefit programs</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
 <div class="note-card"><p>Groceries cost more than they used to. These programs help, and several of them work at the farmers markets and neighborhood grocers this site follows. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}</ul></nav>
 
@@ -1244,11 +1236,11 @@ function foodHelpPage() {
 <p>Nothing on this page is recorded or counted: it doesn't load analytics, and clicks on links to it from other pages aren't recorded either. Seattle Grocery Deals isn't part of any of these programs and can't tell you whether you qualify; the official pages linked above can. Details change, so if something here is out of date, email <a href="mailto:hello@seattlegrocery.deals?subject=Help%20paying%20for%20food">hello@seattlegrocery.deals</a>.</p>
 </div>`;
   write("food-help/", page({
-    title: "Help paying for food", path: "food-help/", section: "about/", body, analytics: false,
+    title: "Food benefit programs", path: "food-help/", section: "about/", body, analytics: false,
     description: "Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks, WIC and more in Seattle, in plain words with links to apply.",
-    ogTitle: "Help paying for food in Seattle",
+    ogTitle: "Food benefit programs in Seattle",
     image: "assets/img/og-food-help.png",
-    imageAlt: "Help paying for food: the crow beside the words SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.",
+    imageAlt: "Food benefit programs: the crow beside the words SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.",
   }));
 }
 
@@ -1265,6 +1257,7 @@ const WEEKDAY_LONG = { Sun: "Sunday", Mon: "Monday", Tue: "Tuesday", Wed: "Wedne
 
 // "Known for" items start lowercase in the sentence, unless they start with a name.
 const PROPER = /^(Washington|Thai|Italian|Mexican|Nordic|Polish|Eastern|Indian|Russian|Japanese|Dungeness|Calabrian|Caribbean|Turkish|A-choy)/;
+const knownFor = (p) => p.carries?.length ? p.carries.map((c) => PROPER.test(c) ? c : c[0].toLowerCase() + c.slice(1)).join(", ") : "";
 function placeEntry(p) {
   const addr = p.address?.replace(new RegExp(`, ${p.neighborhood}$`), "");
   const where = addr && addr !== p.neighborhood ? `${p.neighborhood}, ${addr}` : p.neighborhood;
@@ -1272,7 +1265,7 @@ function placeEntry(p) {
   const closed = (p.closed ?? []).filter((c) => c.date >= TODAY).map((c) => `<p class="place-note">${esc(c.note)}</p>`).join("");
   const moving = p.status === "moving" ? `<p class="place-note">${badge("warn", "flag", "Moving")} ${esc(p.status_note)}</p>` : "";
   const tags = [...(p.programs ?? []).map((k) => badge("good", "check", PROGRAMS[k])), ...(p.fresh_bucks ? [badge("good", "check", "Takes Fresh Bucks")] : [])];
-  const carries = p.carries?.length ? `<p class="place-carries"><b>Known for</b> ${p.carries.map((c) => esc(PROPER.test(c) ? c : c[0].toLowerCase() + c.slice(1))).join(", ")}</p>` : "";
+  const carries = p.carries?.length ? `<p class="place-carries"><b>Known for</b> ${esc(knownFor(p))}</p>` : "";
   const sv = p.services ?? {};
   const service = [
     sv.order_online && (sv.order_online.url ? `<li><b>Order:</b> <a href="${esc(sv.order_online.url)}">${esc(sv.order_online.how)}</a></li>` : `<li><b>Order:</b> ${esc(sv.order_online.how)}</li>`),
@@ -1369,6 +1362,75 @@ ${hubs.map((h) => {
     ogTitle: "Seattle shops worth a trip",
     image: "assets/img/og-shops.png",
     imageAlt: "Shops worth a trip: the crow beside the words Butchers, fishmongers and grocers from around the world.",
+  }));
+}
+
+// The map (/map/): every deal store location, farmers market and shop on one map, with filters
+// for kind, markets open today, delivery, online ordering, EBT matching and Fresh Bucks, a word
+// search over names and what each place is known for, and "Near me" (the browser's location
+// stays on the device). The list under the map is the page without JavaScript, and the version
+// that works with a screen reader; site/assets/map-page.js filters it and draws the pins from it.
+// Owner's call (2026-11-14): one map for everything, as feature-rich as it can be.
+const MAP_KINDS = [["deals", "Deal stores", "D"], ["market", "Farmers markets", "M"], ["butcher", "Butchers", "B"], ["seafood", "Fish and shellfish", "F"], ["world", "Grocers from around the world", "W"], ["neighborhood", "Neighborhood grocers", "N"]];
+function mapPage() {
+  const items = analyzed.get(latest.week);
+  const todayRuns = new Map(daysAhead(PLACES.places, TODAY, 1)[0].open.map((o) => [o.place.id, o]));
+  const rows = [];
+  for (const s of cfg.stores.filter((x) => x.active)) {
+    const mine = items.filter((i) => i.store === s.id);
+    const stand = mine.filter((i) => i.a.tier === "standout").length;
+    for (const l of s.locations) {
+      const note = s.no_online_flyer ? "No online flyer, so no prices here" : !l.flyer ? "Prices here may differ from the flyer we track" : mine.length ? `${plural(mine.length, "deal")} this week${stand ? `, ${plural(stand, "standout")}` : ""}` : "No deals this week";
+      rows.push({ kind: "deals", name: s.name, href: url(`stores/${s.id}/`), sub: l.label, address: l.address, lat: l.lat, lon: l.lon, note,
+        delivers: [s.delivery, s.delivery_apps && `Delivery through ${s.delivery_apps}.`].filter(Boolean).join(" "), order: s.order_online, fb: s.fresh_bucks, text: s.about });
+    }
+  }
+  for (const p of PLACES.places) {
+    if (p.kind === "hub" || p.hub) continue;
+    const run = todayRuns.get(p.id);
+    const today = p.kind === "market" && (p.every_day && !(p.closed ?? []).some((c) => c.date === TODAY) ? "Open today" : run ? `Open today, ${run.name ? run.name + (run.time ? ", " : "") : ""}${run.time ?? ""}` : "");
+    const sv = p.services ?? {};
+    const members = p.hub ? [] : PLACES.places.filter((m) => m.hub && placeById[m.hub]?.market === p.id);
+    rows.push({ kind: p.kind === "market" ? "market" : p.type, name: p.name, href: placeHref(p), sub: p.neighborhood, address: p.address, lat: p.lat, lon: p.lon,
+      note: p.kind === "market" ? (today || p.hours[0]) : `Known for ${knownFor(p)}`, today,
+      delivers: [sv.delivery, sv.ships && `Shipping: ${sv.ships}`].filter(Boolean).join(" "), order: sv.order_online,
+      ebt: (p.programs ?? []).includes("market_match"), fb: p.fresh_bucks || (p.kind === "market" && !/Burien/.test(p.neighborhood)),
+      moving: p.status === "moving" ? p.status_note : "", text: [p.about, ...(p.carries ?? []), ...members.map((m) => `${m.name} ${(m.carries ?? []).join(" ")}`)].join(" ") });
+  }
+  const label = Object.fromEntries(MAP_KINDS.map(([k, l]) => [k, l]));
+  const glyph = Object.fromEntries(MAP_KINDS.map(([k, , g]) => [k, g]));
+  const li = (r) => {
+    const svc = [r.delivers && `<li><b>Delivery:</b> ${esc(r.delivers)}</li>`, r.order && `<li><b>Order:</b> ${r.order.url ? `<a href="${esc(r.order.url)}">${esc(r.order.how)}</a>` : esc(r.order.how)}</li>`].filter(Boolean);
+    const tags = [r.ebt && badge("good", "check", "Doubles EBT"), r.fb && badge("good", "check", "Fresh Bucks")].filter(Boolean);
+    return `<li class="mp-item" data-kind="${r.kind}" data-lat="${r.lat}" data-lon="${r.lon}"${r.today ? " data-today" : ""}${r.delivers ? " data-delivers" : ""}${r.order ? " data-order" : ""}${r.ebt ? " data-ebt" : ""}${r.fb ? " data-fb" : ""} data-text="${esc([r.name, r.sub, r.address, label[r.kind], r.note, r.text].join(" ").toLowerCase())}">
+  <p class="mp-kind"><span class="mp-pin mp-${r.kind}" aria-hidden="true">${glyph[r.kind]}</span>${esc(label[r.kind] === "Deal stores" ? "Deal store" : label[r.kind] === "Farmers markets" ? "Farmers market" : label[r.kind])}<span class="mp-dist" data-dist></span></p>
+  <h3 class="place-name"><a href="${r.href}">${esc(r.name)}</a></h3>
+  <p class="place-where">${esc(r.sub && r.sub !== r.name ? `${r.sub}, ${r.address}` : r.address)}</p>
+  ${r.note ? `<p class="mp-note">${esc(r.note)}</p>` : ""}${r.moving ? `<p class="place-note">${badge("warn", "flag", "Moving")} ${esc(r.moving)}</p>` : ""}
+  ${svc.length ? `<ul class="place-service">${svc.join("")}</ul>` : ""}${tags.length ? `<p class="place-tags">${tags.join(" ")}</p>` : ""}
+  <button type="button" class="linkish mp-show" data-show hidden>Show on map<span class="sr-only">: ${esc(r.name)}</span></button>
+</li>`;
+  };
+  rows.sort((a, b) => a.name.localeCompare(b.name) || a.sub.localeCompare(b.sub));
+  const chip = (attr, text) => `<button type="button" class="fchip" aria-pressed="false" ${attr}>${esc(text)}</button>`;
+  const body = `${pageHead("Map", "Every store with weekly deals, plus farmers markets and shops worth a trip. Filter for what you need, or find what's near you.")}
+<div class="mp-tools" data-map-tools hidden>
+  <label class="find"><span class="sr-only">Search places</span>${ic("search")}<input type="search" data-map-q placeholder="goat, halal, oysters, Ballard" autocomplete="off"></label>
+  <div class="chiprow" role="group" aria-label="Kinds of places">${MAP_KINDS.map(([k, l]) => chip(`data-map-kind="${k}"`, l)).join("")}</div>
+  <div class="chiprow" role="group" aria-label="Only show places that">${chip("data-map-f=\"today\"", "Markets open today")}${chip("data-map-f=\"delivers\"", "Delivers or ships")}${chip("data-map-f=\"order\"", "Order online")}${chip("data-map-f=\"ebt\"", "Doubles EBT")}${chip("data-map-f=\"fb\"", "Fresh Bucks")}<button type="button" class="fchip" aria-pressed="false" data-map-near>Near me</button></div>
+</div>
+<div id="big-map" class="map map-big" role="region" aria-label="Map of the places listed below" hidden></div>
+<p class="legend mp-legend" aria-hidden="true">${MAP_KINDS.map(([k, l, g]) => `<span><span class="mp-pin mp-${k}">${g}</span> ${esc(l)}</span>`).join("")}</p>
+<p class="count" data-map-count role="status"></p>
+<ul class="places mp-list" data-map-list>${rows.map(li).join("\n")}</ul>
+${emptyState({ mood: "surprised", title: "Nothing matches", msg: "Try fewer filters or another word.", attrs: "data-map-empty hidden" })}
+<p class="places-foot">Delivery and online ordering are listed only where we could confirm them, so a place without them may still offer it: check its own site. "Near me" uses your device's location to sort this list; it isn't sent anywhere. Details for <a href="${url("markets/")}">farmers markets</a> and <a href="${url("shops/")}">shops</a> are on their own pages.</p>`;
+  write("map/", page({
+    title: "Map", path: "map/", section: "stores/", body, map: "leaflet", extraScript: "assets/map-page.js",
+    description: `Seattle grocery map: ${cfg.stores.filter((x) => x.active).length} stores with weekly deals, farmers markets and independent shops, with filters for delivery, online ordering, EBT matching and markets open today.`,
+    ogTitle: "Seattle grocery map",
+    image: "assets/img/og-map.png",
+    imageAlt: "Map: the crow beside the words Every deal store, farmers market and shop, with filters.",
   }));
 }
 
@@ -1760,7 +1822,7 @@ function appFeed() {
         // The flyer itself (page images, PDFs, flyer pages), so the app can show it in its own
         // viewer instead of loading the store's home page in a web view.
         flyer_pages: s.no_online_flyer ? [] : (f?.links ?? []).map((l) => ({ label: l.label, url: l.url, kind: flyerKind(l.url) })),
-        delivery: s.delivery ?? null, read_by_hand: !!s.watch?.desktop, status: f?.status ?? null, from: f?.valid_from ?? null, through: f?.valid_through ?? null,
+        delivery: s.delivery ?? null, delivery_apps: s.delivery_apps ?? null, order_online: s.order_online ?? null, read_by_hand: !!s.watch?.desktop, status: f?.status ?? null, from: f?.valid_from ?? null, through: f?.valid_through ?? null,
         locations: s.locations.map((l) => ({ label: l.label, address: l.address, lat: l.lat, lon: l.lon })) };
     }),
     items: items.map((i, rank) => {
@@ -1822,6 +1884,7 @@ privacyPage();
 foodHelpPage();
 marketsPage();
 shopsPage();
+mapPage();
 placesApi();
 accessibilityPage();
 yourListPage();

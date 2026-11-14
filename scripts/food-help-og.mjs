@@ -1,4 +1,4 @@
-// Makes the share image for Help paying for food (site/assets/img/og-food-help.png, 1200 by 630):
+// Makes the share image for Food benefit programs (site/assets/img/og-food-help.png, 1200 by 630):
 // the crow and the programs the page covers, in the site's dark colors. Run by hand when it changes:
 //   node scripts/food-help-og.mjs
 // Needs Playwright with Chromium on the machine (not a dependency of the site). If Playwright's
@@ -39,7 +39,7 @@ p.d { font-size: 30px; line-height: 1.3; color: #c9d4dc; margin: 34px 0 0; max-w
 <svg class="coin" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15" fill="#f2c14e" stroke="#b8862a" stroke-width="3.5"/><path d="M13 13 a9 9 0 0 1 9 -3.5" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".85"/></svg>
 <div class="txt">
   <p class="kicker">Seattle</p>
-  <p class="ask">Help paying for food</p>
+  <p class="ask">Food benefit programs</p>
   <p class="d">SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.</p>
 </div>
 <div class="foot"><b>seattlegrocery.deals/food-help</b><span>Seattle Grocery Deals</span></div>
