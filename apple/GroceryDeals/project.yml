@@ -18,8 +18,9 @@ settings:
     SWIFT_VERSION: "6.0"
     DEVELOPMENT_TEAM: 9BF66MY8TQ
     CODE_SIGN_STYLE: Automatic
-    # Empty for TestFlight and the App Store. apple/install-on-iphone.sh sets them to ".dev",
-    # " Dev" and "Dev" so the phone build is "Deals Dev" with a DEV icon, next to the real app.
+    # Empty for Deals (the public TestFlight and App Store app). The DealsDev and DealsDevWidget
+    # targets set them to ".dev", " Dev" and "Dev": "Deals Dev", its own app with a DEV icon,
+    # which internal TestFlight builds go to (apple/testflight.sh).
     BUNDLE_ID_SUFFIX: ""
     APP_NAME_SUFFIX: ""
     APP_ICON_SUFFIX: ""
@@ -33,12 +34,24 @@ schemes:
       config: Debug
     archive:
       config: Release
-targets:
-  GroceryDeals:
+  # Deals Dev: the internal TestFlight app (its own App Store Connect record and Xcode Cloud
+  # product), installed next to Deals. Also what install-on-iphone.sh builds.
+  Deals Dev:
+    build:
+      targets:
+        DealsDev: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+targetTemplates:
+  DealsApp:
     type: application
     platform: iOS
     sources:
-      - Sources
+      # Each target makes its own Info.plist (info: below), so the committed ones aren't copied in.
+      - path: Sources
+        excludes: [Info.plist]
       - Resources
     dependencies:
       - package: KitchenUI
@@ -49,7 +62,6 @@ targets:
       # In-app messages (Sources/Messages.swift). Still no FirebaseAnalytics.
       - package: Firebase
         product: FirebaseRemoteConfig
-      - target: DealsWidget
     entitlements:
       path: Sources/GroceryDeals.entitlements
       properties:
@@ -69,24 +81,12 @@ targets:
         INFOPLIST_KEY_NSRemindersFullAccessUsageDescription: Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
-    info:
-      path: Sources/Info.plist
-      properties:
-        CFBundleShortVersionString: $(MARKETING_VERSION)
-        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        ITSAppUsesNonExemptEncryption: false
-        # Lets a search started in iPhone Spotlight continue in the app's Search tab.
-        CoreSpotlightContinuation: true
-        UILaunchScreen:
-          UIColorName: ""
-        UIBackgroundModes: [remote-notification]
-        # Push.swift hands the APNs token to Firebase itself; no app delegate swizzling.
-        FirebaseAppDelegateProxyEnabled: false
-  DealsWidget:
+  DealsWidgetBase:
     type: app-extension
     platform: iOS
     sources:
-      - Widget
+      - path: Widget
+        excludes: [Info.plist]
       - Sources/Models.swift
       - Sources/Theme.swift
     dependencies:
@@ -101,8 +101,67 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Deals$(APP_NAME_SUFFIX)
         SKIP_INSTALL: YES
+targets:
+  GroceryDeals:
+    templates: [DealsApp]
+    dependencies:
+      - target: DealsWidget
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        # Lets a search started in iPhone Spotlight continue in the app's Search tab.
+        CoreSpotlightContinuation: true
+        UILaunchScreen:
+          UIColorName: ""
+        UIBackgroundModes: [remote-notification]
+        # Push.swift hands the APNs token to Firebase itself; no app delegate swizzling.
+        FirebaseAppDelegateProxyEnabled: false
+  DealsWidget:
+    templates: [DealsWidgetBase]
     info:
       path: Widget/Info.plist
+      properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+  DealsDev:
+    templates: [DealsApp]
+    dependencies:
+      - target: DealsDevWidget
+    settings:
+      base:
+        PRODUCT_NAME: DealsDev
+        BUNDLE_ID_SUFFIX: .dev
+        APP_NAME_SUFFIX: " Dev"
+        APP_ICON_SUFFIX: Dev
+    info:
+      path: Dev/Info.plist
+      properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        ITSAppUsesNonExemptEncryption: false
+        # Lets a search started in iPhone Spotlight continue in the app's Search tab.
+        CoreSpotlightContinuation: true
+        UILaunchScreen:
+          UIColorName: ""
+        UIBackgroundModes: [remote-notification]
+        # Push.swift hands the APNs token to Firebase itself; no app delegate swizzling.
+        FirebaseAppDelegateProxyEnabled: false
+        # Deals Dev always shows the developer menu (KitchenUI's BuildKind).
+        KitchenInternalBuild: true
+  DealsDevWidget:
+    templates: [DealsWidgetBase]
+    settings:
+      base:
+        PRODUCT_NAME: DealsDevWidget
+        BUNDLE_ID_SUFFIX: .dev
+        APP_NAME_SUFFIX: " Dev"
+    info:
+      path: DevWidget/Info.plist
       properties:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
