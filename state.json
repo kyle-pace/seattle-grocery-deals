@@ -33,14 +33,7 @@
         "Enjoy these deals 11/14 - 11/27"
       ],
       "seen_at": "2026-11-14T16:20:50.670Z",
-      "updated_at": "2026-11-05T07:19:16.950Z",
-      "pending": {
-        "since": "2026-11-14T16:20:50.670Z",
-        "live_before": "2026-10-31|https://www.smithbrothersfarms.com/on-special",
-        "fires": 1,
-        "fired_at": "2026-11-14T16:20:50.670Z",
-        "session": "https://claude.ai/code/cse_015KDcQFdxCUNCWnX5PCY2P2"
-      }
+      "updated_at": "2026-11-14T20:39:48.779Z"
     },
     "met-market": {
       "fingerprint": "6284eff16b4ad3a9",
@@ -55,7 +48,7 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-14T16:03:53.588Z"
+      "error_at": "2026-11-14T20:39:48.779Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -93,9 +86,9 @@
       "pending": {
         "since": "2026-11-14T09:21:24.025Z",
         "live_before": "2026-11-13|https://static.wixstatic.com/media/d268df_0f61dd01112c4547813bd8df554f9d3f~mv2.jpg https://www.vietwah.com/single-post/weekly-ad-nov-13-19-2026",
-        "fires": 2,
-        "fired_at": "2026-11-14T16:03:53.588Z",
-        "session": "https://claude.ai/code/cse_015KDcQBztg7iAccJgeefniH"
+        "fires": 3,
+        "fired_at": "2026-11-14T20:39:48.779Z",
+        "session": "https://claude.ai/code/cse_015KDcQDsTjfShPpXP8XY6gW"
       }
     },
     "asian-family-market": {
