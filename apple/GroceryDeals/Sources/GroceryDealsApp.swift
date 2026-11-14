@@ -152,6 +152,19 @@ struct RootView: View {
         .sheet(item: $openSeason) { SeasonScreen(season: $0, openStore: openStore) }
         // Simulator screenshots: -season <id> opens that season's screen at launch.
         .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
+        // Simulator checks: -link grocerydeals://store/uwajimaya opens a link at launch (simctl's
+        // openurl stops at an "Open in Deals?" prompt nothing can tap), and -trip "eggs, tofu"
+        // prints the trip plan for those items once the deals are in.
+        .task { if let link = DebugArgs.value("-link").flatMap(URL.init(string:)) { router.open(link) } }
+        .task(id: store.feed?.week ?? "") {
+            if let items = DebugArgs.value("-trip"), store.feed != nil {
+                let plan = store.planTrip(splitItems(items))
+                for s in plan.stores.prefix(4) {
+                    print("TRIP \(s.store.name): \(s.covers) of \(plan.asks.count):", s.picks.map { "\($0.asked)=\($0.deal.name) \($0.deal.text)" }.joined(separator: "; "))
+                }
+                print("TRIP elsewhere:", plan.elsewhere.map { "\($0.store.name) \($0.covers)" } ?? "none", "| nowhere:", plan.nowhere.joined(separator: ", "))
+            }
+        }
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
         .onChange(of: router.tabRequest, initial: true) { _, name in
             guard let name else { return }
