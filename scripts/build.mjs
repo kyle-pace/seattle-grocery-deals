@@ -456,7 +456,7 @@ ${head}` : ""}${map ? `
     <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span></a>
     <div class="head-end">
       <nav class="topnav" aria-label="Main">${top}</nav>
-      <a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>${HEART}
+      <a class="head-about" href="${url("app/")}"${cur("app/")}>App</a><a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>${HEART}
     </div>
   </div>
 </header>
@@ -1076,7 +1076,7 @@ function aboutPage() {
   const jump = [["shown", "What you'll see"], ["know", "Good to know"], ["contact", "Get in touch"]];
   const body = `<div class="page-h"><h1>About</h1></div>
 <p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
-<p>There's an app for iPhone and iPad on the way, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">about the app</a>.${cfg.site.mcp_url ? ` You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.` : ""}</p>
+<p>There's a free app for iPhone and iPad, now in beta, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">get the app</a>.${cfg.site.mcp_url ? ` You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.` : ""}</p>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}<li><a href="${url("privacy/")}">Privacy</a></li></ul></nav>
 
 <h2 class="about-part" id="shown">What you'll see</h2>

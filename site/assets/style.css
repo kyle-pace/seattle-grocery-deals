@@ -88,6 +88,8 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 /* 8%, not more: the accent text on this wash stays at 4.6:1 in light mode (12% dipped to 4.4:1) */
 .topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .head-end { display: flex; align-items: center; gap: 0.15rem; }
+/* Phones show App and About beside the heart (the full nav is the tab bar), a little tighter. */
+.head-about { padding: 0 0.6rem; }
 .head-heart { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; color: var(--muted); }
 .head-heart svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; transition: transform 0.2s, fill 0.2s; }
 .head-heart:hover, .head-heart:focus-visible { color: light-dark(#c2334d, #ff8fa3); background: var(--raised); }
