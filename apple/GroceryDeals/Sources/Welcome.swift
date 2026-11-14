@@ -7,7 +7,7 @@ import UIKit
 /// 2026-11-13: Skip on a middle step skips that step only (it used to jump to the question),
 /// the first launch waits for the deals instead of showing empty cards, and the copy says
 /// iPad on an iPad. The only
-/// system prompt is notifications, and only after someone turns an alert on; Reminders is asked
+/// system prompt is notifications, when the alerts step is left with an alert on (both start on); Reminders is asked
 /// when the list first uses it.
 /// Installs that ran 0.1.0 (analytics on by default, before onboarding existed) skip it and
 /// stay opted in.
@@ -47,7 +47,8 @@ enum Welcome {
             "Anything you type, like list items or searches",
             "Your name, email, contacts or location",
             "Your IP address or advertising ID",
-        ]
+        ],
+        emphasis: .share
     )
 
     static func view(_ start: Onboarding.Start, onDone: @escaping () -> Void) -> some View {
@@ -70,8 +71,10 @@ struct DealsOnboarding: View {
     @State private var step: Step
     @State private var tour = "not_shown"
     @State private var picked: Set<String> = []
-    @State private var wantNewDeals = false
-    @State private var wantEnding = false
+    // Both alerts start on (owner's call, 2026-11-13): the main button asks for permission,
+    // and switching both off or tapping Skip leaves them off. A replayed tour shows what's set.
+    @State private var wantNewDeals = true
+    @State private var wantEnding = true
     @State private var hop = 0
     @AccessibilityFocusState private var titleFocused: Bool
 
@@ -120,8 +123,11 @@ struct DealsOnboarding: View {
         .interactiveDismissDisabled()
         .onAppear {
             picked = store.favoriteStores
-            wantNewDeals = alerts.friday
-            wantEnding = alerts.endingSoon
+            // First run: both start on. A replayed tour shows the current settings.
+            if start == .tourOnly {
+                wantNewDeals = alerts.friday
+                wantEnding = alerts.endingSoon
+            }
         }
         .onChange(of: step) { focusTitle() }
     }
@@ -283,7 +289,7 @@ struct DealsOnboarding: View {
                         Text("Want a heads-up?").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                             .accessibilityAddTraits(.isHeader)
                             .accessibilityFocused($titleFocused)
-                        Text("Deals only taps you on the shoulder when it matters. Pick any, or none.")
+                        Text("Deals only taps you on the shoulder when it matters. Both are on to start; switch off any you don't want.")
                             .font(.app(.callout)).foregroundStyle(Palette.body)
                     }
                     Spacer(minLength: 0)
@@ -298,7 +304,7 @@ struct DealsOnboarding: View {
                                     detail: "The morning before it ends.")
                     }
                 }
-                Text("Your \(device) asks for permission once, and only if you turn one on. You can change these anytime in Settings.")
+                Text("Your \(device) asks for permission once, if any are on. You can change these anytime in Settings.")
                     .font(.app(.subheadline)).foregroundStyle(Palette.muted)
             }
             .padding(.horizontal, Space.xl)
