@@ -1,10 +1,14 @@
 #!/bin/sh
 # Send Grocery Deals to TestFlight. Tags the current commit and pushes the tag; Xcode Cloud
 # builds it, archives it and uploads it to App Store Connect. Xcode Cloud sets the build number.
+# Two apps, so both can be on a phone at once:
 #
-#   v<version>     the "TestFlight" workflow: internal testers only (you and the team)
-#   beta-<version> the "TestFlight External" workflow: the External Testers group, after
-#                  Apple's beta review. Notes for testers come from TestFlight/WhatToTest.en-US.txt
+#   dev-<version>  Deals Dev (deals.seattlegrocery.dev, DEV icon, developer menu): the
+#                  "TestFlight" workflow on the Deals Dev product, internal testers only. The
+#                  main channel: every build worth trying goes here first.
+#   beta-<version> Deals (deals.seattlegrocery): the "TestFlight External" workflow, the External
+#                  Testers group after Apple's beta review, from a commit that already ran as
+#                  Deals Dev. Notes for testers come from TestFlight/WhatToTest.en-US.txt
 #
 # Usage: apple/testflight.sh                       internal build: tag and push
 #        apple/testflight.sh --external            external build: tag and push
@@ -13,7 +17,7 @@
 # The version comes from MARKETING_VERSION in project.yml. A second build of the same version
 # gets <tag>-2, then -3 and so on (each kind counts on its own).
 set -e
-PREFIX=v
+PREFIX=dev-
 DRY=no
 for arg in "$@"; do
   case "$arg" in
@@ -57,7 +61,8 @@ if [ "$PREFIX" = beta- ]; then
   echo "External testers will see this under What to Test:"
   sed 's/^/  /' TestFlight/WhatToTest.en-US.txt
 fi
-echo "Grocery Deals $VERSION from $(git rev-parse --short HEAD): tag $TAG"
+APP="Deals Dev (internal)"; [ "$PREFIX" = beta- ] && APP="Deals (public)"
+echo "$APP $VERSION from $(git rev-parse --short HEAD): tag $TAG"
 [ "$DRY" = yes ] && exit 0
 
 git tag -a "$TAG" -m "TestFlight $VERSION"

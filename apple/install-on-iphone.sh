@@ -1,6 +1,8 @@
 #!/bin/sh
-# Build "Deals Dev" (dev bundle ID, name and DEV icon, next to the TestFlight or App Store app)
-# and install it on every linked iPhone and iPad, plugged in or paired over Wi-Fi, unlocked and trusted.
+# Build "Deals Dev" (the DealsDev target: dev bundle ID, name and DEV icon, next to the TestFlight
+# or App Store app) and install it on every linked iPhone and iPad, plugged in or paired over Wi-Fi, unlocked and trusted.
+# Not the routine way to get a build: internal TestFlight (apple/testflight.sh) is. This is for
+# what TestFlight can't do, like an iOS beta the cloud can't target or debugging on the device.
 # Usage: apple/install-on-iphone.sh            build what's checked out, install, open it
 #        apple/install-on-iphone.sh --no-open  install without opening
 # Or from anywhere: `phone deals` (KitchenUI's tools/phone).
@@ -33,12 +35,12 @@ BUILD=$((LAST + 1))
 echo "Deals Dev from $(git rev-parse --abbrev-ref HEAD) at $(git rev-parse --short HEAD)$( [ -n "$(git status --porcelain)" ] && echo ', with uncommitted changes'), build $BUILD, $(basename "$XCODE")"
 xcodegen generate --quiet
 echo "Building..."
-xcodebuild -project GroceryDeals.xcodeproj -scheme GroceryDeals -configuration Release -destination "generic/platform=iOS" \
+xcodebuild -project GroceryDeals.xcodeproj -scheme "Deals Dev" -configuration Release -destination "generic/platform=iOS" \
   -derivedDataPath build -allowProvisioningUpdates -allowProvisioningDeviceRegistration \
-  BUNDLE_ID_SUFFIX=.dev APP_NAME_SUFFIX=" Dev" APP_ICON_SUFFIX=Dev CURRENT_PROJECT_VERSION=$BUILD build > build.log 2>&1 \
+  CURRENT_PROJECT_VERSION=$BUILD build > build.log 2>&1 \
   || { grep -E "error:" build.log | sort -u | head; echo "Build failed; see apple/GroceryDeals/build.log"; exit 1; }
 mkdir -p "$(dirname "$BUILD_FILE")" && echo "$BUILD" > "$BUILD_FILE"
-APP=build/Build/Products/Release-iphoneos/GroceryDeals.app
+APP=build/Build/Products/Release-iphoneos/DealsDev.app
 for DEVICE in $DEVICES; do
   NAME=$(xcrun devicectl list devices 2>/dev/null | grep "$DEVICE" | awk '{print $1}')
   echo "Installing on $NAME..."
