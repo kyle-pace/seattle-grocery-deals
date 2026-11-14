@@ -16,10 +16,23 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>deals.seattlegrocery</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>grocerydeals</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CoreSpotlightContinuation</key>
 	<true/>
+	<key>DealsAppGroup</key>
+	<string>group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>

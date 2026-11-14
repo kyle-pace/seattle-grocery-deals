@@ -24,6 +24,30 @@ final class DealsRouter {
     var openDealSheets = 0
     /// A season screen to open (a This week card, Search, Spotlight).
     var seasonID: String?
+    /// A store page to open (Siri's "Open Store", a grocerydeals://store/ link).
+    var storeID: String?
+    /// Bumped to put the cursor in the List tab's add field (the Add to List control, a widget).
+    var addRequest = 0
+
+    /// The List tab with the keyboard up.
+    func startAdding() {
+        tabRequest = "list"
+        addRequest += 1
+    }
+
+    /// grocerydeals:// links: the widgets, the control, and the link on a Reminders item.
+    func open(_ url: URL) {
+        guard url.scheme == DealsLink.scheme else { return }
+        let value = url.pathComponents.dropFirst().first?.removingPercentEncoding ?? ""
+        switch url.host() {
+        case "tab": tabRequest = value
+        case "deal": if !value.isEmpty { dealID = value }
+        case "store": if !value.isEmpty { storeID = value }
+        case "add": startAdding()
+        default: break
+        }
+        Analytics.track("Opened Link", ["kind": url.host() ?? ""])
+    }
 
     func openSeason(_ id: String) { seasonID = id }
 
@@ -270,6 +294,9 @@ enum DealsSpotlight {
         let detail: String
         let keywords: [String]
         let expires: Date?
+        /// The deal as Siri and Shortcuts know it (Entities.swift), tied to the Spotlight item
+        /// so Siri can use what it finds there. Seasons have none.
+        var entity: DealEntity? = nil
     }
 
     @MainActor
@@ -280,7 +307,8 @@ enum DealsSpotlight {
                   title: "\(shortName(d.name)) \(d.text)",
                   detail: ([store.storeName(d.store)] + (d.ends.map { ["through \(Dates.short($0))"] } ?? [])).joined(separator: " · "),
                   keywords: [d.name, store.storeName(d.store), store.label(forCategory: d.category)],
-                  expires: Dates.date(d.ends ?? feed.end).map { $0.addingTimeInterval(86_400) })
+                  expires: Dates.date(d.ends ?? feed.end).map { $0.addingTimeInterval(86_400) },
+                  entity: DealEntity(d, in: store))
         }
         entries += seasonEntries(store)
         let all = Array(entries)
@@ -293,6 +321,7 @@ enum DealsSpotlight {
             attrs.title = e.title
             attrs.contentDescription = e.detail
             attrs.keywords = e.keywords
+            if let entity = e.entity { attrs.associateAppEntity(entity, priority: 0) }
             let item = CSSearchableItem(uniqueIdentifier: e.id, domainIdentifier: domain, attributeSet: attrs)
             if let expires = e.expires { item.expirationDate = expires }
             return item
