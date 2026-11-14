@@ -2,7 +2,8 @@
 # - sync: copies the latest principles into AGENTS.md (and shared skills into
 #   .agents/skills/) daily, or on demand from the Actions tab.
 # - checks: builds the site, fails if a page loads anything from a host that
-#   isn't allowed, and checks the stack (Amplitude in, Firebase Analytics out,
+#   isn't allowed, runs the page check (axe, sideways scrolling, JavaScript
+#   weight), and checks the stack (Amplitude in, Firebase Analytics out,
 #   Firebase config files match the app's bundle IDs).
 #   Hosts Kyle approves for this project go in .agents/allowed-hosts.txt.
 name: Principles
@@ -29,3 +30,5 @@ jobs:
     uses: kyle-pace/principles/.github/workflows/check.yml@main
     with:
       output-dir: dist
+      # `npm run check` here validates the data, so the page check has its own name.
+      check-script: check:pages

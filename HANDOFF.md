@@ -82,7 +82,7 @@ Updated 2026-11-14.
   - Mascot: the crow (Seattle crows remember where the good stuff is), round like Henwood's hen, with a coin. `scripts/buddy.mjs` on the site, `Buddy(.crow)` / `CrowBuddy` in KitchenUI. The persimmon was the mascot before; it now only stands for persimmon season. Icons are drawn in SVG; the source is on the "Seattle Grocery Deals crow explorations" design canvas.
   - Type: Atkinson Hyperlegible Next for everything, self-hosted, because the privacy notice says fonts come from the site. (Barlow Condensed was dropped with the KitchenUI redesign.)
   - Color carries meaning only, and never alone: every tone pairs a shape or word with its fill. Rainbow and queer flair are saved for the app icon, not the interface.
-  - Accessibility is a requirement: AA contrast in light and dark, 44px tap targets, prices read as "per pound" to screen readers, visible focus.
+  - Accessibility is a requirement: AA contrast in light and dark, 44px tap targets, prices read as "per pound" to screen readers, visible focus. Ended deals no longer fade (the 55% fade failed contrast, found 2026-11-14): muted ink, a struck-through price, neutral tags and the Ended badge instead. `npm run check:pages` runs axe on the built site and is part of CI (see AGENTS.md).
 - **Removed in the redesign:** the "my stores" dialog and the category and tier filters. Bring "my stores" back if people miss it.
 - **Parked:** a store "spotlight" card to encourage shopping at a store going through a hard time. Removed for now at the owner's request; the owner writes any such text.
 - **Delivery notes** for Lam's and T&T come from the owner and were not confirmed online. Add delivery links when known.
