@@ -340,6 +340,7 @@ private struct ReportFlyerButton: View {
 /// Sends a "Think this is wrong?" report to the same server the website uses
 /// (mcp.seattlegrocery.deals/report, mcp/src/reports.js). Only the store's id goes; the server
 /// keeps a count and a time per store for a week.
+@MainActor
 enum FlyerReport {
     static let url = URL(string: "https://mcp.seattlegrocery.deals/report")!
     private static let key = "sgd.reportedFlyers"
