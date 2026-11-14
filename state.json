@@ -8,14 +8,7 @@
         "wp-content/uploads/2025/04/904097666_1828572195734600_3877936444997397916_n.jpg"
       ],
       "seen_at": "2026-11-13T21:56:28.127Z",
-      "updated_at": "2026-11-07T02:20:09.009Z",
-      "pending": {
-        "since": "2026-11-13T21:56:28.127Z",
-        "live_before": "2026-11-06|https://www.lamsseafood.com/wp-content/uploads/2019/06/892860290_1814336116882700_4748373572081284081_n.jpg https://www.lamsseafood.com/wp-content/uploads/2019/06/892485648_1315953007299355_6751413021937486291_n.jpg https://www.lamsseafood.com/wp-content/uploads/2025/04/890198256_1124791023858672_8558554805588745947_n.jpg https://lamsseafood.com/specials",
-        "fires": 1,
-        "fired_at": "2026-11-13T21:56:28.127Z",
-        "session": "https://claude.ai/code/cse_015KDcQCDesDbap9qXRdRwsN"
-      }
+      "updated_at": "2026-11-14T02:17:10.879Z"
     },
     "uwajimaya": {
       "fingerprint": "ca0e01cd1333b30a",
@@ -42,7 +35,7 @@
       "seen_at": "2026-11-03T02:37:26.412Z",
       "updated_at": "2026-11-05T07:19:16.950Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-13T21:56:28.127Z"
+      "error_at": "2026-11-14T02:17:10.879Z"
     },
     "met-market": {
       "fingerprint": "6284eff16b4ad3a9",
@@ -57,7 +50,7 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-13T21:56:28.127Z"
+      "error_at": "2026-11-14T02:17:10.879Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -85,13 +78,20 @@
       "updated_at": "2026-11-13T21:56:28.127Z"
     },
     "viet-wah": {
-      "fingerprint": "b1f6e7c472c01c72",
+      "fingerprint": "2455b36f70fa5e18",
       "matches": [
-        "single-post/weekly-ad-nov-13-19-2026",
-        "single-post/weekly-ad-nov-6-12-2026"
+        "single-post/weekly-ad-nov-6-12-2026",
+        "single-post/weekly-ad-oct-30-nov-5-2026"
       ],
-      "seen_at": "2026-11-13T15:40:01.504Z",
-      "updated_at": "2026-11-13T21:56:28.127Z"
+      "seen_at": "2026-11-14T02:17:10.879Z",
+      "updated_at": "2026-11-13T21:56:28.127Z",
+      "pending": {
+        "since": "2026-11-14T02:17:10.879Z",
+        "live_before": "2026-11-13|https://static.wixstatic.com/media/d268df_0f61dd01112c4547813bd8df554f9d3f~mv2.jpg https://www.vietwah.com/single-post/weekly-ad-nov-13-19-2026",
+        "fires": 1,
+        "fired_at": "2026-11-14T02:17:10.879Z",
+        "session": "https://claude.ai/code/cse_015KDcQDKriJW6cftSgJzbZv"
+      }
     },
     "asian-family-market": {
       "fingerprint": "1c9b8c9069ab3950",
