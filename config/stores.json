@@ -319,12 +319,12 @@
       "representative_location": "Seattle-area home delivery",
       "how_to_read": [
         "The page is rendered with JavaScript. Read the rendered page in a browser; cached fetches go stale.",
-        "The cycle dates are printed at the top (\"Enjoy these deals 10/17 to 10/30\").",
+        "The cycle dates are printed at the top, with \"to\" or a dash (\"Enjoy these deals 10/17 to 10/30\", \"Enjoy these deals 11/14 - 11/27\").",
         "In the headless browser, waiting for the network to go idle times out. Wait for the page load, then scroll to the bottom before reading."
       ],
       "watch": {
         "url": "https://www.smithbrothersfarms.com/on-special",
-        "text": "Enjoy these deals\\s+\\d{1,2}/\\d{1,2}\\s+to\\s+\\d{1,2}/\\d{1,2}"
+        "text": "Enjoy these deals\\s+\\d{1,2}/\\d{1,2}\\s*(?:to|-|–|—)\\s*\\d{1,2}/\\d{1,2}"
       },
       "about": "A Kent dairy that delivers milk, eggs and groceries to homes around Puget Sound. Not a store: sales run in two-week cycles.",
       "delivery": "Home delivery is how they sell: groceries come with your milk order.",

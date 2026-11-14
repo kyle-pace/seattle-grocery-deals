@@ -620,7 +620,7 @@ ${pickable.map((s) => `      <label class="pick"><input type="checkbox" value="$
   <ul class="unread-cards" data-unread-list>${unread.map((s) => {
     const f = latest.flyers.find((x) => x.store === s.id);
     const ad = s.flyer_url ?? f?.links?.[0]?.url ?? s.website;
-    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) ? (s.watch?.desktop ? "This week's sales have ended. We haven't read its new flyer yet." : "This week's sales have ended. Its new flyer isn't in yet.") : f?.status === "stale" ? (s.watch?.desktop ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
+    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) || f?.status === "stale" ? (s.watch?.desktop ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
   }).join("")}</ul>
   <div class="elsewhere" data-elsewhere hidden>
     <div class="sec-h"><h3 class="sec-label">Elsewhere this week</h3><p>Not one of your stores, but clearly ahead</p></div>
