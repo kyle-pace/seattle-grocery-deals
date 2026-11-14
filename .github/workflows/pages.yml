@@ -36,7 +36,7 @@ jobs:
       - run: npm ci
       - run: npm run validate
       # The MCP server's answers (mcp/src/deals.js): plain functions, no install needed.
-      - run: node --test mcp/test/*.test.mjs
+      - run: node --test mcp/test/*.test.mjs scripts/test/*.test.mjs
       - run: npm run build
         env:
           # Read-only use: counts of "Added Deal to List" for /api/popular.json. Without them the
