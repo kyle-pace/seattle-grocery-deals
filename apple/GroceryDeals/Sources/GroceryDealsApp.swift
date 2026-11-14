@@ -244,12 +244,13 @@ extension View {
             .task(id: store.feed?.week ?? "") {
                 guard let items = DebugArgs.value("-trip"), store.feed != nil else { return }
                 let plan = store.planTrip(splitItems(items))
-                for s in plan.stores.prefix(4) {
-                    let picks = s.picks.map { "\($0.asked)=\($0.deal.name) \($0.deal.text)" }.joined(separator: "; ")
-                    print("TRIP \(s.store.name): \(s.covers) of \(plan.asks.count): \(picks)")
+                var lines = plan.stores.prefix(4).map { s in
+                    "TRIP \(s.store.name): \(s.covers) of \(plan.asks.count): " + s.picks.map { "\($0.asked)=\($0.deal.name) \($0.deal.text)" }.joined(separator: "; ")
                 }
                 let other = plan.elsewhere.map { "\($0.store.name) \($0.covers)" } ?? "none"
-                print("TRIP elsewhere: \(other) | nowhere: \(plan.nowhere.joined(separator: ", "))")
+                lines.append("TRIP elsewhere: \(other) | nowhere: \(plan.nowhere.joined(separator: ", "))")
+                // Standard error, which isn't held back the way print is when it goes to a file.
+                FileHandle.standardError.write(Data((lines.joined(separator: "\n") + "\n").utf8))
             }
     }
 }
