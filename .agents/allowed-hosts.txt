@@ -1,0 +1,4 @@
+# Outside hosts this site may load from (see AGENTS.md, "Self-host everything").
+# One host per line, then what it's for and when Kyle approved it.
+tile.openstreetmap.org # map tiles on /map/ and store pages (in use before this file existed)
+# basemaps.cartocdn.com was approved 2026-11-14 but now needs an API key, so it isn't used.

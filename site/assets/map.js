@@ -24,9 +24,9 @@
   probe.remove();
 
   var map = L.map(el, { scrollWheelZoom: false, zoomControl: true });
+  // OpenStreetMap tiles, grayed and quieted in CSS (.tiles-quiet) so the pins carry the color.
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    className: dark ? "tiles-dark" : "",
+    maxZoom: 19, className: dark ? "tiles-quiet tiles-dark" : "tiles-quiet",
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 

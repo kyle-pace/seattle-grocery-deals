@@ -65,6 +65,7 @@ const ICON_PATHS = {
   leaf: `<path d="M3 13.2C3 7.3 6.8 3 13.2 2.8c0 6.3-4.2 10.2-10.2 10.4zM3 13.2l5.6-5.6"/>`,
   storefront: `<path d="M2.6 6.2l.9-3.7h9l.9 3.7M2.6 6.2h10.8v7.3H2.6zM6.2 13.5V9.6h3.6v3.9"/>`,
   chevron: `<path d="M6 3.2L10.8 8 6 12.8"/>`,
+  pin: `<path d="M8 14.6s4.6-4.4 4.6-8A4.6 4.6 0 0 0 3.4 6.6c0 3.6 4.6 8 4.6 8z"/><circle cx="8" cy="6.6" r="1.7"/>`,
   down: `<circle cx="8" cy="8" r="6.3"/><path d="M8 4.6v6.6M5.3 8.6L8 11.3l2.7-2.7"/>`,
   truck: `<path d="M1.5 3.8h8v7.4h-8zM9.5 6.3h2.9l2.1 2.6v2.3h-5"/><circle cx="4.4" cy="12" r="1.4" fill="var(--icon-hole, currentColor)"/><circle cx="11.8" cy="12" r="1.4" fill="var(--icon-hole, currentColor)"/>`,
   search: `<circle cx="7" cy="7" r="4.6"/><path d="M10.4 10.4l4 4"/>`,
@@ -400,7 +401,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
   const imgAlt = image ? imageAlt : DEFAULT_OG_ALT;
   if (!noindex && section !== "404") SITEMAP.add(path);
   const cur = (p) => (p === section ? ' aria-current="page"' : "");
-  const top = [...MAIN_NAV, ["app/", "App"], ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("")
+  const top = [...MAIN_NAV.slice(0, 3), ["map/", "Map"], ...MAIN_NAV.slice(3), ["app/", "App"], ["about/", "About"]].map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${label}${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("")
     + SEASONS_NOW.map((s) => `<a class="nav-season" href="${url(`${s.slug}/`)}" aria-label="${esc(s.label)}" title="${esc(s.label)}"${cur(`${s.slug}/`)}>${seasonIcon(s.buddy)}</a>`).join("");
   const tabs = MAIN_NAV.map(([p, label]) => `<a href="${url(p)}"${cur(p)}>${ICONS[p]}<span>${label}</span>${p === "list/" ? `<span class="list-n" data-list-count hidden></span>` : ""}</a>`).join("");
   return `<!doctype html>
@@ -800,10 +801,11 @@ function storePages() {
     title: "Stores", path: "stores/",
     description: `The Seattle-area grocery stores we list sales for: ${tracked.slice(0, 4).map((s) => s.name).join(", ")} and ${tracked.length - 4} more.`,
     body: `${pageHead("Stores", "The Asian markets, seafood shops and co-ops we read as each new flyer comes out, with the most standouts first. Each store is tracked by one general Seattle-area flyer; other locations may have different prices.")}
+<p class="map-cta"><a class="btn btn-primary" href="${url("map/")}">${ic("pin")}Map of every store, market and shop</a></p>
 <div class="tools chiprow"><button type="button" class="fchip" aria-pressed="false" data-deliv-toggle>${ic("truck")}<span>Delivers</span></button></div>
 <ul class="tiles" data-store-tiles>${tracked.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
 ${emptyState({ mood: "surprised", title: "No stores match", msg: "None of these stores deliver. Turn off Delivers to see them all.", attrs: "data-deliv-empty hidden" })}
-<div class="note-card"><b>The map</b><span>Every store here, plus farmers markets and shops worth a trip, with filters for delivery, online ordering and EBT. <a href="${url("map/")}">Open the map</a></span></div>
+
 ${others.length ? `<section class="block" aria-labelledby="h-other">
   <div class="sec-h"><h2 id="h-other">Other markets worth knowing</h2><p>Good local markets with no online flyer, so their prices are not tracked</p></div>
   <ul class="tiles">${others.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
@@ -1147,7 +1149,7 @@ function privacyPage() {
 <h3>What stays in your browser</h3>
 <p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
 <h3>Other sites it loads from</h3>
-<p>The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site. Flyer links take you to each store's own site, which has its own privacy rules.</p>
+<p>The maps load their map images (tiles) from OpenStreetMap, which receives your IP address the way any website does. "Near me" on the map uses your location only on your device, to sort the list; it isn't sent to this site, OpenStreetMap or Amplitude. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site. Flyer links take you to each store's own site, which has its own privacy rules.</p>
 
 <h2 id="app">The app</h2>
 <h3>Getting the deals</h3>
@@ -1307,6 +1309,7 @@ function marketsPage() {
 </li>`;
   };
   const body = `${pageHead("Farmers markets", "Buy straight from Washington farms and fishers. Markets don't print flyers, so there are no prices here: just who's open this week, and where each one posts its news.")}
+<p class="map-cta"><a class="btn" href="${url("map/")}#market">${ic("pin")}Markets on the map</a></p>
 <section class="block" aria-labelledby="h-week">
   <div class="sec-h"><h2 id="h-week">The next seven days</h2></div>
   <ol class="mk-week">${ahead.map(day).join("\n")}</ol>
@@ -1341,6 +1344,7 @@ function shopsPage() {
   const groups = Object.entries(SHOP_TYPES).map(([type, label]) => ({ type, label, list: shops.filter((p) => p.type === type && !p.hub).sort((a, b) => a.name.localeCompare(b.name)) })).filter((g) => g.list.length);
   const jump = [...groups.map((g) => [`type-${g.type}`, g.label]), ...hubs.map((h) => [h.id, h.name])];
   const body = `${pageHead("Shops worth a trip", "Butchers, fishmongers and grocers from around the world. They don't post weekly flyers, so there are no prices here: just where they are and what they're good for.")}
+<p class="map-cta"><a class="btn" href="${url("map/")}#shops">${ic("pin")}Shops on the map</a></p>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${esc(label)}</a></li>`).join("")}</ul></nav>
 ${groups.map((g) => `<section class="block" aria-labelledby="type-${g.type}">
   <div class="sec-h"><h2 id="type-${g.type}">${esc(g.label)}</h2><p>${plural(g.list.length, "shop")}</p></div>
@@ -1426,7 +1430,7 @@ function mapPage() {
 ${emptyState({ mood: "surprised", title: "Nothing matches", msg: "Try fewer filters or another word.", attrs: "data-map-empty hidden" })}
 <p class="places-foot">Delivery and online ordering are listed only where we could confirm them, so a place without them may still offer it: check its own site. "Near me" uses your device's location to sort this list; it isn't sent anywhere. Details for <a href="${url("markets/")}">farmers markets</a> and <a href="${url("shops/")}">shops</a> are on their own pages.</p>`;
   write("map/", page({
-    title: "Map", path: "map/", section: "stores/", body, map: "leaflet", extraScript: "assets/map-page.js",
+    title: "Map", path: "map/", body, map: "leaflet", extraScript: "assets/map-page.js",
     description: `Seattle grocery map: ${cfg.stores.filter((x) => x.active).length} stores with weekly deals, farmers markets and independent shops, with filters for delivery, online ordering, EBT matching and markets open today.`,
     ogTitle: "Seattle grocery map",
     image: "assets/img/og-map.png",
