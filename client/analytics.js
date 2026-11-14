@@ -4,7 +4,8 @@
 //   turns it off on the About page (localStorage "sgd.analyticsOff");
 // - only on the live site, so local previews aren't counted;
 // - Session Replay for a small share of visits (REPLAY_SHARE), with all text and input
-//   masked ("conservative"); its code downloads only for those visits.
+//   masked ("conservative"); its code downloads only for those visits;
+// - nothing on the Help paying for food page (it doesn't load this file), and no clicks on links to it.
 // Bundled by scripts/build.mjs into dist/assets/analytics/ (an ES module) and loaded once per page.
 // The key comes from config/site.json (amplitude_api_key) and is public by design.
 import * as amplitude from '@amplitude/analytics-browser';
@@ -29,7 +30,10 @@ function optedOut() {
 if (!AMPLITUDE_API_KEY) {
   console.warn('Amplitude API key missing: analytics disabled');
 } else if (location.hostname === 'seattlegrocery.deals' && !optedOut()) {
-  amplitude.init(AMPLITUDE_API_KEY, { autocapture: true, identityStorage: 'localStorage', trackingOptions: { ipAddress: false } });
+  // Links marked data-no-track (to the Help paying for food page) are left out of click capture;
+  // otherwise this is Amplitude's default list of elements. The page itself loads no analytics.
+  const CLICKABLE = ['a:not([data-no-track])', 'button', 'input', 'select', 'textarea', 'label', '[data-amp-default-track]', '.amp-default-track'];
+  amplitude.init(AMPLITUDE_API_KEY, { autocapture: { elementInteractions: { cssSelectorAllowlist: CLICKABLE } }, identityStorage: 'localStorage', trackingOptions: { ipAddress: false } });
   if (document.body.dataset.page === 'home') {
     let picked = [];
     try { picked = JSON.parse(localStorage.getItem('sgd.stores') || '[]'); } catch (e) {}
