@@ -1213,11 +1213,15 @@ function accessibilityPage() {
   write("accessibility/", page({ title: "Accessibility", path: "accessibility/", section: "about/", body, description: "How Seattle Grocery Deals is built to work for everyone, the display settings you can change, and how to report a problem." }));
 }
 
-// The iPhone app, before it's on the App Store, at /app/ (it was /apps/, which now redirects).
+// The iPhone app at /app/ (it was /apps/, which now redirects). It's in public beta on
+// TestFlight (Apple approved the first external build 2026-11-13); the App Store comes later.
 // Laid out like henwood.app: the buddy, the name, one line, the badge, then a few cards.
-// The badge is Apple's own, unchanged and not a link (there's no store page yet); "Coming soon"
-// sits beside it in plain text so nobody, sighted or not, takes it for a download.
+// The TestFlight badge is our own (TESTFLIGHT_BADGE, styled in style.css): Apple has no
+// official one, so it's plain text in the site's type with no Apple artwork. When the app is
+// on the App Store, put Apple's badge back (site/assets/img/app-store-black.svg) as a link.
 // Screenshots are off for now; captures stay in site/assets/img/app/ for later.
+const TESTFLIGHT_URL = "https://testflight.apple.com/join/NbQ9pXvw";
+const TESTFLIGHT_BADGE = `<a class="tf-badge" href="${TESTFLIGHT_URL}"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true" focusable="false"><path d="M21.5 2.5 2.8 9.9l6.3 2.9m12.4-10.3L9.1 12.8m12.4-10.3-5.9 18.3-3.6-6.1m-2.9-1.9v6l2.9-4.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span><span class="tf-small">Join the beta on</span><span class="tf-big">TestFlight</span></span></a>`;
 function appsPage() {
   const features = [
     ["newspaper", "This week, sorted", "The same deals as this site, with the best stores to shop this week first. Browse by aisle, search across stores, or hide meat and seafood with Vegetarian."],
@@ -1230,13 +1234,13 @@ function appsPage() {
   ${buddy("happy", 160, "bd-hop")}
   <h1>Seattle Grocery Deals</h1>
   <p class="app-tag">This week's grocery sales, in your pocket.</p>
-  <p class="app-badge"><img src="${url("assets/img/app-store-black.svg")}" alt="Download on the App Store" width="132" height="44"><span class="badge tone-neutral app-soon">Coming soon</span><span class="sr-only">The app isn't on the App Store yet. Check back here.</span></p>
-  <p class="app-platforms">For iPhone and iPad</p>
+  <p class="app-badge">${TESTFLIGHT_BADGE}</p>
+  <p class="app-platforms">A free beta for iPhone and iPad. The link opens in TestFlight, Apple's app for trying apps early. The App Store comes later.</p>
   <ul class="app-features">${features.map(([icon, title, text]) => `<li class="card app-feature">${ic(icon)}<div><h2>${esc(title)}</h2><p>${esc(text)}</p></div></li>`).join("")}</ul>
   <p class="app-note">No account, and your list stays on your phone. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. Coming soon." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
@@ -1441,7 +1445,7 @@ function howPage() {
   ];
   const places = [
     ["newspaper", "This site", `Plain pages from GitHub Pages. Your list, your stores and your display settings are kept in your browser and nowhere else.`, url(), "See this week"],
-    ["widget", "The app", `For iPhone and iPad, coming soon. It fetches the same feed when you open it, and matches your list and price watches on the phone.`, url("app/"), "About the app"],
+    ["widget", "The app", `For iPhone and iPad, in beta on TestFlight. It fetches the same feed when you open it, and matches your list and price watches on the phone.`, url("app/"), "About the app"],
     ...(cfg.site.mcp_url ? [["search", "AI assistants", `A small Cloudflare Worker reads the same feed and answers questions from Claude or another assistant. It keeps nothing.`, url("mcp/"), "Connect an assistant"]] : []),
   ];
   const parts = [

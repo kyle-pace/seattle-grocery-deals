@@ -463,9 +463,15 @@ body.season .site-head { position: relative; z-index: 2; }
 .app-landing h1 { margin: var(--s-m) 0 0; font-size: clamp(2.25rem, 8vw, 3.5rem); line-height: 1.05; letter-spacing: -0.02em; }
 .app-tag { margin: var(--s-m) 0 0; font-size: clamp(1.1875rem, 4.4vw, 1.4375rem); color: var(--text-body); max-width: 30ch; }
 .app-badge { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: var(--s-s); margin: var(--s-l) 0 0; }
-.app-badge img { display: block; width: auto; height: 44px; flex: none; }
-.app-soon { font-size: 0.9375rem; min-height: 32px; padding: 2px 12px; }
-.app-platforms { margin: var(--s-s) 0 0; color: var(--muted); font-size: 0.9375rem; }
+/* Our own TestFlight badge (Apple has none): black in both modes like a store badge, with a
+   gray edge so it holds on the dark ground. White on black is 21:1. */
+.tf-badge { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 52px; padding: 0.4rem 1.1rem 0.4rem 0.9rem; border-radius: 10px; border: 1px solid #a6a6a6; background: #000; color: #fff; text-decoration: none; text-align: left; line-height: 1.15; }
+.tf-badge svg { flex: none; }
+.tf-badge span span { display: block; }
+.tf-small { font-size: 0.75rem; font-weight: 500; }
+.tf-big { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+.tf-badge:hover { background: #1c1c1e; color: #fff; }
+.app-platforms { margin: var(--s-m) 0 0; color: var(--muted); font-size: 0.9375rem; max-width: 40ch; }
 .app-landing .app-features { width: 100%; margin-top: var(--s-xl); text-align: left; }
 .app-note { margin: var(--s-l) 0 0; color: var(--text-body); max-width: var(--measure); }
 .app-note + .app-note { margin-top: var(--s-s); }
