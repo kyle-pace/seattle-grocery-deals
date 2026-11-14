@@ -4,12 +4,14 @@ The iPhone and iPad app (SwiftUI). It replaced an earlier Expo app (decided 2026
 
 ## Build channels
 
-Two channels, both TestFlight (owner's call, 2026-11-13; the rule for all his apps is in the principles block of `AGENTS.md`):
+Two channels, both TestFlight (owner's call, 2026-11-13; the rule for all his apps is in the principles block of `AGENTS.md`), and since 2026-11-14 two apps, so both sit on a phone at once:
 
-1. **Internal TestFlight** (`apple/testflight.sh`, tags beginning with `v`): the main channel. Every build worth trying on a device goes here. These builds are named "Deals Int" with the DEV icon (they share the public build's bundle ID, so only one is installed at a time), and the bottom of Settings says "Internal TestFlight" or "Public TestFlight" with the build number. They also show Settings, Developer: `ci_post_clone.sh` marks them (`KitchenInternalBuild` in Info.plist) and gives them the DEV app icon and KitchenUI's `BuildKind` reads it. Needs KitchenUI's `internal-dev-menu` change on its `main`.
-2. **Public TestFlight** (`apple/testflight.sh --external`, tags beginning with `beta-`): from a commit that has already run on internal.
+1. **Deals Dev on internal TestFlight** (`apple/testflight.sh`, tags beginning with `dev-`): the main channel. Every build worth trying on a device goes here. It's its own app: the `DealsDev` target (widget `DealsDevWidget`, scheme "Deals Dev"), bundle ID `deals.seattlegrocery.dev`, the name "Deals Dev", the DEV icon, and Settings, Developer always on (`KitchenInternalBuild` in `Dev/Info.plist`). It joins the `new-deals-test` push topic, so test pushes and flyer alerts reach it. Own App Store Connect record and Xcode Cloud product.
+2. **Deals on public TestFlight** (`apple/testflight.sh --external`, tags beginning with `beta-`): the `GroceryDeals` target, bundle ID `deals.seattlegrocery`, from a commit that has already run as Deals Dev. Later the App Store build comes from here too.
 
-Before tagging, build and run on the Mac's iPhone and iPad simulators, so Xcode Cloud's hours aren't spent on compile errors. Installing Deals Dev straight onto a device (next section) is no longer routine: use it only when TestFlight can't do the job. Today that means test pushes (`new-deals-test` only reaches the `.dev` app), debugging on the device, or a quick loop the owner asks for. Don't assume the Deals Dev on the owner's devices is current.
+Both targets come from one template in `project.yml` (`DealsApp`, `DealsWidgetBase`), so they always have the same code; only the bundle ID, name, icon and Info.plist differ.
+
+Before tagging, build and run on the Mac's iPhone and iPad simulators, so Xcode Cloud's hours aren't spent on compile errors. Installing Deals Dev straight onto a device (next section) is no longer routine: use it only when TestFlight can't do the job, like debugging on the device or an iOS beta the cloud can't build for. It installs over the TestFlight Deals Dev (same bundle ID).
 
 ## Build and install on your iPhone (the exception)
 
@@ -20,7 +22,7 @@ apple/install-on-iphone.sh            # build what's checked out, install, open 
 apple/install-on-iphone.sh --no-open
 ```
 
-It installs **Deals Dev**: bundle ID `deals.seattlegrocery.dev` (widget `.dev.widget`), the name "Deals Dev" and a DEV icon (`AppIconDev`), so it sits next to the TestFlight or App Store app with its own data. The build settings `BUNDLE_ID_SUFFIX`, `APP_NAME_SUFFIX` and `APP_ICON_SUFFIX` in `project.yml` are empty for everything else.
+It builds the "Deals Dev" scheme: bundle ID `deals.seattlegrocery.dev` (widget `.dev.widget`), the name "Deals Dev" and a DEV icon (`AppIconDev`), the same app internal TestFlight delivers, so it replaces that one on the device. The build settings `BUNDLE_ID_SUFFIX`, `APP_NAME_SUFFIX` and `APP_ICON_SUFFIX` in `project.yml` are set only on the `DealsDev` targets.
 
 The phone can be plugged in or paired over Wi-Fi (Xcode, Devices and Simulators, "Connect via network"), unlocked and trusted. Needs the KitchenUI package checked out at `~/Developer/KitchenUI` (next to this repo), Xcode (the beta while the phone runs an iOS beta) and XcodeGen (`brew install xcodegen`). The Xcode project is generated from `GroceryDeals/project.yml`; edit that, not the `.xcodeproj`. Signed with the paid developer account, so a phone build keeps opening for a year.
 
@@ -29,15 +31,15 @@ The phone can be plugged in or paired over Wi-Fi (Xcode, Devices and Simulators,
 TestFlight builds come from Xcode Cloud, not this Mac. Commit and push, then:
 
 ```bash
-apple/testflight.sh            # tag the pushed commit v<version> and push the tag
+apple/testflight.sh            # tag the pushed commit dev-<version> and push the tag (Deals Dev)
 apple/testflight.sh --dry-run  # show the version and tag only
 ```
 
-Xcode Cloud's **TestFlight** workflow starts on any tag beginning with `v`, so weekly data merges and everyday pushes to `main` never make a TestFlight build. It archives the `GroceryDeals` scheme (Release, so the bundle ID is `deals.seattlegrocery`, never `.dev`) on the latest release Xcode and uploads to App Store Connect for internal testers. The version is `MARKETING_VERSION` in `project.yml`; a second build of the same version is tagged `v<version>-2` and so on. **Xcode Cloud sets the build number** (its own counter), not the commit count the old local script used, so don't upload from this Mac any more: a local upload would collide with those numbers.
+The Deals Dev product's **TestFlight** workflow starts on any tag beginning with `dev-`, so weekly data merges and everyday pushes to `main` never make a TestFlight build. It archives the "Deals Dev" scheme (Release) on the latest release Xcode and uploads to the Deals Dev app in App Store Connect for internal testers. The version is `MARKETING_VERSION` in `project.yml`, the same for both apps; a second build of the same version is tagged `dev-<version>-2` and so on. **Xcode Cloud sets the build number** (its own counter, one per app), so don't upload from this Mac any more: a local upload would collide with those numbers. Tags beginning with `v` were the old internal builds of Deals itself (up to 2026-11-14).
 
 ### External testers
 
-A second Xcode Cloud workflow, **TestFlight External**, builds tags that start with `beta-` and sends them to the **External Testers** group. Apple reviews the first external build of each version (usually within a day); later builds of the same version mostly go straight out.
+The Deals product's Xcode Cloud workflow, **TestFlight External**, builds tags that start with `beta-` (the `GroceryDeals` scheme) and sends them to the **External Testers** group. Apple reviews the first external build of each version (usually within a day); later builds of the same version mostly go straight out.
 
 ```bash
 apple/testflight.sh --external            # tag beta-<version> and push
@@ -45,17 +47,17 @@ apple/testflight.sh --external --dry-run  # show the tag and the notes for teste
 ```
 
 - Notes for testers ("What to Test") come from `GroceryDeals/TestFlight/WhatToTest.en-US.txt`, next to `ci_scripts`. Update it before each external build.
-- The two workflows differ in three settings: the start condition (tags beginning with `v` or with `beta-`), the archive's distribution (**TestFlight (Internal Testing Only)** or **TestFlight and App Store**), and the post-action (**TestFlight Internal Testing** or **TestFlight External Testing** with the External Testers group). A build from the internal workflow can never be given to external testers, so external builds have to come from the second one.
+- The two workflows are on two Xcode Cloud products (Deals Dev and Deals). They differ in the scheme ("Deals Dev" or `GroceryDeals`), the start condition (tags beginning with `dev-` or with `beta-`), the archive's distribution (**TestFlight (Internal Testing Only)** or **TestFlight and App Store**), and the post-action (**TestFlight Internal Testing** or **TestFlight External Testing** with the External Testers group). Both need the `KITCHEN_GITHUB_TOKEN` secret (see `ci_post_clone.sh`).
 - External testing also needs App Store Connect's Test Information (beta description, feedback email, privacy policy link) and a contact for Apple's reviewer.
 - Each external build is a second Xcode Cloud run, on the same 25 free hours a month.
 
 How it fits together:
 - `GroceryDeals/ci_scripts/ci_post_clone.sh` clones KitchenUI's `main` next to the repo, where `project.yml` expects the local package (`../../../KitchenUI`). Push KitchenUI changes before tagging.
-- The `GroceryDeals` scheme is shared (committed under `xcshareddata`) because Xcode Cloud only sees shared schemes; it's defined in `project.yml`.
+- The `GroceryDeals` and "Deals Dev" schemes are shared (committed under `xcshareddata`) because Xcode Cloud only sees shared schemes; it's defined in `project.yml`.
 - Packages resolve from the committed `Package.resolved` (Xcode Cloud turns automatic resolution off), so commit it after changing package versions.
 - Free plan: 25 compute hours a month across all the account's apps.
 
-App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26, uploaded from the Mac.
+App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26, uploaded from the Mac. Deals Dev is a second app record for `deals.seattlegrocery.dev`, never released; it only exists for internal TestFlight.
 
 ## Code
 

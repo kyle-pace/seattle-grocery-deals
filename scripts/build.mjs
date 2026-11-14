@@ -390,7 +390,7 @@ const DISPLAY_PANEL = `<button class="dp-toggle" type="button" popovertarget="di
   <p class="dp-note">Saved in this browser only.</p>
 </div>`;
 
-function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null }) {
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null, analytics = true }) {
   const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
   const desc = description ?? cfg.site.tagline;
   const pageUrl = cfg.site.origin + cfg.site.base_path + path;
@@ -442,7 +442,7 @@ function page({ title, path, section = path, body, wrap = true, description, map
 <script src="${asset("assets/app.js")}" defer></script>
 <script src="${asset("assets/display.js")}" defer></script>
 <script src="${asset("assets/list.js")}" defer></script>
-<script type="module" src="${ANALYTICS_SRC}"></script>${extraScript ? `
+${analytics ? `<script type="module" src="${ANALYTICS_SRC}"></script>` : ""}${extraScript ? `
 <script src="${asset(extraScript)}" defer></script>` : ""}${head ? `
 ${head}` : ""}${map ? `
 <link rel="stylesheet" href="${asset("assets/leaflet/leaflet.css")}">
@@ -473,7 +473,7 @@ ${section === "app/" ? "" : `<aside class="app-banner" data-app-banner hidden ar
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Help paying for food</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -591,7 +591,7 @@ function homePage() {
 
   const body = `<div class="wrap page-h page-h-home">
   <h1>This week</h1>
-  <p class="page-intro">Sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
+  <p class="page-intro">Groceries cost more than they used to, and some of the best prices in town are in flyers you'd never see. Here are this week's sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip, read from each store's own flyer.</p>
   <p class="page-sub">${vegText(plural(live.length, "deal"), plural(liveVeg.length, "vegetarian deal"))} from ${plural(storeCount(live), "store")}</p>
 </div>
 ${controls({ stores: storesIn(items), searchLabel: "Search this week's deals and stores" })}
@@ -620,7 +620,7 @@ ${pickable.map((s) => `      <label class="pick"><input type="checkbox" value="$
   <ul class="unread-cards" data-unread-list>${unread.map((s) => {
     const f = latest.flyers.find((x) => x.store === s.id);
     const ad = s.flyer_url ?? f?.links?.[0]?.url ?? s.website;
-    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) ? (s.watch?.desktop ? "This week's sales have ended. We haven't read its new flyer yet." : "This week's sales have ended. Its new flyer isn't in yet.") : f?.status === "stale" ? (s.watch?.desktop ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
+    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) || f?.status === "stale" ? (s.watch?.desktop ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
   }).join("")}</ul>
   <div class="elsewhere" data-elsewhere hidden>
     <div class="sec-h"><h3 class="sec-label">Elsewhere this week</h3><p>Not one of your stores, but clearly ahead</p></div>
@@ -873,6 +873,7 @@ ${pageHead(esc(s.name), sub)}
 <div class="about-store"><p class="lede clamp" id="about-${esc(s.id)}" data-clamp>${esc(s.about)}</p><button type="button" class="linkish" data-clamp-toggle aria-controls="about-${esc(s.id)}" aria-expanded="false" hidden>Read more</button></div>
 ${actions}
 ${s.delivery ? `<div class="note-card"><b>Delivery</b><span>${esc(s.delivery)}</span></div>` : ""}
+${s.fresh_bucks ? `<div class="note-card"><b>Fresh Bucks</b><span>Accepted here for fruits and vegetables. <a href="${url("food-help/")}#fresh-bucks" data-no-track>About Fresh Bucks and other food help</a></span></div>` : ""}
 ${flyerNote}
 ${mine.length ? `<div class="sec-h deals-h" id="deals"><h2>Deals this week</h2><p>${vegText(dealCounts(mine), dealCounts(mine.filter(isVegetarian)))}</p></div>` : !s.no_online_flyer ? emptyState({ mood: "sleepy", title: f && f.status === "unreadable" ? "Couldn't read this week's flyer" : "No deals this week", msg: adUrl ? "The weekly ad might still have something." : "Its new deals show up here as soon as its next flyer is out.", link: adUrl ? [esc(adUrl), "Open the weekly ad"] : [url(), "See this week's deals"] }) : ""}
 </div>
@@ -1084,7 +1085,7 @@ function aboutPage() {
   const mail = "hello@seattlegrocery.deals";
   const jump = [["shown", "What you'll see"], ["know", "Good to know"], ["contact", "Get in touch"]];
   const body = `<div class="page-h"><h1>About</h1></div>
-<p>As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
+<p>Groceries cost more than they used to, and some of the best prices in town are in flyers you'd never see. As each store posts its new flyer, this site lists what's on sale at Seattle's Asian markets, seafood shops, co-ops and specialty grocers, so you can see what's cheap where and plan where to shop. It links to every store's flyer for the week.</p>
 <p>There's a free app for iPhone and iPad, now in beta, with the same deals, a list that fills itself and alerts you choose: <a href="${url("app/")}">get the app</a>.${cfg.site.mcp_url ? ` You can also ask an AI assistant like Claude what's on sale: <a href="${url("mcp/")}">connect it to this site</a>.` : ""}</p>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}<li><a href="${url("privacy/")}">Privacy</a></li></ul></nav>
 
@@ -1118,6 +1119,7 @@ function aboutPage() {
 
 <h2 class="about-part" id="know">Good to know</h2>
 <p>Each store is tracked by one general Seattle-area flyer, so other locations may have different prices. Prices can also change or sell out, so check in store before you rely on one. Flyers that could not be read, or still show last week's dates, are marked as such. This site links to the flyers and doesn't copy them, and it isn't affiliated with any store; store names belong to their owners.</p>
+<p>If your grocery budget is tight, <a href="${url("food-help/")}" data-no-track>Help paying for food</a> explains Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks and other programs in Seattle.</p>
 <p>There are no accounts, ads or sign-ups, and nothing you do here is sold. Your list, your stores and your settings stay in your browser. The details are on the <a href="${url("privacy/")}">privacy page</a>.</p>
 
 <h2 class="about-part" id="contact">Get in touch</h2>
@@ -1146,6 +1148,7 @@ function privacyPage() {
 <h2 id="site">The website</h2>
 <h3>Anonymous usage</h3>
 <p>The site uses <a href="https://amplitude.com">Amplitude</a> to see which pages are viewed and what gets clicked, so it can be improved. It's set up to be as private as possible: no IP address stored, no cookies, and no name or account. Amplitude keeps a random ID in your browser's storage so it can tell a return visit from a new one, and receives basic details like browser type and screen size. About 1 in 20 visits is also recorded (Session Replay) to see where the site is confusing; in those recordings all text and everything you type is hidden, so they show only the page layout, scrolling and taps. How Amplitude handles that data is in <a href="https://amplitude.com/privacy">Amplitude's privacy notice</a>.</p>
+<p>The <a href="${url("food-help/")}" data-no-track>Help paying for food</a> page is left out on purpose: it doesn't load Amplitude at all, and clicks on links to it aren't recorded.</p>
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <h3>What stays in your browser</h3>
 <p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
@@ -1181,6 +1184,69 @@ function privacyPage() {
     ogTitle: "Privacy at Seattle Grocery Deals",
     image: "assets/img/og-privacy.png",
     imageAlt: "Privacy at Seattle Grocery Deals: the crow beside the words No accounts, no ads, nothing sold.",
+  }));
+}
+
+// Help paying for food, at /food-help/: Basic Food (SNAP), farmers market matching, Fresh Bucks
+// and other programs, in plain words with links to each official page. Owner's call
+// (2026-11-14): part of the site's focus, but not prominent, since it won't apply to most people.
+// Privacy: this page loads no analytics at all, and links to it carry data-no-track so the clicks
+// aren't autocaptured elsewhere (client/analytics.js). Keep it that way; the Privacy page says so.
+// Program details change: check each section against its official page and update CHECKED.
+// Share image: node scripts/food-help-og.mjs.
+function foodHelpPage() {
+  const CHECKED = "November 14, 2026";
+  const jump = [["basic-food", "Basic Food (SNAP)"], ["markets", "At farmers markets"], ["fresh-bucks", "Fresh Bucks"], ["kids", "Families with kids"], ["older-adults", "Older adults"], ["food-banks", "Food banks"]];
+  const body = `<div class="privacy-page help-page">
+<div class="page-h"><h1>Help paying for food</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
+<div class="note-card"><p>Groceries cost more than they used to. These programs help, and several of them work at the farmers markets and neighborhood grocers this site follows. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
+<nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}</ul></nav>
+
+<h2 class="about-part" id="basic-food">Basic Food (SNAP)</h2>
+<p>Basic Food is Washington's name for SNAP, the federal food benefit some people still call food stamps. Benefits come on an EBT card that you use like a debit card for groceries. Washington also runs a state program for some immigrants with lawful status who don't qualify for federal SNAP, so one household can get a mix of both.</p>
+<h3>How to apply</h3>
+<ul>
+  <li>Online at <a href="https://www.washingtonconnection.org">Washington Connection</a>.</li>
+  <li>By phone at <a href="tel:+18775012233">877-501-2233</a>, without filling out an application first.</li>
+  <li>In person at a <a href="https://www.dshs.wa.gov/office-locations">DSHS Community Services Office</a>.</li>
+</ul>
+<p>Every application includes a short interview, by phone or in person. Federal rules changed in 2025, including work requirements for more adults, so ask DSHS what applies to your household.</p>
+<h3>Where to use it</h3>
+<p>Most grocery stores take EBT, along with farmers markets. Ask at the register, or look up a store on the <a href="https://www.fns.usda.gov/snap/retailer-locator">USDA's SNAP Retailer Locator</a>.</p>
+
+<h2 class="about-part" id="markets">At farmers markets: double your EBT</h2>
+<h3>SNAP Market Match</h3>
+<p>Take your EBT card to the market's information or manager tent and ask for Market Match. Swipe for the amount you want to spend. You get that much in market tokens for food, plus the same amount again in Market Match dollars for fresh fruits and vegetables, mushrooms, fresh herbs, and seeds and plants that grow food. Every participating market matches at least $10 a day; ask yours for its daily amount. SUN Bucks summer cards get the match too.</p>
+<p>It's offered at all seven Neighborhood Farmers Markets (U District, Capitol Hill, West Seattle, Columbia City, Lake City, Magnolia and Phinney), at Ballard, at Pike Place Market (trade your EBT at the Market Commons first), and at most other markets in Seattle and King County. <a href="https://doh.wa.gov/you-and-your-family/nutrition-and-physical-activity/healthy-eating/snap-match-programs/snap-market-match">The full list and rules</a> are on the Department of Health's site.</p>
+<h3>SNAP Produce Rewards</h3>
+<p>At the West Seattle, Columbia City and Lake City markets, buying fruits and vegetables with EBT also puts money back on your card: $1 for every $1, up to $50 a month. There's nothing to sign up for, and it works alongside Market Match. <a href="https://doh.wa.gov/you-and-your-family/nutrition-and-physical-activity/healthy-eating/snap-match-programs/snap-produce-rewards">More about Produce Rewards</a>.</p>
+
+<h2 class="about-part" id="fresh-bucks">Fresh Bucks</h2>
+<p>The City of Seattle's own produce benefit: $60 a month for fruits and vegetables, for Seattle households under an income limit. It has its own rules, separate from SNAP, so you don't need Basic Food to apply. It's accepted at more than 55 places in Seattle, including farmers markets, independent grocers and Seattle Safeway stores.</p>
+<p>New households are picked at random from a waitlist as funding allows. <a href="https://www.seattlefreshbucks.org/">Check if you qualify and join the waitlist</a>.</p>
+
+<h2 class="about-part" id="kids">Families with kids</h2>
+<h3>WIC</h3>
+<p>For people who are pregnant or recently had a baby, and for children under 5. Dads, grandparents, foster parents and guardians can apply for a child. WIC gives healthy food on a WIC card, plus nutrition and breastfeeding support. U.S. citizenship isn't required, and using WIC doesn't make you a public charge. <a href="https://doh.wa.gov/FindWIC">Find a WIC clinic</a> or call <a href="tel:+18008411410">800-841-1410</a>.</p>
+<h3>SUN Bucks (Summer EBT)</h3>
+<p>$120 for each eligible school-age child, to buy groceries over the summer when school meals stop. Some children are signed up automatically; others apply through <a href="https://www.dshs.wa.gov/sunbucks">DSHS's SUN Bucks page</a>.</p>
+
+<h2 class="about-part" id="older-adults">Older adults</h2>
+<h3>Senior Farmers Market Nutrition Program</h3>
+<p>An $80 card for fruits and vegetables at King County farmers markets, for people 60 and older (55 and older for American Indian and Alaska Native elders) with incomes under a limit. Applications open each spring, and cards go out by random selection. <a href="https://www.agingkingcounty.org/SFMNP">Apply on Aging and Disability Services' site</a>, or get help applying at <a href="tel:+18443485464">844-348-5464</a>.</p>
+
+<h2 class="about-part" id="food-banks">Food banks and free meals</h2>
+<p>Seattle has more than 30 food banks. Find one near you on the <a href="https://www.seattlefoodcommittee.org/find-a-food-bank/">Seattle Food Committee's map</a> or the <a href="https://maps.seattle.gov/humanservices/foodresources">City's food resources map</a>, and call ahead to check hours. You can also call <a href="tel:211">211</a> any time, or visit <a href="https://wa211.org">wa211.org</a>, for help finding food.</p>
+
+<h2 class="about-part" id="this-page">About this page</h2>
+<p>Nothing on this page is recorded or counted: it doesn't load analytics, and clicks on links to it from other pages aren't recorded either. Seattle Grocery Deals isn't part of any of these programs and can't tell you whether you qualify; the official pages linked above can. Details change, so if something here is out of date, email <a href="mailto:hello@seattlegrocery.deals?subject=Help%20paying%20for%20food">hello@seattlegrocery.deals</a>.</p>
+</div>`;
+  write("food-help/", page({
+    title: "Help paying for food", path: "food-help/", section: "about/", body, analytics: false,
+    description: "Basic Food (SNAP), doubling EBT at farmers markets, Fresh Bucks, WIC and more in Seattle, in plain words with links to apply.",
+    ogTitle: "Help paying for food in Seattle",
+    image: "assets/img/og-food-help.png",
+    imageAlt: "Help paying for food: the crow beside the words SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.",
   }));
 }
 
@@ -1625,6 +1691,7 @@ weekPages();
 storePages();
 aboutPage();
 privacyPage();
+foodHelpPage();
 accessibilityPage();
 yourListPage();
 appsPage();

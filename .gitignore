@@ -12,3 +12,6 @@ apple/GroceryDeals/build-sim/
 
 # Cloudflare Worker local state (mcp/)
 .wrangler/
+
+# npm run check:pages output (screenshots)
+.check/

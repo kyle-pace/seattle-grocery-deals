@@ -48,7 +48,9 @@ struct SharedState: Codable, Sendable, Equatable {
 /// Links the widgets and Reminders open: grocerydeals://tab/list, grocerydeals://deal/<id>,
 /// grocerydeals://store/<id>, grocerydeals://add (the List tab with the keyboard up).
 enum DealsLink {
-    static let scheme = "grocerydeals"
+    /// "grocerydeals" for Deals, "grocerydealsdev" for Deals Dev (Info.plist's DealsLinkScheme),
+    /// so a link opens the app it came from when both are on a phone.
+    static let scheme = Bundle.main.object(forInfoDictionaryKey: "DealsLinkScheme") as? String ?? "grocerydeals"
     static func tab(_ name: String) -> URL { URL(string: "\(scheme)://tab/\(name)")! }
     static func deal(_ id: String) -> URL { URL(string: "\(scheme)://deal/\(id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id)")! }
     static func store(_ id: String) -> URL { URL(string: "\(scheme)://store/\(id)")! }
