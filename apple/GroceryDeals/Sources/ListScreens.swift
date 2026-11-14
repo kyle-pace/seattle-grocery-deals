@@ -361,6 +361,10 @@ struct SettingsView: View {
                     Button("Show the tour again", systemImage: "sparkles.rectangle.stack") { replayingTour = true }
                 }
 
+                // Which build this is: internal and public TestFlight builds share one app, so the
+                // icon alone (DEV on internal ones) is easy to miss.
+                Section {} footer: { BuildLabel() }
+
                 DevMenuSection { DealsDevMenu() }
                 }
                 .listRowBackground(Palette.surface)
@@ -574,5 +578,23 @@ final class DealMatches {
         let deal = matchDeal(text, in: deals())
         found[text] = deal
         return deal
+    }
+}
+
+/// "Internal TestFlight · 0.1.0 (13)" at the bottom of Settings.
+private struct BuildLabel: View {
+    var body: some View {
+        let info = Bundle.main.infoDictionary
+        let version = "\(info?["CFBundleShortVersionString"] as? String ?? "?") (\(info?["CFBundleVersion"] as? String ?? "?"))"
+        let kind = switch BuildInfo.shared.kind {
+        case .internalTestFlight: "Internal TestFlight"
+        case .testFlight: "Public TestFlight"
+        case .debug, .development: "Development build"
+        case .appStore, nil: "Deals"
+        }
+        Text("\(kind) · \(version)")
+            .font(.app(.footnote)).foregroundStyle(Palette.muted)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .onAppear { BuildInfo.shared.resolve() }
     }
 }

@@ -44,14 +44,20 @@ case "$INTERNAL_BUILD" in
         && echo "Marked $PLIST as an internal build." \
         || echo "warning: couldn't mark $PLIST; this build won't show the developer menu."
     done
-    # The DEV icon too, so an internal build on the Home Screen can't be mistaken for the
-    # public one (they share a bundle ID, so only one is installed at a time). Same switch
-    # install-on-iphone.sh uses; the name and bundle ID stay as they are.
+    # The DEV icon and the name "Deals Int" too, so an internal build on the Home Screen can't
+    # be mistaken for the public one (they share a bundle ID, so only one is installed at a
+    # time; Settings also says which build it is). Same switches install-on-iphone.sh uses
+    # (it names its builds "Deals Dev"); the bundle ID stays as it is.
     PROJ="$CI_PRIMARY_REPOSITORY_PATH/apple/GroceryDeals/GroceryDeals.xcodeproj/project.pbxproj"
     if sed -i '' 's/APP_ICON_SUFFIX = "";/APP_ICON_SUFFIX = Dev;/' "$PROJ" && grep -q 'APP_ICON_SUFFIX = Dev;' "$PROJ"; then
       echo "Internal build: using the DEV app icon."
     else
       echo "warning: couldn't switch to the DEV app icon; this build has the regular one."
+    fi
+    if sed -i '' 's/APP_NAME_SUFFIX = "";/APP_NAME_SUFFIX = " Int";/' "$PROJ" && grep -q 'APP_NAME_SUFFIX = " Int";' "$PROJ"; then
+      echo "Internal build: named Deals Int."
+    else
+      echo "warning: couldn't rename this build; it shows as Deals."
     fi
     ;;
 esac
