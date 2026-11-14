@@ -28,14 +28,19 @@
       "updated_at": "2026-11-05T15:46:08.383Z"
     },
     "smith-brothers": {
-      "fingerprint": "8fd6e3143570f8f4",
+      "fingerprint": "8567793e5d5062f3",
       "matches": [
-        "Enjoy these deals 10/31 to 11/13"
+        "Enjoy these deals 11/14 - 11/27"
       ],
-      "seen_at": "2026-11-03T02:37:26.412Z",
+      "seen_at": "2026-11-14T16:20:50.670Z",
       "updated_at": "2026-11-05T07:19:16.950Z",
-      "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-14T16:03:53.588Z"
+      "pending": {
+        "since": "2026-11-14T16:20:50.670Z",
+        "live_before": "2026-10-31|https://www.smithbrothersfarms.com/on-special",
+        "fires": 1,
+        "fired_at": "2026-11-14T16:20:50.670Z",
+        "session": "https://claude.ai/code/cse_015KDcQFdxCUNCWnX5PCY2P2"
+      }
     },
     "met-market": {
       "fingerprint": "6284eff16b4ad3a9",
