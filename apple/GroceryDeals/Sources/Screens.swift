@@ -69,14 +69,58 @@ struct WideColumns<Content: View>: View {
     @Environment(\.dynamicTypeSize) private var typeSize
     var minimum: CGFloat = Wide.column
     var spacing: CGFloat = Space.xl
+    /// Store cards: every card in a row is as tall as the tallest, like the site's.
+    var equalHeights = false
     @ViewBuilder var content: Content
 
     var body: some View {
-        if sizeClass == .regular && !typeSize.isAccessibilitySize {
+        if sizeClass == .regular && !typeSize.isAccessibilitySize && equalHeights {
+            EqualRows(minimum: minimum, spacing: spacing) { content }
+        } else if sizeClass == .regular && !typeSize.isAccessibilitySize {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: minimum), spacing: spacing, alignment: .top)],
                       alignment: .leading, spacing: 0) { content }
         } else {
             content
+        }
+    }
+}
+
+/// Columns like `WideColumns`' grid, but each row is as tall as its tallest card and every card
+/// in it is offered that height, so cards side by side line up top and bottom. Not lazy: for a
+/// dozen store cards, not hundreds of rows.
+private struct EqualRows: Layout {
+    var minimum: CGFloat
+    var spacing: CGFloat
+
+    private func columns(_ width: CGFloat) -> (count: Int, width: CGFloat) {
+        let count = max(1, Int((width + spacing) / (minimum + spacing)))
+        return (count, (width - spacing * CGFloat(count - 1)) / CGFloat(count))
+    }
+
+    private func rowHeights(_ subviews: Subviews, _ cols: (count: Int, width: CGFloat)) -> [CGFloat] {
+        stride(from: 0, to: subviews.count, by: cols.count).map { start in
+            subviews[start..<min(start + cols.count, subviews.count)]
+                .map { $0.sizeThatFits(ProposedViewSize(width: cols.width, height: nil)).height }
+                .max() ?? 0
+        }
+    }
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.width ?? minimum
+        return CGSize(width: width, height: rowHeights(subviews, columns(width)).reduce(0, +))
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        let cols = columns(bounds.width)
+        var y = bounds.minY
+        for (row, height) in rowHeights(subviews, cols).enumerated() {
+            for col in 0..<cols.count {
+                let i = row * cols.count + col
+                guard i < subviews.count else { break }
+                subviews[i].place(at: CGPoint(x: bounds.minX + CGFloat(col) * (cols.width + spacing), y: y), anchor: .topLeading,
+                                  proposal: ProposedViewSize(width: cols.width, height: height))
+            }
+            y += height
         }
     }
 }
@@ -205,7 +249,7 @@ private struct YourStoresWeek: View {
             QuietNote(names: w.ranked.map(\.store.name), none: w.ranked.isEmpty, elsewhere: w.elsewhere)
         }
         // Side by side on iPad, like the site's store cards.
-        WideColumns(spacing: Space.m) {
+        WideColumns(spacing: Space.m, equalHeights: true) {
             ForEach(Array(w.ranked.enumerated()), id: \.element.id) { i, e in
                 section(e, best: i == 0 && w.ranked.count > 1 && !w.quiet, position: i + 1, place: picked.isEmpty ? "all" : "yours")
             }
@@ -351,6 +395,8 @@ private struct StoreSection: View {
                 }
                 .padding(.horizontal, Space.l)
 
+                // On iPad a shorter card stretches to its row's height: See all stays at the bottom.
+                Spacer(minLength: 0)
                 Button { openStore(s.id) } label: {
                     Text("See all \(total) at \(s.name)")
                         .font(.app(.callout, .semibold))
@@ -361,6 +407,7 @@ private struct StoreSection: View {
                 .padding(.horizontal, Space.l)
                 .padding(.vertical, Space.xs)
             }
+            .frame(maxHeight: .infinity, alignment: .top)
         }
         .clipShape(RoundedRectangle(cornerRadius: Radius.large))
         .padding(.top, Space.m)

@@ -57,6 +57,8 @@ How it fits together:
 - Packages resolve from the committed `Package.resolved` (Xcode Cloud turns automatic resolution off), so commit it after changing package versions.
 - Free plan: 25 compute hours a month across all the account's apps.
 
+Xcode Cloud can't register bundle IDs. Every app and extension bundle ID has to exist at https://developer.apple.com/account/resources/identifiers/list before its first cloud build, or the export fails with "Automatic signing cannot register bundle identifier" (Deals Dev's widget, `deals.seattlegrocery.dev.widget`, was registered by hand on 2026-11-14 for that reason). A new extension target means registering its ID there first.
+
 App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. First build: 0.1.0 (1), 2026-10-26, uploaded from the Mac. Deals Dev is a second app record for `deals.seattlegrocery.dev`, never released; it only exists for internal TestFlight.
 
 ## Code
@@ -69,6 +71,10 @@ App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. Fir
 - `Sources/Aisles.swift`: the Aisles tab and one page per aisle (store chips, sort, search).
 - `Sources/Search.swift`: the Search tab (the field at the bottom on iPhone, in place of the tab bar; picking the tab opens the keyboard), Spotlight indexing of the week's deals, and the router Siri and Spotlight use.
 - `Sources/Flyer.swift`: the full-screen weekly ad viewer (page images, PDFs) and Safari's viewer for page-only stores.
+- `Sources/Intents.swift`, `Entities.swift`, `SiriTools.swift`, `Skills.skillsbundle`: Siri and Shortcuts. Deals and stores as entities, the questions (this week at my stores, a store's deals, is it on sale, what on my list is on sale, plan my trip), the Siri AI tool conformances for iOS 27.3 and the skill that tells Siri how to use them.
+- `Sources/Trip.swift`: plan my trip (the server's `plan_trip` in Swift), and `Sharing.publish`, which writes what the widgets need.
+- `Shared/`: compiled into the app and the widget extension. `SharedState` (Your stores, the filters and the open list items, in the App Group), `DealsLink` (the `grocerydeals://` links) and the Add to List control's intent.
+- `Widget/DealsWidget.swift`: Best This Week (follows Your stores; Home and Lock Screen sizes), Grocery List, and the Add to List control.
 - `Sources/ListStore.swift`: the grocery list, in the app or in a Reminders list (EventKit); deal items carry price, store and the sale end date as the due date; whole-word matching of list items to deals.
 - `Sources/ListScreens.swift`: List tab, Reminders list picker, Settings (privacy switch).
 - `Sources/Analytics.swift`: Amplitude (Swift SDK), same project, events and privacy rules as the website: no IP, carrier, vendor ID or city. Off until the person says yes in onboarding (Amplitude isn't created before that); the switch in Settings changes the answer.
@@ -83,4 +89,5 @@ App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. Fir
 2. **Done:** List (in the app or Reminders via EventKit), + and checkmark on every deal, Amplitude with private settings. (Trip plan dropped.)
 2b. **Done:** alerts (`Sources/AlertsStore.swift`): new deals (a server push per store; a weekly local reminder without Firebase), ending soon, price watches.
 3. **Done:** Siri and Shortcuts (`Sources/Intents.swift`: "Add to my grocery list in Deals", "What's on sale in Deals") and the Best This Week widget (`Widget/`).
+3b. **Built, not yet on a device (2026-11-13):** Siri questions and Siri AI tools, widgets that follow Your stores, the Grocery List widget, the Add to List control, `grocerydeals://` links.
 4. With the paid Apple account: **TestFlight done** (2026-10-26). **Firebase push wired up** (2026-10-26): dev project `seattle-grocery-deals-dev`, APNs key `62XWUGPJN9`, sent from the deploy workflow. Then Universal Links. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.

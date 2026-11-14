@@ -65,6 +65,12 @@ struct RootView: View {
         return "\(f.week)|\(f.updated ?? "")|\(f.items.count)"
     }
 
+    /// Changes whenever something the widgets show does.
+    private var sharedVersion: String {
+        let lines = list.openItems.map { "\($0.id)\($0.text)" }.joined(separator: ",")
+        return "\(feedVersion)|\(store.favoriteStores.sorted().joined(separator: ","))|\(store.vegetarianOnly)|\(store.hideEndingToday)|\(list.title)|\(lines)"
+    }
+
     var body: some View {
         @Bindable var list = list
         // Every tab gets the same closure each time this view is redrawn. A fresh closure
@@ -120,12 +126,15 @@ struct RootView: View {
             }
             await alerts.scheduleEndingSoon(matches)
         }
+        // Widgets, Siri's store names, links and store opens from outside the app.
+        .modifier(Outside(sharedVersion: sharedVersion, openPendingStore: { openPendingStore(dropIfMissing: false) }))
         .handlesSpotlight(router)
         .onChange(of: router.searchRequest, initial: true) { if router.searchRequest > 0 { tab = .search } }
         // A deal from Spotlight can be newer than the deals saved on the phone: it waits for the
         // refresh instead of being dropped (it was, when the app opened from Spotlight).
         .onChange(of: router.dealID, initial: true) { openPendingDeal(dropIfMissing: false) }
         .onChange(of: feedVersion) {
+            openPendingStore(dropIfMissing: true)
             openPendingDeal(dropIfMissing: true)
             openPendingSeason(dropIfMissing: true)
         }
@@ -135,6 +144,7 @@ struct RootView: View {
         .sheet(item: $openSeason) { SeasonScreen(season: $0, openStore: openStore) }
         // Simulator screenshots: -season <id> opens that season's screen at launch.
         .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
+        .simulatorChecks(store, router)
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
         .onChange(of: router.tabRequest, initial: true) { _, name in
             guard let name else { return }
@@ -172,6 +182,16 @@ struct RootView: View {
         }
     }
 
+    private func openPendingStore(dropIfMissing: Bool) {
+        guard let id = router.storeID else { return }
+        if store.store(id) != nil {
+            openStore(id)
+            router.storeID = nil
+        } else if dropIfMissing {
+            router.storeID = nil
+        }
+    }
+
     private func openPendingSeason(dropIfMissing: Bool) {
         guard let id = router.seasonID else { return }
         if let season = store.season(id) {
@@ -186,6 +206,52 @@ struct RootView: View {
         guard let s = store.store(id) else { return }
         storePath = [s]
         tab = .stores
+    }
+}
+
+/// What reaches the app from outside it, kept out of RootView's body (one more modifier there
+/// and the compiler gives up type-checking it).
+private struct Outside: ViewModifier {
+    @Environment(FeedStore.self) private var store
+    @Environment(ListStore.self) private var list
+    let sharedVersion: String
+    let openPendingStore: () -> Void
+
+    func body(content: Content) -> some View {
+        let router = DealsRouter.shared
+        content
+            // The widgets follow Your stores, the filters and the list (Shared/SharedState.swift).
+            .task(id: sharedVersion) { Sharing.publish(store, list) }
+            // "What's on sale at Uwajimaya in Deals": Siri learns the store names from the feed.
+            .task(id: store.feed?.stores.map(\.id).joined(separator: ",") ?? "") {
+                if store.feed != nil { DealsShortcuts.updateAppShortcutParameters() }
+            }
+            // grocerydeals:// links from the widgets and from a deal's Reminders item.
+            .onOpenURL { router.open($0) }
+            // A store page, from Siri's Open Store or a link.
+            .onChange(of: router.storeID, initial: true) { openPendingStore() }
+    }
+}
+
+extension View {
+    /// Simulator checks (Debug builds): -link grocerydeals://store/uwajimaya opens a link at
+    /// launch (simctl's openurl stops at an "Open in Deals?" prompt nothing can tap), and
+    /// -trip "eggs, tofu" prints the trip plan for those items once the deals are in.
+    @MainActor
+    fileprivate func simulatorChecks(_ store: FeedStore, _ router: DealsRouter) -> some View {
+        self
+            .task { if let link = DebugArgs.value("-link").flatMap(URL.init(string:)) { router.open(link) } }
+            .task(id: store.feed?.week ?? "") {
+                guard let items = DebugArgs.value("-trip"), store.feed != nil else { return }
+                let plan = store.planTrip(splitItems(items))
+                var lines = plan.stores.prefix(4).map { s in
+                    "TRIP \(s.store.name): \(s.covers) of \(plan.asks.count): " + s.picks.map { "\($0.asked)=\($0.deal.name) \($0.deal.text)" }.joined(separator: "; ")
+                }
+                let other = plan.elsewhere.map { "\($0.store.name) \($0.covers)" } ?? "none"
+                lines.append("TRIP elsewhere: \(other) | nowhere: \(plan.nowhere.joined(separator: ", "))")
+                // Standard error, which isn't held back the way print is when it goes to a file.
+                FileHandle.standardError.write(Data((lines.joined(separator: "\n") + "\n").utf8))
+            }
     }
 }
 

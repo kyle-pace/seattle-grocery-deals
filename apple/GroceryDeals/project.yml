@@ -53,6 +53,10 @@ targetTemplates:
       - path: Sources
         excludes: [Info.plist]
       - Resources
+      # Shared with the widget extension: what the widgets read, and the control's intent.
+      - Shared
+      # Siri AI app skills (Skills.skillsbundle). Compiled by Xcode 27.3 and later.
+      - Skills.skillsbundle
     dependencies:
       - package: KitchenUI
       - package: AmplitudeSwift
@@ -67,10 +71,14 @@ targetTemplates:
       properties:
         # Xcode switches this to production when it signs for TestFlight and the App Store.
         aps-environment: development
+        # Your stores, the filters and the list, for the widgets (Shared/SharedState.swift).
+        com.apple.security.application-groups: [group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
         PRODUCT_NAME: GroceryDeals
+        # Shared/AddToListControl.swift is in the widget extension too; this marks the app's copy.
+        SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) DEALS_APP"
         MARKETING_VERSION: "0.1.0"
         CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1,2"
@@ -87,10 +95,15 @@ targetTemplates:
     sources:
       - path: Widget
         excludes: [Info.plist]
+      - Shared
       - Sources/Models.swift
       - Sources/Theme.swift
     dependencies:
       - package: KitchenUI
+    entitlements:
+      path: Widget/DealsWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery$(BUNDLE_ID_SUFFIX).widget
@@ -112,6 +125,13 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
+        DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        # Links from the widgets and from a deal's Reminders item (DealsLink). Each app has its
+        # own scheme, so a link opens the app it came from when both are installed.
+        DealsLinkScheme: grocerydeals
+        CFBundleURLTypes:
+          - CFBundleURLName: deals.seattlegrocery
+            CFBundleURLSchemes: [grocerydeals]
         # Lets a search started in iPhone Spotlight continue in the app's Search tab.
         CoreSpotlightContinuation: true
         UILaunchScreen:
@@ -126,6 +146,8 @@ targets:
       properties:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        DealsLinkScheme: grocerydeals
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
   DealsDev:
@@ -144,6 +166,13 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
+        DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        # Links from the widgets and from a deal's Reminders item (DealsLink). Each app has its
+        # own scheme, so a link opens the app it came from when both are installed.
+        DealsLinkScheme: grocerydealsdev
+        CFBundleURLTypes:
+          - CFBundleURLName: deals.seattlegrocery.dev
+            CFBundleURLSchemes: [grocerydealsdev]
         # Lets a search started in iPhone Spotlight continue in the app's Search tab.
         CoreSpotlightContinuation: true
         UILaunchScreen:
@@ -165,5 +194,7 @@ targets:
       properties:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        DealsLinkScheme: grocerydealsdev
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
