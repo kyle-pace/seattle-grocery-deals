@@ -8,9 +8,9 @@
 import { McpServer } from "@modelcontextprotocol/server";
 import { createMcpHandler } from "agents/mcp/server";
 import { z } from "zod";
-import { listStores, planTrip, searchDeals, thisWeek } from "./deals.js";
+import { findPlaces, listStores, planTrip, searchDeals, thisWeek } from "./deals.js";
 
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 const DEFAULT_FEED = "https://seattlegrocery.deals/api/week.json";
 const FRESH_MS = 5 * 60 * 1000; // the site rebuilds hourly, and on every new flyer
 
@@ -30,6 +30,26 @@ async function loadFeed(env) {
     return feed;
   } catch (e) {
     if (cached.feed && cached.url === url) return cached.feed;
+    throw e;
+  }
+}
+
+// Farmers markets and independent shops: /api/places.json, next to the week feed, cached the
+// same way. It changes when the site rebuilds, so a few minutes' staleness is fine.
+let placesCache = { at: 0, url: "", feed: null };
+
+async function loadPlaces(env) {
+  const url = (env?.FEED_URL || DEFAULT_FEED).replace(/week\.json$/, "places.json");
+  if (placesCache.feed && placesCache.url === url && Date.now() - placesCache.at < FRESH_MS) return placesCache.feed;
+  try {
+    const res = await fetch(url, { headers: { accept: "application/json", "user-agent": "seattle-grocery-deals-mcp" } });
+    if (!res.ok) throw new Error(`The places feed answered ${res.status}`);
+    const feed = await res.json();
+    if (!Array.isArray(feed.places)) throw new Error("The places feed is not in the expected shape");
+    placesCache = { at: Date.now(), url, feed };
+    return feed;
+  } catch (e) {
+    if (placesCache.feed && placesCache.url === url) return placesCache.feed;
     throw e;
   }
 }
@@ -70,7 +90,7 @@ function createServer(env, defaults = { stores: [], skip_stores: [] }) {
     {
       instructions:
         "This week's grocery flyer sales at Seattle-area specialty grocers (Asian markets, seafood shops, co-ops), on food for cooking. " +
-        "Use this_week for an overview or 'where should I shop', plan_trip to pick the one store that covers a shopping list, search_deals to look for ingredients or browse a store or aisle, and list_stores for store details. " +
+        "Use this_week for an overview or 'where should I shop', plan_trip to pick the one store that covers a shopping list, search_deals to look for ingredients or browse a store or aisle, and list_stores for store details. For farmers markets and independent shops with no flyer (butchers, fishmongers, grocers from around the world), use find_places. " +
         "People shop one store per trip and only at stores they like. If you know which stores the person shops at or avoids (they said so, or you remember), pass them as `stores` and `skip_stores` on every call. If you don't know and they ask where to shop or what to buy, ask which stores they use before recommending. " +
         "Recommend one store for a trip, not one item from each of several stores, unless they ask for the cheapest of everything. " +
         "Repeat prices exactly as given and say which store each is at; they come from printed flyers and can change. " +
@@ -172,6 +192,34 @@ function createServer(env, defaults = { stores: [], skip_stores: [] }) {
         return json(listStores(await loadFeed(env), withDefaults(args, defaults)));
       } catch (e) {
         return failed(e);
+      }
+    },
+  );
+
+  server.registerTool(
+    "find_places",
+    {
+      title: "Farmers markets and independent shops",
+      description:
+        "Seattle farmers markets and independent shops that don't post weekly flyers (so no prices): butchers, fishmongers, grocers from around the world, neighborhood grocers, and the food side of Pike Place Market. " +
+        "Each comes with its neighborhood and address, what it's known for, and how to order or get delivery when it offers that. Markets also say which days they're open in the next 7 days, their hours, and whether they double EBT (SNAP Market Match). " +
+        "Use it for 'which farmers markets are open this weekend?', 'where can I buy goat?', 'is there a halal butcher near Lake City?', or 'which shops take Fresh Bucks?'. It's a hand-picked list, not every store.",
+      inputSchema: z.object({
+        query: z.string().optional().describe("Words to look for in the name, neighborhood or what it's known for, for example 'goat', 'halal', 'oysters' or 'Ballard'."),
+        kind: z.enum(["market", "shop", "any"]).optional().describe("'market' for farmers markets, 'shop' for shops, 'any' (default) for both."),
+        shop_type: z.enum(["butcher", "seafood", "world", "neighborhood"]).optional().describe("Only shops of this type: butcher, seafood (fish and shellfish), world (grocers from around the world) or neighborhood (neighborhood grocers)."),
+        open_this_week: z.boolean().optional().describe("Only farmers markets open in the next 7 days."),
+        fresh_bucks: z.boolean().optional().describe("Only places that take Fresh Bucks (Seattle's produce benefit)."),
+        delivers: z.boolean().optional().describe("Only places that deliver or ship."),
+        limit: z.number().int().min(1).max(60).optional().describe("How many to return. Default 20."),
+      }),
+      annotations: READ_ONLY,
+    },
+    async (args) => {
+      try {
+        return json(findPlaces(await loadPlaces(env), args));
+      } catch (e) {
+        return { isError: true, content: [{ type: "text", text: `Could not read the markets and shops list: ${e.message}. See https://seattlegrocery.deals/shops/` }] };
       }
     },
   );

@@ -11,6 +11,7 @@ import {
   computeUnitPrice, round2, percentOff, leaveOutReason, flyerKind, collapseVariants,
 } from "./lib.mjs";
 import { FRUIT_SVG } from "./buddy.mjs";
+import { loadPlaces, checkPlaces } from "./places.mjs";
 
 const cfg = loadConfig();
 const errors = [];
@@ -54,6 +55,20 @@ function checkConfig() {
     if (item.benchmark && !cfg.benchmarks[item.benchmark]) err(w, `unknown benchmark ${item.benchmark}`);
   }
   checkSeasons();
+  checkPlacesFile();
+}
+
+// Farmers markets and shops (config/places.json). Errors stop the build; stale dates only warn.
+function checkPlacesFile() {
+  let file;
+  try { file = loadPlaces(); } catch (e) { return err("config/places.json", `not valid JSON: ${e.message}`); }
+  for (const e of checkPlaces(file)) err("config/places.json", e);
+  const today = new Date().toISOString().slice(0, 10);
+  if (file.checked && addDays(file.checked, 120) < today) warn("config/places.json", `checked ${file.checked}, over four months ago; recheck hours and moves`);
+  for (const p of file.places ?? []) {
+    if (p.now?.through && p.now.through < today) warn(`config/places.json ${p.id}`, `its run ended ${p.now.through}; update now for the next season or remove it`);
+    if (p.status === "moving") warn(`config/places.json ${p.id}`, "is moving; update the address once the new spot is known");
+  }
 }
 
 // Seasonal items: KitchenCatalog's calendar (vendor copy) and this site's config/seasons.json.

@@ -11,6 +11,7 @@ import { writeRecipes } from "./recipes.mjs";
 let POPULAR = { items: [] };
 import { buddy, seasonBuddy, seasonIcon } from "./buddy.mjs";
 import { loadSeasons, seasonOn, seasonDeals, seasonLog, seasonEnd, fill } from "./seasons.mjs";
+import { loadPlaces, SHOP_TYPES, PROGRAMS, daysAhead, upcomingSpecials, runningNow, placesFeed } from "./places.mjs";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
   unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind, storeRanks,
@@ -473,7 +474,7 @@ ${section === "app/" ? "" : `<aside class="app-banner" data-app-banner hidden ar
 ${wrap ? `<div class="wrap">\n${body}\n</div>` : body}
 </main>
 <footer class="site-foot"><div class="wrap">
-  <nav aria-label="More"><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Help paying for food</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
+  <nav aria-label="More"><a href="${url("markets/")}">Farmers markets</a><a href="${url("shops/")}">Shops worth a trip</a><a href="${url("weeks/")}">Past weeks</a><a href="${url("app/")}">iPhone app</a>${cfg.site.mcp_url ? `<a href="${url("mcp/")}">AI assistants</a>` : ""}<a href="${url("how-it-works/")}">How it works</a><a href="${url("about/")}">About</a><a href="${url("food-help/")}" data-no-track>Help paying for food</a><a href="${url("privacy/")}">Privacy</a><a href="${url("accessibility/")}">Accessibility</a>${SEASONS_NOW.map((s) => `<a href="${url(`${s.slug}/`)}">${esc(s.label)}</a>`).join("")}<a href="${esc(cfg.site.repo_url)}">Source</a></nav>
   <p>Prices come from each store's own flyer and can change. Check in store. Not affiliated with any store.</p>
 </div></footer>
 <nav class="tabbar" aria-label="Main">${tabs}</nav>
@@ -815,6 +816,7 @@ ${others.length ? `<section class="block" aria-labelledby="h-other">
   <div class="sec-h"><h2 id="h-other">Other markets worth knowing</h2><p>Good local markets with no online flyer, so their prices are not tracked</p></div>
   <ul class="tiles">${others.map((s) => storeTile(s, items, { about: true })).join("\n")}</ul>
 </section>` : ""}
+<div class="note-card"><b>No flyer, still worth a trip</b><span><a href="${url("markets/")}">Farmers markets</a> shows who's open this week. <a href="${url("shops/")}">Shops worth a trip</a> has butchers, fishmongers and grocers from around the world.</span></div>
 <section class="block" aria-labelledby="h-fly">
   <div class="sec-h"><h2 id="h-fly">This week's flyers</h2></div>
   ${flyerList(latest)}
@@ -1248,6 +1250,132 @@ function foodHelpPage() {
     image: "assets/img/og-food-help.png",
     imageAlt: "Help paying for food: the crow beside the words SNAP, Market Match at farmers markets, Fresh Bucks, WIC and more, with links to apply.",
   }));
+}
+
+// Farmers markets (/markets/) and Shops worth a trip (/shops/): places with no weekly flyer, so
+// no prices, from config/places.json (scripts/places.mjs). Added 2026-11-14 at the owner's ask, to
+// raise awareness that these places exist. Plan: design/PLAN.md. Analytics: no custom events;
+// Amplitude's own page views and link clicks say whether people find these pages and follow the
+// links out (newsletters, vendor maps, websites). Share images: node scripts/places-og.mjs.
+const PLACES = loadPlaces();
+const placeById = Object.fromEntries(PLACES.places.map((p) => [p.id, p]));
+const shortMarket = (p) => p.name.replace(/ Farmers Market$/, "");
+const placeHref = (p) => url(`${p.kind === "market" ? "markets" : "shops"}/#${p.id}`);
+const WEEKDAY_LONG = { Sun: "Sunday", Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday" };
+
+// "Known for" items start lowercase in the sentence, unless they start with a name.
+const PROPER = /^(Washington|Thai|Italian|Mexican|Nordic|Polish|Eastern|Indian|Russian|Japanese|Dungeness|Calabrian|Caribbean|Turkish|A-choy)/;
+function placeEntry(p) {
+  const addr = p.address?.replace(new RegExp(`, ${p.neighborhood}$`), "");
+  const where = addr && addr !== p.neighborhood ? `${p.neighborhood}, ${addr}` : p.neighborhood;
+  const hours = p.hours?.length ? `<ul class="place-hours">${p.hours.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>` : "";
+  const closed = (p.closed ?? []).filter((c) => c.date >= TODAY).map((c) => `<p class="place-note">${esc(c.note)}</p>`).join("");
+  const moving = p.status === "moving" ? `<p class="place-note">${badge("warn", "flag", "Moving")} ${esc(p.status_note)}</p>` : "";
+  const tags = [...(p.programs ?? []).map((k) => badge("good", "check", PROGRAMS[k])), ...(p.fresh_bucks ? [badge("good", "check", "Takes Fresh Bucks")] : [])];
+  const carries = p.carries?.length ? `<p class="place-carries"><b>Known for</b> ${p.carries.map((c) => esc(PROPER.test(c) ? c : c[0].toLowerCase() + c.slice(1))).join(", ")}</p>` : "";
+  const sv = p.services ?? {};
+  const service = [
+    sv.order_online && (sv.order_online.url ? `<li><b>Order:</b> <a href="${esc(sv.order_online.url)}">${esc(sv.order_online.how)}</a></li>` : `<li><b>Order:</b> ${esc(sv.order_online.how)}</li>`),
+    sv.phone_orders && `<li><b>Order:</b> ${esc(sv.phone_orders)}</li>`,
+    sv.delivery && `<li><b>Delivery:</b> ${esc(sv.delivery)}</li>`,
+    sv.ships && `<li><b>Shipping:</b> ${esc(sv.ships)}</li>`,
+  ].filter(Boolean);
+  const links = [
+    p.weekly && `<a href="${esc(p.weekly.url)}">${esc(p.weekly.label)}</a>`,
+    p.newsletter && `<a href="${esc(p.newsletter.url)}">${esc(p.newsletter.label)}</a>`,
+    p.website && `<a href="${esc(p.website)}">Website<span class="sr-only"> for ${esc(p.name)}</span></a>`,
+    p.hub && `<a href="${url(`shops/#${p.hub}`)}">Its food shops</a>`,
+  ].filter(Boolean);
+  return `<li class="place" id="${esc(p.id)}">
+  <h3 class="place-name">${esc(p.name)}</h3>
+  <p class="place-where">${esc(where)}</p>
+  ${hours}${closed}${moving}
+  <p class="place-about">${esc(p.about)}</p>
+  ${carries}${service.length ? `<ul class="place-service">${service.join("")}</ul>` : ""}
+  ${tags.length ? `<p class="place-tags">${tags.join(" ")}${p.program_note ? ` <span>${esc(p.program_note)}</span>` : ""}</p>` : ""}
+  ${links.length ? `<p class="place-links">${links.join("")}</p>` : ""}
+</li>`;
+}
+const placeList = (list) => `<ul class="places">${list.map(placeEntry).join("\n")}</ul>`;
+
+function marketsPage() {
+  const markets = PLACES.places.filter((p) => p.kind === "market");
+  const ahead = daysAhead(markets, TODAY, 7);
+  const now = markets.filter((p) => runningNow(p, TODAY));
+  const later = markets.filter((p) => !runningNow(p, TODAY));
+  const specials = upcomingSpecials(markets, TODAY, 60);
+  const everyDay = markets.filter((p) => p.every_day);
+  const day = (d, i) => {
+    const [dow, md] = fmtDate(d.date).split(", ");
+    const num = md.split(" ")[1];
+    return `<li class="mk-day${i === 0 ? " is-today" : ""}">
+  <h3 class="mk-date"><span aria-hidden="true"><span class="mk-dow">${i === 0 ? "Today" : dow}</span> <span class="mk-num">${num}</span></span><span class="sr-only">${i === 0 ? "Today, " : ""}${WEEKDAY_LONG[dow]}, ${esc(md)}</span></h3>
+  ${d.open.length ? `<ul>${d.open.map((o) => `<li><a href="#${esc(o.place.id)}">${esc(shortMarket(o.place))}${o.name ? ` ${esc(o.name)}` : ""}</a>${o.time ? `<span>${esc(o.time)}</span>` : ""}</li>`).join("")}</ul>` : `<p class="mk-none">No markets</p>`}
+</li>`;
+  };
+  const body = `${pageHead("Farmers markets", "Buy straight from Washington farms and fishers. Markets don't print flyers, so there are no prices here: just who's open this week, and where each one posts its news.")}
+<section class="block" aria-labelledby="h-week">
+  <div class="sec-h"><h2 id="h-week">The next seven days</h2></div>
+  <ol class="mk-week">${ahead.map(day).join("\n")}</ol>
+  ${everyDay.length ? `<p class="sec-note mk-every">${everyDay.map((p) => `<a href="#${esc(p.id)}">${esc(p.name)}</a>`).join(", ")} ${everyDay.length === 1 ? "is" : "are"} open every day.</p>` : ""}
+</section>
+<section class="block" aria-labelledby="h-now">
+  <div class="sec-h"><h2 id="h-now">Open now</h2><p>${plural(now.length, "market")}</p></div>
+  ${placeList(now)}
+</section>
+${specials.length ? `<section class="block" aria-labelledby="h-special">
+  <div class="sec-h"><h2 id="h-special">Harvest and holiday markets</h2><p>One-day markets from the summer markets</p></div>
+  <ul class="mk-specials">${specials.map((s) => `<li><b>${esc(fmtDate(s.date))}</b> <a href="#${esc(s.place.id)}">${esc(shortMarket(s.place))} ${esc(s.name)}</a>${s.time ? `, ${esc(s.time)}` : ""}</li>`).join("")}</ul>
+</section>` : ""}
+<section class="block" aria-labelledby="h-later">
+  <div class="sec-h"><h2 id="h-later">Summer markets</h2><p>Dates are from the 2026 season; new ones usually come out in spring</p></div>
+  ${placeList(later)}
+</section>
+<div class="note-card"><b>Paying with EBT or Fresh Bucks</b><span>Most of these markets double what you spend with EBT on fruits and vegetables, and Fresh Bucks work at farmers markets in Seattle. <a href="${url("food-help/")}#markets" data-no-track>How Market Match and Fresh Bucks work</a></span></div>
+<p class="places-foot">Hours were checked ${esc(fmtDate(PLACES.checked, { weekday: false, year: true }))} and can change, so check a market's own page before a special trip. Looking for shops instead? See <a href="${url("shops/")}">Shops worth a trip</a>.</p>`;
+  write("markets/", page({
+    title: "Farmers markets", path: "markets/", section: "stores/", body,
+    description: `Seattle farmers markets open this week, from ${now.slice(0, 3).map(shortMarket).join(", ")} and more, with each market's hours and newsletter. Most double EBT for produce.`,
+    ogTitle: "Seattle farmers markets this week",
+    image: "assets/img/og-markets.png",
+    imageAlt: "Farmers markets: the crow beside the words Who's open this week, with each market's hours and newsletter.",
+  }));
+}
+
+function shopsPage() {
+  const shops = PLACES.places.filter((p) => p.kind === "shop");
+  const hubs = PLACES.places.filter((p) => p.kind === "hub");
+  const groups = Object.entries(SHOP_TYPES).map(([type, label]) => ({ type, label, list: shops.filter((p) => p.type === type && !p.hub).sort((a, b) => a.name.localeCompare(b.name)) })).filter((g) => g.list.length);
+  const jump = [...groups.map((g) => [`type-${g.type}`, g.label]), ...hubs.map((h) => [h.id, h.name])];
+  const body = `${pageHead("Shops worth a trip", "Butchers, fishmongers and grocers from around the world. They don't post weekly flyers, so there are no prices here: just where they are and what they're good for.")}
+<nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${esc(label)}</a></li>`).join("")}</ul></nav>
+${groups.map((g) => `<section class="block" aria-labelledby="type-${g.type}">
+  <div class="sec-h"><h2 id="type-${g.type}">${esc(g.label)}</h2><p>${plural(g.list.length, "shop")}</p></div>
+  ${placeList(g.list)}
+</section>`).join("\n")}
+${hubs.map((h) => {
+    const members = shops.filter((p) => p.hub === h.id);
+    const market = h.market && placeById[h.market];
+    return `<section class="block" aria-labelledby="${esc(h.id)}">
+  <div class="sec-h"><h2 id="${esc(h.id)}">${esc(h.name)}</h2><p>${plural(members.length, "food shop")}</p></div>
+  <p class="hub-about">${esc(h.about)}${market ? ` <a href="${placeHref(market)}">Hours and EBT at the Market</a>` : ""}</p>
+  ${placeList(members)}
+</section>`;
+  }).join("\n")}
+<p class="places-foot">Each shop was checked ${esc(fmtDate(PLACES.checked, { weekday: false, year: true }))}. Hours change, so call ahead for a special trip. For produce straight from farms, see <a href="${url("markets/")}">Farmers markets</a>. <a href="${esc(cfg.site.suggest_store_url)}">Suggest a shop</a></p>`;
+  write("shops/", page({
+    title: "Shops worth a trip", path: "shops/", section: "stores/", body,
+    description: `Independent butchers, fishmongers and grocers from around the world in the Seattle area, like ${shops.filter((p) => !p.hub).slice(0, 3).map((p) => p.name).join(", ")}, plus the food side of Pike Place Market.`,
+    ogTitle: "Seattle shops worth a trip",
+    image: "assets/img/og-shops.png",
+    imageAlt: "Shops worth a trip: the crow beside the words Butchers, fishmongers and grocers from around the world.",
+  }));
+}
+
+// The markets and shops for the MCP server and anyone else: /api/places.json.
+function placesApi() {
+  mkdirSync(join(DIST, "api"), { recursive: true });
+  writeFileSync(join(DIST, "api", "places.json"), JSON.stringify(placesFeed(PLACES, TODAY, (p) => cfg.site.origin + cfg.site.base_path + p)));
 }
 
 // Accessibility statement, linked from the footer and the About page.
@@ -1692,6 +1820,9 @@ storePages();
 aboutPage();
 privacyPage();
 foodHelpPage();
+marketsPage();
+shopsPage();
+placesApi();
 accessibilityPage();
 yourListPage();
 appsPage();

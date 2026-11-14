@@ -37,6 +37,8 @@ jobs:
       - run: npm run validate
       # The MCP server's answers (mcp/src/deals.js): plain functions, no install needed.
       - run: node --test mcp/test/*.test.mjs
+      # Farmers markets and shops (config/places.json): the real file and a broken one.
+      - run: node --test scripts/*.test.mjs
       - run: npm run build
         env:
           # Read-only use: counts of "Added Deal to List" for /api/popular.json. Without them the

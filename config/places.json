@@ -1,0 +1,1042 @@
+{
+  "_about": "Farmers markets and independent shops, for /markets/ and /shops/ and /api/places.json. No prices: these places don't post weekly flyers. Curated by hand from the 'markets and independents to vet' sheet; every entry was checked on the date in `checked` against its `source`. See ADDING-A-PLACE.md.",
+  "checked": "2026-11-14",
+  "places": [
+    {
+      "id": "ballard",
+      "kind": "market",
+      "name": "Ballard Farmers Market",
+      "neighborhood": "Ballard",
+      "address": "5345 Ballard Ave NW",
+      "about": "A big year-round Sunday market of Washington growers only: produce, meat, fish, eggs, cheese and bread.",
+      "run_by": "Seattle Farmers Market Association",
+      "hours": [
+        "Sundays 9am to 2pm, all year"
+      ],
+      "now": {
+        "days": [
+          "sun"
+        ],
+        "time": "9am to 2pm"
+      },
+      "programs": [
+        "market_match"
+      ],
+      "website": "https://www.sfmamarkets.com/",
+      "weekly": {
+        "label": "This week's vendor map, posted Fridays",
+        "url": "https://maps.managemymarket.com/7814"
+      },
+      "newsletter": {
+        "label": "SFMA newsletter",
+        "url": "https://www.sfmamarkets.com/sfmamarkets-newsletter"
+      },
+      "source": "https://www.sfmamarkets.com/",
+      "lat": 47.66734,
+      "lon": -122.38451
+    },
+    {
+      "id": "u-district",
+      "kind": "market",
+      "name": "University District Farmers Market",
+      "neighborhood": "U District",
+      "address": "University Way NE and NE 50th St",
+      "about": "Seattle's oldest neighborhood farmers market, every Saturday of the year on the Ave.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Saturdays 9am to 2pm, all year"
+      ],
+      "now": {
+        "days": [
+          "sat"
+        ],
+        "time": "9am to 2pm"
+      },
+      "programs": [
+        "market_match"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.66518,
+      "lon": -122.31297
+    },
+    {
+      "id": "capitol-hill",
+      "kind": "market",
+      "name": "Capitol Hill Farmers Market",
+      "neighborhood": "Capitol Hill",
+      "address": "Broadway and E Barbara Bailey Way",
+      "about": "A Sunday market on Broadway all year, plus a Tuesday evening market in summer.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Sundays 11am to 3pm, all year",
+        "Tuesdays 3 to 7pm, June to September"
+      ],
+      "now": {
+        "days": [
+          "sun"
+        ],
+        "time": "11am to 3pm"
+      },
+      "programs": [
+        "market_match"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.61619,
+      "lon": -122.3215
+    },
+    {
+      "id": "west-seattle",
+      "kind": "market",
+      "name": "West Seattle Farmers Market",
+      "neighborhood": "West Seattle Junction",
+      "address": "California Ave SW and SW Alaska St",
+      "about": "A year-round Sunday market in the Junction. Buying produce with EBT here also puts money back on your card.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Sundays 10am to 2pm, all year"
+      ],
+      "now": {
+        "days": [
+          "sun"
+        ],
+        "time": "10am to 2pm"
+      },
+      "programs": [
+        "market_match",
+        "produce_rewards"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.56121,
+      "lon": -122.38719
+    },
+    {
+      "id": "burien",
+      "kind": "market",
+      "name": "Burien Farmers Market",
+      "neighborhood": "Burien",
+      "address": "Burien Town Square Park",
+      "about": "A Thursday market just south of the city, open all year with shorter winter hours.",
+      "run_by": "Discover Burien",
+      "hours": [
+        "Thursdays 10am to 4pm, November to April",
+        "Thursdays 10am to 6pm, May to October"
+      ],
+      "now": {
+        "days": [
+          "thu"
+        ],
+        "time": "10am to 4pm"
+      },
+      "closed": [
+        {
+          "date": "2026-12-31",
+          "note": "Closed Thursday, December 31; back January 7"
+        }
+      ],
+      "website": "https://www.discoverburien.org/info",
+      "source": "https://www.discoverburien.org/info",
+      "lat": 47.4674,
+      "lon": -122.34024
+    },
+    {
+      "id": "pike-place",
+      "kind": "market",
+      "name": "Pike Place Market",
+      "neighborhood": "Downtown",
+      "address": "Pike Place and 1st Ave",
+      "about": "Open every day. Much of it is crafts, gifts and restaurants, so the shops page lists just its food: produce stands, fish counters, a butcher and specialty grocers.",
+      "run_by": "Pike Place Market PDA",
+      "hours": [
+        "Every day, roughly 9am to 6pm; produce day stalls close earlier"
+      ],
+      "every_day": true,
+      "hub": "pike-place-food",
+      "programs": [
+        "market_match"
+      ],
+      "program_note": "For Market Match, trade your EBT at the Market Commons first.",
+      "website": "https://www.pikeplacemarket.org/",
+      "source": "https://www.pikeplacemarket.org/",
+      "lat": 47.6094,
+      "lon": -122.34141
+    },
+    {
+      "id": "lake-city",
+      "kind": "market",
+      "name": "Lake City Farmers Market",
+      "neighborhood": "Lake City",
+      "address": "NE 125th St and 28th Ave NE",
+      "about": "A summer Thursday market with a fall Saturday run that goes up to the holidays. EBT produce purchases earn money back here.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Saturdays 10am to 2pm, October 3 to December 19",
+        "Thursdays 3 to 7pm, June to September"
+      ],
+      "now": {
+        "days": [
+          "sat"
+        ],
+        "time": "10am to 2pm",
+        "from": "2026-10-03",
+        "through": "2026-12-19"
+      },
+      "programs": [
+        "market_match",
+        "produce_rewards"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.71937,
+      "lon": -122.29817
+    },
+    {
+      "id": "queen-anne",
+      "kind": "market",
+      "name": "Queen Anne Farmers Market",
+      "neighborhood": "Queen Anne",
+      "address": "Queen Anne Ave N and W Crockett St",
+      "about": "Seattle's only independent, community-run farmers market, on Thursday evenings in summer.",
+      "run_by": "Queen Anne Farmers Market (independent)",
+      "hours": [
+        "Thursdays 3 to 7:30pm, May 28 to October 8"
+      ],
+      "special": [
+        {
+          "date": "2026-11-21",
+          "name": "Thanksgiving Harvest Market"
+        }
+      ],
+      "website": "https://qafm.org",
+      "newsletter": {
+        "label": "Sign up at qafm.org",
+        "url": "https://qafm.org"
+      },
+      "source": "https://qafm.org",
+      "lat": 47.63682,
+      "lon": -122.35706
+    },
+    {
+      "id": "magnolia",
+      "kind": "market",
+      "name": "Magnolia Farmers Market",
+      "neighborhood": "Magnolia",
+      "address": "33rd Ave W and W McGraw St",
+      "about": "A small Saturday market in summer, back for a harvest market and a holiday market.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Saturdays 10am to 2pm, June 6 to October 10"
+      ],
+      "special": [
+        {
+          "date": "2026-11-21",
+          "name": "Harvest Market"
+        },
+        {
+          "date": "2026-12-05",
+          "name": "Holiday Market"
+        }
+      ],
+      "programs": [
+        "market_match"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.64005,
+      "lon": -122.39959
+    },
+    {
+      "id": "phinney",
+      "kind": "market",
+      "name": "Phinney Farmers Market",
+      "neighborhood": "Phinney Ridge",
+      "address": "6532 Phinney Ave N",
+      "about": "A Friday evening market in summer, with one harvest market before Thanksgiving.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Fridays 3 to 7pm, June 5 to September 25"
+      ],
+      "special": [
+        {
+          "date": "2026-11-20",
+          "name": "Harvest Market"
+        }
+      ],
+      "programs": [
+        "market_match"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.67714,
+      "lon": -122.354
+    },
+    {
+      "id": "columbia-city",
+      "kind": "market",
+      "name": "Columbia City Farmers Market",
+      "neighborhood": "Columbia City",
+      "address": "37th Ave S and S Edmunds St",
+      "about": "A Wednesday afternoon market in the Rainier Valley. EBT produce purchases earn money back here.",
+      "run_by": "Neighborhood Farmers Markets",
+      "hours": [
+        "Wednesdays 3 to 7pm, May 6 to October 28"
+      ],
+      "programs": [
+        "market_match",
+        "produce_rewards"
+      ],
+      "newsletter": {
+        "label": "Ripe+Ready newsletter",
+        "url": "https://mailchi.mp/seattlefarmersmarkets/ripeandready"
+      },
+      "source": "https://mailchi.mp/seattlefarmersmarkets/ripeandready",
+      "lat": 47.55981,
+      "lon": -122.28733
+    },
+    {
+      "id": "wallingford",
+      "kind": "market",
+      "name": "Wallingford Farmers Market",
+      "neighborhood": "Wallingford",
+      "address": "Meridian Park",
+      "about": "A Wednesday afternoon market in Meridian Park through the summer.",
+      "run_by": "Seattle Farmers Market Association",
+      "hours": [
+        "Wednesdays 3 to 7pm, May 27 to September 30"
+      ],
+      "website": "https://www.sfmamarkets.com/",
+      "newsletter": {
+        "label": "SFMA newsletter",
+        "url": "https://www.sfmamarkets.com/sfmamarkets-newsletter"
+      },
+      "source": "https://www.sfmamarkets.com/",
+      "lat": 47.64863,
+      "lon": -122.33356
+    },
+    {
+      "id": "central-district",
+      "kind": "market",
+      "name": "Central District Farmers Market",
+      "neighborhood": "Central District",
+      "address": "1126 Martin Luther King Jr Way",
+      "about": "A summer market that used to be the Madrona market. Its 2027 days haven't been posted yet.",
+      "run_by": "Seattle Farmers Market Association",
+      "hours": [
+        "Summer; check the 2027 schedule"
+      ],
+      "website": "https://www.sfmamarkets.com/",
+      "newsletter": {
+        "label": "SFMA newsletter",
+        "url": "https://www.sfmamarkets.com/sfmamarkets-newsletter"
+      },
+      "source": "https://www.sfmamarkets.com/",
+      "lat": 47.61243,
+      "lon": -122.29551
+    },
+    {
+      "id": "pike-place-food",
+      "kind": "hub",
+      "name": "Pike Place Market",
+      "neighborhood": "Downtown",
+      "address": "Pike Place and 1st Ave",
+      "about": "The food side of the Market, without the crafts and gifts: produce stands and day stalls along the main arcade, three fish counters, the last full-service butcher, a sausage maker and a few specialty grocers.",
+      "market": "pike-place",
+      "source": "https://www.pikeplacemarket.org/",
+      "lat": 47.6094,
+      "lon": -122.34141
+    },
+    {
+      "id": "don-and-joes",
+      "kind": "shop",
+      "type": "butcher",
+      "hub": "pike-place-food",
+      "name": "Don & Joe's Meats",
+      "neighborhood": "Pike Place Market",
+      "address": "85 Pike St",
+      "about": "The Market's last full-service butcher, under the clock since 1969. Six Market restaurants buy their meat here.",
+      "source": "https://www.kbcs.fm/2026/07/16/madinah-in-the-market-season-3-episode-7/",
+      "lat": 47.60961,
+      "lon": -122.34165,
+      "carries": [
+        "Steaks and chops cut to order",
+        "Lamb and veal",
+        "Grain-finished natural beef"
+      ]
+    },
+    {
+      "id": "pike-place-fish-counters",
+      "kind": "shop",
+      "type": "seafood",
+      "hub": "pike-place-food",
+      "name": "The fish counters",
+      "neighborhood": "Pike Place Market",
+      "address": "Main Arcade",
+      "about": "City Fish Co., Pure Food Fish and Pike Place Fish. Ask what came in today; most will pack fish to travel or ship it.",
+      "source": "https://reviews.birdeye.com/d/seafood-markets/seattle-wa",
+      "carries": [
+        "Wild salmon",
+        "Dungeness crab",
+        "Halibut",
+        "Smoked salmon"
+      ],
+      "services": {
+        "ships": "Pike Place Fish and Pure Food Fish ship overnight"
+      }
+    },
+    {
+      "id": "riccios",
+      "kind": "shop",
+      "type": "butcher",
+      "hub": "pike-place-food",
+      "name": "Riccio's Sausage Co.",
+      "neighborhood": "Pike Place Market",
+      "address": "1511 Pike Pl",
+      "about": "Calabrian and Italian sausages made by the owner's family recipes, raw to take home or in a sandwich. Opened in January 2026 in the old Uli's spot, next to Pure Food Fish.",
+      "source": "https://www.pikeplacemarket.org/vendor/riccios-sausage-co/",
+      "lat": 47.60875,
+      "lon": -122.34107,
+      "carries": [
+        "Calabrian sausage",
+        "Italian sausage",
+        "Sausage sandwiches"
+      ]
+    },
+    {
+      "id": "delaurenti",
+      "kind": "shop",
+      "type": "world",
+      "hub": "pike-place-food",
+      "name": "DeLaurenti Food & Wine",
+      "neighborhood": "Pike Place Market",
+      "address": "1435 1st Ave",
+      "about": "An Italian and European grocer since 1946: olive oils, dried pasta, anchovies, and a cheese and salumi counter.",
+      "source": "https://www.seattlemet.com/eat-and-drink/delaurenti-a-love-letter/",
+      "lat": 47.60865,
+      "lon": -122.34008,
+      "carries": [
+        "Italian cheese and salumi",
+        "Olive oil",
+        "Dried pasta",
+        "Anchovies",
+        "Wine"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Online, for pickup or delivery",
+          "url": "https://delaurenti.com"
+        },
+        "delivery": "Same day in much of Seattle for $10 if you order by noon",
+        "ships": "Next day by ground in Washington"
+      }
+    },
+    {
+      "id": "el-mercado-latino",
+      "kind": "shop",
+      "type": "world",
+      "hub": "pike-place-food",
+      "name": "El Mercado Latino",
+      "neighborhood": "Pike Place Market",
+      "address": "1514 Pike Pl #6",
+      "about": "Dried and fresh chiles, yerba mate, and Caribbean and South American pantry staples, on Post Alley since 1988.",
+      "source": "https://en.wikipedia.org/wiki/El_Mercado_Latino",
+      "lat": 47.60906,
+      "lon": -122.34093,
+      "carries": [
+        "Dried and fresh chiles",
+        "Yerba mate",
+        "Caribbean and South American pantry"
+      ]
+    },
+    {
+      "id": "world-spice",
+      "kind": "shop",
+      "type": "world",
+      "hub": "pike-place-food",
+      "name": "World Spice Merchants",
+      "neighborhood": "Below Pike Place Market",
+      "address": "1509 Western Ave",
+      "about": "Whole and ground spices, blends and tea, sold by weight, so you can buy as little as a recipe needs.",
+      "website": "https://worldspice.com/pages/seattle",
+      "source": "https://worldspice.com/pages/seattle",
+      "lat": 47.6086,
+      "lon": -122.34156,
+      "carries": [
+        "Whole and ground spices",
+        "Spice blends",
+        "Tea"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Online shop",
+          "url": "https://worldspice.com"
+        },
+        "ships": "Ships spices and tea"
+      }
+    },
+    {
+      "id": "beast-and-cleaver",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Beast & Cleaver",
+      "neighborhood": "Ballard",
+      "address": "2362 NW 80th St",
+      "about": "A whole-animal butcher buying from Northwest ranches: long dry-aged beef, house sausages, and the odd cuts others don't carry.",
+      "source": "https://www.seattlemet.com/eat-and-drink/best-butcher-shops-meat-markets-seattle",
+      "lat": 47.68694,
+      "lon": -122.38711,
+      "carries": [
+        "Dry-aged beef",
+        "House sausage",
+        "Whole-animal cuts",
+        "Butcher sandwiches"
+      ],
+      "services": {
+        "phone_orders": "Call for special orders",
+        "delivery": "A monthly butcher box delivered through Table22"
+      }
+    },
+    {
+      "id": "better-meat",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Better Meat",
+      "neighborhood": "Greenwood",
+      "address": "305 NW 82nd St",
+      "about": "An old-school family butcher since 1962. Ask for a custom cut, or a whole pig.",
+      "source": "https://freshchalk.com/b/seattle/butchers",
+      "lat": 47.6882,
+      "lon": -122.36099,
+      "carries": [
+        "Custom cuts",
+        "Whole pigs",
+        "Holiday turkeys"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Online store, for curbside pickup"
+        }
+      }
+    },
+    {
+      "id": "bobs-quality-meats",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Bob's Quality Meats",
+      "neighborhood": "Columbia City",
+      "address": "4861 Rainier Ave S",
+      "about": "A third-generation family butcher with Washington meats, house jerky and sausage, and holiday turkeys to order.",
+      "source": "https://phoenix.aws.mapquest.com/us/washington/bobs-quality-meats-12582876",
+      "lat": 47.55832,
+      "lon": -122.2855,
+      "carries": [
+        "Washington beef and pork",
+        "House jerky",
+        "Sausage",
+        "Holiday turkeys"
+      ]
+    },
+    {
+      "id": "b-and-e-queen-anne",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "B&E Meats & Seafood",
+      "neighborhood": "Queen Anne",
+      "address": "2401 Queen Anne Ave N",
+      "about": "A neighborhood meat and seafood counter from a family business that started in Burien in 1958. Smoked salmon and marinated meats are its specialties.",
+      "source": "https://freshchalk.com/b/seattle/butchers",
+      "lat": 47.63975,
+      "lon": -122.35723,
+      "carries": [
+        "Smoked salmon",
+        "Marinated meats",
+        "Washington and Oregon beef",
+        "Seafood"
+      ]
+    },
+    {
+      "id": "rain-shadow",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Rain Shadow Meats",
+      "neighborhood": "Capitol Hill",
+      "address": "1531 Melrose Ave",
+      "about": "Local meats and house charcuterie, with home delivery and a butcher's club.",
+      "status": "moving",
+      "status_note": "Leaving Melrose Market after December 23, 2026. The new spot hasn't been announced.",
+      "source": "https://whatnow.com/?p=393052",
+      "lat": 47.61476,
+      "lon": -122.32808,
+      "carries": [
+        "Local beef, pork and lamb",
+        "House charcuterie",
+        "Cured meats"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Online, for next-day pickup"
+        },
+        "delivery": "Weekly home delivery from its fresh sheet, and a monthly butcher's club through Table22"
+      }
+    },
+    {
+      "id": "leschi-market",
+      "kind": "shop",
+      "type": "neighborhood",
+      "name": "Leschi Market",
+      "neighborhood": "Leschi",
+      "address": "103 Lakeside Ave",
+      "about": "A lakeside neighborhood grocery with a full-service butcher counter and house-smoked andouille.",
+      "source": "https://www.seattlemet.com/articles/specialty-grocery-stores-seattle",
+      "lat": 47.60197,
+      "lon": -122.28545,
+      "carries": [
+        "Butcher counter",
+        "House-smoked andouille",
+        "Local tortillas",
+        "Wine"
+      ]
+    },
+    {
+      "id": "meat-the-live-butcher",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Meat the Live Butcher",
+      "neighborhood": "White Center",
+      "address": "9432 16th Ave SW",
+      "about": "A third-generation family butcher: custom cuts, dry-aged beef, house sausage and meat bundles for stocking the freezer.",
+      "source": "https://www.emeraldpalate.com/?p=24712",
+      "lat": 47.5182,
+      "lon": -122.35497,
+      "carries": [
+        "Dry-aged beef",
+        "House pork sausage",
+        "Bison and venison",
+        "Freezer bundles"
+      ]
+    },
+    {
+      "id": "carniceria-el-paisano",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Carniceria El Paisano",
+      "neighborhood": "White Center",
+      "address": "9629 15th Ave SW",
+      "about": "A Mexican butcher: thin-cut beef for carne asada, smoked pork chops and goat, plus tamales and salsas. The family's rosticeria is next door.",
+      "source": "https://www.seattlemet.com/stores/el-paisano-rosticeria-y-cocina",
+      "lat": 47.5165,
+      "lon": -122.35418,
+      "carries": [
+        "Carne asada cuts",
+        "Smoked pork chops",
+        "Goat",
+        "Tamales",
+        "Salsas"
+      ]
+    },
+    {
+      "id": "golden-steer",
+      "kind": "shop",
+      "type": "butcher",
+      "name": "Golden Steer Choice Meats",
+      "neighborhood": "Bellevue",
+      "address": "15255 NE Bel-Red Rd, Bellevue",
+      "about": "Since 1968: smoking and dry aging done in house, house sausages and marinated chicken. There's a second shop in Woodinville.",
+      "source": "https://www.seattlemet.com/eat-and-drink/best-butcher-shops-meat-markets-seattle",
+      "lat": 47.6284,
+      "lon": -122.13512,
+      "carries": [
+        "Dry-aged beef",
+        "House-smoked meats",
+        "House sausage",
+        "Marinated chicken"
+      ]
+    },
+    {
+      "id": "wild-salmon-seafood",
+      "kind": "shop",
+      "type": "seafood",
+      "name": "Wild Salmon Seafood Market",
+      "neighborhood": "Fishermen's Terminal",
+      "address": "1900 W Nickerson St #105",
+      "about": "A family-run fish market at Fishermen's Terminal that buys from the boats: wild salmon, halibut, crab and smoked fish.",
+      "source": "https://king5.com/article/life/food/wild-salmon-market-is-seattles-best-kept-secret-for-seafood-lovers/281-457688787",
+      "lat": 47.65716,
+      "lon": -122.37978,
+      "carries": [
+        "Wild salmon",
+        "Halibut",
+        "Dungeness crab",
+        "Smoked fish"
+      ],
+      "services": {
+        "ships": "Ships overnight by UPS"
+      }
+    },
+    {
+      "id": "seattle-fish-guys",
+      "kind": "shop",
+      "type": "seafood",
+      "name": "Seattle Fish Guys",
+      "neighborhood": "Central District",
+      "address": "411 23rd Ave S",
+      "about": "A fish market and poke counter from Mutual Fish and City Fish alums: black cod, spot prawns, scallops.",
+      "source": "https://www.seattlemet.com/eat-and-drink/the-best-seafood-in-seattle",
+      "lat": 47.59897,
+      "lon": -122.30244,
+      "carries": [
+        "Black cod",
+        "Spot prawns",
+        "Scallops",
+        "Poke"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Online, for pickup (poke and prepared food)",
+          "url": "https://order.online/store/-663493/"
+        },
+        "delivery": "Poke and prepared food through DoorDash and Uber Eats"
+      }
+    },
+    {
+      "id": "taylor-shellfish-melrose",
+      "kind": "shop",
+      "type": "seafood",
+      "name": "Taylor Shellfish",
+      "neighborhood": "Capitol Hill",
+      "address": "1521 Melrose Ave",
+      "about": "The shellfish farm's own shop. Besides the oyster bar, there are live tanks of oysters, clams, mussels and geoduck to take home.",
+      "website": "https://www.taylorshellfishfarms.com/capitol-hill-melrose",
+      "source": "https://www.taylorshellfishfarms.com/capitol-hill-melrose",
+      "lat": 47.61463,
+      "lon": -122.32806,
+      "carries": [
+        "Live oysters",
+        "Clams and mussels",
+        "Geoduck",
+        "Dungeness crab"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Online, for pickup",
+          "url": "https://www.toasttab.com/local/order/taylor-shellfish-farms-melrose"
+        },
+        "ships": "Ships shellfish; $10 to Western Washington, usually next day"
+      }
+    },
+    {
+      "id": "kuzmas",
+      "kind": "shop",
+      "type": "seafood",
+      "name": "Kuzma's Fish Market",
+      "neighborhood": "Edmonds",
+      "address": "21104 70th Ave W, Edmonds",
+      "about": "An old-school fish shop that breaks down whole fish in house, slices sashimi daily and makes poke. Run by a longtime Mutual Fish and Uwajimaya fishmonger.",
+      "source": "https://www.seattlemet.com/eat-and-drink/2026/10/kuzmas-fish-market-seafood",
+      "lat": 47.80779,
+      "lon": -122.3278,
+      "carries": [
+        "Whole fish, cut in house",
+        "Sashimi-grade fish",
+        "Poke",
+        "Japanese groceries"
+      ]
+    },
+    {
+      "id": "big-johns-pfi",
+      "kind": "shop",
+      "type": "world",
+      "name": "Big John's PFI",
+      "neighborhood": "Chinatown-International District",
+      "address": "1608 S Dearborn St",
+      "about": "An Italian and Mediterranean importer since 1971: specialty flours, anchovies, olives, pasta, and cheese by the chunk at warehouse prices.",
+      "source": "https://www.seattlemet.com/articles/specialty-grocery-stores-seattle",
+      "lat": 47.59604,
+      "lon": -122.31112,
+      "carries": [
+        "Specialty flours",
+        "Anchovies",
+        "Olives",
+        "Cheese by the chunk",
+        "Pasta"
+      ]
+    },
+    {
+      "id": "goodies-mediterranean",
+      "kind": "shop",
+      "type": "world",
+      "name": "Goodies Mediterranean Market",
+      "neighborhood": "Lake City",
+      "address": "13721 Lake City Way NE",
+      "about": "Groceries from Lebanon, Palestine, Turkey and around the region, with a halal butcher, cheeses, olives and fresh pita.",
+      "source": "https://www.seattlemet.com/articles/specialty-grocery-stores-seattle",
+      "lat": 47.72908,
+      "lon": -122.29276,
+      "carries": [
+        "Halal meat",
+        "Cheeses",
+        "Olives",
+        "Fresh pita",
+        "Turkish delight"
+      ]
+    },
+    {
+      "id": "mekong-asian-market",
+      "kind": "shop",
+      "type": "world",
+      "name": "Mekong Asian Market",
+      "neighborhood": "Mount Baker",
+      "address": "3400 Rainier Ave S",
+      "about": "Thai, Lao and Cambodian groceries since 1986, with good prices on greens and a banh mi counter.",
+      "source": "https://www.seattlemet.com/articles/specialty-grocery-stores-seattle",
+      "lat": 47.57287,
+      "lon": -122.29339,
+      "carries": [
+        "Thai, Lao and Cambodian groceries",
+        "Fresh greens",
+        "Rice by the bag",
+        "Banh mi"
+      ],
+      "services": {
+        "order_online": {
+          "how": "Banh mi counter, for pickup",
+          "url": "https://order.online/store/-30938460/"
+        }
+      }
+    },
+    {
+      "id": "harameyn",
+      "kind": "shop",
+      "type": "world",
+      "name": "Harameyn Grocery",
+      "neighborhood": "Rainier Valley",
+      "address": "5811 Rainier Ave S",
+      "about": "A halal grocery in the Rainier Valley, and one of the City's Fresh Bucks grocers for fruits and vegetables.",
+      "fresh_bucks": true,
+      "source": "https://www.seattle.gov/documents/Departments/OSE/FoodAccess/Fresh%20Bucks%20General/OSE-Report-2023.pdf",
+      "lat": 47.55012,
+      "lon": -122.27757,
+      "carries": [
+        "Halal groceries",
+        "Fruits and vegetables"
+      ]
+    },
+    {
+      "id": "spice-spc",
+      "kind": "shop",
+      "type": "world",
+      "name": "Spice SPC",
+      "neighborhood": "Madison Valley",
+      "address": "2108 E Denny Way",
+      "about": "An Indian grocery with the fresh things that are hard to find: curry leaf, Indian okra, karela, paneer. Samosas, curries and chai too.",
+      "website": "https://spicespc.com",
+      "source": "https://capitolhillseattle.com/2023/08/spice-spc-an-indian-grocery-also-serving-samosas-curries-and-fresh-chai-settles-in-on-e-madison",
+      "lat": 47.6184,
+      "lon": -122.30436,
+      "carries": [
+        "Curry leaf",
+        "Indian okra",
+        "Karela",
+        "Paneer",
+        "Samosas and chai"
+      ]
+    },
+    {
+      "id": "indian-sweets-and-spices",
+      "kind": "shop",
+      "type": "world",
+      "name": "Indian Sweets & Spices",
+      "neighborhood": "Shoreline",
+      "address": "18002 15th Ave NE, Shoreline",
+      "about": "Indian and Middle Eastern groceries: spices at good prices, frozen halal meat, and sweets made in house.",
+      "source": "https://seattleglobalist.com/?p=10708",
+      "lat": 47.75953,
+      "lon": -122.31318,
+      "carries": [
+        "Spices",
+        "Frozen halal meat",
+        "Indian sweets",
+        "Curries to go"
+      ]
+    },
+    {
+      "id": "mendozas-mercado",
+      "kind": "shop",
+      "type": "world",
+      "name": "Mendoza's Mexican Mercado",
+      "neighborhood": "Greenwood",
+      "address": "7811 Aurora Ave N",
+      "about": "A family-owned Mexican grocery since 2011: dried chiles, cheeses, tamales and salsas. It takes Fresh Bucks.",
+      "fresh_bucks": true,
+      "source": "https://greenspace.seattle.gov/2026/05/fresh-bucks-stories-traditional-flavors-from-latin-america-at-mendozas-mexican-mercado-in-greenwood/",
+      "lat": 47.6859,
+      "lon": -122.34471,
+      "carries": [
+        "Dried chiles",
+        "Mexican cheeses",
+        "Tamales",
+        "Salsas"
+      ]
+    },
+    {
+      "id": "georges-sausage",
+      "kind": "shop",
+      "type": "world",
+      "name": "George's Sausage & Delicatessen",
+      "neighborhood": "First Hill",
+      "address": "907 Madison St",
+      "about": "A Polish deli: smoked sausages, imported groceries, buckwheat and other Eastern European staples.",
+      "source": "https://seattlerefined.com/lifestyle/georges-sausage-delicatessen-seattle-first-hill-neighborhood-staple-restaurant-business-sandwiches-imported-goods",
+      "lat": 47.60843,
+      "lon": -122.327,
+      "carries": [
+        "Polish sausage",
+        "Buckwheat",
+        "Eastern European groceries"
+      ]
+    },
+    {
+      "id": "scandinavian-specialties",
+      "kind": "shop",
+      "type": "world",
+      "name": "Scandinavian Specialties",
+      "neighborhood": "Crown Hill",
+      "address": "6719 15th Ave NW",
+      "about": "Nordic groceries and a deli since 1962, including traditional frozen foods made in house.",
+      "source": "https://www.mapquest.com/us/washington/scandinavian-specialties-355589586",
+      "lat": 47.67825,
+      "lon": -122.37705,
+      "carries": [
+        "Nordic groceries",
+        "House-made frozen foods",
+        "Deli"
+      ]
+    },
+    {
+      "id": "dk-market",
+      "kind": "shop",
+      "type": "world",
+      "name": "DK Market",
+      "neighborhood": "Renton",
+      "address": "720 Lind Ave SW, Renton",
+      "about": "A warehouse of groceries from everywhere: a huge produce section, bulk spices, a Russian deli and Indian, Mexican and Chinese aisles, at low prices.",
+      "source": "https://www.seattlemet.com/articles/specialty-grocery-stores-seattle",
+      "lat": 47.47299,
+      "lon": -122.22243,
+      "carries": [
+        "Huge produce section",
+        "Bulk spices",
+        "Russian deli",
+        "Indian and Mexican aisles"
+      ]
+    },
+    {
+      "id": "hc-grocery",
+      "kind": "shop",
+      "type": "neighborhood",
+      "name": "HC Grocery",
+      "neighborhood": "South Beacon Hill",
+      "address": "7106 Beacon Ave S",
+      "about": "A neighborhood grocery opened in 2023: Chinese greens like yu choy, taro and daikon, dried beans and mushrooms. Open Monday to Saturday, and it takes Fresh Bucks.",
+      "fresh_bucks": true,
+      "source": "https://greenspace.seattle.gov/2026/02/fresh-bucks-stories-how-anna-chens-hc-grocery-is-fueling-beacon-hill-neighbors/",
+      "lat": 47.53875,
+      "lon": -122.29546,
+      "carries": [
+        "Yu choy",
+        "Taro",
+        "Daikon",
+        "Dried beans and mushrooms"
+      ]
+    },
+    {
+      "id": "golden-hong",
+      "kind": "shop",
+      "type": "neighborhood",
+      "name": "Golden Hong Market",
+      "neighborhood": "Chinatown-International District",
+      "address": "516 7th Ave S",
+      "about": "Low-cost Asian groceries and produce like A-choy, bok choy and lychee, open every day. The first grocer in the neighborhood to take Fresh Bucks.",
+      "fresh_bucks": true,
+      "source": "https://greenspace.seattle.gov/2024/10/3-well-loved-local-grocery-stores-join-seattles-fresh-bucks-program/",
+      "lat": 47.59785,
+      "lon": -122.32358,
+      "carries": [
+        "A-choy and bok choy",
+        "Lychee",
+        "Low-cost Asian groceries"
+      ]
+    },
+    {
+      "id": "cascadia-fresh",
+      "kind": "shop",
+      "type": "neighborhood",
+      "name": "Cascadia Fresh Market",
+      "neighborhood": "North Delridge",
+      "address": "5444 Delridge Way SW",
+      "about": "The first shop from a produce wholesaler, focused on low-cost fresh food, open every day. It takes Fresh Bucks.",
+      "fresh_bucks": true,
+      "source": "https://greenspace.seattle.gov/2024/10/3-well-loved-local-grocery-stores-join-seattles-fresh-bucks-program/",
+      "lat": 47.55256,
+      "lon": -122.3625,
+      "carries": [
+        "Low-cost produce"
+      ]
+    },
+    {
+      "id": "lees-produce",
+      "kind": "shop",
+      "type": "neighborhood",
+      "name": "Lee's Produce",
+      "neighborhood": "South Delridge",
+      "address": "9435 Delridge Way SW",
+      "about": "A family-run produce market for more than 40 years, known for low prices on fruits and vegetables, plus spices and flowers. Open every day, and it takes Fresh Bucks.",
+      "fresh_bucks": true,
+      "source": "https://greenspace.seattle.gov/2023/02/fresh-bucks-expands-to-lees-produce-market-a-family-owned-small-business-in-the-delridge-neighborhood/",
+      "lat": 47.51818,
+      "lon": -122.35622,
+      "carries": [
+        "Low-cost produce",
+        "Spices",
+        "Flowers"
+      ]
+    },
+    {
+      "id": "la-esperanza",
+      "kind": "shop",
+      "type": "world",
+      "name": "La Esperanza Mercado y Carniceria",
+      "neighborhood": "Beacon Hill",
+      "address": "2500 Beacon Ave S",
+      "about": "A Mexican grocery and butcher near the Beacon Hill light rail station: carne asada, fresh produce and pan dulce, open daily 9am to 9pm. It takes Fresh Bucks.",
+      "fresh_bucks": true,
+      "source": "https://greenspace.seattle.gov/2025/06/fresh-bucks-program-adds-two-new-retailers-in-south-seattle/",
+      "lat": 47.58325,
+      "lon": -122.31699,
+      "carries": [
+        "Carne asada",
+        "Pan dulce",
+        "Fresh produce"
+      ]
+    }
+  ]
+}
