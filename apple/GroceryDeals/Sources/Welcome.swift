@@ -1,8 +1,12 @@
 import SwiftUI
+import UIKit
 
 /// First-run onboarding, reworked 2026-10-28 and again 2026-11-07 for the crow: the crow and the
 /// real week first, your stores (and Vegetarian), alerts, how it works with the app's own pieces,
-/// then KitchenUI's usage question. Everything but the usage question can be skipped. The only
+/// then KitchenUI's usage question. Everything but the usage question can be skipped. Tidied
+/// 2026-11-13: Skip on a middle step skips that step only (it used to jump to the question),
+/// the first launch waits for the deals instead of showing empty cards, and the copy says
+/// iPad on an iPad. The only
 /// system prompt is notifications, and only after someone turns an alert on; Reminders is asked
 /// when the list first uses it.
 /// Installs that ran 0.1.0 (analytics on by default, before onboarding existed) skip it and
@@ -37,7 +41,7 @@ enum Welcome {
         shared: [
             "Screens you open and features you use",
             "Which deals you open, add or watch",
-            "App version, iPhone model and iOS version",
+            "App version, device model and system version",
         ],
         neverShared: [
             "Anything you type, like list items or searches",
@@ -126,7 +130,7 @@ struct DealsOnboarding: View {
 
     private var welcome: some View {
         StepScreen {
-            topBar(label: nil, skipTitle: start == .tourOnly ? "Close" : "Skip") { skip() }
+            topBar(label: nil) { skip() }
         } content: {
             VStack(spacing: Space.l) {
                 ZStack {
@@ -147,10 +151,22 @@ struct DealsOnboarding: View {
                     Text("This week's sales at Seattle's Asian markets, seafood shops and co-ops, the stores the big apps skip.")
                         .font(.app(.callout)).foregroundStyle(Palette.body).multilineTextAlignment(.center)
                 }
-                PreviewStack(deals: store.topPicks(3, perStore: 1))
+                // A first launch has no deals yet (FeedStore starts empty and fetches): say so
+                // here, and let the cards stamp in when the week arrives.
+                let picks = store.topPicks(3, perStore: 1)
+                if !picks.isEmpty {
+                    PreviewStack(deals: picks)
+                }
                 if let feed = store.feed {
-                    Text("This week: \(store.items.count) deals from \(feed.stores.filter(\.readThisWeek).count) stores, read from each store's own flyer.")
+                    Text("\(store.live.count) deals from \(feed.stores.filter(\.readThisWeek).count) stores this week, read from each store's own flyer.")
                         .font(.app(.subheadline)).foregroundStyle(Palette.muted).multilineTextAlignment(.center)
+                } else if store.loading {
+                    HStack(spacing: Space.s) {
+                        ProgressView()
+                        Text("Reading this week's flyers…")
+                    }
+                    .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                    .accessibilityElement(children: .combine)
                 }
             }
             .padding(.horizontal, Space.xl)
@@ -164,60 +180,43 @@ struct DealsOnboarding: View {
 
     private var stores: some View {
         StepScreen {
-            topBar(label: label(.stores)) { saveStores(); skip() }
+            topBar(label: label(.stores)) { saveStores(); skipStep() }
         } content: {
             VStack(alignment: .leading, spacing: Space.l) {
                 VStack(alignment: .leading, spacing: Space.s) {
                     Text("Where do you shop?").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($titleFocused)
-                    Text("Pick the stores you'd actually go to. Each week This week ranks them and says which one is worth the trip. Change them anytime from This week.")
+                    Text("Pick the stores you'd actually go to. Each week you'll see which one is worth the trip. You can change them anytime.")
                         .font(.app(.callout)).foregroundStyle(Palette.body)
                 }
                 // Every store, by name, with where it is: people recognize "the one near me" by
                 // place, and a store whose flyer wasn't read this week can still be picked.
-                Card(padding: 0) {
-                    VStack(spacing: 0) {
-                        ForEach((store.feed?.stores ?? []).sorted { $0.name.localizedCompare($1.name) == .orderedAscending }) { s in
-                            let on = picked.contains(s.id)
-                            Button {
-                                if on { picked.remove(s.id) } else { picked.insert(s.id) }
-                            } label: {
-                                HStack(spacing: Space.m) {
-                                    Image(systemName: on ? "checkmark.circle.fill" : "circle")
-                                        .font(.app(.title3)).foregroundStyle(on ? Palette.accent : Palette.muted)
-                                        .accessibilityHidden(true)
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
-                                        if !s.towns.isEmpty {
-                                            Text(s.towns).font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                                        } else if s.delivery != nil {
-                                            Text("Delivers").font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                                        }
-                                    }
-                                    Spacer(minLength: 0)
-                                }
-                                .padding(.horizontal, Space.l)
-                                .frame(minHeight: 56)
-                                .contentShape(Rectangle())
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityAddTraits(on ? .isSelected : [])
-                            .overlay(alignment: .bottom) { Rectangle().fill(Palette.divider).frame(height: 1) }
+                let all = (store.feed?.stores ?? []).sorted { $0.name.localizedCompare($1.name) == .orderedAscending }
+                if all.isEmpty {
+                    // Still fetching on a first launch, or nothing could be read at all.
+                    Card(padding: Space.l) {
+                        HStack(spacing: Space.m) {
+                            if store.loading { ProgressView() }
+                            Text(store.loading ? "Getting the list of stores…" : "The stores couldn't be loaded. You can pick them later from This week.")
+                                .font(.app(.callout)).foregroundStyle(Palette.body)
+                            Spacer(minLength: 0)
                         }
+                        .frame(minHeight: 44)
                     }
+                } else {
+                    storeList(all)
+                    Text("Not sure yet? Skip this and you'll see every store.")
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
                 }
-                .sensoryFeedback(.selection, trigger: picked)
-                Text("Not sure yet? Skip it, and This week ranks every store until you pick.")
-                    .font(.app(.subheadline)).foregroundStyle(Palette.muted)
 
-                VStack(alignment: .leading, spacing: Space.s) {
-                    SectionHeader("Anything else?")
-                    FilterChip("Vegetarian deals only", systemImage: "leaf", isOn: store.vegetarianOnly) {
-                        store.vegetarianOnly.toggle()
-                    }
+                // Its own card, worded like the switch in Settings, so it doesn't read as one
+                // more store.
+                Card(padding: 0) {
+                    AlertToggle(isOn: Binding(get: { store.vegetarianOnly }, set: { store.vegetarianOnly = $0 }),
+                                title: "Vegetarian deals only",
+                                detail: "Hides meat and seafood everywhere in the app.")
                 }
-                .padding(.top, Space.s)
             }
             .padding(.horizontal, Space.xl)
         } buttons: {
@@ -226,6 +225,44 @@ struct DealsOnboarding: View {
             }
             .buttonStyle(.borderedProminent)
         }
+    }
+
+    /// Every store as a checklist row.
+    private func storeList(_ all: [Store]) -> some View {
+        Card(padding: 0) {
+            VStack(spacing: 0) {
+                ForEach(all) { s in
+                    let on = picked.contains(s.id)
+                    Button {
+                        if on { picked.remove(s.id) } else { picked.insert(s.id) }
+                    } label: {
+                        HStack(spacing: Space.m) {
+                            Image(systemName: on ? "checkmark.circle.fill" : "circle")
+                                .font(.app(.title3)).foregroundStyle(on ? Palette.accent : Palette.muted)
+                                .accessibilityHidden(true)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(s.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                                if !s.towns.isEmpty {
+                                    Text(s.towns).font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                                } else if s.delivery != nil {
+                                    Text("Delivers").font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                                }
+                            }
+                            Spacer(minLength: 0)
+                        }
+                        .padding(.horizontal, Space.l)
+                        .frame(minHeight: 56)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(on ? .isSelected : [])
+                    .overlay(alignment: .bottom) {
+                        if s.id != all.last?.id { Rectangle().fill(Palette.divider).frame(height: 1) }
+                    }
+                }
+            }
+        }
+        .sensoryFeedback(.selection, trigger: picked)
     }
 
     private func saveStores() {
@@ -238,7 +275,7 @@ struct DealsOnboarding: View {
 
     private var alertsStep: some View {
         StepScreen {
-            topBar(label: label(.alerts)) { skip() }
+            topBar(label: label(.alerts)) { skipStep() }
         } content: {
             VStack(alignment: .leading, spacing: Space.l) {
                 HStack(alignment: .top, spacing: Space.m) {
@@ -261,7 +298,7 @@ struct DealsOnboarding: View {
                                     detail: "The morning before it ends.")
                     }
                 }
-                Text("Your iPhone asks for permission once, only if you turn one on. Change these anytime in Settings, and watch any price from a deal.")
+                Text("Your \(device) asks for permission once, and only if you turn one on. You can change these anytime in Settings.")
                     .font(.app(.subheadline)).foregroundStyle(Palette.muted)
             }
             .padding(.horizontal, Space.xl)
@@ -272,7 +309,7 @@ struct DealsOnboarding: View {
                     next()
                 }
             } label: {
-                wide(wantNewDeals || wantEnding ? "Turn on alerts" : "Not now", prominent: true)
+                wide(wantNewDeals || wantEnding ? "Turn on alerts" : "Continue without alerts", prominent: true)
             }
             .buttonStyle(.borderedProminent)
         }
@@ -293,36 +330,23 @@ struct DealsOnboarding: View {
 
     private var howItWorks: some View {
         StepScreen {
-            topBar(label: label(.howItWorks), skipTitle: start == .tourOnly ? "Close" : "Skip") { skip() }
+            // Last stop of the tour: Continue is the only way on, so no Skip beside it.
+            topBar(label: label(.howItWorks), skipTitle: start == .tourOnly ? "Close" : nil) { skip() }
         } content: {
             VStack(alignment: .leading, spacing: Space.l) {
                 Text("How it works").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                     .accessibilityAddTraits(.isHeader)
                     .accessibilityFocused($titleFocused)
-                HowRow(title: "Your stores, best first", detail: "This week ranks your stores by their deals and says why one is worth the trip. Each links to its weekly ad.") {
-                    Label("Best this week", systemImage: "star.fill")
-                        .labelStyle(.titleAndIcon)
-                        .font(.app(.caption, .bold)).foregroundStyle(Palette.text(.warn))
-                        .padding(.horizontal, Space.s).frame(minHeight: 28)
-                        .background(Palette.fill(.warn), in: Capsule())
-                }
-                HowRow(title: "Tap + to add it to your list", detail: "Keep the list here, or in a Reminders list you share. The price and sale end come along.") {
-                    MiniDeal(deal: store.topPicks(1).first)
-                }
-                HowRow(title: "Watch a price", detail: "Get a nudge when something you buy drops to your price.") {
-                    Label("Watch price", systemImage: "bell")
-                        .font(.app(.subheadline, .semibold)).foregroundStyle(Palette.ink)
-                        .padding(.horizontal, Space.m).frame(minHeight: 40)
-                        .glassEffect(.regular, in: .capsule)
-                }
-                HowRow(title: "On your Home Screen, and Siri", detail: "Add the Best This Week widget, or ask Siri what's on sale.") {
-                    Image(systemName: "apps.iphone").font(.app(.title3, .semibold)).foregroundStyle(Palette.ink)
-                        .frame(width: 48, height: 48).glassEffect(.regular, in: .circle)
-                }
-                HowRow(title: "Search from anywhere", detail: "Aisles, stores and deals. This week's deals show up in iPhone search, too.") {
-                    Image(systemName: "magnifyingglass").font(.app(.title3, .semibold)).foregroundStyle(Palette.ink)
-                        .frame(width: 48, height: 48).glassEffect(.regular, in: .circle)
-                }
+                HowRow(systemImage: "star.fill", title: "Your stores, best first",
+                       detail: "This week ranks your stores by their deals and says why one is worth the trip. Each links to its weekly ad.")
+                HowRow(systemImage: "plus", title: "Tap + to add a deal to your list",
+                       detail: "Keep the list here, or in a Reminders list you share. The price and the day the sale ends come along.")
+                HowRow(systemImage: "bell", title: "Watch a price",
+                       detail: "Get a nudge when something you buy drops to your price.")
+                HowRow(systemImage: "magnifyingglass", title: "Search everything",
+                       detail: "Deals, aisles and stores. This week's deals show up in \(device) search, too.")
+                HowRow(systemImage: "apps.iphone", title: "Widget and Siri",
+                       detail: "Add the Best This Week widget to your Home Screen, or ask Siri what's on sale.")
             }
             .padding(.horizontal, Space.xl)
         } buttons: {
@@ -345,7 +369,14 @@ struct DealsOnboarding: View {
         go(steps[i + 1])
     }
 
-    /// Skip goes straight to the usage question on a first run, and closes a replayed tour.
+    /// Skip on a middle step passes that step only: skipping the store picker used to skip the
+    /// alerts too. A replayed tour shows Close there instead, which closes it.
+    private func skipStep() {
+        if start == .tourOnly { skip() } else { next() }
+    }
+
+    /// Skip on the welcome goes straight to the usage question on a first run; Close ends a
+    /// replayed tour.
     private func skip() {
         if tour != "finished" { tour = "skipped" }
         if start == .tourOnly { finish() } else { go(.question) }
@@ -360,17 +391,27 @@ struct DealsOnboarding: View {
 
     // MARK: helpers
 
-    private func topBar(label: String?, skipTitle: String = "Skip", skip: @escaping () -> Void) -> some View {
-        HStack {
+    /// "iPad" on an iPad: the copy used to say iPhone everywhere.
+    private var device: String { UIDevice.current.userInterfaceIdiom == .pad ? "iPad" : "iPhone" }
+
+    /// The step count on the left and one way out on the right. With no title passed, a first
+    /// run gets Skip and a replayed tour gets Close; `nil` leaves the button out.
+    private func topBar(label: String?, skipTitle: String? = "", skip: @escaping () -> Void) -> some View {
+        let title = skipTitle == "" ? (start == .tourOnly ? "Close" : "Skip") : skipTitle
+        return HStack {
             if let label {
                 Text(label).font(.app(.footnote, .semibold)).foregroundStyle(Palette.muted)
             }
             Spacer()
-            Button(skipTitle, action: skip)
-                .font(.app(.body, .semibold))
-                .frame(minWidth: 44, minHeight: 44)
-                .accessibilityHint(skipTitle == "Close" ? "Closes the tour" : "Goes straight to the last step")
+            if let title {
+                Button(title, action: skip)
+                    .font(.app(.body, .semibold))
+                    .frame(minWidth: 44, minHeight: 44)
+                    .accessibilityHint(title == "Close" ? "Closes the tour"
+                                       : label == nil ? "Goes straight to the last step" : "Skips this step")
+            }
         }
+        .frame(minHeight: 44)
     }
 
     private var slide: AnyTransition {
@@ -474,7 +515,7 @@ private struct PreviewStack: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("This week's top picks: " + deals.map { "\(shortName($0.name)), \($0.text) at \(store.storeName($0.store))" }.joined(separator: "; "))
-        .task {
+        .task(id: deals.count) {
             for i in 1...max(deals.count, 1) {
                 try? await Task.sleep(for: .milliseconds(reduceMotion ? 0 : 220))
                 withAnimation(reduceMotion ? nil : .spring(duration: 0.35, bounce: 0.4)) { shown = i }
@@ -484,15 +525,18 @@ private struct PreviewStack: View {
     }
 }
 
-/// One step in "How it works": a real piece of the app on the left, words on the right.
-private struct HowRow<Art: View>: View {
+/// One step in "How it works": an icon in a fixed column, so every row's words line up.
+private struct HowRow: View {
+    let systemImage: String
     let title: String
     let detail: String
-    @ViewBuilder var art: Art
 
     var body: some View {
-        HStack(alignment: .center, spacing: Space.m) {
-            art.frame(minWidth: 72).accessibilityHidden(true)
+        HStack(alignment: .top, spacing: Space.m) {
+            Image(systemName: systemImage).font(.app(.title3, .semibold)).foregroundStyle(Palette.accent)
+                .frame(width: 48, height: 48)
+                .background(Palette.accent.opacity(0.12), in: Circle())
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title).font(.app(.headline)).foregroundStyle(Palette.ink)
                 Text(detail).font(.app(.subheadline)).foregroundStyle(Palette.body)
@@ -500,20 +544,5 @@ private struct HowRow<Art: View>: View {
             Spacer(minLength: 0)
         }
         .accessibilityElement(children: .combine)
-    }
-}
-
-/// A deal's price and a + button, looking just like a row in the app (but not tappable).
-private struct MiniDeal: View {
-    let deal: Deal?
-    var body: some View {
-        HStack(spacing: Space.xs) {
-            if let deal {
-                Text(deal.amount).font(.app(.headline, .bold)).foregroundStyle(Palette.ink).monospacedDigit()
-            }
-            Image(systemName: "plus").font(.app(.subheadline, .bold)).foregroundStyle(Palette.ink)
-                .frame(width: 32, height: 32)
-                .background(Palette.raised, in: Circle())
-        }
     }
 }
