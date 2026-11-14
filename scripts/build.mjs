@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { buildSync } from "esbuild";
 import { writePopular } from "./popular.mjs";
+import { writeRecipes } from "./recipes.mjs";
 // What people are adding this week (Amplitude, counts only), read before the pages are built
 // so This week can show it like the app. Set in the build steps at the bottom.
 let POPULAR = { items: [] };
@@ -1137,7 +1138,7 @@ function aboutPage() {
 // App Store Connect. If analytics, push or storage change (client/analytics.js, Analytics.swift,
 // Push.swift, the sgd.* browser keys), change this page too, and its date.
 function privacyPage() {
-  const updated = "November 13, 2026";
+  const updated = "November 14, 2026";
   const body = `<div class="privacy-page">
 <div class="page-h"><h1>Privacy</h1><p class="page-sub">For the website and the app. Updated ${updated}.</p></div>
 <div class="note-card"><p>No accounts, no ads, nothing sold. Nothing asks for your name, email or location. The site and the app collect anonymous usage, like which screens get opened, and you can turn that off.</p></div>
@@ -1154,6 +1155,7 @@ function privacyPage() {
 <h2 id="app">The app</h2>
 <h3>Getting the deals</h3>
 <p>The app downloads each week's deals from this site, the same public list anyone can see. Like any website, the server sees your device's IP address when it sends them; nothing about you is in the request. The widget and the deals that show up when you search from your Home Screen use that same list, kept on your device.</p>
+<p>Recipe ideas on a deal come in the same way, as one list that's the same for everyone, so looking at a deal doesn't tell anyone what you looked at. Each idea's photo loads from the recipe's own site when it comes on screen, and that site sees your device's IP address, as with any picture on the web. Tapping an idea opens the recipe on its site.</p>
 <h3>Usage, only if you say yes</h3>
 <p>The app asks the first time you open it whether to share anonymous usage. Until you answer yes, nothing is sent and no ID is made. If you say yes, it sends the screens you open, the features you use, which deals you open, add or watch, and your app version, device model and iOS version. It never sends anything you type, like list items or searches, your name, email, contacts or location, your IP address or your advertising ID. Change your answer any time in Settings, under Privacy.</p>
 <h3>Your list and your stores</h3>
@@ -1613,6 +1615,8 @@ writeFileSync(join(DIST, ".nojekyll"), "");
 // The app feed and what people are adding come first: This week shows "People are adding".
 const feed = appFeed();
 POPULAR = await writePopular(feed, DIST);
+// Recipe ideas for the ingredients on sale (/api/recipes.json), read by the app's deal sheet.
+await writeRecipes(feed, DIST, { catalog: JSON.parse(readFileSync(join(ROOT, "vendor", "kitchen-catalog", "catalog.json"), "utf8")) });
 homePage();
 standoutsPage();
 departmentPages();

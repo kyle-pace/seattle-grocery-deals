@@ -288,6 +288,11 @@ struct SeasonScreen: View {
                 lists
                 if season.log.count > 1 { priceLog }
                 if !season.facts.isEmpty { facts }
+                // What to cook with it, from the recipe search (the season's id is its item key).
+                if let ideas = store.recipeIdeas(for: season.id) {
+                    RecipeIdeas(ideas: ideas, itemKey: season.id, from: "season", bleed: Space.l)
+                        .padding(.top, Space.l)
+                }
                 more
             }
             .padding(.horizontal, Space.l)
