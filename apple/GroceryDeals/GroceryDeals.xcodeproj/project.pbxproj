@@ -11,14 +11,17 @@
 		1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34300759905B9585BA88F72D /* DealViews.swift */; };
 		24B72EE560CFC3050DA2FD19 /* week.json in Resources */ = {isa = PBXBuildFile; fileRef = 84F994427923C400F45DB70C /* week.json */; };
 		279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
+		2BB2D6BA2B52C049C6BC69BA /* SharedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939655B568CDDBEC846860FB /* SharedState.swift */; };
 		2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900666ED70B2F3E6A406669D /* Screens.swift */; };
 		319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B30268FA30809DBA50C0E7 /* Analytics.swift */; };
 		31E0AEDA41356B154BDE22BF /* Aisles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4A3B8F3ECEA1275AAF3090 /* Aisles.swift */; };
 		44B284A97AAE39A18625645A /* Moments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51539486FC8A1B3336B12EA1 /* Moments.swift */; };
+		500C56FA3C65439734AE49CC /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C556EEC67D6A3F5385285613 /* Trip.swift */; };
 		5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */; };
 		5E5F214F5EDC5B27AF9195C5 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = BE555C74D8DBB3947396CE77 /* FirebaseMessaging */; };
 		5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030270E4AFF9913A0A8A86E3 /* Assets.xcassets */; };
 		64267422E7D9136407CEA5F4 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
+		6AD8120EBC698BA715815AD6 /* Entities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCBD4AD379ACFB22957A99D /* Entities.swift */; };
 		6E48E52EA001EF290CC57FB3 /* DealsWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FF981C7805200162BB6BACE8 /* DealsWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */; };
 		7F321984D31A4686A13826EF /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F47E0D9D9A3272DED6A7D1E8 /* GoogleService-Info-Dev.plist */; };
@@ -27,15 +30,20 @@
 		9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CE2E4258193F86182E0754 /* Theme.swift */; };
 		98B87E7A494B40032CC179EE /* Flyer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4199622464029D424B8C09 /* Flyer.swift */; };
 		98ED1814CAB3F5726E8075A2 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ECE3BB430AA4E2AEA88A042 /* Search.swift */; };
+		A103AC61F9DA0A0F219DB8F7 /* AddToListControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941BCBA650EB48900CDCD45E /* AddToListControl.swift */; };
 		AFEA23B455ED3D816F0A195A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8FD9277FD1B4926AFB0E64 /* Messages.swift */; };
 		B8190E6162641899C00C0B7F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = E91339D213554CB89C434FE8 /* FirebaseRemoteConfig */; };
+		B9FD70CC4DB7BD79A056FAF9 /* SiriTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480088491012D8F80C71FBC2 /* SiriTools.swift */; };
 		BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B9CD189C14496D79B9A60 /* Welcome.swift */; };
+		C96B814B6EDB28A81B8CFAA6 /* AddToListControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941BCBA650EB48900CDCD45E /* AddToListControl.swift */; };
 		CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 91E71391CC336A9B1BC351B8 /* KitchenUI */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
 		D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581B0CF13289C4A25A25F8A /* DealsWidget.swift */; };
 		D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE081C1EE741AEAB7005033E /* ListScreens.swift */; };
+		DB9A28C17F0321A3E1453FAC /* SharedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939655B568CDDBEC846860FB /* SharedState.swift */; };
 		DDD206C2E3CFBDC9BC64B26D /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		DE229B66319FFAB6BAEA6D0C /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40DA8A41D719580DE66FCDC /* Lines.swift */; };
+		DECA4B8829A49FD0A9896B40 /* Skills.skillsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 757EDBCF924E5B8377A28E8D /* Skills.skillsbundle */; };
 		F2BEA78981A7C51A2BC1FE64 /* Seasons.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */; };
 		F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352F5BB18C8111F694A1DAFE /* ListStore.swift */; };
 		F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */; };
@@ -77,23 +85,30 @@
 		33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDealsApp.swift; sourceTree = "<group>"; };
 		34300759905B9585BA88F72D /* DealViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealViews.swift; sourceTree = "<group>"; };
 		352F5BB18C8111F694A1DAFE /* ListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStore.swift; sourceTree = "<group>"; };
+		480088491012D8F80C71FBC2 /* SiriTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriTools.swift; sourceTree = "<group>"; };
 		4E4E38A37F8FB357DFC488EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		51539486FC8A1B3336B12EA1 /* Moments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moments.swift; sourceTree = "<group>"; };
 		53827BED375495D006304F00 /* Push.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Push.swift; sourceTree = "<group>"; };
 		6CCA90E2F287635AB2BBB3A2 /* GroceryDeals.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GroceryDeals.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C1108FE82C9173926697E6 /* KitchenUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KitchenUI; path = ../../../KitchenUI; sourceTree = SOURCE_ROOT; };
+		757EDBCF924E5B8377A28E8D /* Skills.skillsbundle */ = {isa = PBXFileReference; path = Skills.skillsbundle; sourceTree = "<group>"; };
 		7581B0CF13289C4A25A25F8A /* DealsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsWidget.swift; sourceTree = "<group>"; };
 		798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		84F994427923C400F45DB70C /* week.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = week.json; sourceTree = "<group>"; };
 		86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsStore.swift; sourceTree = "<group>"; };
 		8B4199622464029D424B8C09 /* Flyer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flyer.swift; sourceTree = "<group>"; };
+		8BCBD4AD379ACFB22957A99D /* Entities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
 		8C7685CC51CA8311DC803DA0 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		900666ED70B2F3E6A406669D /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
+		939655B568CDDBEC846860FB /* SharedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedState.swift; sourceTree = "<group>"; };
+		941BCBA650EB48900CDCD45E /* AddToListControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToListControl.swift; sourceTree = "<group>"; };
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B40DA8A41D719580DE66FCDC /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seasons.swift; sourceTree = "<group>"; };
+		C556EEC67D6A3F5385285613 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		CB1B9CD189C14496D79B9A60 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		CC8FD9277FD1B4926AFB0E64 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		D7E6CA1167A541A4782007BD /* DealsWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DealsWidget.entitlements; sourceTree = "<group>"; };
 		DE081C1EE741AEAB7005033E /* ListScreens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListScreens.swift; sourceTree = "<group>"; };
 		E5CE2E4258193F86182E0754 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		F47E0D9D9A3272DED6A7D1E8 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -126,6 +141,7 @@
 		4E61624D376C35F18A2C4CEB /* Widget */ = {
 			isa = PBXGroup;
 			children = (
+				D7E6CA1167A541A4782007BD /* DealsWidget.entitlements */,
 				7581B0CF13289C4A25A25F8A /* DealsWidget.swift */,
 				4E4E38A37F8FB357DFC488EE /* Info.plist */,
 			);
@@ -140,6 +156,7 @@
 				A6B30268FA30809DBA50C0E7 /* Analytics.swift */,
 				300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */,
 				34300759905B9585BA88F72D /* DealViews.swift */,
+				8BCBD4AD379ACFB22957A99D /* Entities.swift */,
 				798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */,
 				8B4199622464029D424B8C09 /* Flyer.swift */,
 				158EA5D150749B2D78AAA07F /* GroceryDeals.entitlements */,
@@ -156,7 +173,9 @@
 				900666ED70B2F3E6A406669D /* Screens.swift */,
 				2ECE3BB430AA4E2AEA88A042 /* Search.swift */,
 				BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */,
+				480088491012D8F80C71FBC2 /* SiriTools.swift */,
 				E5CE2E4258193F86182E0754 /* Theme.swift */,
+				C556EEC67D6A3F5385285613 /* Trip.swift */,
 				CB1B9CD189C14496D79B9A60 /* Welcome.swift */,
 			);
 			path = Sources;
@@ -173,8 +192,10 @@
 		D51F22F60B64BD340F576851 = {
 			isa = PBXGroup;
 			children = (
+				757EDBCF924E5B8377A28E8D /* Skills.skillsbundle */,
 				B7B83A042219DB067DDF5D46 /* Packages */,
 				EDDEB32C30EF772A83CC907E /* Resources */,
+				F277DC93CAC0C4A562BA7EA8 /* Shared */,
 				4F5D7D77730F85828D6884E7 /* Sources */,
 				4E61624D376C35F18A2C4CEB /* Widget */,
 				D8857578EBE926F51C17A868 /* Products */,
@@ -198,6 +219,15 @@
 				84F994427923C400F45DB70C /* week.json */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F277DC93CAC0C4A562BA7EA8 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				941BCBA650EB48900CDCD45E /* AddToListControl.swift */,
+				939655B568CDDBEC846860FB /* SharedState.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +328,7 @@
 			files = (
 				5FBC4EBEC7FDF4E4EE6E5913 /* Assets.xcassets in Resources */,
 				7F321984D31A4686A13826EF /* GoogleService-Info-Dev.plist in Resources */,
+				DECA4B8829A49FD0A9896B40 /* Skills.skillsbundle in Resources */,
 				24B72EE560CFC3050DA2FD19 /* week.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,11 +340,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A103AC61F9DA0A0F219DB8F7 /* AddToListControl.swift in Sources */,
 				31E0AEDA41356B154BDE22BF /* Aisles.swift in Sources */,
 				72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */,
 				319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */,
 				1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */,
 				08DF113380BEFCF2577DA776 /* DealsDevMenu.swift in Sources */,
+				6AD8120EBC698BA715815AD6 /* Entities.swift in Sources */,
 				5A8489E809B0F75B9037BFA5 /* FeedStore.swift in Sources */,
 				98B87E7A494B40032CC179EE /* Flyer.swift in Sources */,
 				F853F0D126A08F9987AC0219 /* GroceryDealsApp.swift in Sources */,
@@ -328,7 +361,10 @@
 				2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */,
 				98ED1814CAB3F5726E8075A2 /* Search.swift in Sources */,
 				F2BEA78981A7C51A2BC1FE64 /* Seasons.swift in Sources */,
+				DB9A28C17F0321A3E1453FAC /* SharedState.swift in Sources */,
+				B9FD70CC4DB7BD79A056FAF9 /* SiriTools.swift in Sources */,
 				64267422E7D9136407CEA5F4 /* Theme.swift in Sources */,
+				500C56FA3C65439734AE49CC /* Trip.swift in Sources */,
 				BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,8 +373,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C96B814B6EDB28A81B8CFAA6 /* AddToListControl.swift in Sources */,
 				D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */,
 				DDD206C2E3CFBDC9BC64B26D /* Models.swift in Sources */,
+				2BB2D6BA2B52C049C6BC69BA /* SharedState.swift in Sources */,
 				9842BD348DDB6C6BCECFA4B9 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +414,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEALS_APP";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -383,6 +422,7 @@
 		3F2835176AB9F702DE543CC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/DealsWidget.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -472,6 +512,7 @@
 		49BBD886BBB69B5E2A1F725D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Widget/DealsWidget.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Widget/Info.plist;
@@ -573,6 +614,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "deals.seattlegrocery$(BUNDLE_ID_SUFFIX)";
 				PRODUCT_NAME = GroceryDeals;
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEALS_APP";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
