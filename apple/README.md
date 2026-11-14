@@ -2,7 +2,16 @@
 
 The iPhone and iPad app (SwiftUI). It replaced an earlier Expo app (decided 2026-10-24: Apple devices first, so widgets, Siri, the Watch and Liquid Glass are native).
 
-## Build and install on your iPhone
+## Build channels
+
+Two channels, both TestFlight (owner's call, 2026-11-13; the rule for all his apps is in the principles block of `AGENTS.md`):
+
+1. **Internal TestFlight** (`apple/testflight.sh`, tags beginning with `v`): the main channel. Every build worth trying on a device goes here.
+2. **Public TestFlight** (`apple/testflight.sh --external`, tags beginning with `beta-`): from a commit that has already run on internal.
+
+Before tagging, build and run on the Mac's iPhone and iPad simulators, so Xcode Cloud's hours aren't spent on compile errors. Installing Deals Dev straight onto a device (next section) is no longer routine: use it only when TestFlight can't do the job. Today that means the Developer menu (hidden on TestFlight builds), test pushes (`new-deals-test` only reaches the `.dev` app), debugging on the device, or a quick loop the owner asks for. Don't assume the Deals Dev on the owner's devices is current.
+
+## Build and install on your iPhone (the exception)
 
 From anywhere on the Mac: `phone deals` (or `phone` for both apps; see KitchenUI's `tools/phone`). In this repo:
 
