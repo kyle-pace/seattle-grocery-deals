@@ -22,7 +22,7 @@ It checks every page the build wrote as an HTML file and fails on:
 
 It also saves full-page screenshots to `.check/`, named `<page>-<width>-<light|dark>.png`. In a full-page shot, anything fixed to the screen (the display settings button, a sticky bar) is drawn once, where the first screen ends, so it can look like it covers content in the middle of the page. It doesn't; check how it sits at the very bottom of the page instead. Passing the check is not the same as looking: open the screenshots of the pages you changed (at least the smallest width and a large one, both themes) and check nothing overlaps, clips or looks off.
 
-Useful options: `--pages /apps/,/labs/` to check only some pages, `--no-shots` to skip screenshots, `--dir <folder>` if the build isn't in `dist/client`, `dist` or `_site`. Locally, set `CHROME=/path/to/chrome` to use a browser that's already installed.
+Useful options: `--pages /apps/,/labs/` to check only some pages, `--sample 3` on a big site to check three pages from each folder of look-alike pages (every store, every week) instead of all of them, `--no-shots` to skip screenshots, `--dir <folder>` if the build isn't in `dist/client`, `dist` or `_site`. Locally, set `CHROME=/path/to/chrome` to use a browser that's already installed.
 
 What it can't see: pages rendered on the server at request time, anything behind a click (menus, dialogs, a map's controls), keyboard order, and whether alt text is any good. Check those by hand for the screens you changed.
 
