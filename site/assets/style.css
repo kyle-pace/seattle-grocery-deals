@@ -471,7 +471,7 @@ body.season .site-head { position: relative; z-index: 2; }
 .tf-small { font-size: 0.75rem; font-weight: 500; }
 .tf-big { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
 .tf-badge:hover { background: #1c1c1e; color: #fff; }
-.app-platforms { margin: var(--s-m) 0 0; color: var(--muted); font-size: 0.9375rem; max-width: 40ch; }
+.app-platforms { margin: var(--s-m) 0 0; color: var(--muted); font-size: 0.9375rem; max-width: 44ch; }
 .app-landing .app-features { width: 100%; margin-top: var(--s-xl); text-align: left; }
 .app-note { margin: var(--s-l) 0 0; color: var(--text-body); max-width: var(--measure); }
 .app-note + .app-note { margin-top: var(--s-s); }
