@@ -307,6 +307,11 @@ struct Deal: Codable, Sendable, Identifiable, Hashable {
 
 /// When a deal ends, said the same way on every row (and on the website's rows).
 extension Deal {
+    /// The price as one short string for a row's detail line: "$2.49/lb", "3 for $5.00", "99¢ ea".
+    var shortPrice: String {
+        let u = unit.isEmpty ? "" : unit == "ea" ? " ea" : unit
+        return [lead, amount + u].filter { !$0.isEmpty }.joined(separator: " ")
+    }
     /// Days left counting today: 1 means it ends today, 0 or less means it has ended.
     var daysLeft: Int? { Dates.daysLeft(through: ends) }
     /// True once the sale's last day has passed.

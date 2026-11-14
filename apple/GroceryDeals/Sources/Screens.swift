@@ -311,6 +311,7 @@ private struct StoreSection: View {
     var newFlyer = false
     let select: (Deal) -> Void
     let openStore: (String) -> Void
+    @Environment(\.dynamicTypeSize) private var typeSize
 
     var body: some View {
         Card(padding: 0) {
@@ -346,10 +347,25 @@ private struct StoreSection: View {
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityHint("Opens the store")
 
-                ForEach(deals) { d in
-                    DealRow(deal: d, showStore: false) { select(d) }
+                // The store's best few as flyer cards to swipe through, stickers big (2026-11-13).
+                // Rows again at the accessibility text sizes, where a card can't hold the words.
+                if typeSize.isAccessibilitySize {
+                    ForEach(deals) { d in
+                        DealRow(deal: d, showStore: false) { select(d) }
+                    }
+                    .padding(.horizontal, Space.l)
+                } else {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .top, spacing: Space.m) {
+                            ForEach(deals) { d in
+                                DealCard(deal: d) { select(d) }
+                            }
+                        }
+                        .padding(.horizontal, Space.l)
+                        .padding(.top, Space.l)
+                        .padding(.bottom, Space.s)
+                    }
                 }
-                .padding(.horizontal, Space.l)
 
                 Button { openStore(s.id) } label: {
                     Text("See all \(total) at \(s.name)")
