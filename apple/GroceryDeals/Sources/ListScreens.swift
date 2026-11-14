@@ -11,8 +11,13 @@ struct ListView: View {
     @State private var choosing = false
     @State private var celebrate = false
     @State private var matches = DealMatches()
+    @State private var trips = TripPlans()
+    @State private var editingStores = false
     @FocusState private var typing: Bool
     @AppStorage("sgd.list.byStore") private var byStore = false
+    /// Plan my trip: minimized to one line, and the store someone chose to shop at ("" for none).
+    @AppStorage("sgd.list.tripCollapsed") private var tripCollapsed = false
+    @AppStorage("sgd.list.tripStore") private var tripStoreID = ""
     let openStore: (String) -> Void
 
     var body: some View {
@@ -22,6 +27,15 @@ struct ListView: View {
                     MessageCard(place: "list")
                         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0))
                         .listRowBackground(Color.clear)
+                }
+                // Plan my trip: which one store has the most of this list on sale. Worth showing
+                // from two things to get; it can be minimized to a line.
+                if let plan = tripPlan {
+                    Section {
+                        TripCard(plan: plan, collapsed: $tripCollapsed, shoppingAt: tripStore(in: plan)?.store.id,
+                                 shop: { shop(at: $0, in: plan) }, changeStores: { editingStores = true }, openStore: openStore)
+                    }
+                    .listRowBackground(Palette.surface)
                 }
                 ForEach(duplicates, id: \.key) { d in
                     Section {
@@ -98,7 +112,37 @@ struct ListView: View {
             .refreshable { list.reload() }
             .sheet(item: $selected) { DealDetail(deal: $0, openStore: openStore) }
             .sheet(isPresented: $choosing) { RemindersPicker(prompt: "list_tab") }
+            .sheet(isPresented: $editingStores) { YourStoresSheet() }
         }
+    }
+
+    // MARK: plan my trip
+
+    private var feedVersion: String {
+        "\(store.feed?.week ?? "")|\(store.feed?.updated ?? "")|\(store.vegetarianOnly)|\(store.hideEndingToday)|\(store.items.count)"
+    }
+
+    /// The plan for the open items, or nil when there's too little to plan (under two things to
+    /// get, or no deals loaded). Worked out once per change to the list, the deals or Your stores.
+    private var tripPlan: TripPlan? {
+        let asks = list.openItems.map(\.text)
+        guard store.feed != nil, asks.count >= 2 else { return nil }
+        let version = "\(feedVersion)|\(store.favoriteStores.sorted().joined(separator: ","))|\(asks.joined(separator: "\n"))"
+        let plan = trips.plan(version: version) { store.planTrip(asks) }
+        return plan.asks.count >= 2 ? plan : nil
+    }
+
+    /// The store someone chose to shop at, while it's still one of the stores compared.
+    private func tripStore(in plan: TripPlan) -> TripPlan.StorePlan? {
+        guard !tripStoreID.isEmpty else { return nil }
+        return (plan.stores + [plan.elsewhere].compactMap { $0 }).first { $0.store.id == tripStoreID }
+    }
+
+    private func shop(at id: String?, in plan: TripPlan) {
+        withAnimation(.snappy) { tripStoreID = id ?? "" }
+        let chosen = tripStore(in: plan)
+        Analytics.track("Changed Trip Store", ["store": id ?? "", "covers": chosen?.covers ?? 0, "items": plan.asks.count])
+        Announce.say(chosen.map { "Showing \($0.store.name)'s prices" } ?? "Showing the best price at any store")
     }
 
     /// An "Add an item" field that's always there at the bottom, like Reminders' New Reminder,
@@ -179,8 +223,13 @@ struct ListView: View {
 
     private func deal(for item: ListStore.Item) -> Deal? {
         if let id = item.dealID, let d = store.deal(id) { return d }
-        let version = "\(store.feed?.week ?? "")|\(store.feed?.updated ?? "")|\(store.vegetarianOnly)|\(store.hideEndingToday)|\(store.items.count)"
-        return matches.deal(item.text, version: version) { store.items }
+        // Shopping at one store: a typed item shows that store's deal for it, or none, instead
+        // of the best deal anywhere. (A line added from a deal keeps its own deal.)
+        if !item.done, let plan = tripPlan, let chosen = tripStore(in: plan) {
+            let asked = item.text.trimmingCharacters(in: .whitespaces).lowercased()
+            return chosen.picks.first { $0.asked.lowercased() == asked }?.deal
+        }
+        return matches.deal(item.text, version: feedVersion) { store.items }
     }
 
     private func row(_ item: ListStore.Item) -> some View {
@@ -561,6 +610,146 @@ struct YourStoresPicker: View {
             return s.status == "stale" ? (s.read_by_hand == true ? "New flyer not read yet" : "New flyer not up yet") : s.readThisWeek ? "No deals this week" : "Flyer not read this week"
         }
         return r.standouts > 0 ? "\(r.standouts) standout\(r.standouts == 1 ? "" : "s") this week" : "\(r.deals) deals this week"
+    }
+}
+
+/// Trip plans, kept until the list, the deals or Your stores change (the List asks several
+/// times a draw, like `DealMatches`).
+final class TripPlans {
+    private var version = ""
+    private var known: TripPlan?
+
+    func plan(version: String, make: () -> TripPlan) -> TripPlan {
+        if version == self.version, let known { return known }
+        let made = make()
+        self.version = version
+        known = made
+        return made
+    }
+}
+
+/// Plan my trip, on the List tab: the one store with the most of the list on sale, how your other
+/// stores compare, and a way to see the list at one store's prices. It can be minimized to a
+/// line, and Your stores can be changed from it.
+private struct TripCard: View {
+    let plan: TripPlan
+    @Binding var collapsed: Bool
+    /// The store whose prices the list is showing, if someone chose one.
+    let shoppingAt: String?
+    let shop: (String?) -> Void
+    let changeStores: () -> Void
+    let openStore: (String) -> Void
+
+    private var total: Int { plan.asks.count }
+    /// The store the card leads with: the one being shopped, or the best.
+    private var lead: TripPlan.StorePlan? { shown.first { $0.store.id == shoppingAt } ?? plan.best }
+    /// Your stores, or the best few of every store when none are picked, plus the one store
+    /// elsewhere that beats them.
+    private var shown: [TripPlan.StorePlan] { Array(plan.stores.prefix(plan.pickedStores ? 6 : 3)) + [plan.elsewhere].compactMap { $0 } }
+
+    private var headline: String {
+        guard let lead else { return plan.pickedStores ? "Nothing on your list is on sale at your stores" : "Nothing on your list is on sale this week" }
+        return shoppingAt == lead.store.id ? "Shopping at \(lead.store.name)" : "\(lead.store.name) has the most of your list"
+    }
+    private var summary: String {
+        guard let lead else { return "Stores usually still sell it all at regular price." }
+        return "\(lead.covers) of your \(total) \(total == 1 ? "item is" : "items are") in its flyer this week."
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Space.m) {
+            Button {
+                withAnimation(.snappy) { collapsed.toggle() }
+                Analytics.track("Toggled Trip Card", ["collapsed": collapsed])
+            } label: {
+                HStack(alignment: .firstTextBaseline, spacing: Space.s) {
+                    Image(systemName: "cart").foregroundStyle(Palette.accent).hiddenWhenTextIsLarge()
+                    VStack(alignment: .leading, spacing: 2) {
+                        if collapsed {
+                            Text(lead.map { "\($0.store.name): \($0.covers) of \(total) on sale" } ?? "Plan my trip")
+                                .font(.app(.headline)).foregroundStyle(Palette.ink)
+                        } else {
+                            Text(headline).font(.app(.title3, .bold)).foregroundStyle(Palette.ink)
+                            Text(summary).font(.app(.callout)).foregroundStyle(Palette.body)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    Image(systemName: collapsed ? "chevron.down" : "chevron.up")
+                        .font(.app(.subheadline, .semibold)).foregroundStyle(Palette.muted)
+                }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityElement(children: .combine)
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityValue(collapsed ? "Minimized" : "Showing")
+            .accessibilityHint(collapsed ? "Shows the trip plan" : "Minimizes the trip plan")
+
+            if !collapsed {
+                VStack(spacing: 0) {
+                    ForEach(shown) { s in row(s) }
+                }
+                AdaptiveStack(spacing: Space.s) {
+                    if let lead, shoppingAt != lead.store.id {
+                        Button { shop(lead.store.id) } label: {
+                            Text("Shop at \(lead.store.name)").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                        }
+                        .buttonStyle(.glassProminent)
+                        .accessibilityHint("Shows this store's prices on your list")
+                    } else if shoppingAt != nil {
+                        Button { shop(nil) } label: {
+                            Text("Show the best price anywhere").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                        }
+                        .buttonStyle(.glass)
+                    }
+                    Button(action: changeStores) {
+                        Text(plan.pickedStores ? "Change stores" : "Pick your stores").font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                    }
+                    .buttonStyle(.glass)
+                }
+                .tint(Palette.accent)
+            }
+        }
+        .padding(.vertical, Space.xs)
+    }
+
+    /// One store: its name, how much of the list is in its flyer as a bar and in words, and a
+    /// way to its page. Tapping the row shops there.
+    private func row(_ s: TripPlan.StorePlan) -> some View {
+        let here = s.store.id == shoppingAt
+        let mine = plan.elsewhere?.store.id != s.store.id
+        return HStack(spacing: Space.s) {
+            Button { shop(here ? nil : s.store.id) } label: {
+                HStack(spacing: Space.m) {
+                    Image(systemName: here ? "checkmark.circle.fill" : "circle")
+                        .foregroundStyle(here ? Palette.accent : Palette.muted)
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(s.store.name).font(.app(.callout, here ? .bold : .semibold)).foregroundStyle(Palette.ink)
+                            Spacer(minLength: Space.s)
+                            Text("\(s.covers) of \(total)").font(.app(.callout, .semibold)).foregroundStyle(Palette.ink).monospacedDigit()
+                        }
+                        ProgressView(value: Double(s.covers), total: Double(max(total, 1))).tint(Palette.accent)
+                        if !mine { Text("Not one of your stores").font(.app(.footnote)).foregroundStyle(Palette.muted) }
+                    }
+                }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(s.store.name), \(s.covers) of \(total) on sale\(mine ? "" : ", not one of your stores")")
+            .accessibilityAddTraits(here ? .isSelected : [])
+            .accessibilityHint(here ? "Goes back to the best price anywhere" : "Shows this store's prices on your list")
+            Button { openStore(s.store.id) } label: {
+                Image(systemName: "chevron.right").font(.app(.subheadline, .semibold)).foregroundStyle(Palette.muted)
+                    .frame(minWidth: 44, minHeight: 44)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Open \(s.store.name)")
+        }
+        .padding(.vertical, Space.xs)
     }
 }
 
