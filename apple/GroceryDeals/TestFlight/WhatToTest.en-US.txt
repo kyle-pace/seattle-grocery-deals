@@ -5,7 +5,9 @@ Things to try:
 - Tap + on a few deals to build a list, or connect it to a Reminders list you share.
 - Search for something you buy often, like pork belly or bok choy.
 - Watch a price and get a nudge when it drops.
-- Turn on "New deals are in" to hear when your stores post a new flyer.
+- Leave "New deals from your stores" on to hear when your stores post a new flyer.
+
+New in this build: a smoother first-run setup (alerts start on, and you can skip any step on its own), and stores whose new flyer we haven't read yet now say so instead of saying it isn't out.
 
 Good to know: it covers 13 Seattle-area stores, and each one updates as soon as its new flyer is out. Prices come straight from the flyers, so double-check in store.
 
