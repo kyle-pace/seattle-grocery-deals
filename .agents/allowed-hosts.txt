@@ -1,0 +1,18 @@
+# Outside hosts this project talks to, beyond its own domain (see the principles).
+# The app's runtime calls are listed too, though the CI check only sees the site's HTML and CSS.
+
+# Recipe search's list lookup (POST /recipe-search/api/with), from the app's "Recipes with your list", only on a tap. Approved by Kyle, 2026-11-14.
+kylepace.dev
+
+# Recipe photos on recipe ideas in the app, each from its recipe's own site, loaded as they come on screen. Added under the content-image rule, 2026-11-14. Same hosts as recipe search's own list.
+thewoksoflife.com
+hot-thai-kitchen.com
+i0.wp.com
+www.recipetineats.com
+japan.recipetineats.com
+sudachirecipes.com
+blog.themalamarket.com
+cdn.sanity.io
+altonbrown.com
+www.justonecookbook.com
+www.maangchi.com
