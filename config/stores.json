@@ -324,7 +324,7 @@
       ],
       "watch": {
         "url": "https://www.smithbrothersfarms.com/on-special",
-        "text": "Enjoy these deals\\s+\\d{1,2}/\\d{1,2}\\s*(?:to|-|–|—)\\s*\\d{1,2}/\\d{1,2}"
+        "text": "Enjoy these deals\\s+\\d{1,2}/\\d{1,2}\\s*(?:to|-|\\u2013|\\u2014)\\s*\\d{1,2}/\\d{1,2}"
       },
       "about": "A Kent dairy that delivers milk, eggs and groceries to homes around Puget Sound. Not a store: sales run in two-week cycles.",
       "delivery": "Home delivery is how they sell: groceries come with your milk order.",
