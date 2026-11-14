@@ -57,6 +57,7 @@ The store needs a public weekly flyer or specials page that can be read without 
 | `representative_location` | Which store's flyer is used, if it varies. |
 | `how_to_read` | Short instructions for the weekly routine. Include any quirks. |
 | `delivery` | Optional. One sentence, 10 to 200 characters, on how the store delivers groceries itself. Adds a "Delivers" badge and a Delivery note on the store page. Leave it out for stores that only deliver through apps like Instacart. |
+| `fresh_bucks` | Optional. `true` only when the City of Seattle lists the store as a Fresh Bucks retailer (seattlefreshbucks.org). Adds a quiet Fresh Bucks note on the store page that links to Help paying for food. |
 
 ## 4. The weekly routine
 
