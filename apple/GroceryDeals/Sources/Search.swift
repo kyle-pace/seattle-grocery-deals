@@ -321,7 +321,7 @@ enum DealsSpotlight {
             attrs.title = e.title
             attrs.contentDescription = e.detail
             attrs.keywords = e.keywords
-            if let entity = e.entity { attrs.associateAppEntity(entity, priority: nil) }
+            if let entity = e.entity { attrs.associateAppEntity(entity, priority: 0) }
             let item = CSSearchableItem(uniqueIdentifier: e.id, domainIdentifier: domain, attributeSet: attrs)
             if let expires = e.expires { item.expirationDate = expires }
             return item
