@@ -8,6 +8,11 @@ final class FeedStore {
     static let feedURL = URL(string: "https://seattlegrocery.deals/api/week.json")!
     static let popularURL = URL(string: "https://seattlegrocery.deals/api/popular.json")!
 
+    static let recipesURL = URL(string: "https://seattlegrocery.deals/api/recipes.json")!
+
+    /// Recipe ideas by item key; empty until the file arrives (and on older site builds).
+    private(set) var recipes: [String: RecipeFeed.Ingredient] = [:]
+
     /// What people are adding this week; empty until enough people have added the same deals.
     private(set) var popular: [Popular.Item] = []
 
@@ -114,6 +119,7 @@ final class FeedStore {
             refreshing = false
         }
         Task { await refreshPopular() }
+        Task { await refreshRecipes() }
         do {
             // Fifteen seconds, not the system's sixty: a first launch on a bad connection
             // shouldn't sit on the loading screen for a minute before the saved deals show.
@@ -141,6 +147,23 @@ final class FeedStore {
               (response as? HTTPURLResponse)?.statusCode == 200,
               let fresh = try? JSONDecoder().decode(Popular.self, from: data) else { return }
         popular = fresh.items
+    }
+
+    /// Fetches /api/recipes.json (rebuilt with the deals). Quietly keeps the last ideas on failure.
+    func refreshRecipes() async {
+        guard let (data, response) = try? await URLSession.shared.data(from: Self.recipesURL),
+              (response as? HTTPURLResponse)?.statusCode == 200,
+              let fresh = try? JSONDecoder().decode(RecipeFeed.self, from: data) else { return }
+        recipes = fresh.by_key
+    }
+
+    /// Recipe ideas for an item key ("pork-chops"), vegetarian ones only when Vegetarian is on.
+    /// Nil when there are none, so the section isn't shown.
+    func recipeIdeas(for key: String?) -> RecipeFeed.Ingredient? {
+        guard let key, let found = recipes[key] else { return nil }
+        let ideas = Array(found.recipes.filter { !vegetarianOnly || $0.veg }.prefix(6))
+        guard !ideas.isEmpty else { return nil }
+        return RecipeFeed.Ingredient(ingredient: found.ingredient, more: found.more, total: found.total, recipes: ideas)
     }
 
     /// Popular deals that are in this week's feed (and pass the vegetarian filter), with counts.
