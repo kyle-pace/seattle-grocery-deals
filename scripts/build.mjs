@@ -451,12 +451,20 @@ ${head}` : ""}${map ? `
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ""}${pageId ? ` data-page="${pageId}"` : ""}>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-head">
+${section === "app/" ? "" : `<aside class="app-banner" data-app-banner hidden aria-label="The app for iPhone and iPad">
+  <div class="wrap app-banner-in">
+    <button type="button" class="app-banner-x" data-app-banner-close aria-label="Hide this banner"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    ${LOGO}
+    <p><strong>Seattle Grocery Deals app</strong><span>Free beta for iPhone and iPad</span></p>
+    <a class="app-banner-get" href="${url("app/")}">Get<span class="sr-only"> the app</span></a>
+  </div>
+</aside>
+`}<header class="site-head">
   <div class="wrap head-in">
     <a class="brand" href="${url()}">${LOGO}<span>${esc(cfg.site.title)}</span></a>
     <div class="head-end">
       <nav class="topnav" aria-label="Main">${top}</nav>
-      <a class="head-about" href="${url("app/")}"${cur("app/")}>App</a><a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>${HEART}
+      <a class="head-about" href="${url("about/")}"${cur("about/")}>About</a>${HEART}
     </div>
   </div>
 </header>

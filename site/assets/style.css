@@ -88,8 +88,20 @@ main .wrap > p, main .wrap > ul:not([class]) li { color: var(--text-body); }
 /* 8%, not more: the accent text on this wash stays at 4.6:1 in light mode (12% dipped to 4.4:1) */
 .topnav a[aria-current="page"], .head-about[aria-current="page"] { color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
 .head-end { display: flex; align-items: center; gap: 0.15rem; }
-/* Phones show App and About beside the heart (the full nav is the tab bar), a little tighter. */
-.head-about { padding: 0 0.6rem; }
+/* Our own take on Apple's Smart App Banner, which only works once an app is on the App Store.
+   app.js shows it on iPhones and iPads only, until it's closed (sgd.appBanner). */
+.app-banner { background: var(--surface); border-bottom: 1px solid var(--line); padding-top: env(safe-area-inset-top, 0px); }
+.app-banner[hidden] { display: none; }
+.app-banner-in { display: flex; align-items: center; gap: 0.6rem; padding-block: 0.4rem; }
+.app-banner-in > svg { flex: none; width: 40px; height: 40px; }
+.app-banner p { margin: 0; min-width: 0; flex: 1; line-height: 1.25; }
+.app-banner strong, .app-banner p span { display: block; }
+.app-banner strong { font-size: 0.9375rem; color: var(--ink); }
+.app-banner p span { font-size: 0.8125rem; color: var(--muted); }
+.app-banner-x { flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; margin-left: -0.75rem; margin-right: -0.4rem; border: 0; border-radius: 999px; background: none; color: var(--muted); cursor: pointer; }
+.app-banner-x:hover { color: var(--ink); background: var(--raised); }
+.app-banner-get { flex: none; display: inline-flex; align-items: center; min-height: 36px; padding: 0 1.1rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-weight: 700; font-size: 0.9375rem; text-decoration: none; position: relative; }
+.app-banner-get::after { content: ""; position: absolute; inset: -4px 0; }
 .head-heart { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; color: var(--muted); }
 .head-heart svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; transition: transform 0.2s, fill 0.2s; }
 .head-heart:hover, .head-heart:focus-visible { color: light-dark(#c2334d, #ff8fa3); background: var(--raised); }

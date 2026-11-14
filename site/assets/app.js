@@ -414,3 +414,20 @@
   }
   update();
 })();
+
+// The app banner (build.mjs, .app-banner): only on iPhones and iPads, since that's where the
+// app runs, and only until someone closes it. iPads say they're Macs, so check for touch too.
+(function () {
+  var banner = document.querySelector("[data-app-banner]");
+  if (!banner) return;
+  var ua = navigator.userAgent;
+  var ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  var closed = false;
+  try { closed = localStorage.getItem("sgd.appBanner") === "closed"; } catch (e) {}
+  if (!ios || closed) return;
+  banner.hidden = false;
+  banner.querySelector("[data-app-banner-close]").addEventListener("click", function () {
+    banner.hidden = true;
+    try { localStorage.setItem("sgd.appBanner", "closed"); } catch (e) {}
+  });
+})();
