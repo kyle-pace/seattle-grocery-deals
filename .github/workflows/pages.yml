@@ -66,6 +66,11 @@ jobs:
   # a test instead (for example new-deals-test, which only debug builds join).
   # No stored key: GitHub signs in to Google Cloud as push-sender through Workload Identity
   # Federation, and that account can only send Cloud Messaging.
+  # Two Firebase projects while builds move over (2026-11-14): seattle-grocery-deals-dev, which
+  # TestFlight builds up to now use, and seattle-grocery-deals (production). Each send goes to
+  # both, so people on either kind of build hear about new flyers. Drop the dev send once no
+  # build people use is on the dev project. A production send that fails only warns, while
+  # nobody is on it yet.
   notify:
     if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.push_topic != '')
     needs: deploy
@@ -73,8 +78,6 @@ jobs:
     permissions:
       contents: write # push the notified/... tags
       id-token: write # sign in to Google Cloud without a key
-    env:
-      FIREBASE_PROJECT_ID: seattle-grocery-deals-dev
     steps:
       - uses: actions/checkout@v4
         with:
@@ -88,16 +91,29 @@ jobs:
           workload_identity_provider: projects/70205055774/locations/global/workloadIdentityPools/github/providers/seattle-grocery-deals
           service_account: push-sender@seattle-grocery-deals-dev.iam.gserviceaccount.com
           token_format: access_token
+      - id: google_prod
+        # A production sign-in that fails mustn't stop the dev send people rely on today.
+        continue-on-error: true
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/553872012954/locations/global/workloadIdentityPools/github/providers/seattle-grocery-deals
+          service_account: push-sender@seattle-grocery-deals.iam.gserviceaccount.com
+          token_format: access_token
       - name: Test send
         if: github.event_name == 'workflow_dispatch'
         env:
-          FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          DEV_TOKEN: ${{ steps.google.outputs.access_token }}
+          PROD_TOKEN: ${{ steps.google_prod.outputs.access_token }}
           TOPIC: ${{ inputs.push_topic }}
-        run: node scripts/send-push.mjs --force --topic "$TOPIC"
+        run: |
+          FCM_ACCESS_TOKEN="$DEV_TOKEN" FIREBASE_PROJECT_ID=seattle-grocery-deals-dev node scripts/send-push.mjs --force --topic "$TOPIC"
+          FCM_ACCESS_TOKEN="$PROD_TOKEN" FIREBASE_PROJECT_ID=seattle-grocery-deals node scripts/send-push.mjs --force --topic "$TOPIC" \
+            || echo "::warning::The production send failed."
       - name: New deals are in
         if: github.event_name == 'push'
         env:
-          FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          DEV_TOKEN: ${{ steps.google.outputs.access_token }}
+          PROD_TOKEN: ${{ steps.google_prod.outputs.access_token }}
         run: |
           # Stores whose flyer changed in this push, as store@start-date. Code-only merges
           # change no flyer, so they send nothing.
@@ -113,7 +129,11 @@ jobs:
           done
           stores="${stores#,}"
           if [ -z "$stores" ]; then echo "No new flyers in this push; not announcing."; exit 0; fi
-          out=$(node scripts/send-push.mjs --stores "$stores")
+          out=$(FCM_ACCESS_TOKEN="$DEV_TOKEN" FIREBASE_PROJECT_ID=seattle-grocery-deals-dev node scripts/send-push.mjs --stores "$stores")
+          prod=$(FCM_ACCESS_TOKEN="$PROD_TOKEN" FIREBASE_PROJECT_ID=seattle-grocery-deals node scripts/send-push.mjs --stores "$stores") \
+            || echo "::warning::The production send failed."
+          out="$out
+          $prod"
           echo "$out"
           if echo "$out" | grep -q "^Sent to"; then
             for tag in $tags; do git tag "$tag"; done

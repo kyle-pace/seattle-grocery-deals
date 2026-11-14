@@ -178,3 +178,21 @@ test("list_stores puts your stores first and marks them", () => {
   assert.equal(r.stores.find((s) => s.id === "hmart").skipped, true);
   assert.equal(r.stores.length, 4);
 });
+
+test("plan_trip matches the item's name, not its aisle", () => {
+  // Tofu sits in "Dairy and eggs": a list's "eggs" isn't tofu, at any store.
+  const r = planTrip(big, { items: "eggs, tofu" }, TODAY);
+  assert.ok(r.stores.every((s) => s.on_sale.every((d) => d.item !== "eggs")));
+  assert.match(r.notes.join(" "), /any store compared this week: eggs/);
+  // Search still finds an aisle by its name.
+  assert.ok(searchDeals(big, { query: "eggs" }, TODAY).deals.length > 0);
+});
+
+test("plan_trip prefers the item itself over a product that mentions it", () => {
+  const feed = { ...big, items: [
+    item("uwajimaya-90", 1, "Wontons, Pork / Spinach / Bok Choy", "uwajimaya", "frozen", { tier: "standout" }),
+    item("uwajimaya-91", 9, "Baby Bok Choy", "uwajimaya", "produce"),
+  ] };
+  const r = planTrip(feed, { items: "bok choy" }, TODAY);
+  assert.equal(r.stores[0].on_sale[0].name, "Baby Bok Choy");
+});
