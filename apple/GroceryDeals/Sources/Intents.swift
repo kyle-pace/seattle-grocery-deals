@@ -40,11 +40,11 @@ struct DealsShortcuts: AppShortcutsProvider {
 
 // MARK: the list
 
-/// "Hey Siri, add to my grocery list in Deals": adds items and says which are on sale this week.
+/// "Hey Siri, add to my grocery list in Grocery Deals": adds items and says which are on sale this week.
 struct AddToListIntent: AppIntent {
     static let title: LocalizedStringResource = "Add to Grocery List"
     static let description = IntentDescription(
-        "Adds things to buy to the grocery list in Deals, and says which of them are on sale this week and where.",
+        "Adds things to buy to the grocery list in Grocery Deals, and says which of them are on sale this week and where.",
         searchKeywords: ["groceries", "buy", "need", "shopping list"])
 
     @Parameter(title: "Items", description: "The things to buy, separated by commas or \u{201C}and,\u{201D} like \u{201C}eggs and tofu.\u{201D}", requestValueDialog: "What should I add?")
@@ -80,7 +80,7 @@ struct AddToListIntent: AppIntent {
 struct ListOnSaleIntent: AppIntent {
     static let title: LocalizedStringResource = "What's on Sale from My List"
     static let description = IntentDescription(
-        "Checks the grocery list in Deals against this week's flyers and returns the best deal for each item that's on sale, at the person's stores first.",
+        "Checks the grocery list in Grocery Deals against this week's flyers and returns the best deal for each item that's on sale, at the person's stores first.",
         searchKeywords: ["grocery list", "shopping list", "on sale"])
 
     @MainActor
@@ -215,10 +215,10 @@ struct CheckSaleIntent: AppIntent {
 struct PlanTripIntent: AppIntent {
     static let title: LocalizedStringResource = "Plan My Grocery Trip"
     static let description = IntentDescription(
-        "Finds the one grocery store with the most of a shopping list on sale this week, comparing the person's stores. Uses the grocery list in Deals unless items are given. Items not on sale are usually still sold there at regular price.",
+        "Finds the one grocery store with the most of a shopping list on sale this week, comparing the person's stores. Uses the grocery list in Grocery Deals unless items are given. Items not on sale are usually still sold there at regular price.",
         searchKeywords: ["which store", "where to shop", "trip", "one stop"])
 
-    @Parameter(title: "Items", description: "The things to buy, separated by commas. Leave empty to use the grocery list in Deals.")
+    @Parameter(title: "Items", description: "The things to buy, separated by commas. Leave empty to use the grocery list in Grocery Deals.")
     var items: String?
 
     static var parameterSummary: some ParameterSummary { Summary("Plan my grocery trip") { \.$items } }
@@ -281,7 +281,7 @@ struct SearchDealsIntent: AppIntent {
 /// Opens a store's page: its deals by aisle and its weekly ad.
 struct OpenStoreIntent: OpenIntent {
     static let title: LocalizedStringResource = "Open Store"
-    static let description = IntentDescription("Opens a store's page in Deals, with this week's deals by aisle and its weekly ad.")
+    static let description = IntentDescription("Opens a store's page in Grocery Deals, with this week's deals by aisle and its weekly ad.")
 
     @Parameter(title: "Store") var target: StoreEntity
 
@@ -295,7 +295,7 @@ struct OpenStoreIntent: OpenIntent {
 /// Opens one deal: the price, how it compares, and the same item at other stores.
 struct OpenDealIntent: OpenIntent {
     static let title: LocalizedStringResource = "Open Deal"
-    static let description = IntentDescription("Opens a deal in Deals, with how the price compares and the same item at other stores.")
+    static let description = IntentDescription("Opens a deal in Grocery Deals, with how the price compares and the same item at other stores.")
 
     @Parameter(title: "Deal") var target: DealEntity
 

@@ -23,6 +23,9 @@ settings:
     # which internal TestFlight builds go to (apple/testflight.sh).
     BUNDLE_ID_SUFFIX: ""
     APP_NAME_SUFFIX: ""
+    # The Home Screen name: "Grocery Deals" (owner's call, 2026-11-14; it matches the site's Home
+    # Screen name). Deals Dev keeps its short name so it fits under the icon.
+    APP_DISPLAY_NAME: Grocery Deals
     APP_ICON_SUFFIX: ""
 schemes:
   # Shared (committed) so Xcode Cloud can build it.
@@ -84,9 +87,9 @@ targetTemplates:
         TARGETED_DEVICE_FAMILY: "1,2"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon$(APP_ICON_SUFFIX)
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Deals$(APP_NAME_SUFFIX)
+        INFOPLIST_KEY_CFBundleDisplayName: $(APP_DISPLAY_NAME)
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
-        INFOPLIST_KEY_NSRemindersFullAccessUsageDescription: Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.
+        INFOPLIST_KEY_NSRemindersFullAccessUsageDescription: Grocery Deals adds items to the Reminders list you pick, with the price and when the sale ends, and shows which items are on sale.
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
   DealsWidgetBase:
@@ -112,7 +115,7 @@ targetTemplates:
         CURRENT_PROJECT_VERSION: "1"
         TARGETED_DEVICE_FAMILY: "1,2"
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Deals$(APP_NAME_SUFFIX)
+        INFOPLIST_KEY_CFBundleDisplayName: $(APP_DISPLAY_NAME)
         SKIP_INSTALL: YES
 targets:
   GroceryDeals:
@@ -159,6 +162,7 @@ targets:
         PRODUCT_NAME: DealsDev
         BUNDLE_ID_SUFFIX: .dev
         APP_NAME_SUFFIX: " Dev"
+        APP_DISPLAY_NAME: Deals Dev
         APP_ICON_SUFFIX: Dev
     info:
       path: Dev/Info.plist
@@ -189,6 +193,7 @@ targets:
         PRODUCT_NAME: DealsDevWidget
         BUNDLE_ID_SUFFIX: .dev
         APP_NAME_SUFFIX: " Dev"
+        APP_DISPLAY_NAME: Deals Dev
     info:
       path: DevWidget/Info.plist
       properties:

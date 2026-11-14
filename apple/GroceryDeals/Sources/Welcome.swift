@@ -37,7 +37,7 @@ enum Welcome {
 
     static let question = UsageQuestion(
         title: "Help make Deals better?",
-        message: "With your OK, Deals sends anonymous usage, so it's clear which features get used and what to fix next. It isn't linked to you.",
+        message: "With your OK, Grocery Deals sends anonymous usage, so it's clear which features get used and what to fix next. It isn't linked to you.",
         shared: [
             "Screens you open and features you use",
             "Which deals you open, add or watch",
@@ -106,7 +106,7 @@ struct DealsOnboarding: View {
             case .alerts: alertsStep.transition(slide)
             case .howItWorks: howItWorks.transition(slide)
             case .question:
-                Onboarding(buddy: .crow, appName: "Deals",
+                Onboarding(buddy: .crow, appName: "Grocery Deals",
                            tagline: "This week's best sales at Seattle's specialty grocers.",
                            pages: [], question: Welcome.question, start: .question) { result in
                     if let share = result.shareUsage { Analytics.setSharing(share) }
@@ -150,7 +150,7 @@ struct DealsOnboarding: View {
                     hop += 1
                 }
                 VStack(spacing: Space.s) {
-                    Text("Welcome to Deals").font(.app(.largeTitle, .bold)).foregroundStyle(Palette.ink)
+                    Text("Welcome to Grocery Deals").font(.app(.largeTitle, .bold)).foregroundStyle(Palette.ink)
                         .multilineTextAlignment(.center)
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($titleFocused)
@@ -290,7 +290,7 @@ struct DealsOnboarding: View {
                         Text("Want a heads-up?").font(.app(.title, .bold)).foregroundStyle(Palette.ink)
                             .accessibilityAddTraits(.isHeader)
                             .accessibilityFocused($titleFocused)
-                        Text("Deals only taps you on the shoulder when it matters. Both are on to start; switch off any you don't want.")
+                        Text("Grocery Deals only taps you on the shoulder when it matters. Both are on to start; switch off any you don't want.")
                             .font(.app(.callout)).foregroundStyle(Palette.body)
                     }
                     Spacer(minLength: 0)

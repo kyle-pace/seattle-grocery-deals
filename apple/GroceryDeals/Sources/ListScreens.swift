@@ -516,7 +516,7 @@ struct ListHomePrimer: View {
                                 loading = false
                             }
                         }
-                        option("Here in Deals", detail: "Simple and private. Nothing leaves your iPhone.", systemImage: "iphone", busy: false) {
+                        option("Here in Grocery Deals", detail: "Simple and private. Nothing leaves your iPhone.", systemImage: "iphone", busy: false) {
                             list.useApp(prompt: "first_add")
                             list.finishPendingAdd()
                             dismiss()
@@ -798,7 +798,7 @@ private struct BuildLabel: View {
         case .internalTestFlight: "Internal TestFlight"
         case .testFlight: "Public TestFlight"
         case .debug, .development: "Development build"
-        case .appStore, nil: "Deals"
+        case .appStore, nil: "Grocery Deals"
         }
         Text("\(kind) · \(version)")
             .font(.app(.footnote)).foregroundStyle(Palette.muted)
