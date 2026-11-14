@@ -725,10 +725,13 @@ private struct TripCard: View {
                     Image(systemName: here ? "checkmark.circle.fill" : "circle")
                         .foregroundStyle(here ? Palette.accent : Palette.muted)
                     VStack(alignment: .leading, spacing: 4) {
-                        HStack(alignment: .firstTextBaseline) {
+                        // Side by side, or the count under the name at the largest text sizes,
+                        // where side by side broke store names mid-word.
+                        AdaptiveStack(spacing: 2) {
                             Text(s.store.name).font(.app(.callout, here ? .bold : .semibold)).foregroundStyle(Palette.ink)
-                            Spacer(minLength: Space.s)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             Text("\(s.covers) of \(total)").font(.app(.callout, .semibold)).foregroundStyle(Palette.ink).monospacedDigit()
+                                .fixedSize()
                         }
                         ProgressView(value: Double(s.covers), total: Double(max(total, 1))).tint(Palette.accent)
                         if !mine { Text("Not one of your stores").font(.app(.footnote)).foregroundStyle(Palette.muted) }
