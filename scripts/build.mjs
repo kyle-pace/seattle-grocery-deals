@@ -617,10 +617,10 @@ ${pickable.map((s) => `      <label class="pick"><input type="checkbox" value="$
   <div class="card quiet-note" data-quiet-note hidden></div>
   <ul class="store-cards" data-rank-list>${shops.map((s) => storeCard(s, items, hlAll, hlVeg)).join("\n")}</ul>
   <p class="small filtered-note" data-filtered-note hidden></p>
-  <ul class="unread-cards" data-unread-list>${unread.map((s) => {
+  <ul class="unread-cards" data-unread-list${cfg.site.mcp_url ? ` data-report-url="${esc(cfg.site.mcp_url)}/report"` : ""}>${unread.map((s) => {
     const f = latest.flyers.find((x) => x.store === s.id);
     const ad = s.flyer_url ?? f?.links?.[0]?.url ?? s.website;
-    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) || f?.status === "stale" ? (s.watch?.desktop ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer."}</span></span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
+    return `<li class="unread-card" data-unread-card="${esc(s.id)}" hidden><span><b>${esc(s.name)}</b><span class="small">${items.some((i) => i.store === s.id) || f?.status === "stale" ? (s.watch?.desktop ? "We haven't read its new flyer yet." : "Its new flyer isn't up yet.") : "We couldn't read this week's flyer."}</span>${cfg.site.mcp_url ? `<span class="unread-report"><button type="button" class="linkish" data-report="${esc(s.id)}">Think this is wrong?</button><span class="small" role="status" data-report-status></span></span>` : ""}</span>${ad ? `<a href="${esc(ad)}" rel="noopener">Their ad</a>` : ""}</li>`;
   }).join("")}</ul>
   <div class="elsewhere" data-elsewhere hidden>
     <div class="sec-h"><h3 class="sec-label">Elsewhere this week</h3><p>Not one of your stores, but clearly ahead</p></div>
@@ -1149,6 +1149,8 @@ function privacyPage() {
 <p>It doesn't run at all if your browser sends Global Privacy Control or Do Not Track, or if you turn it off here: <button type="button" class="linkish" data-analytics-toggle>Turn off analytics in this browser</button> <span class="muted" data-analytics-state></span></p>
 <h3>What stays in your browser</h3>
 <p>Your list, your stores, the Vegetarian filter, display settings and the analytics choice are saved in your browser's storage and never sent anywhere. Clearing your browser's site data removes them.</p>
+<h3>"Think this is wrong?"</h3>
+<p>When a store's new flyer is missing and you tap "Think this is wrong?", the site or the app sends just that store's name to this site's server, so the flyer gets checked. The server keeps a count and the time for each store for a week, and nothing about who tapped: no IP address, no ID, no account.</p>
 <h3>Other sites it loads from</h3>
 <p>The store map loads map tiles from OpenStreetMap, which receives your IP address the way any website does. Apart from Amplitude and the map tiles, everything, fonts included, is served from this site. Flyer links take you to each store's own site, which has its own privacy rules.</p>
 

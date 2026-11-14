@@ -276,6 +276,9 @@ html.veg-on [data-meat-only] { display: none; }
 .unread-card { display: flex; align-items: center; justify-content: space-between; gap: var(--s-m); padding: var(--s-s) var(--s-l); min-height: 56px; border: 2px dashed var(--line); border-radius: var(--r-l); }
 .unread-card > span { display: grid; }
 .unread-card a { font-weight: 700; min-height: 44px; display: inline-flex; align-items: center; }
+.unread-report { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--s-s); }
+.unread-report .linkish { font-size: 0.9375rem; font-weight: 400; color: var(--muted); }
+.unread-report .linkish:hover { color: var(--accent); }
 .elsewhere { margin-top: var(--s-xl); }
 .elsewhere .sec-h { justify-content: flex-start; }
 
