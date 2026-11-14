@@ -11,8 +11,8 @@ import UserNotifications
 /// Analytics is never added (Amplitude is the tool).
 ///
 /// Firebase is only set up when a config file is bundled: `GoogleService-Info-Dev.plist` for
-/// Debug builds, `GoogleService-Info-Prod.plist` for Release (falling back to Dev until the
-/// prod project exists). Without one, the app keeps its local weekly reminder.
+/// Deals Dev and Debug builds, `GoogleService-Info-Prod.plist` for Deals in Release (see
+/// `options()`). Without one, the app keeps its local weekly reminder.
 @MainActor @Observable
 final class PushStore {
     static let shared = PushStore()
@@ -103,11 +103,15 @@ final class PushStore {
         UserDefaults.standard.set(current.sorted(), forKey: Self.subscribedKey)
     }
 
+    /// Which Firebase project: Deals Dev, and any Debug build, use the dev project
+    /// (seattle-grocery-deals-dev); Deals in Release (public TestFlight, the App Store) uses
+    /// production (seattle-grocery-deals), falling back to dev if the file is missing. The deploy
+    /// workflow sends every push to both projects.
     private static func options() -> FirebaseOptions? {
         #if DEBUG
         let names = ["GoogleService-Info-Dev"]
         #else
-        let names = ["GoogleService-Info-Prod", "GoogleService-Info-Dev"]
+        let names = isDevApp ? ["GoogleService-Info-Dev"] : ["GoogleService-Info-Prod", "GoogleService-Info-Dev"]
         #endif
         for name in names {
             if let path = Bundle.main.path(forResource: name, ofType: "plist"),

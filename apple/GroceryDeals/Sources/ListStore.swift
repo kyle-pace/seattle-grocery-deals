@@ -29,7 +29,7 @@ final class ListStore {
     var pendingAdd: PendingAdd?
 
     private let events = EKEventStore()
-    nonisolated private static let dealURL = "grocerydeals://deal/"
+    nonisolated private static let dealURL = "\(DealsLink.scheme)://deal/"
 
     init() {
         if let data = UserDefaults.standard.data(forKey: "sgd.listSource") {
@@ -152,6 +152,18 @@ final class ListStore {
         nonisolated(unsafe) let predicate = events.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: [list])
         nonisolated(unsafe) let store = events
         Task { items = await Self.fetchItems(store, predicate) }
+    }
+
+    /// For Siri and the widgets: the list as it is right now, waiting for Reminders when the
+    /// list lives there (`reload` returns before Reminders has answered).
+    func loadNow() async {
+        guard case .reminders(let id, _) = source, let list = events.calendar(withIdentifier: id) else {
+            items = Self.savedAppItems()
+            return
+        }
+        nonisolated(unsafe) let predicate = events.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: [list])
+        nonisolated(unsafe) let store = events
+        items = await Self.fetchItems(store, predicate)
     }
 
     /// EventKit calls back on a background queue, so this must not be main-actor code
