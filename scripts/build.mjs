@@ -12,7 +12,7 @@ import { buddy, seasonBuddy, seasonIcon } from "./buddy.mjs";
 import { loadSeasons, seasonOn, seasonDeals, seasonLog, seasonEnd, fill } from "./seasons.mjs";
 import {
   ROOT, loadConfig, loadWeeks, esc, fmtDate, fmtPeriod, money, priceText, unitPriceText, packText,
-  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind, storeRanks,
+  unitPriceIsExtra, analyze, priorListings, peerPrices, convertPer, isVegetarian, flyerKind, storeRanks, stickerFor,
 } from "./lib.mjs";
 
 const cfg = loadConfig();
@@ -1570,6 +1570,9 @@ function appFeed() {
     items: items.map((i, rank) => {
       const p = priceParts(i);
       return { id: `${i.store}-${rank}`, rank, name: i.item, store: i.store, category: i.category, key: i.item_key ?? null,
+        // The drawing on the app's row (the names are KitchenCatalog's stickers). Missing in feeds
+        // built before 2026-11-14; older apps ignore it.
+        sticker: stickerFor(i, cfg),
         price: i.price, text: priceText(i), lead: p.lead, amount: p.cur + p.num, unit: p.unit.trim(), spoken: p.spoken, detail: p.detail,
         regular: i.regular_price != null ? priceText(i, i.regular_price) : null, off: i.percent_off ?? null,
         unit_price: i.unit_price ? unitPriceText(i.unit_price) : null, tier: i.a.tier,

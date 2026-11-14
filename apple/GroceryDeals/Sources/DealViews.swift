@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// "$4.99/lb" in plain bold type, with a smaller dollar sign and unit. With `savings`, the
 /// regular price and the percent off sit underneath; the percent off is the one bit of color.
@@ -184,32 +185,37 @@ struct DealRow: View {
     var body: some View {
         HStack(alignment: .center, spacing: Space.m) {
             Button(action: open) {
-                AdaptiveStack(spacing: Space.m) {
-                    VStack(alignment: .leading, spacing: 3) {
-                        // Wraps: side by side, "Standout" and "Ends tomorrow" were wider than
-                        // the words column and squeezed the price into one character per line.
-                        FlowLayout(spacing: 6) {
-                            TierBadge(tier: deal.tier)
-                            EndsBadge(deal: deal)
+                HStack(alignment: .center, spacing: Space.m) {
+                    // The item's sticker leads the row; the words take its room back at the
+                    // accessibility text sizes.
+                    Sticker(deal: deal).hiddenWhenTextIsLarge()
+                    AdaptiveStack(spacing: Space.m) {
+                        VStack(alignment: .leading, spacing: 3) {
+                            // Wraps: side by side, "Standout" and "Ends tomorrow" were wider than
+                            // the words column and squeezed the price into one character per line.
+                            FlowLayout(spacing: 6) {
+                                TierBadge(tier: deal.tier)
+                                EndsBadge(deal: deal)
+                            }
+                            Text(deal.name).font(.app(.headline)).foregroundStyle(Palette.ink)
+                            meta
+                            // The savings pill sits with the words, not under the price: under the
+                            // price it made that column as wide as the pill and squeezed names and
+                            // the "why" text into a narrow column.
+                            if (deal.us?.under ?? 0) > 0 || deal.off != nil {
+                                SavingsPill(deal: deal).padding(.top, 2)
+                            }
+                            if let people { PeopleCount(people).padding(.top, 2) }
+                            if showWhy, !deal.why.isEmpty {
+                                Text(deal.why).font(.app(.subheadline)).foregroundStyle(Palette.body).padding(.top, 2)
+                            }
                         }
-                        Text(deal.name).font(.app(.headline)).foregroundStyle(Palette.ink)
-                        meta
-                        // The savings pill sits with the words, not under the price: under the
-                        // price it made that column as wide as the pill and squeezed names and
-                        // the "why" text into a narrow column.
-                        if (deal.us?.under ?? 0) > 0 || deal.off != nil {
-                            SavingsPill(deal: deal).padding(.top, 2)
-                        }
-                        if let people { PeopleCount(people).padding(.top, 2) }
-                        if showWhy, !deal.why.isEmpty {
-                            Text(deal.why).font(.app(.subheadline)).foregroundStyle(Palette.body).padding(.top, 2)
-                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        // The price never wraps; the words column gives way instead.
+                        PriceTag(deal: deal)
+                            .fixedSize(horizontal: true, vertical: false)
+                            .layoutPriority(1)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    // The price never wraps; the words column gives way instead.
-                    PriceTag(deal: deal)
-                        .fixedSize(horizontal: true, vertical: false)
-                        .layoutPriority(1)
                 }
                 .contentShape(Rectangle())
             }
@@ -253,6 +259,45 @@ struct DealRow: View {
         if showWhy, !deal.why.isEmpty { parts.append(deal.why) }
         if let people { parts.append("\(people) people added this this week") }
         return parts.filter { !$0.isEmpty }.joined(separator: ". ")
+    }
+}
+
+/// The deal's sticker: a small drawing of the item, tilted a little like a sticker on a flyer.
+/// The drawings are KitchenCatalog's (stickers/stickers.json); `npm run sync-catalog` copies them
+/// into Assets.xcassets/Stickers. The feed names each deal's sticker (`deal.sticker`: the item's
+/// own, a more general item's, or its aisle's). Feeds built before 2026-11-14 don't, and a newer
+/// feed can name one this build doesn't have, so the item key and then the aisle stand in.
+/// Decorative: the row's words already say what it is.
+struct Sticker: View {
+    let deal: Deal
+    var size: CGFloat = 56
+
+    var body: some View {
+        if let name = Self.name(for: deal) {
+            Image(name)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size, height: size)
+                .rotationEffect(.degrees(Self.tilt(deal.id)))
+                // Lifts the white border off a white card in light mode.
+                .shadow(color: .black.opacity(0.18), radius: 1.5, y: 1)
+                .accessibilityHidden(true)
+        }
+    }
+
+    /// The first of the feed's sticker, the item key and the aisle that this build has a drawing for.
+    static func name(for deal: Deal) -> String? {
+        for candidate in [deal.sticker, deal.key, "section-\(deal.category)"] {
+            guard let candidate else { continue }
+            let name = "Stickers/\(candidate)"
+            if UIImage(named: name) != nil { return name }
+        }
+        return nil
+    }
+
+    /// A slight lean, the same every time for the same deal, so a list doesn't look stamped.
+    static func tilt(_ id: String) -> Double {
+        [-5, 4, -3, 6][id.unicodeScalars.reduce(0) { ($0 + Int($1.value)) % 4 }]
     }
 }
 

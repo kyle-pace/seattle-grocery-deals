@@ -275,6 +275,9 @@ struct Deal: Codable, Sendable, Identifiable, Hashable {
     let store: String
     let category: String
     let key: String?
+    /// The drawing for this deal's row, by name in Assets.xcassets/Stickers ("bok-choy",
+    /// "section-produce"). Missing in feeds built before 2026-11-14.
+    let sticker: String?
     let price: Double
     let text: String
     let lead: String

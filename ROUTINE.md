@@ -95,6 +95,8 @@ Fix every error. Then compare with last week's file and note anything surprising
 - any item key whose unit price changed by more than 3 times from its last listing (likely a unit or pack mistake: fix it or drop the row);
 - every flyer's dates cover this Friday, or the flyer is marked `stale`.
 
+Then run `node scripts/stickers-missing.mjs 1` and put its first ten lines in the pull request (item 4): the items this week with no sticker of their own, so the owner knows what to have drawn next. Don't draw them in this run.
+
 ### 6. Pull request
 
 Commit `data/weeks/YYYY-MM-DD.json`, the All Items note and any `config/items.json` changes on the branch for the mode, push it, and open the pull request against `main` with `gh pr create` (add `--draft` for a dry run).
