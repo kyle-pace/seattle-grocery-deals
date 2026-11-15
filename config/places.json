@@ -126,7 +126,7 @@
       "kind": "market",
       "name": "Burien Farmers Market",
       "neighborhood": "Burien",
-      "address": "Burien Town Square Park",
+      "address": "Burien Town Square Park, 480 SW 152nd St",
       "about": "A Thursday market just south of the city, open all year with shorter winter hours.",
       "run_by": "Discover Burien",
       "hours": [
@@ -148,7 +148,10 @@
       "website": "https://www.discoverburien.org/info",
       "source": "https://www.discoverburien.org/info",
       "lat": 47.4674,
-      "lon": -122.34024
+      "lon": -122.34024,
+      "programs": [
+        "market_match"
+      ]
     },
     {
       "id": "pike-place",
