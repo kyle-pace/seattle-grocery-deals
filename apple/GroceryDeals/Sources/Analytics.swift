@@ -52,6 +52,17 @@ enum Analytics {
                 .disableTrackCity().disableTrackDMA(),
             autocapture: [.sessions, .appLifecycles]
         ))
+        if isInternal { setUser(["internal_user": true]) }
+    }
+
+    /// Kyle's own installs: Deals Dev (an internal build) and the Simulator. They carry the user
+    /// property internal_user = true so charts can leave them out of real-visitor counts.
+    private static var isInternal: Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return Bundle.main.object(forInfoDictionaryKey: "KitchenInternalBuild") as? Bool == true
+        #endif
     }
 
     // MARK: dev menu
