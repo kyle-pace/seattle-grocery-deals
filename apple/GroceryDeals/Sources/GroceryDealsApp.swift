@@ -54,9 +54,9 @@ struct RootView: View {
     @State private var spotlightDeal: Deal?
     @State private var openSeason: Season?
     @State private var onboarding = Welcome.start != nil
-    /// Debug builds: -sheet feedback opens the heart sheet at launch (with -TipJarDemo, the tip
-    /// jar without the App Store), for screenshots in the simulator, where nothing can tap.
-    @State private var debugFeedback = DebugArgs.value("-sheet") == "feedback"
+    /// Debug builds: -sheet tips opens the heart's sheet at launch (with -TipJarDemo, the tip jar
+    /// without the App Store), for screenshots in the simulator, where nothing can tap.
+    @State private var debugTips = DebugArgs.value("-sheet") == "tips"
     @State private var router = DealsRouter.shared
     @State private var opener = StoreOpener()
     @Environment(FeedStore.self) private var store
@@ -149,7 +149,7 @@ struct RootView: View {
         // Simulator screenshots: -season <id> opens that season's screen at launch.
         .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
         .simulatorChecks(store, router)
-        .sheet(isPresented: $debugFeedback) { FeedbackSheet() }
+        .sheet(isPresented: $debugTips) { TipSheet() }
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
         .onChange(of: router.tabRequest, initial: true) { _, name in
             guard let name else { return }
@@ -274,12 +274,12 @@ private final class StoreOpener {
     }
 }
 
-/// The heart and the gear at the top right of every tab. The heart opens Feedback (below); the
-/// gear opens Settings. One sheet slot for both (2026-11-14): with a separate isPresented for
-/// each, the heart could stop opening anything after the first time and only flash.
+/// The heart and the gear at the top right of every tab. The heart opens tips (below); the gear
+/// opens Settings, where Send feedback lives. One sheet slot for both (2026-11-14): with a
+/// separate isPresented for each, the heart could stop opening anything after the first time.
 private struct SettingsButton: ViewModifier {
     private enum Sheet: String, Identifiable {
-        case settings, feedback
+        case settings, tips
         var id: String { rawValue }
     }
     @State private var sheet: Sheet?
@@ -287,9 +287,9 @@ private struct SettingsButton: ViewModifier {
         content
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Send feedback", systemImage: "heart") {
-                        sheet = .feedback
-                        Analytics.track("Opened Feedback")
+                    Button("Leave a tip", systemImage: "heart") {
+                        sheet = .tips
+                        Analytics.track("Opened Tips")
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
@@ -299,22 +299,18 @@ private struct SettingsButton: ViewModifier {
             .sheet(item: $sheet) { which in
                 switch which {
                 case .settings: SettingsView()
-                case .feedback: FeedbackSheet()
+                case .tips: TipSheet()
                 }
             }
     }
 }
 
-/// What the heart opens: a note from the person who makes the app, a way to write back (email
-/// to the site's public address with the app version filled in, or the address to copy when
-/// there's no mail app), and tips for anyone who wants to chip in (KitchenUI's TipJar, in-app
-/// purchases, since App Review turns down outside tip links). Sized to its
-/// content, on the system's glass, so it sits like any short sheet instead of a dark box.
-struct FeedbackSheet: View {
-    static let address = "hello@seattlegrocery.deals"
+/// What the heart opens: a thank-you from the person who makes the app and the tip jar
+/// (KitchenUI's TipJar: in-app purchases, since App Review turns down outside tip links), with a
+/// quiet Send feedback at the bottom for anyone who tapped the heart to say something. Sized to
+/// its content, on the system's glass, so it sits like any short sheet instead of a dark box.
+struct TipSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
-    @State private var noMail = false
     @State private var height: CGFloat = 440
 
     var body: some View {
@@ -326,36 +322,16 @@ struct FeedbackSheet: View {
                     Text("Thanks for using Grocery Deals")
                         .font(.app(.title2, .bold)).foregroundStyle(Palette.ink)
                         .accessibilityAddTraits(.isHeader)
-                    Text("It's free and made by one person in Seattle. Tell me what's working, what isn't, or which store to add next.")
+                    Text("It's free and made by one person in Seattle. If it's saved you some money, you can leave a tip. Tips don't unlock anything.")
                         .font(.app(.body)).foregroundStyle(Palette.body)
                 }
                 .multilineTextAlignment(.center)
-                Button { write() } label: {
-                    Label("Send feedback", systemImage: "envelope")
-                        .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
-                }
-                .buttonStyle(.glassProminent)
-                .tint(Palette.accent)
-                if noMail {
-                    VStack(spacing: Space.xs) {
-                        Text("No mail app is set up here. You can write to")
-                            .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                        Text(Self.address).font(.app(.headline)).foregroundStyle(Palette.ink).textSelection(.enabled)
-                        Button("Copy address", systemImage: "doc.on.doc") {
-                            UIPasteboard.general.string = Self.address
-                            Announce.say("Copied")
-                        }
-                        .font(.app(.subheadline, .semibold))
-                        .frame(minHeight: 44)
-                    }
-                    .multilineTextAlignment(.center)
-                }
-                TipJar(tint: Palette.accent) { Analytics.track($0.name, $0.properties) }
-                    .padding(.top, Space.s)
+                TipJar(tint: Palette.accent, header: false) { Analytics.track($0.name, $0.properties) }
+                SendFeedback(style: .link, from: "tip_sheet")
             }
             .padding(.horizontal, Space.l)
             .padding(.top, Space.xl)
-            .padding(.bottom, Space.xl)
+            .padding(.bottom, Space.l)
             .frame(maxWidth: 520)
             .frame(maxWidth: .infinity)
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height = $0 }
@@ -376,10 +352,64 @@ struct FeedbackSheet: View {
         .presentationDetents([.height(height), .large])
         .presentationDragIndicator(.hidden)
     }
+}
+
+/// Writing to the person who makes the app: an email to the site's public address with the
+/// version and iOS filled in, or, when there's no mail app, the address to copy. A row in
+/// Settings, and a quiet link at the bottom of the tip sheet. Event: Started Feedback Email,
+/// with `from` (settings or tip_sheet).
+struct SendFeedback: View {
+    enum Style { case row, link }
+    static let address = "hello@seattlegrocery.deals"
+    let style: Style
+    let from: String
+    @Environment(\.openURL) private var openURL
+    @State private var noMail = false
+
+    var body: some View {
+        VStack(alignment: style == .row ? .leading : .center, spacing: Space.s) {
+            Button { write() } label: { label }
+                .accessibilityHint("Opens an email to the developer")
+            if noMail {
+                VStack(alignment: style == .row ? .leading : .center, spacing: Space.xs) {
+                    Text("No mail app is set up here. You can write to")
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                    Text(Self.address).font(.app(.headline)).foregroundStyle(Palette.ink).textSelection(.enabled)
+                    Button("Copy address", systemImage: "doc.on.doc") {
+                        UIPasteboard.general.string = Self.address
+                        Announce.say("Copied")
+                    }
+                    .font(.app(.subheadline, .semibold))
+                    .frame(minHeight: 44)
+                }
+                .multilineTextAlignment(style == .row ? .leading : .center)
+            }
+        }
+    }
+
+    @ViewBuilder private var label: some View {
+        switch style {
+        case .row:
+            HStack(spacing: Space.m) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Send feedback").font(.app(.headline)).foregroundStyle(Palette.ink)
+                    Text("Tell me what's working, what isn't, or which store to add next")
+                        .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Image(systemName: "envelope").foregroundStyle(Palette.accent).accessibilityHidden(true)
+            }
+        case .link:
+            Label("Send feedback", systemImage: "envelope")
+                .font(.app(.subheadline, .semibold))
+                .foregroundStyle(Palette.accent)
+                .frame(minHeight: 44)
+        }
+    }
 
     private func write() {
-        Analytics.track("Started Feedback Email")
-        guard let url = FeedbackSheet.mailURL(app: "Grocery Deals", to: Self.address) else { noMail = true; return }
+        Analytics.track("Started Feedback Email", ["from": from])
+        guard let url = Self.mailURL(app: "Grocery Deals", to: Self.address) else { noMail = true; return }
         openURL(url) { opened in if !opened { withAnimation { noMail = true } } }
     }
 

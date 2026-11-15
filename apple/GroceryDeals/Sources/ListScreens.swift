@@ -331,6 +331,11 @@ struct SettingsView: View {
                 // One Group so every row takes the app's harbor-blue surface. Without it the
                 // rows are the system's neutral gray, which looks muddy on the blue ground.
                 Group {
+                // Feedback lives here; the heart in the top bar is for tips.
+                Section {
+                    SendFeedback(style: .row, from: "settings")
+                }
+
                 Section {
                     Toggle(isOn: Binding(get: { alerts.friday }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.friday = on } } })) {
                         if PushStore.shared.available {
