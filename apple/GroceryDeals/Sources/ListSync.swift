@@ -20,7 +20,7 @@ import UIKit
 /// Deals and Deals Dev (Info.plist's DealsCloudContainer), so testing never touches a real list.
 /// Builds from Xcode use CloudKit's development environment; TestFlight and the App Store use
 /// production. Off in unit tests and with `-noSync`.
-@MainActor
+@MainActor @Observable
 final class ListSync {
     static let shared = ListSync()
     static let zone = CKRecordZone.ID(zoneName: "List")
@@ -29,15 +29,19 @@ final class ListSync {
     enum Status: Equatable { case off(String), on, problem(String) }
     private(set) var status: Status = .off("Starting…")
 
-    private var engine: CKSyncEngine?
-    private lazy var container: CKContainer? = {
+    @ObservationIgnored private var engine: CKSyncEngine?
+    @ObservationIgnored private let container: CKContainer? = {
         guard let id = Bundle.main.object(forInfoDictionaryKey: "DealsCloudContainer") as? String else { return nil }
         return CKContainer(identifier: id)
     }()
-    private let ledger = Ledger()
+    @ObservationIgnored private let ledger = Ledger()
 
     func start() {
-        guard engine == nil, !CloudSettings.isDisabled, let container else { return }
+        guard engine == nil else { return }
+        guard !CloudSettings.isDisabled, let container else {
+            status = .off("Sync is off in this build.")
+            return
+        }
         let engine = CKSyncEngine(CKSyncEngine.Configuration(database: container.privateCloudDatabase,
                                                              stateSerialization: ledger.engineState, delegate: self))
         self.engine = engine
