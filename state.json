@@ -48,7 +48,7 @@
       "seen_at": "2026-11-11T15:16:09.090Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-15T07:46:52.609Z",
+      "error_at": "2026-11-15T15:36:31.922Z",
       "error_since": "2026-11-15T07:46:52.609Z"
     },
     "hmart": {
@@ -109,8 +109,17 @@
       "title": "Viet-Wah: new flyer spotted, update never landed",
       "body": "The routine was started 3 times since 2026-11-14 and the site still has the old flyer. Last run: https://claude.ai/code/cse_015KDcQDsTjfShPpXP8XY6gW",
       "since": "2026-11-15T07:46:52.609Z",
-      "issue": 52,
-      "notified_at": "2026-11-15T07:46:59.749Z"
+      "notified_at": "2026-11-15T07:46:59.749Z",
+      "issue": 52
+    },
+    "watch:met-market": {
+      "store": "met-market",
+      "kind": "watch",
+      "title": "Metropolitan Market: the flyer watcher can't read its page",
+      "body": "Since 2026-11-15 07:46 UTC: the pattern matched nothing (page layout may have changed). Fix its \"watch\" entry in config/stores.json.",
+      "since": "2026-11-15T15:36:31.922Z",
+      "issue": 53,
+      "notified_at": "2026-11-15T15:36:39.670Z"
     }
   },
   "resolved": []
