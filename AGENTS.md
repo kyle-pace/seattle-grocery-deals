@@ -112,6 +112,16 @@ Every project uses the same rules, so charts read the same way everywhere.
 - Copy is plain language, written for the person using it.
 - Don't add "Built with AI" lines or other AI credits to sites or apps unless Kyle asks.
 
+### Docs stay current
+
+Docs are part of the change, like its analytics events: the same piece of work updates every doc that describes what changed, in every project it touches. Not a follow-up, and not only when a session ends.
+
+- **In the repo:** the README (what it is, how to build and run it), the project's section of this file, and any handoff or status file the project keeps (where things stand, decisions, what's left).
+- **In Confluence:** the project's pages in the App Projects space (https://kylepace.atlassian.net/wiki/spaces/APPS). Update the status line and date on the project's overview page and the pages about what changed (architecture, analytics, notifications, roadmap and so on). A new feature that needs more than a few lines gets its own page under the project's. Do it yourself when you can reach Confluence; if you can't, say so and list what needs changing.
+- The project's section names its Confluence overview page. A project with none yet gets one with its first real feature.
+- Write for someone picking it up cold: what it does, how it works, where it stands, and the date. When something stops being true, change or remove it; don't add the new fact beside the old one.
+- Say in your report which docs you updated, or why the change needed none.
+
 ### App builds: two channels, both TestFlight
 
 - **Internal TestFlight** is the main channel: every build worth trying on a device goes there. Before an app has a public beta, it is the only channel.
@@ -175,6 +185,7 @@ Match the checking to the change. If you're unsure which tier a change is, use t
 
 - The build passes, and so do any tests and linters.
 - Read the changed text where it shows up in the built output.
+- The docs that describe what changed are updated, in the repo and in Confluence (see "Docs stay current").
 
 **Tier 2: something people see or use changed.** Layout, styles, a component, a new control, new behavior.
 
@@ -202,6 +213,7 @@ CI runs the check command where a project has one, the stack check (see "Default
 
 Seattle Grocery Deals: the website (seattlegrocery.deals, a static site built by `scripts/build.mjs` into `dist/` and served by GitHub Pages), the iPhone and iPad app in `apple/`, and the MCP server in `mcp/`.
 
+- **Confluence:** the overview page is [Seattle Grocery Deals](https://kylepace.atlassian.net/wiki/spaces/APPS/pages/1015809/Seattle+Grocery+Deals) in App Projects, with architecture, analytics, notifications, roadmap, flyer updates and the MCP server as their own pages. HANDOFF.md stays the day-to-day log; Confluence is the picture someone reads first.
 - **Start with [HANDOFF.md](HANDOFF.md)**: decisions, the app plan, where work left off, and house rules. Where it and the principles above disagree, HANDOFF.md wins for this project; tell Kyle about the difference.
 - **`npm run check` here means validate the data and build** (the weekly routine depends on it). It is not the page check from the principles.
 - **The page check is `npm run check:pages`** (after `npm run build`): axe in light and dark, sideways scrolling, JavaScript weight and screenshots in `.check/`. It checks every top-level page and a sample of three from each folder of look-alike pages (stores, weeks, aisles), because all 50 take too long. CI runs it on every push.
