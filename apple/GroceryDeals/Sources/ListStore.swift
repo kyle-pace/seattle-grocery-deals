@@ -12,6 +12,11 @@ final class ListStore {
         var text: String
         var done = false
         var dealID: String?
+        /// When it was added and last changed (in-app list only), so iCloud can tell which of two
+        /// devices' versions is newer and keep the list in the order it was made. Lists saved
+        /// before sync have neither.
+        var added: Date?
+        var changed: Date?
     }
     enum Source: Codable, Equatable {
         case app
@@ -36,6 +41,25 @@ final class ListStore {
             source = try? JSONDecoder().decode(Source.self, from: data)
         }
         if case .reminders = source { reload() } else { items = Self.savedAppItems() }
+        // The in-app list changed elsewhere: Siri, another screen's ListStore, or iCloud.
+        NotificationCenter.default.addObserver(forName: Self.appListChanged, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self, !self.usesReminders else { return }
+                let saved = Self.savedAppItems()
+                if saved != self.items { self.items = saved }
+            }
+        }
+    }
+
+    /// The Reminders list in use. When its ID isn't known on this device (Reminders can give the
+    /// same list a different ID on each iPhone and iPad, for example after a restore), it's found
+    /// by name instead, and the ID found is remembered.
+    private func remindersList() -> EKCalendar? {
+        guard case .reminders(let id, let title) = source else { return nil }
+        if let list = events.calendar(withIdentifier: id) { return list }
+        guard let list = events.calendars(for: .reminder).first(where: { $0.title == title }) else { return nil }
+        setSource(.reminders(id: list.calendarIdentifier, title: list.title))
+        return list
     }
 
     var title: String {
@@ -102,8 +126,8 @@ final class ListStore {
         Analytics.track(deal == nil ? "Added Item to List" : "Added Deal to List",
                         (deal.map(Analytics.deal) ?? [:]).merging(["list_source": usesReminders ? "reminders" : "app"]) { a, _ in a })
         switch source {
-        case .reminders(let id, _):
-            guard let list = events.calendar(withIdentifier: id) else { lastError = "That Reminders list no longer exists. Pick another."; return }
+        case .reminders:
+            guard let list = remindersList() else { lastError = "That Reminders list no longer exists. Pick another."; return }
             let r = EKReminder(eventStore: events)
             r.calendar = list
             r.title = text
@@ -117,7 +141,7 @@ final class ListStore {
             do { try events.save(r, commit: true) } catch { lastError = error.localizedDescription }
             reload()
         default:
-            items.insert(Item(id: UUID().uuidString, text: text, dealID: deal?.id), at: 0)
+            items.insert(Item(id: UUID().uuidString, text: text, dealID: deal?.id, added: .now, changed: .now), at: 0)
             saveAppItems()
         }
     }
@@ -125,6 +149,7 @@ final class ListStore {
     func toggle(_ item: Item) {
         guard let i = items.firstIndex(of: item) else { return }
         items[i].done.toggle()
+        items[i].changed = .now
         if usesReminders, let r = events.calendarItem(withIdentifier: item.id) as? EKReminder {
             r.isCompleted = items[i].done
             try? events.save(r, commit: true)
@@ -148,7 +173,7 @@ final class ListStore {
     func reload() {
         // The in-app list may have changed from Siri (another ListStore instance).
         if !usesReminders { items = Self.savedAppItems(); return }
-        guard case .reminders(let id, _) = source, let list = events.calendar(withIdentifier: id) else { return }
+        guard let list = remindersList() else { return }
         nonisolated(unsafe) let predicate = events.predicateForIncompleteReminders(withDueDateStarting: nil, ending: nil, calendars: [list])
         nonisolated(unsafe) let store = events
         Task { items = await Self.fetchItems(store, predicate) }
@@ -157,7 +182,7 @@ final class ListStore {
     /// For Siri and the widgets: the list as it is right now, waiting for Reminders when the
     /// list lives there (`reload` returns before Reminders has answered).
     func loadNow() async {
-        guard case .reminders(let id, _) = source, let list = events.calendar(withIdentifier: id) else {
+        guard usesReminders, let list = remindersList() else {
             items = Self.savedAppItems()
             return
         }
@@ -194,16 +219,30 @@ final class ListStore {
 
     /// Empties the in-app list (not a Reminders list).
     func devClearAppList() {
-        UserDefaults.standard.removeObject(forKey: "sgd.list")
+        Self.writeAppItems([])
         if !usesReminders { items = [] }
     }
 
     // MARK: in-app storage
 
     private func saveAppItems() {
-        UserDefaults.standard.set(try? JSONEncoder().encode(items), forKey: "sgd.list")
+        Self.writeAppItems(items)
     }
-    private static func savedAppItems() -> [Item] {
+
+    /// Posted when the in-app list was saved, by any ListStore or by iCloud.
+    static let appListChanged = Notification.Name("AppListChanged")
+
+    /// Saves the in-app list, tells iCloud what changed (unless the change came from iCloud) and
+    /// tells every ListStore to reload.
+    static func writeAppItems(_ items: [Item], fromCloud: Bool = false) {
+        let before = savedAppItems()
+        guard before != items else { return }
+        UserDefaults.standard.set(try? JSONEncoder().encode(items), forKey: "sgd.list")
+        if !fromCloud { ListSync.shared.localChanges(before: before, after: items) }
+        NotificationCenter.default.post(name: appListChanged, object: nil)
+    }
+
+    static func savedAppItems() -> [Item] {
         guard let data = UserDefaults.standard.data(forKey: "sgd.list"),
               let items = try? JSONDecoder().decode([Item].self, from: data) else { return [] }
         return items

@@ -63,6 +63,9 @@ final class PushStore {
     }
 
     func didRegister(_ deviceToken: Data) {
+        // The app also registers for iCloud's silent pushes (ListSync), with alerts off. Firebase
+        // only gets the token when "New deals are in" is on; turning it on registers again.
+        guard available, wantsNewDeals else { return }
         Messaging.messaging().apnsToken = deviceToken
         Task { await updateTopics() }
     }
@@ -127,6 +130,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         PushStore.shared.configure()
         MessageStore.shared.refresh()
+        // Your stores, settings and list between your iPhone and iPad, through your own iCloud.
+        CloudSettings.shared.start()
+        ListSync.shared.start()
         return true
     }
 

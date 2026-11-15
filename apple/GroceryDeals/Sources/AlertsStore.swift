@@ -26,6 +26,13 @@ final class AlertsStore {
         friday = d.bool(forKey: "sgd.alerts.friday")
         endingSoon = d.bool(forKey: "sgd.alerts.ending")
         watches = (d.data(forKey: "sgd.watches")).flatMap { try? JSONDecoder().decode([Watch].self, from: $0) } ?? []
+        // Price watches set on your other iPhone or iPad (CloudSettings.swift).
+        NotificationCenter.default.addObserver(forName: CloudSettings.changed, object: nil, queue: .main) { [weak self] note in
+            guard (note.userInfo?["keys"] as? [String])?.contains("sgd.watches") == true else { return }
+            MainActor.assumeIsolated {
+                self?.watches = (UserDefaults.standard.data(forKey: "sgd.watches")).flatMap { try? JSONDecoder().decode([Watch].self, from: $0) } ?? []
+            }
+        }
     }
 
     /// True until the person has been asked about notifications, so the app can show what an
@@ -152,7 +159,12 @@ final class AlertsStore {
         let d = UserDefaults.standard
         d.set(friday, forKey: "sgd.alerts.friday")
         d.set(endingSoon, forKey: "sgd.alerts.ending")
-        d.set(try? JSONEncoder().encode(watches), forKey: "sgd.watches")
+        let data = try? JSONEncoder().encode(watches)
+        guard d.data(forKey: "sgd.watches") != data else { return }
+        d.set(data, forKey: "sgd.watches")
+        // Watches follow you to your other devices; so does "already told you this week", so an
+        // iPad doesn't repeat a price drop the iPhone just announced.
+        CloudSettings.shared.put("sgd.watches")
     }
 }
 

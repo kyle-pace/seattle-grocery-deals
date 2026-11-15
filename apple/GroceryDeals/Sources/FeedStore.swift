@@ -37,6 +37,8 @@ final class FeedStore {
         didSet {
             cache = nil
             UserDefaults.standard.set(hideEndingToday, forKey: "sgd.hideEndingToday")
+            guard !CloudSettings.shared.applying else { return }
+            CloudSettings.shared.put("sgd.hideEndingToday")
             Analytics.track("Toggled Hide Ending Today", ["on": hideEndingToday])
         }
     }
@@ -44,8 +46,10 @@ final class FeedStore {
         didSet {
             cache = nil
             UserDefaults.standard.set(vegetarianOnly, forKey: "sgd.vegOnly")
-            Analytics.track("Toggled Vegetarian Only", ["on": vegetarianOnly])
             Analytics.setUser(["veg_only": vegetarianOnly])
+            guard !CloudSettings.shared.applying else { return }
+            CloudSettings.shared.put("sgd.vegOnly")
+            Analytics.track("Toggled Vegetarian Only", ["on": vegetarianOnly])
         }
     }
 
@@ -55,6 +59,7 @@ final class FeedStore {
         didSet {
             cache = nil
             UserDefaults.standard.set(Array(favoriteStores).sorted(), forKey: "sgd.favoriteStores")
+            CloudSettings.shared.put("sgd.favoriteStores")
             Analytics.setUser(["favorite_stores": favoriteStores.count])
             // "New deals are in" follows the stores someone picked.
             PushStore.shared.storesChanged(favoriteStores)
@@ -64,7 +69,10 @@ final class FeedStore {
     /// Seasons someone hid from This week ("Hide for this season"), as "<id>@<last day>", so a
     /// hidden card comes back next year. Kept on this iPhone only.
     var hiddenSeasons: Set<String> {
-        didSet { UserDefaults.standard.set(Array(hiddenSeasons).sorted(), forKey: "sgd.hiddenSeasons") }
+        didSet {
+            UserDefaults.standard.set(Array(hiddenSeasons).sorted(), forKey: "sgd.hiddenSeasons")
+            CloudSettings.shared.put("sgd.hiddenSeasons")
+        }
     }
 
     /// Dev menu: 0 shows the feed's seasons, 1 and 2 show that many sample seasons made from this
@@ -89,6 +97,22 @@ final class FeedStore {
         feed = recent ? saved : nil
         fallback = recent ? nil : saved
         loading = !recent
+        // Settings that changed on your other iPhone or iPad (CloudSettings.swift).
+        NotificationCenter.default.addObserver(forName: CloudSettings.changed, object: nil, queue: .main) { [weak self] _ in
+            MainActor.assumeIsolated { self?.reloadSettings() }
+        }
+    }
+
+    /// Reads the synced settings again after iCloud changed them. Only assigns what differs, so
+    /// nothing redraws or re-subscribes for no reason.
+    private func reloadSettings() {
+        let d = UserDefaults.standard
+        let stores = Set(d.stringArray(forKey: "sgd.favoriteStores") ?? [])
+        if stores != favoriteStores { favoriteStores = stores }
+        let hidden = Set(d.stringArray(forKey: "sgd.hiddenSeasons") ?? [])
+        if hidden != hiddenSeasons { hiddenSeasons = hidden }
+        if d.bool(forKey: "sgd.vegOnly") != vegetarianOnly { vegetarianOnly = d.bool(forKey: "sgd.vegOnly") }
+        if d.bool(forKey: "sgd.hideEndingToday") != hideEndingToday { hideEndingToday = d.bool(forKey: "sgd.hideEndingToday") }
     }
 
     /// Weeks start on Fridays, and the next one begins when the first store posts a flyer that

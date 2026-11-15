@@ -330,6 +330,20 @@ struct SettingsView: View {
     @State private var replayingTour = false
     @State private var copiedAddress = false
 
+    private var syncTitle: String {
+        switch ListSync.shared.status {
+        case .on: "Syncing with iCloud"
+        case .off: "Not syncing"
+        case .problem: "Sync paused"
+        }
+    }
+    private var syncDetail: String {
+        switch ListSync.shared.status {
+        case .on: "Your stores, filters, price watches and the list in this app stay the same on your iPhone and iPad, through your own iCloud. Alerts are set on each device."
+        case .off(let why), .problem(let why): why
+        }
+    }
+
     /// The page about the MCP server, and the server's own address (config/site.json's mcp_url).
     private static let assistantsPage = URL(string: "https://seattlegrocery.deals/mcp/")!
     private static let assistantsAddress = "https://mcp.seattlegrocery.deals"
@@ -343,6 +357,7 @@ struct SettingsView: View {
     var body: some View {
         @Bindable var alerts = alerts
         NavigationStack {
+            ScrollViewReader { proxy in
             Form {
                 // One Group so every row takes the app's harbor-blue surface. Without it the
                 // rows are the system's neutral gray, which looks muddy on the blue ground.
@@ -416,6 +431,22 @@ struct SettingsView: View {
                     .onChange(of: share) { _, on in Analytics.setSharing(on) }
                 } header: { Text("Privacy") }
 
+                // iCloud sync (CloudSettings.swift, ListSync.swift): nothing to turn on, so this
+                // only says what syncs, or why it can't.
+                Section {
+                    Label {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(syncTitle).font(.app(.headline))
+                            Text(syncDetail).font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                        }
+                    } icon: {
+                        Image(systemName: ListSync.shared.status == .on ? "checkmark.icloud" : "icloud.slash")
+                            .foregroundStyle(ListSync.shared.status == .on ? Palette.accent : Palette.muted)
+                    }
+                    .accessibilityElement(children: .combine)
+                } header: { Text("Your devices") }
+                .id("devices")
+
                 // The site's MCP server (mcp/ in the repo): any AI assistant can look up the same
                 // public deals. The page has the "Add to Claude" button; the address is for the rest.
                 Section {
@@ -451,6 +482,13 @@ struct SettingsView: View {
                 .listRowBackground(Palette.surface)
             }
             .scrollContentBackground(.hidden)
+            .task {
+                // `-scroll devices` (Debug only): show the sync line, for simulator checks.
+                guard DebugArgs.value("-scroll") == "devices" else { return }
+                try? await Task.sleep(for: .seconds(1))
+                proxy.scrollTo("devices", anchor: .top)
+            }
+            }
             .background(Palette.ground)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)

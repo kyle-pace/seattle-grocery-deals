@@ -76,6 +76,12 @@ targetTemplates:
         aps-environment: development
         # Your stores, the filters and the list, for the widgets (Shared/SharedState.swift).
         com.apple.security.application-groups: [group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)]
+        # iCloud: settings in the key-value store (CloudSettings.swift) and the list in CloudKit
+        # (ListSync.swift), in the person's own iCloud. Deals and Deals Dev each have their own
+        # container, so testing never touches a real list.
+        com.apple.developer.icloud-container-identifiers: [iCloud.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)]
+        com.apple.developer.icloud-services: [CloudKit]
+        com.apple.developer.ubiquity-kvstore-identifier: $(TeamIdentifierPrefix)$(CFBundleIdentifier)
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
@@ -129,6 +135,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        DealsCloudContainer: iCloud.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
         # Links from the widgets and from a deal's Reminders item (DealsLink). Each app has its
         # own scheme, so a link opens the app it came from when both are installed.
         DealsLinkScheme: grocerydeals
@@ -171,6 +178,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        DealsCloudContainer: iCloud.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
         # Links from the widgets and from a deal's Reminders item (DealsLink). Each app has its
         # own scheme, so a link opens the app it came from when both are installed.
         DealsLinkScheme: grocerydealsdev
