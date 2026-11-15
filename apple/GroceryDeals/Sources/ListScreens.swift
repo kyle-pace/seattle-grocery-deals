@@ -341,6 +341,7 @@ struct SettingsView: View {
     var body: some View {
         @Bindable var alerts = alerts
         NavigationStack {
+            ScrollViewReader { proxy in
             Form {
                 // One Group so every row takes the app's harbor-blue surface. Without it the
                 // rows are the system's neutral gray, which looks muddy on the blue ground.
@@ -428,6 +429,7 @@ struct SettingsView: View {
                     }
                     .accessibilityElement(children: .combine)
                 } header: { Text("Your devices") }
+                .id("devices")
 
                 // The site's MCP server (mcp/ in the repo): any AI assistant can look up the same
                 // public deals. The page has the "Add to Claude" button; the address is for the rest.
@@ -464,6 +466,13 @@ struct SettingsView: View {
                 .listRowBackground(Palette.surface)
             }
             .scrollContentBackground(.hidden)
+            .task {
+                // `-scroll devices` (Debug only): show the sync line, for simulator checks.
+                guard DebugArgs.value("-scroll") == "devices" else { return }
+                try? await Task.sleep(for: .seconds(1))
+                proxy.scrollTo("devices", anchor: .top)
+            }
+            }
             .background(Palette.ground)
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
