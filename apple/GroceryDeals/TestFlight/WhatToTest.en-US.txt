@@ -1,7 +1,7 @@
-Thanks for trying Grocery Deals! It gathers this week's sales from Seattle-area Asian markets, seafood shops and co-ops, read from each store's own flyer, so you know where to shop before you go.
+Thanks for trying Seattle Grocery Deals! It gathers this week's sales from Seattle-area Asian markets, seafood shops and co-ops, read from each store's own flyer, so you know where to shop before you go.
 
 New in this build:
-- A new name: Grocery Deals.
+- A shorter name on your Home Screen: Grocery Deals.
 - Recipe ideas: swipe up on a deal for recipes from independent cooks that use it. Tap Something else for more. Store pages and your list suggest recipes too.
 - Plan my trip: with two or more things on your list, the List tab shows which of your stores has the most of it on sale.
 - Your list and stores stay the same on your iPhone and iPad through your own iCloud.

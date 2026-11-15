@@ -458,7 +458,7 @@ ${section === "app/" ? "" : `<aside class="app-banner" data-app-banner hidden ar
   <div class="wrap app-banner-in">
     <button type="button" class="app-banner-x" data-app-banner-close aria-label="Hide this banner"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
     ${LOGO}
-    <p><strong>Grocery Deals</strong><span>Free beta for iPhone and iPad</span></p>
+    <p><strong>Seattle Grocery Deals app</strong><span>Free beta for iPhone and iPad</span></p>
     <a class="app-banner-get" href="${url("app/")}">Get<span class="sr-only"> the app</span></a>
   </div>
 </aside>
@@ -1508,7 +1508,7 @@ function appsPage() {
   ];
   const body = `<div class="app-landing">
   ${buddy("happy", 160, "bd-hop")}
-  <h1>Grocery Deals</h1>
+  <h1>Seattle Grocery Deals</h1>
   <p class="app-tag">This week's grocery sales, in your pocket.</p>
   <p class="app-badge">${TESTFLIGHT_BADGE}</p>
   <p class="app-platforms">TestFlight is Apple's free app for trying apps before they reach the App Store. Tap the button on your iPhone or iPad and it walks you through installing both.</p>
@@ -1516,7 +1516,7 @@ function appsPage() {
   <p class="app-note">No account, and your list stays on your phone. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "Grocery Deals, the app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
