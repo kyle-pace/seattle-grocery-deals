@@ -12,6 +12,7 @@ struct GroceryDealsApp: App {
 
     init() {
         KitchenUI.registerFonts()
+        TipJar.startListening()
         Palette.use(.rain, neutrals: .harbor)    // Deals' "Puget evening": rain blue on harbor neutrals, with the crow
         _ = Welcome.start          // decide before the first feed load saves a week
         Analytics.start()          // does nothing until the usage question gets a yes
@@ -269,81 +270,105 @@ private final class StoreOpener {
     }
 }
 
-/// The heart and the gear at the top right of every tab. The heart opens Feedback (below) for
-/// now; it becomes the place to chip in once tips are set up. The gear opens Settings.
+/// The heart and the gear at the top right of every tab. The heart opens Feedback (below); the
+/// gear opens Settings. One sheet slot for both (2026-11-14): with a separate isPresented for
+/// each, the heart could stop opening anything after the first time and only flash.
 private struct SettingsButton: ViewModifier {
-    @State private var showing = false
-    @State private var feedback = false
+    private enum Sheet: String, Identifiable {
+        case settings, feedback
+        var id: String { rawValue }
+    }
+    @State private var sheet: Sheet?
     func body(content: Content) -> some View {
         content
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Send feedback", systemImage: "heart") {
-                        feedback = true
+                        sheet = .feedback
                         Analytics.track("Opened Feedback")
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Settings", systemImage: "gearshape") { showing = true }
+                    Button("Settings", systemImage: "gearshape") { sheet = .settings }
                 }
             }
-            .sheet(isPresented: $showing) { SettingsView() }
-            .sheet(isPresented: $feedback) { FeedbackSheet() }
+            .sheet(item: $sheet) { which in
+                switch which {
+                case .settings: SettingsView()
+                case .feedback: FeedbackSheet()
+                }
+            }
     }
 }
 
-/// What the heart opens: a note from the person who makes the app and a way to write back, by
-/// email to the site's public address with the app version filled in. If there's no mail app,
-/// it shows the address to copy instead.
+/// What the heart opens: a note from the person who makes the app, a way to write back (email
+/// to the site's public address with the app version filled in, or the address to copy when
+/// there's no mail app), and tips for anyone who wants to chip in (KitchenUI's TipJar, in-app
+/// purchases, since App Review turns down outside tip links). Sized to its
+/// content, on the system's glass, so it sits like any short sheet instead of a dark box.
 struct FeedbackSheet: View {
     static let address = "hello@seattlegrocery.deals"
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var noMail = false
+    @State private var height: CGFloat = 440
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: Space.l) {
-                    Buddy(.crow, mood: .happy, size: 72).hiddenWhenTextIsLarge()
-                        .accessibilityHidden(true)
-                    VStack(spacing: Space.s) {
-                        Text("Thanks for using Grocery Deals")
-                            .font(.app(.title2, .bold)).foregroundStyle(Palette.ink)
-                            .accessibilityAddTraits(.isHeader)
-                        Text("It's free and made by one person in Seattle. Tell me what's working, what isn't, or which store to add next.")
-                            .font(.app(.body)).foregroundStyle(Palette.body)
+        ScrollView {
+            VStack(spacing: Space.l) {
+                Buddy(.crow, mood: .happy, size: 64).hiddenWhenTextIsLarge()
+                    .accessibilityHidden(true)
+                VStack(spacing: Space.s) {
+                    Text("Thanks for using Grocery Deals")
+                        .font(.app(.title2, .bold)).foregroundStyle(Palette.ink)
+                        .accessibilityAddTraits(.isHeader)
+                    Text("It's free and made by one person in Seattle. Tell me what's working, what isn't, or which store to add next.")
+                        .font(.app(.body)).foregroundStyle(Palette.body)
+                }
+                .multilineTextAlignment(.center)
+                Button { write() } label: {
+                    Label("Send feedback", systemImage: "envelope")
+                        .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
+                }
+                .buttonStyle(.glassProminent)
+                .tint(Palette.accent)
+                if noMail {
+                    VStack(spacing: Space.xs) {
+                        Text("No mail app is set up here. You can write to")
+                            .font(.app(.subheadline)).foregroundStyle(Palette.muted)
+                        Text(Self.address).font(.app(.headline)).foregroundStyle(Palette.ink).textSelection(.enabled)
+                        Button("Copy address", systemImage: "doc.on.doc") {
+                            UIPasteboard.general.string = Self.address
+                            Announce.say("Copied")
+                        }
+                        .font(.app(.subheadline, .semibold))
+                        .frame(minHeight: 44)
                     }
                     .multilineTextAlignment(.center)
-                    Button { write() } label: {
-                        Label("Send feedback", systemImage: "envelope")
-                            .font(.app(.headline)).frame(maxWidth: .infinity, minHeight: 44)
-                    }
-                    .buttonStyle(.glassProminent)
-                    .tint(Palette.accent)
-                    if noMail {
-                        VStack(spacing: Space.xs) {
-                            Text("No mail app is set up here. You can write to")
-                                .font(.app(.subheadline)).foregroundStyle(Palette.muted)
-                            Text(Self.address).font(.app(.headline)).foregroundStyle(Palette.ink).textSelection(.enabled)
-                            Button("Copy address", systemImage: "doc.on.doc") {
-                                UIPasteboard.general.string = Self.address
-                                Announce.say("Copied")
-                            }
-                            .font(.app(.subheadline, .semibold))
-                            .frame(minHeight: 44)
-                        }
-                        .multilineTextAlignment(.center)
-                    }
                 }
-                .padding(Space.l)
-                .frame(maxWidth: 520)
-                .frame(maxWidth: .infinity)
+                TipJar(tint: Palette.accent) { Analytics.track($0.name, $0.properties) }
+                    .padding(.top, Space.s)
             }
-            .background(Palette.ground)
-            .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
+            .padding(.horizontal, Space.l)
+            .padding(.top, Space.xl)
+            .padding(.bottom, Space.l)
+            .frame(maxWidth: 520)
+            .frame(maxWidth: .infinity)
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height = $0 }
         }
-        .presentationDetents([.medium, .large])
+        .scrollBounceBehavior(.basedOnSize)
+        .overlay(alignment: .topTrailing) {
+            Button { dismiss() } label: {
+                Image(systemName: "xmark").font(.app(.body, .semibold)).frame(width: 44, height: 44)
+            }
+            .buttonStyle(.glass)
+            .buttonBorderShape(.circle)
+            .accessibilityLabel("Close")
+            .padding(Space.m)
+        }
+        // Fits the content; large text or the no-mail note can pull it up to full height.
+        .presentationDetents([.height(height), .large])
+        .presentationDragIndicator(.hidden)
     }
 
     private func write() {
