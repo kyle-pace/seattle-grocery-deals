@@ -14,6 +14,9 @@
   "routes": [{ "pattern": "mcp.seattlegrocery.deals/*", "zone_name": "kylepace.dev" }],
   "preview_urls": false,
   "observability": { "enabled": true },
+  // "Think this is wrong?" reports (src/reports.js): per store, a count and two times, kept a
+  // week. The flyer watcher reads them.
+  "kv_namespaces": [{ "binding": "REPORTS", "id": "44d2574c33fe4a639ef0ad94db34a1c4" }],
   "vars": {
     // The same feed the iPhone app reads.
     "FEED_URL": "https://seattlegrocery.deals/api/week.json",

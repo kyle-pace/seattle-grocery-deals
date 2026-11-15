@@ -21,9 +21,15 @@ on:
         description: "Comma-separated store ids to check (empty for all)"
         required: false
         default: ""
+      test_alert:
+        description: "Only send a test alert push to Deals Dev"
+        type: boolean
+        default: false
 
 permissions:
   contents: write # push state.json to the flyer-watch branch
+  issues: write # open and close flyer-alert issues (scripts/flyer-alerts.mjs)
+  id-token: write # sign in to Google Cloud for the alert push, without a key
 
 concurrency:
   group: watch-flyers
@@ -55,6 +61,7 @@ jobs:
           npm install --no-save --no-package-lock playwright@latest
           npx playwright install --with-deps chromium
       - name: Check the flyer pages
+        if: inputs.test_alert != true
         env:
           ROUTINE_FIRE_URL: ${{ secrets.ROUTINE_FIRE_URL }}
           ROUTINE_FIRE_TOKEN: ${{ secrets.ROUTINE_FIRE_TOKEN }}
@@ -63,6 +70,25 @@ jobs:
           if [ "${{ inputs.dry_run }}" = "true" ]; then extra="--dry-run"; fi
           if [ -n "${{ inputs.only }}" ]; then extra="$extra --only ${{ inputs.only }}"; fi
           node scripts/watch-flyers.mjs --state ../state/state.json $extra
+      # Alerts for the owner: a push to Deals Dev (new-deals-test, which only the owner's dev
+      # build joins) and a GitHub issue each. See the top of scripts/watch-flyers.mjs.
+      - id: google
+        if: inputs.dry_run != true
+        continue-on-error: true
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/70205055774/locations/global/workloadIdentityPools/github/providers/seattle-grocery-deals
+          service_account: push-sender@seattle-grocery-deals-dev.iam.gserviceaccount.com
+          token_format: access_token
+      - name: Send alerts
+        if: always() && inputs.dry_run != true
+        env:
+          FCM_ACCESS_TOKEN: ${{ steps.google.outputs.access_token }}
+          FIREBASE_PROJECT_ID: seattle-grocery-deals-dev
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ inputs.test_alert }}" = "true" ]; then node scripts/flyer-alerts.mjs --test; exit 0; fi
+          node scripts/flyer-alerts.mjs --state ../state/state.json
       - name: Save the fingerprints
         if: always() && inputs.dry_run != true
         run: |

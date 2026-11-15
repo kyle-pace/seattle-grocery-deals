@@ -6,6 +6,8 @@ Live at `https://mcp.seattlegrocery.deals` (since November 11, 2026).
 
 It is a small Cloudflare Worker with no data of its own. Every answer comes from the same public feed the iPhone app reads, `https://seattlegrocery.deals/api/week.json`, so the site stays the one source of truth and a new flyer shows up here within about five minutes of going live. Read-only, no sign-in, and nothing about the person asking is stored.
 
+It also takes "Think this is wrong?" reports from the site and the app (`src/reports.js`): `POST /report` with `{"store": "<id>", "about": "flyer"}`, and `GET /reports` for the flyer watcher, which checks each reported store and alerts the owner. Per store it keeps a count and the first and latest times, for a week, in the `REPORTS` KV namespace; nothing about who reported.
+
 ## Tools
 
 | Tool | What it answers |
