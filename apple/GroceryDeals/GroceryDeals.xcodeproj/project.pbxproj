@@ -21,6 +21,7 @@
 		1B09BDCDACA9B8DFC2C92FF2 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		223150913BD81A39D255EDB6 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8FD9277FD1B4926AFB0E64 /* Messages.swift */; };
 		24B72EE560CFC3050DA2FD19 /* week.json in Resources */ = {isa = PBXBuildFile; fileRef = 84F994427923C400F45DB70C /* week.json */; };
+		25670551F4B4D6949FA87F65 /* CloudSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A9CB42DF8A70568A8FC9A /* CloudSettings.swift */; };
 		279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C7685CC51CA8311DC803DA0 /* Models.swift */; };
 		2BB2D6BA2B52C049C6BC69BA /* SharedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939655B568CDDBEC846860FB /* SharedState.swift */; };
 		2D701AB29DD8BFECFDA8656A /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 900666ED70B2F3E6A406669D /* Screens.swift */; };
@@ -60,9 +61,11 @@
 		9CE300640F51CC7DD47EF9F5 /* SharedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939655B568CDDBEC846860FB /* SharedState.swift */; };
 		A103AC61F9DA0A0F219DB8F7 /* AddToListControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941BCBA650EB48900CDCD45E /* AddToListControl.swift */; };
 		A104DB96F4DD3B14326BEFC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 030270E4AFF9913A0A8A86E3 /* Assets.xcassets */; };
+		A6C8D806DE7C7238654010B3 /* CloudSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A9CB42DF8A70568A8FC9A /* CloudSettings.swift */; };
 		AE4BC665855B93EF086D1A4D /* Push.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53827BED375495D006304F00 /* Push.swift */; };
 		AFEA23B455ED3D816F0A195A /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8FD9277FD1B4926AFB0E64 /* Messages.swift */; };
 		B01F1D8961DF92330D5F33F7 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40DA8A41D719580DE66FCDC /* Lines.swift */; };
+		B41321EE0E14E0636C02635F /* ListSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AE446641359777F4910468 /* ListSync.swift */; };
 		B8190E6162641899C00C0B7F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = E91339D213554CB89C434FE8 /* FirebaseRemoteConfig */; };
 		B9FD70CC4DB7BD79A056FAF9 /* SiriTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480088491012D8F80C71FBC2 /* SiriTools.swift */; };
 		BAC926E8225A0C6CC94B6CF5 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B9CD189C14496D79B9A60 /* Welcome.swift */; };
@@ -71,6 +74,7 @@
 		C96B814B6EDB28A81B8CFAA6 /* AddToListControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 941BCBA650EB48900CDCD45E /* AddToListControl.swift */; };
 		CBE3462C2BBEFC0122C3A962 /* KitchenUI in Frameworks */ = {isa = PBXBuildFile; productRef = 91E71391CC336A9B1BC351B8 /* KitchenUI */; };
 		CE4B3C4674C1B91A1540C238 /* Intents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16919D4F6B29C60454AF3D0D /* Intents.swift */; };
+		CFCF32DE2DF0B4FCF15A5AF5 /* ListSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AE446641359777F4910468 /* ListSync.swift */; };
 		D2A24DEA6CA3F8DF3C59BA9F /* DealsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7581B0CF13289C4A25A25F8A /* DealsWidget.swift */; };
 		D652C487BEB546EECF8E2367 /* ListScreens.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE081C1EE741AEAB7005033E /* ListScreens.swift */; };
 		D6B550C825B5B0B16E3F0D2F /* GroceryDealsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33F69FBB282BEB9E303442AD /* GroceryDealsApp.swift */; };
@@ -153,6 +157,7 @@
 		73C1108FE82C9173926697E6 /* KitchenUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = KitchenUI; path = ../../../KitchenUI; sourceTree = SOURCE_ROOT; };
 		757EDBCF924E5B8377A28E8D /* Skills.skillsbundle */ = {isa = PBXFileReference; path = Skills.skillsbundle; sourceTree = "<group>"; };
 		7581B0CF13289C4A25A25F8A /* DealsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DealsWidget.swift; sourceTree = "<group>"; };
+		792A9CB42DF8A70568A8FC9A /* CloudSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSettings.swift; sourceTree = "<group>"; };
 		798C68EBCFB1CEFA5669A6DE /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		84F994427923C400F45DB70C /* week.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = week.json; sourceTree = "<group>"; };
 		86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsStore.swift; sourceTree = "<group>"; };
@@ -166,6 +171,7 @@
 		A6B30268FA30809DBA50C0E7 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		B40DA8A41D719580DE66FCDC /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		BD7C5AF83BA056B2D9EF2BE5 /* Seasons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seasons.swift; sourceTree = "<group>"; };
+		C3AE446641359777F4910468 /* ListSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSync.swift; sourceTree = "<group>"; };
 		C556EEC67D6A3F5385285613 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		CB1B9CD189C14496D79B9A60 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
 		CC8FD9277FD1B4926AFB0E64 /* Messages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 				1B4A3B8F3ECEA1275AAF3090 /* Aisles.swift */,
 				86AA4CAB211032CCCE8B2648 /* AlertsStore.swift */,
 				A6B30268FA30809DBA50C0E7 /* Analytics.swift */,
+				792A9CB42DF8A70568A8FC9A /* CloudSettings.swift */,
 				300DBA4829773DD2932CF1E8 /* DealsDevMenu.swift */,
 				34300759905B9585BA88F72D /* DealViews.swift */,
 				8BCBD4AD379ACFB22957A99D /* Entities.swift */,
@@ -245,6 +252,7 @@
 				B40DA8A41D719580DE66FCDC /* Lines.swift */,
 				DE081C1EE741AEAB7005033E /* ListScreens.swift */,
 				352F5BB18C8111F694A1DAFE /* ListStore.swift */,
+				C3AE446641359777F4910468 /* ListSync.swift */,
 				CC8FD9277FD1B4926AFB0E64 /* Messages.swift */,
 				8C7685CC51CA8311DC803DA0 /* Models.swift */,
 				51539486FC8A1B3336B12EA1 /* Moments.swift */,
@@ -505,6 +513,7 @@
 				31E0AEDA41356B154BDE22BF /* Aisles.swift in Sources */,
 				72F70D482F19FF82F3AB318B /* AlertsStore.swift in Sources */,
 				319CCC3880CC49BC27D872E6 /* Analytics.swift in Sources */,
+				25670551F4B4D6949FA87F65 /* CloudSettings.swift in Sources */,
 				1A864B3865C064653B8EEAC1 /* DealViews.swift in Sources */,
 				08DF113380BEFCF2577DA776 /* DealsDevMenu.swift in Sources */,
 				6AD8120EBC698BA715815AD6 /* Entities.swift in Sources */,
@@ -515,6 +524,7 @@
 				DE229B66319FFAB6BAEA6D0C /* Lines.swift in Sources */,
 				D97AA6ED757FDFCF6E8465CA /* ListScreens.swift in Sources */,
 				F400EF54F8D251845B5B2041 /* ListStore.swift in Sources */,
+				B41321EE0E14E0636C02635F /* ListSync.swift in Sources */,
 				AFEA23B455ED3D816F0A195A /* Messages.swift in Sources */,
 				279FC44A5E8CC1D270CCA0FA /* Models.swift in Sources */,
 				44B284A97AAE39A18625645A /* Moments.swift in Sources */,
@@ -550,6 +560,7 @@
 				6991D2B2E925DB35CC2C4D1E /* Aisles.swift in Sources */,
 				32288BD8D3C6D92E0C9C6C90 /* AlertsStore.swift in Sources */,
 				C09ACF0AA4B1F03EDA2EF292 /* Analytics.swift in Sources */,
+				A6C8D806DE7C7238654010B3 /* CloudSettings.swift in Sources */,
 				3D8004C2E37B0C76E50CB6AB /* DealViews.swift in Sources */,
 				DDC8A7DDDE04F5318B41A056 /* DealsDevMenu.swift in Sources */,
 				051401D7ADE75C5FE68230FA /* Entities.swift in Sources */,
@@ -560,6 +571,7 @@
 				B01F1D8961DF92330D5F33F7 /* Lines.swift in Sources */,
 				D652C487BEB546EECF8E2367 /* ListScreens.swift in Sources */,
 				71006036CBAE1B7E2564D2A3 /* ListStore.swift in Sources */,
+				CFCF32DE2DF0B4FCF15A5AF5 /* ListSync.swift in Sources */,
 				223150913BD81A39D255EDB6 /* Messages.swift in Sources */,
 				00D4BAE77D3BEA7DD7B44A53 /* Models.swift in Sources */,
 				57CA4FA8B6A96CFB42E17BF0 /* Moments.swift in Sources */,

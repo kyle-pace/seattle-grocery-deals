@@ -33,6 +33,8 @@
 	<true/>
 	<key>DealsAppGroup</key>
 	<string>group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)</string>
+	<key>DealsCloudContainer</key>
+	<string>iCloud.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)</string>
 	<key>DealsLinkScheme</key>
 	<string>grocerydealsdev</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
