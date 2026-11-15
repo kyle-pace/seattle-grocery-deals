@@ -1133,8 +1133,8 @@ function aboutPage() {
 }
 
 // Privacy, at /privacy/: the website and the app in one place. Also the privacy policy URL for
-// App Store Connect. If analytics, push or storage change (client/analytics.js, Analytics.swift,
-// Push.swift, the sgd.* browser keys), change this page too, and its date.
+// App Store Connect. If analytics, push, storage or tips change (client/analytics.js, Analytics.swift,
+// Push.swift, the sgd.* browser keys, KitchenUI's TipJar), change this page too, and its date.
 function privacyPage() {
   const updated = "November 14, 2026";
   const body = `<div class="privacy-page">
@@ -1163,6 +1163,8 @@ function privacyPage() {
 <p>The app asks the first time you open it whether to share anonymous usage. Until you answer yes, nothing is sent and no ID is made. If you say yes, it sends the screens you open, the features you use, which deals you open, add or watch, and your app version, device model and iOS version. It never sends anything you type, like list items or searches, your name, email, contacts or location, your IP address or your advertising ID. Change your answer any time in Settings, under Privacy.</p>
 <h3>Your list and your stores</h3>
 <p>They're kept on your device and, if you're signed in to iCloud, in your own iCloud, so they're the same on your iPhone and iPad. That covers the list in the app, your stores, your filters, the season cards you hid and your price watches. They go only to your iCloud account, through Apple; this site, Firebase and Amplitude never see them. If you choose to use a Reminders list instead, it lives in Apple's Reminders and syncs the way your Reminders already do.</p>
+<h3>Tips</h3>
+<p>Tips in the app are in-app purchases, and Apple handles the payment. The app never sees your name, Apple Account or card; Apple only tells it that a tip went through. If you've said yes to usage, it records which tip was tapped and whether it went through, with the price.</p>
 <h3>Notifications</h3>
 <p>Alerts are off until you turn them on. "New deals are in" comes through Firebase Cloud Messaging and Apple: your device signs up for the stores you picked, Firebase keeps that sign-up so it can deliver, and no list of devices is kept here. Alerts for a sale ending or a price you're watching are worked out on your device.</p>
 <h3>Notes in the app</h3>
