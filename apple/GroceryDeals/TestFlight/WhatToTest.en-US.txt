@@ -1,14 +1,20 @@
-Thanks for trying Seattle Grocery Deals! It gathers this week's sales from Seattle-area Asian markets, seafood shops and co-ops, read from each store's own flyer, so you know where to shop before you go.
+Thanks for trying Grocery Deals! It gathers this week's sales from Seattle-area Asian markets, seafood shops and co-ops, read from each store's own flyer, so you know where to shop before you go.
+
+New in this build:
+- A new name: Grocery Deals.
+- Recipe ideas: swipe up on a deal for recipes from independent cooks that use it. Tap Something else for more. Store pages and your list suggest recipes too.
+- Plan my trip: with two or more things on your list, the List tab shows which of your stores has the most of it on sale.
+- Your list and stores stay the same on your iPhone and iPad through your own iCloud.
+- Widgets: Best This Week (now following your stores, also on the Lock Screen) and your grocery list. Plus an Add to List control for Control Center and the Action button.
+- Ask Siri: "What's on sale in Grocery Deals", "Plan my trip in Grocery Deals", "What on my list is on sale in Grocery Deals".
+- Think a store's new flyer should be in by now? Tap "Think this is wrong?" under it.
+- The heart now has a tip jar, if you'd like to chip in. Send feedback moved to Settings.
 
 Things to try:
 - Pick the stores you actually shop at, then check This week to see which one has the best week.
-- Tap + on a few deals to build a list, or connect it to a Reminders list you share.
-- Search for something you buy often, like pork belly or bok choy.
-- Watch a price and get a nudge when it drops.
-- Leave "New deals from your stores" on to hear when your stores post a new flyer.
+- Tap + on a few deals to build a list, then open the app on your iPad.
+- Add a widget to your Home or Lock Screen.
 
-New in this build: a smoother first-run setup (alerts start on, and you can skip any step on its own), and stores whose new flyer we haven't read yet now say so instead of saying it isn't out.
-
-Good to know: it covers 13 Seattle-area stores, and each one updates as soon as its new flyer is out. Prices come straight from the flyers, so double-check in store.
+Good to know: prices come straight from the flyers, so double-check in store.
 
 Tell me what's confusing, what's missing, or which store to add next. Take a screenshot in the app to send feedback through TestFlight, or email hello@seattlegrocery.deals.

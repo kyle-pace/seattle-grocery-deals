@@ -87,7 +87,7 @@ struct DealsWidgetView: View {
             Label("\(shortened(d.name)) \(price(d)) · \(storeName(d))", systemImage: "tag.fill")
                 .accessibilityLabel("\(d.name), \(storeName(d)), \(d.spoken)")
         } else {
-            Label("Deals", systemImage: "tag.fill")
+            Label("Grocery Deals", systemImage: "tag.fill")
         }
     }
 
@@ -100,13 +100,13 @@ struct DealsWidgetView: View {
                 Text("\(shortened(d.name)) \(price(d))").font(.app(.headline)).lineLimit(1).minimumScaleFactor(0.8)
                 Text(storeName(d)).font(.app(.caption)).lineLimit(1)
             } else {
-                Text("Deals").font(.app(.headline))
+                Text("Grocery Deals").font(.app(.headline))
                 Text("Open to load this week's flyers.").font(.app(.caption))
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(entry.deals.first.map { "\(entry.yours ? "Best at your stores" : "Best this week"): \($0.name), \(storeName($0)), \($0.spoken)" } ?? "Deals")
+        .accessibilityLabel(entry.deals.first.map { "\(entry.yours ? "Best at your stores" : "Best this week"): \($0.name), \(storeName($0)), \($0.spoken)" } ?? "Grocery Deals")
         .containerBackground(.clear, for: .widget)
     }
 
@@ -296,7 +296,7 @@ struct AddToListControl: ControlWidget {
             }
         }
         .displayName("Add to Grocery List")
-        .description("Opens Deals on your list, ready to type an item.")
+        .description("Opens Grocery Deals on your list, ready to type an item.")
     }
 }
 
