@@ -183,10 +183,10 @@ struct Popular: Codable, Sendable {
     let items: [Item]
 }
 
-/// Recipe ideas for the ingredients on sale (/api/recipes.json, written by the site build in
-/// scripts/recipes.mjs from the recipe search index). Each idea is a name and a link to the
-/// recipe on its own site. The file is the same for everyone: opening a deal asks no server
-/// anything.
+/// Recipe ideas (/api/recipes.json, written by the site build in scripts/recipes.mjs from the
+/// recipe search index): up to 24 per ingredient on sale, and up to 12 per store that use two
+/// or more of its deals. Each idea is a name and a link to the recipe on its own site. The
+/// file is the same for everyone: opening a deal or a store asks no server anything.
 struct RecipeFeed: Codable, Sendable {
     struct Idea: Codable, Sendable, Hashable, Identifiable {
         let name: String
@@ -194,29 +194,98 @@ struct RecipeFeed: Codable, Sendable {
         /// "The Woks of Life"
         let site: String
         let minutes: Int?
-        let cuisine: String?
         /// The recipe's own photo, on its own site.
         let image: String?
-        /// No meat or seafood in the ingredient list (a best guess).
+        /// No meat or seafood in it (a best guess from the ingredient list and the name).
         let veg: Bool
+        /// Store and list ideas: which of the deals it uses ("Napa Cabbage", "Tofu").
+        let uses: [String]?
         var id: String { url }
         var link: URL? { webURL(url) }
         var photo: URL? { image.flatMap(webURL) }
-        /// "The Woks of Life, 30 minutes", for VoiceOver.
-        var spoken: String { [name, "from \(site)", minutes.map { "\($0) minutes" }].compactMap { $0 }.joined(separator: ", ") }
+        /// "Uses napa cabbage and tofu"
+        var usesLine: String? {
+            guard let uses, !uses.isEmpty else { return nil }
+            let names = uses.prefix(3).map { $0.lowercased() }
+            let list = names.count == 1 ? names[0] : names.dropLast().joined(separator: ", ") + " and " + names.last!
+            return "Uses \(list)" + (uses.count > 3 ? " and more" : "")
+        }
+        /// "Thai Glass Noodle Soup, from Hot Thai Kitchen, 60 minutes, uses napa cabbage and tofu", for VoiceOver.
+        var spoken: String {
+            [name, "from \(site)", minutes.map { "\($0) minutes" }, usesLine?.lowercased()].compactMap { $0 }.joined(separator: ", ")
+        }
     }
     /// One ingredient's ideas, by the deal's item key ("pork-chops").
     struct Ingredient: Codable, Sendable, Hashable {
+        /// The recipe search's own id for it ("ground-pork"), which the list lookup sends.
+        /// Missing in files built before 2026-11-14.
+        let id: String?
         /// "Pork chops", as the recipe index names it.
         let ingredient: String
         /// The rest, on the recipe search page.
         let more: String
         let total: Int
         let recipes: [Idea]
-        var moreLink: URL? { webURL(more) }
+    }
+    /// A store's ideas: recipes that use two or more of its deals this week.
+    struct StoreIdeas: Codable, Sendable, Hashable {
+        let total: Int
+        let recipes: [Idea]
     }
     let week: String
     let by_key: [String: Ingredient]
+    /// Missing in files built before 2026-11-14.
+    let by_store: [String: StoreIdeas]?
+}
+
+/// One row of recipe ideas, ready to show: the deal sheet's, a season's, a store page's or the
+/// list's. `RecipeIdeas` (DealViews.swift) draws it.
+struct RecipeShelf: Hashable {
+    let title: String
+    var note: String? = nil
+    /// Every idea, already filtered for Vegetarian. The row shows them a page at a time.
+    let ideas: [RecipeFeed.Idea]
+    /// How many recipes there are in all, for the last card.
+    let total: Int
+    /// The rest on the recipe search page, for the last card.
+    var more: URL? = nil
+    /// For analytics: "deal", "season", "store" or "list", and the item key or store id.
+    let from: String
+    var key: String? = nil
+    var store: String? = nil
+}
+
+/// Recipe search's list lookup (kylepace.dev/recipe-search/api/with): recipes that use two or
+/// more of a few ingredients. The only call this app makes outside seattlegrocery.deals. It
+/// sends catalog ids for list items that match this week's deals, never what was typed, and
+/// only when the person taps for it. The answer is the same idea shape as recipes.json.
+enum RecipeSearch {
+    static let withURL = URL(string: "https://kylepace.dev/recipe-search/api/with")!
+    static let searchURL = URL(string: "https://kylepace.dev/recipe-search/")!
+
+    struct Answer: Decodable, Sendable {
+        let total: Int
+        let recipes: [RecipeFeed.Idea]
+    }
+
+    static func recipes(with ids: [String], vegetarian: Bool) async throws -> Answer {
+        var request = URLRequest(url: withURL, timeoutInterval: 15)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        var body: [String: Any] = ["with": Array(ids.prefix(25)), "limit": 24]
+        if vegetarian { body["diet"] = "vegetarian" }
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw URLError(.badServerResponse) }
+        return try JSONDecoder().decode(Answer.self, from: data)
+    }
+
+    /// The recipe search page with these ingredients picked ("?with=ground-pork,napa-cabbage").
+    static func searchLink(with ids: [String]) -> URL? {
+        var parts = URLComponents(url: searchURL, resolvingAgainstBaseURL: false)
+        parts?.queryItems = [URLQueryItem(name: "with", value: ids.joined(separator: ","))]
+        return parts?.url
+    }
 }
 
 /// Safari's viewer only opens web addresses (anything else crashes it).
