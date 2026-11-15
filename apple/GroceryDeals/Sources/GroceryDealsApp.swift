@@ -54,6 +54,9 @@ struct RootView: View {
     @State private var spotlightDeal: Deal?
     @State private var openSeason: Season?
     @State private var onboarding = Welcome.start != nil
+    /// Debug builds: -sheet feedback opens the heart sheet at launch (with -TipJarDemo, the tip
+    /// jar without the App Store), for screenshots in the simulator, where nothing can tap.
+    @State private var debugFeedback = DebugArgs.value("-sheet") == "feedback"
     @State private var router = DealsRouter.shared
     @State private var opener = StoreOpener()
     @Environment(FeedStore.self) private var store
@@ -146,6 +149,7 @@ struct RootView: View {
         // Simulator screenshots: -season <id> opens that season's screen at launch.
         .task(id: store.feed?.week ?? "") { if let id = DebugArgs.value("-season"), openSeason == nil { router.openSeason(id) } }
         .simulatorChecks(store, router)
+        .sheet(isPresented: $debugFeedback) { FeedbackSheet() }
         // In-app messages (Messages.swift): a link like deals://tab/aisles, and the sheet style.
         .onChange(of: router.tabRequest, initial: true) { _, name in
             guard let name else { return }
@@ -351,12 +355,14 @@ struct FeedbackSheet: View {
             }
             .padding(.horizontal, Space.l)
             .padding(.top, Space.xl)
-            .padding(.bottom, Space.l)
+            .padding(.bottom, Space.xl)
             .frame(maxWidth: 520)
             .frame(maxWidth: .infinity)
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height = $0 }
         }
         .scrollBounceBehavior(.basedOnSize)
+        // The floating sheet's bottom inset was being added on top of the padding: a gap.
+        .ignoresSafeArea(.container, edges: .bottom)
         .overlay(alignment: .topTrailing) {
             Button { dismiss() } label: {
                 Image(systemName: "xmark").font(.app(.body, .semibold)).frame(width: 44, height: 44)
