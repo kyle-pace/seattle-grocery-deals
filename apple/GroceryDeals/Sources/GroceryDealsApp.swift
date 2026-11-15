@@ -32,6 +32,7 @@ struct GroceryDealsApp: App {
                 // Pick up changes made in Reminders (Siri, a shared list) when coming back.
                 .onChange(of: phase) { _, p in
                     if p == .active {
+                        ListSync.shared.fetch()
                         list.reload()
                         MessageStore.shared.refresh()
                         Task { await store.refreshIfStale() }
