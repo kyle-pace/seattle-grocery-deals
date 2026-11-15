@@ -273,7 +273,8 @@ private final class StoreOpener {
 /// The heart and the gear at the top right of every tab. The heart opens Feedback (below) for
 /// now; it becomes the place to chip in once tips are set up. The gear opens Settings.
 private struct SettingsButton: ViewModifier {
-    @State private var showing = false
+    /// `-open settings` (Debug only) starts with Settings up, for simulator checks.
+    @State private var showing = DebugArgs.value("-open") == "settings"
     @State private var feedback = false
     func body(content: Content) -> some View {
         content
