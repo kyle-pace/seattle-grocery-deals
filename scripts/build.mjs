@@ -392,8 +392,9 @@ const DISPLAY_PANEL = `<button class="dp-toggle" type="button" popovertarget="di
   <p class="dp-note">Saved in this browser only.</p>
 </div>`;
 
-function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null, analytics = true }) {
-  const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null, analytics = true, fullTitle = null }) {
+  // fullTitle replaces the whole <title> (the home page, so search results say what the site is).
+  const full = fullTitle ?? (title ? `${title} | ${cfg.site.title}` : cfg.site.title);
   const desc = description ?? cfg.site.tagline;
   const pageUrl = cfg.site.origin + cfg.site.base_path + path;
   // Pages without their own share image get the site's (scripts/site-og.mjs).
@@ -656,6 +657,7 @@ ${soonPool.length ? `<section class="block ending" data-ending hidden aria-label
 </div>`;
   const home = cfg.site.origin + cfg.site.base_path;
   write("", page({ title: "", path: "", body, wrap: false, pageId: "home",
+    fullTitle: "Seattle Grocery Deals: weekly ads from Asian markets, co-ops and more",
     ogTitle: "Seattle Grocery Deals: this week's sales, sorted",
     description: `${plural(live.length, "sale")} this week at ${storeCount(live)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
     jsonld: [
@@ -1516,7 +1518,9 @@ function appsPage() {
   <p class="app-note">No account, and your list stays on your phone. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." ,
+    // Tells search engines this page is about a free iPhone and iPad app.
+    jsonld: { "@context": "https://schema.org", "@type": "MobileApplication", name: cfg.site.title, operatingSystem: "iOS, iPadOS", applicationCategory: "ShoppingApplication", description: "This week's grocery sales at Seattle Asian markets, seafood shops and co-ops, with a shopping list and alerts for your stores. In beta on TestFlight.", url: cfg.site.origin + cfg.site.base_path + "app/", installUrl: TESTFLIGHT_URL, image: `${cfg.site.origin}${cfg.site.base_path}assets/logo-512.png`, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } } }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);
