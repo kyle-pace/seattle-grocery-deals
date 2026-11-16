@@ -1201,7 +1201,7 @@ function foodHelpPage() {
   const jump = [["basic-food", "Basic Food (SNAP)"], ["markets", "At farmers markets"], ["fresh-bucks", "Fresh Bucks"], ["kids", "Families with kids"], ["older-adults", "Older adults"], ["food-banks", "Food banks"]];
   const body = `<div class="privacy-page help-page">
 <div class="page-h"><h1>Food benefit programs</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
-<div class="note-card"><p>Groceries cost more than they used to. These programs help, and several of them work at the farmers markets and neighborhood grocers this site follows. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
+<div class="note-card"><p>Several of these programs work at the farmers markets and neighborhood grocers this site follows, and some add extra dollars for fruits and vegetables. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}</ul></nav>
 
 <h2 class="about-part" id="basic-food">Basic Food (SNAP)</h2>
