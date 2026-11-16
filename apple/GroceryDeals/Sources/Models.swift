@@ -255,13 +255,13 @@ struct RecipeShelf: Hashable {
     var store: String? = nil
 }
 
-/// Recipe search's list lookup (kylepace.dev/recipe-search/api/with): recipes that use two or
+/// Recipe search's list lookup (findish.now/api/with): recipes that use two or
 /// more of a few ingredients. The only call this app makes outside seattlegrocery.deals. It
 /// sends catalog ids for list items that match this week's deals, never what was typed, and
 /// only when the person taps for it. The answer is the same idea shape as recipes.json.
 enum RecipeSearch {
-    static let withURL = URL(string: "https://kylepace.dev/recipe-search/api/with")!
-    static let searchURL = URL(string: "https://kylepace.dev/recipe-search/")!
+    static let withURL = URL(string: "https://findish.now/api/with")!
+    static let searchURL = URL(string: "https://findish.now/")!
 
     struct Answer: Decodable, Sendable {
         let total: Int

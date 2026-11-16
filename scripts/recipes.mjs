@@ -1,5 +1,5 @@
 // Recipe ideas for this week's deals: /api/recipes.json, taken from the recipe search index
-// (kylepace.dev/recipe-search, the owner's own index of trusted recipe sites). Run by the
+// (findish.now, the owner's own index of trusted recipe sites). Run by the
 // build (scripts/build.mjs calls writeRecipes) and on its own: node scripts/recipes.mjs
 //
 // Two kinds of ideas, both worked out here at build time so the app only ever reads one small
@@ -17,11 +17,11 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const INDEX_URL = "https://kylepace.dev/recipe-search/index.json";
-export const SEARCH_URL = "https://kylepace.dev/recipe-search/";
-export const ABOUT_URL = "https://kylepace.dev/recipe-search/about/";
+export const INDEX_URL = "https://findish.now/index.json";
+export const SEARCH_URL = "https://findish.now/";
+export const ABOUT_URL = "https://findish.now/about/";
 /** Where the app asks for recipes that use several things on a list (recipe search's own endpoint). */
-export const WITH_URL = "https://kylepace.dev/recipe-search/api/with";
+export const WITH_URL = "https://findish.now/api/with";
 const LIVE_COPY = "https://seattlegrocery.deals/api/recipes.json";
 
 /** One page of ideas: what the row shows before "Something else". */
