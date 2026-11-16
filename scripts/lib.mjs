@@ -447,7 +447,7 @@ const RANK_TIER = { standout: 4, good: 0.8 };
 const RANK_POP = { everyday: 1.5, common: 1, specialty: 0.6 };
 const RANK_AISLE = { produce: 1.2, meat: 1.2, seafood: 1.2, "dairy-eggs": 1.1, pantry: 1, frozen: 0.7, bakery: 0.7, prepared: 0.6, "snacks-drinks": 0.5, other: 0.5 };
 const CORE_AISLES = ["produce", "meat", "seafood", "dairy-eggs", "pantry"];
-const AISLE_WORDS = { produce: "produce", meat: "meat", seafood: "seafood", "dairy-eggs": "dairy", pantry: "pantry staples", frozen: "frozen food", bakery: "bakery", prepared: "deli", other: "other groceries" };
+const AISLE_WORDS = { produce: "produce", meat: "meat", seafood: "seafood", "dairy-eggs": "dairy", pantry: "pantry staples", frozen: "frozen food", bakery: "bakery", prepared: "deli", other: "tofu" };
 // A quiet week: fewer standouts than this and fewer good deals than QUIET_GOOD. This week
 // can say so instead of crowning a weak store, and point to a stronger one elsewhere.
 export const QUIET_STANDOUTS = 3;

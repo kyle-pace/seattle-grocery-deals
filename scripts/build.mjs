@@ -31,7 +31,7 @@ const TODAY = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles"
 
 const CATEGORY_LABELS = {
   produce: "Produce", meat: "Meat", seafood: "Seafood", "dairy-eggs": "Dairy and eggs", pantry: "Pantry",
-  frozen: "Frozen", bakery: "Bakery", prepared: "Deli and prepared", "snacks-drinks": "Snacks and drinks", other: "Other",
+  frozen: "Frozen", bakery: "Bakery", prepared: "Deli and prepared", "snacks-drinks": "Snacks and drinks", other: "Tofu, kimchi and more",
 };
 const STATUS_LABELS = { full: "Read in full", partial: "Partly read", stale: "Stale", unreadable: "Unreadable" };
 const FORMAT_LABELS = { "web-page": "Web page", images: "Flyer images", pdf: "PDF", "catalogue-viewer": "Catalogue viewer" };
@@ -105,7 +105,8 @@ function shortName(name) {
 }
 // A small picture for each aisle, the same emoji as the app (Aisles.swift AisleArt). Decorative.
 const AISLE_EMOJI = { produce: "🥬", meat: "🥩", seafood: "🐟", "dairy-eggs": "🥚", pantry: "🍚", frozen: "🥟", bakery: "🥖", prepared: "🍱", "snacks-drinks": "🍵", other: "🫘" };
-// "Other" is mostly tofu, bean curd and plant-based meats, so beans rather than a basket.
+// The "other" aisle is shown as "Tofu, kimchi and more": mostly tofu, bean curd and
+// plant-based meats, so beans rather than a basket.
 const aisleEmoji = (c) => `<span class="tile-art" aria-hidden="true">${AISLE_EMOJI[c] ?? "🫘"}</span>`;
 // Days left on a flyer, as the app's weekly ad card: "Ends today", "3 days left". The build
 // runs at least hourly, and app.js recounts it from data-through in the browser.

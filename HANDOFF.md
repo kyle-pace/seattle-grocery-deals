@@ -6,7 +6,7 @@ Keep the "Where we left off" section current. Work happens on a branch per task 
 
 ## Where we left off
 
-- **Other aisle picture (2026-11-15, branch `other-aisle-emoji`, owner's call):** the Other aisle's tile showed 🧺 (a laundry basket), which didn't fit: that aisle is mostly tofu, bean curd and plant-based meats. Now 🫘 on the site (`AISLE_EMOJI` in build.mjs) and in the app (`AisleArt` in Aisles.swift). Site build checked; the app change is one string and reaches TestFlight with the next `dev-` build (not built on the simulator for this alone).
+- **Other aisle renamed "Tofu, kimchi and more" (2026-11-15, branch `other-aisle-emoji`, owner's call):** the `other` aisle's tile showed 🧺 (a laundry basket) and the name said nothing. Of its 60 deals so far, about 70% were tofu, bean curd and plant-based meats; the rest kimchi, dumpling wrappers, rice cakes, konjac noodles, hummus and a ramen pack. The id stays `other` (URLs, data and the app's filters unchanged); only the label (`CATEGORY_LABELS` in build.mjs, which the app reads from the feed), the picture (🫘, `AISLE_EMOJI` in build.mjs and `AisleArt` in Aisles.swift) and the store summary word (`AISLE_WORDS` in lib.mjs: "tofu") changed. UPDATING.md tells the routine what belongs there. Site built and checked; the app's emoji reaches TestFlight with the next `dev-` build (not built on the simulator for one string).
 
 Updated 2026-11-14.
 
