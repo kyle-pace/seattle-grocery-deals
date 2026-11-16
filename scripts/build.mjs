@@ -104,8 +104,9 @@ function shortName(name) {
   return s.trim();
 }
 // A small picture for each aisle, the same emoji as the app (Aisles.swift AisleArt). Decorative.
-const AISLE_EMOJI = { produce: "🥬", meat: "🥩", seafood: "🐟", "dairy-eggs": "🥚", pantry: "🍚", frozen: "🥟", bakery: "🥖", prepared: "🍱", "snacks-drinks": "🍵" };
-const aisleEmoji = (c) => `<span class="tile-art" aria-hidden="true">${AISLE_EMOJI[c] ?? "🧺"}</span>`;
+const AISLE_EMOJI = { produce: "🥬", meat: "🥩", seafood: "🐟", "dairy-eggs": "🥚", pantry: "🍚", frozen: "🥟", bakery: "🥖", prepared: "🍱", "snacks-drinks": "🍵", other: "🫘" };
+// "Other" is mostly tofu, bean curd and plant-based meats, so beans rather than a basket.
+const aisleEmoji = (c) => `<span class="tile-art" aria-hidden="true">${AISLE_EMOJI[c] ?? "🫘"}</span>`;
 // Days left on a flyer, as the app's weekly ad card: "Ends today", "3 days left". The build
 // runs at least hourly, and app.js recounts it from data-through in the browser.
 const daysLeftText = (through) => {
