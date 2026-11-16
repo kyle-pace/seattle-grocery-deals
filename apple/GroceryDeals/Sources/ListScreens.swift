@@ -329,6 +329,7 @@ struct SettingsView: View {
     @State private var share = Analytics.isOn
     @State private var replayingTour = false
     @State private var copiedAddress = false
+    @State private var tipping = false
 
     private var syncTitle: String {
         switch ListSync.shared.status {
@@ -362,10 +363,22 @@ struct SettingsView: View {
                 // One Group so every row takes the app's harbor-blue surface. Without it the
                 // rows are the system's neutral gray, which looks muddy on the blue ground.
                 Group {
-                // Feedback lives here; the heart in the top bar is for tips.
+                // Feedback, and tips too (the same sheet as the heart in the top bar), so both
+                // can be found here as well as from the heart (2026-11-15).
                 Section {
                     SendFeedback(style: .row, from: "settings")
-                }
+                    Button {
+                        tipping = true
+                        Analytics.track("Opened Tips", ["from": "settings"])
+                    } label: {
+                        HStack(spacing: Space.m) {
+                            labeled("Leave a tip", "Grocery Deals is free. Tips help keep it that way, and don't unlock anything")
+                                .foregroundStyle(Palette.ink)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Image(systemName: "heart").foregroundStyle(Palette.accent).accessibilityHidden(true)
+                        }
+                    }
+                } header: { Text("Feedback and tips") }
 
                 Section {
                     Toggle(isOn: Binding(get: { alerts.friday }, set: { on in Task { let ok = on ? await alerts.allow() : true; if ok { alerts.friday = on } } })) {
@@ -499,6 +512,7 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button(role: .close) { dismiss() } } }
             .fullScreenCover(isPresented: $replayingTour) { Welcome.view(.tourOnly) { replayingTour = false }.environment(store).environment(alerts) }
+            .sheet(isPresented: $tipping) { TipSheet() }
         }
     }
 

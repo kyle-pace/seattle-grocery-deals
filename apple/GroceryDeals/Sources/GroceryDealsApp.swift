@@ -291,7 +291,7 @@ private struct SettingsButton: ViewModifier {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Leave a tip", systemImage: "heart") {
                         sheet = .tips
-                        Analytics.track("Opened Tips")
+                        Analytics.track("Opened Tips", ["from": "heart"])
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
