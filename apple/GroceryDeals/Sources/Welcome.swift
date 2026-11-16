@@ -6,7 +6,8 @@ import UIKit
 /// then KitchenUI's usage question. Everything but the usage question can be skipped. Tidied
 /// 2026-11-13: Skip on a middle step skips that step only (it used to jump to the question),
 /// the first launch waits for the deals instead of showing empty cards, and the copy says
-/// iPad on an iPad. The only
+/// iPad on an iPad. How it works ends with the heart: tips are optional, and feedback is in
+/// Settings (2026-11-15). The only
 /// system prompt is notifications, when the alerts step is left with an alert on (both start on); Reminders is asked
 /// when the list first uses it.
 /// Installs that ran 0.1.0 (analytics on by default, before onboarding existed) skip it and
@@ -354,6 +355,8 @@ struct DealsOnboarding: View {
                        detail: "Deals, aisles and stores. This week's deals show up in \(device) search, too.")
                 HowRow(systemImage: "apps.iphone", title: "Widget and Siri",
                        detail: "Add the Best This Week widget to your Home Screen, or ask Siri what's on sale.")
+                HowRow(systemImage: "heart", title: "Free, with a tip jar",
+                       detail: "The heart at the top is for tips, if you'd like to chip in. They're optional and don't unlock anything. To send feedback, or tip later, look in Settings.")
             }
             .padding(.horizontal, Space.xl)
         } buttons: {
