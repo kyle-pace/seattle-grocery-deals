@@ -17,7 +17,8 @@ enum AisleArt {
         case "bakery": "🥖"
         case "prepared": "🍱"
         case "snacks-drinks": "🍵"
-        default: "🧺"
+        // "other", shown as Tofu, kimchi and more: mostly tofu, bean curd and plant-based meats.
+        default: "🫘"
         }
     }
 }

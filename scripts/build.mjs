@@ -31,7 +31,7 @@ const TODAY = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Los_Angeles"
 
 const CATEGORY_LABELS = {
   produce: "Produce", meat: "Meat", seafood: "Seafood", "dairy-eggs": "Dairy and eggs", pantry: "Pantry",
-  frozen: "Frozen", bakery: "Bakery", prepared: "Deli and prepared", "snacks-drinks": "Snacks and drinks", other: "Other",
+  frozen: "Frozen", bakery: "Bakery", prepared: "Deli and prepared", "snacks-drinks": "Snacks and drinks", other: "Tofu, kimchi and more",
 };
 const STATUS_LABELS = { full: "Read in full", partial: "Partly read", stale: "Stale", unreadable: "Unreadable" };
 const FORMAT_LABELS = { "web-page": "Web page", images: "Flyer images", pdf: "PDF", "catalogue-viewer": "Catalogue viewer" };
@@ -104,8 +104,10 @@ function shortName(name) {
   return s.trim();
 }
 // A small picture for each aisle, the same emoji as the app (Aisles.swift AisleArt). Decorative.
-const AISLE_EMOJI = { produce: "🥬", meat: "🥩", seafood: "🐟", "dairy-eggs": "🥚", pantry: "🍚", frozen: "🥟", bakery: "🥖", prepared: "🍱", "snacks-drinks": "🍵" };
-const aisleEmoji = (c) => `<span class="tile-art" aria-hidden="true">${AISLE_EMOJI[c] ?? "🧺"}</span>`;
+const AISLE_EMOJI = { produce: "🥬", meat: "🥩", seafood: "🐟", "dairy-eggs": "🥚", pantry: "🍚", frozen: "🥟", bakery: "🥖", prepared: "🍱", "snacks-drinks": "🍵", other: "🫘" };
+// The "other" aisle is shown as "Tofu, kimchi and more": mostly tofu, bean curd and
+// plant-based meats, so beans rather than a basket.
+const aisleEmoji = (c) => `<span class="tile-art" aria-hidden="true">${AISLE_EMOJI[c] ?? "🫘"}</span>`;
 // Days left on a flyer, as the app's weekly ad card: "Ends today", "3 days left". The build
 // runs at least hourly, and app.js recounts it from data-through in the browser.
 const daysLeftText = (through) => {
@@ -392,8 +394,9 @@ const DISPLAY_PANEL = `<button class="dp-toggle" type="button" popovertarget="di
   <p class="dp-note">Saved in this browser only.</p>
 </div>`;
 
-function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null, analytics = true }) {
-  const full = title ? `${title} | ${cfg.site.title}` : cfg.site.title;
+function page({ title, path, section = path, body, wrap = true, description, map = false, extraScript = null, bodyClass = "", pageId = "", image = null, imageAlt = "", ogTitle = null, head = "", noindex = false, jsonld = null, analytics = true, fullTitle = null }) {
+  // fullTitle replaces the whole <title> (the home page, so search results say what the site is).
+  const full = fullTitle ?? (title ? `${title} | ${cfg.site.title}` : cfg.site.title);
   const desc = description ?? cfg.site.tagline;
   const pageUrl = cfg.site.origin + cfg.site.base_path + path;
   // Pages without their own share image get the site's (scripts/site-og.mjs).
@@ -656,6 +659,7 @@ ${soonPool.length ? `<section class="block ending" data-ending hidden aria-label
 </div>`;
   const home = cfg.site.origin + cfg.site.base_path;
   write("", page({ title: "", path: "", body, wrap: false, pageId: "home",
+    fullTitle: "Seattle Grocery Deals: weekly ads from Asian markets, co-ops and more",
     ogTitle: "Seattle Grocery Deals: this week's sales, sorted",
     description: `${plural(live.length, "sale")} this week at ${storeCount(live)} Seattle Asian markets, seafood shops and co-ops. Top picks: ${pickList(hlAll, 3, {}, DESC_MAX - 100)}.`,
     jsonld: [
@@ -1201,7 +1205,7 @@ function foodHelpPage() {
   const jump = [["basic-food", "Basic Food (SNAP)"], ["markets", "At farmers markets"], ["fresh-bucks", "Fresh Bucks"], ["kids", "Families with kids"], ["older-adults", "Older adults"], ["food-banks", "Food banks"]];
   const body = `<div class="privacy-page help-page">
 <div class="page-h"><h1>Food benefit programs</h1><p class="page-sub">Programs in Seattle and Washington that stretch a grocery budget. Checked ${CHECKED}.</p></div>
-<div class="note-card"><p>Groceries cost more than they used to. These programs help, and several of them work at the farmers markets and neighborhood grocers this site follows. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
+<div class="note-card"><p>Several of these programs work at the farmers markets and neighborhood grocers this site follows, and some add extra dollars for fruits and vegetables. Who qualifies can change, so each part links to the official page where you can check or apply.</p></div>
 <nav class="about-jump" aria-label="On this page"><ul>${jump.map(([id, label]) => `<li><a href="#${id}">${label}</a></li>`).join("")}</ul></nav>
 
 <h2 class="about-part" id="basic-food">Basic Food (SNAP)</h2>
@@ -1516,7 +1520,9 @@ function appsPage() {
   <p class="app-note">No account, and your list stays on your phone. More on the <a href="${url("privacy/")}">privacy page</a>.</p>
   <p class="app-note">Everything in the app is on this site too. <a class="go" href="${url()}">See this week's deals</a></p>
 </div>`;
-  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." }));
+  write("app/", page({ title: "iPhone app", path: "app/", section: "app/", body, description: "The Seattle Grocery Deals app for iPhone and iPad: this week's deals, the best of your stores, a list that knows the sale, and alerts you choose. In beta on TestFlight." ,
+    // Tells search engines this page is about a free iPhone and iPad app.
+    jsonld: { "@context": "https://schema.org", "@type": "MobileApplication", name: cfg.site.title, operatingSystem: "iOS, iPadOS", applicationCategory: "ShoppingApplication", description: "This week's grocery sales at Seattle Asian markets, seafood shops and co-ops, with a shopping list and alerts for your stores. In beta on TestFlight.", url: cfg.site.origin + cfg.site.base_path + "app/", installUrl: TESTFLIGHT_URL, image: `${cfg.site.origin}${cfg.site.base_path}assets/logo-512.png`, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" } } }));
   // The old address.
   const to = url("app/");
   write("apps/", `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>iPhone app</title><link rel="canonical" href="${esc(cfg.site.origin + to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}"></head><body><p><a href="${to}">The iPhone app has moved here.</a></p></body></html>`);

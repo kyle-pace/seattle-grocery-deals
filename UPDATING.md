@@ -124,7 +124,7 @@ The settings are in `config/criteria.json`. Every item gets a tier:
 | `store` | Store id. Its flyer entry must be `full` or `partial`. |
 | `item` | The name as printed. You may add the pack size, as in "Shirakiku Sekka Rice, 15 lb". |
 | `item_key` | A key from `config/items.json`, or `null`. |
-| `category` | `produce`, `meat`, `seafood`, `dairy-eggs`, `pantry`, `frozen`, `bakery` or `other`. `prepared` and `snacks-drinks` are no longer used from 2026-10-30 (section 3): sliced deli meat and cheese go in `meat` and `dairy-eggs`, plain milks in `dairy-eggs`, coffee beans and tea bags in `pantry`, tofu in `other`. |
+| `category` | `produce`, `meat`, `seafood`, `dairy-eggs`, `pantry`, `frozen`, `bakery` or `other`. `prepared` and `snacks-drinks` are no longer used from 2026-10-30 (section 3): sliced deli meat and cheese go in `meat` and `dairy-eggs`, plain milks in `dairy-eggs`, coffee beans and tea bags in `pantry`, tofu in `other`. `other` is shown as "Tofu, kimchi and more" (since 2026-11-15): tofu and bean curd, plant-based meats, kimchi, fresh dumpling wrappers, rice cakes and similar chilled Asian staples. |
 | `price` | The sale price as printed, for `quantity` units. |
 | `quantity` | `1`, unless it is a multi-buy: for "4 for $5", `price` is `5` and `quantity` is `4`. |
 | `unit` | `lb` per pound, `each` per item, `pack` per package. |
