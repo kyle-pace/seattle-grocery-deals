@@ -1812,6 +1812,9 @@ function searchFiles() {
     background_color: "#eef3f6", theme_color: "#eef3f6",
     icons: [{ src: url("assets/logo-192.png"), sizes: "192x192", type: "image/png" }, { src: url("assets/logo-512.png"), sizes: "512x512", type: "image/png" }],
   }, null, 2));
+  // IndexNow key file (scripts/indexnow.mjs): proves to Bing and the other IndexNow engines that
+  // the post-deploy pings for this site come from us. Not a secret; it has to be served publicly.
+  writeFileSync(join(DIST, "0877964bc9a1b98b43be5762f6c86c6f.txt"), "0877964bc9a1b98b43be5762f6c86c6f");
   writeFileSync(join(DIST, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: ${url("data/")}\n\nSitemap: ${origin}sitemap.xml\n`);
   const home = new Set(["", "departments/", "stores/", "standouts/", "compare/"]);
   const xml = [...SITEMAP].sort().map((p) => `  <url><loc>${esc(origin + p)}</loc><lastmod>${TODAY}</lastmod>${home.has(p) || p.startsWith("stores/") || p.startsWith("departments/") ? "<changefreq>daily</changefreq>" : p.startsWith("weeks/") && p !== "weeks/" ? "<changefreq>yearly</changefreq>" : ""}</url>`);

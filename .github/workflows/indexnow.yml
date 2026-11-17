@@ -1,0 +1,49 @@
+name: IndexNow
+
+# After each deploy from a push to main, tell Bing and the other IndexNow engines which pages
+# changed (scripts/indexnow.mjs). The hourly scheduled rebuilds don't trigger it.
+# Google doesn't use IndexNow; it reads the sitemap instead.
+
+on:
+  workflow_run:
+    workflows: ["Build and deploy"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: "Submit every page in the sitemap, not just recently changed ones"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/indexnow.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Submit to IndexNow
+        env:
+          SITE: https://seattlegrocery.deals
+          SITEMAP: https://seattlegrocery.deals/sitemap.xml
+        run: |
+          flag=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.all }}" = "true" ]; then flag="--all"; fi
+          for try in 1 2 3; do
+            node scripts/indexnow.mjs $flag && exit 0
+            echo "Retrying in 60 seconds"; sleep 60
+          done
+          exit 1
