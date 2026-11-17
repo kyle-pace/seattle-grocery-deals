@@ -1,0 +1,49 @@
+name: IndexNow
+
+# After a deploy, tell Bing and the other IndexNow engines which pages changed
+# (scripts/indexnow.mjs). Google doesn't use IndexNow; it reads the sitemap instead.
+# The site deploys outside this workflow, so this waits for the new build to go live first.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: "Submit every page in the sitemap, not just recently changed ones"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/indexnow.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Wait for the deploy
+        if: github.event_name == 'push'
+        run: sleep 150
+      - name: Submit to IndexNow
+        env:
+          SITE: https://example.com
+          SITEMAP: https://example.com/sitemap-index.xml
+        run: |
+          flag=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.all }}" = "true" ]; then flag="--all"; fi
+          for try in 1 2 3 4; do
+            node scripts/indexnow.mjs $flag && exit 0
+            echo "Retrying in 60 seconds"; sleep 60
+          done
+          exit 1

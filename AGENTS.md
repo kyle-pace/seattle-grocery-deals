@@ -182,8 +182,7 @@ A new website on its own domain also gets set up so search engines can find it, 
 - A home page title that says what the site is and who it's for ("Henwood: pantry and recipes app for iPhone, iPad and Mac"), not just the name.
 - `robots.txt` that points to a sitemap, and a sitemap that lists every page meant to be found. Astro sites use `@astrojs/sitemap`; a hand-written site keeps `sitemap.xml` by hand and adds each new page to it.
 - Structured data (JSON-LD) on the home page: `WebSite` for every site, `MobileApplication` with the store or TestFlight link for an app's site, and Kyle's `Person` (`@id` `https://kylepace.net/#kyle`) on his personal sites.
-- A Google Search Console domain property, with the sitemap submitted there. Verifying the domain adds a DNS record, so ask Kyle first (see "Shipping").
-- The site imported into [Bing Webmaster Tools](https://www.bing.com/webmasters) from Search Console, which also covers DuckDuckGo. Bing only brings in sitemaps already submitted to Google, so do Search Console first.
+- A Google Search Console domain property with the sitemap submitted, the site imported into Bing Webmaster Tools, and IndexNow pinging Bing after every deploy. Follow `.agents/skills/search-setup/SKILL.md`. Verifying the domain adds a DNS record, so ask Kyle first (see "Shipping").
 - A few days after launch, check Search Console's Pages report and fix anything it says it couldn't crawl.
 - Changing a favicon later? Give the new file a new name (`favicon-v2.png`), because Google keeps showing the old one for weeks otherwise.
 
