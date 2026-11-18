@@ -36,20 +36,26 @@
       "updated_at": "2026-11-14T20:39:48.779Z"
     },
     "met-market": {
-      "fingerprint": "6284eff16b4ad3a9",
+      "fingerprint": "0e788f87dfabc034",
       "matches": [
-        "Weekly-Savings-111126-PG-1",
-        "Weekly-Savings-111126-PG-2",
-        "Weekly-Savings-111126-PG-3",
-        "Weekly-Savings-111126-PG-4",
-        "Weekly-Savings-111126-PG-5",
-        "Weekly-Savings-111126-PG-6"
+        "Weekly-Savings-111826-PG-1",
+        "Weekly-Savings-111826-PG-2",
+        "Weekly-Savings-111826-PG-3",
+        "Weekly-Savings-111826-PG-4",
+        "Weekly-Savings-111826-PG-5",
+        "Weekly-Savings-111826-PG-6",
+        "Weekly-Savings-111826-PG-7",
+        "Weekly-Savings-111826-PG-8"
       ],
-      "seen_at": "2026-11-11T15:16:09.090Z",
+      "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-11T21:59:40.379Z",
-      "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-18T01:16:21.672Z",
-      "error_since": "2026-11-15T07:46:52.609Z"
+      "pending": {
+        "since": "2026-11-18T09:03:37.080Z",
+        "live_before": "2026-11-11|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-5.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-6.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
+        "fires": 1,
+        "fired_at": "2026-11-18T09:03:37.080Z",
+        "session": "https://claude.ai/code/cse_015KDcQCLrDUBuzN243tD7cY"
+      }
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -111,15 +117,6 @@
       "since": "2026-11-15T07:46:52.609Z",
       "notified_at": "2026-11-15T07:46:59.749Z",
       "issue": 52
-    },
-    "watch:met-market": {
-      "store": "met-market",
-      "kind": "watch",
-      "title": "Metropolitan Market: the flyer watcher can't read its page",
-      "body": "Since 2026-11-15 07:46 UTC: the pattern matched nothing (page layout may have changed). Fix its \"watch\" entry in config/stores.json.",
-      "since": "2026-11-15T15:36:31.922Z",
-      "notified_at": "2026-11-15T15:36:39.670Z",
-      "issue": 53
     }
   },
   "resolved": []
