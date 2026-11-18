@@ -48,14 +48,7 @@
         "Weekly-Savings-111826-PG-8"
       ],
       "seen_at": "2026-11-18T09:03:37.080Z",
-      "updated_at": "2026-11-11T21:59:40.379Z",
-      "pending": {
-        "since": "2026-11-18T09:03:37.080Z",
-        "live_before": "2026-11-11|https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-5.webp https://res.cloudinary.com/gfh-prd/image/upload/v10005/Metropolitan-Market-Weekly-Savings-111126-PG-6.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
-        "fires": 1,
-        "fired_at": "2026-11-18T09:03:37.080Z",
-        "session": "https://claude.ai/code/cse_015KDcQCLrDUBuzN243tD7cY"
-      }
+      "updated_at": "2026-11-18T18:00:14.658Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -117,6 +110,33 @@
       "since": "2026-11-15T07:46:52.609Z",
       "notified_at": "2026-11-15T07:46:59.749Z",
       "issue": 52
+    },
+    "overdue:uwajimaya:2026-11-17": {
+      "store": "uwajimaya",
+      "kind": "overdue",
+      "title": "Uwajimaya: sale ended Nov 17, no new flyer read",
+      "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. The page shows: wp-content/uploads/2026/11/WeeklyAd-11.11.26.pdf.",
+      "since": "2026-11-18T18:00:14.658Z",
+      "issue": 58,
+      "notified_at": "2026-11-18T18:00:20.672Z"
+    },
+    "overdue:central-coop:2026-11-17": {
+      "store": "central-coop",
+      "kind": "overdue",
+      "title": "Central Co-op: sale ended Nov 17, no new flyer read",
+      "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. The page shows: /s/Coop_Deals_2026_Nov_Flyer_West_A.pdf | SALES FOR 11.4.26 - 11.10.26.",
+      "since": "2026-11-18T18:00:14.658Z",
+      "issue": 59,
+      "notified_at": "2026-11-18T18:00:21.125Z"
+    },
+    "overdue:red-apple:2026-11-17": {
+      "store": "red-apple",
+      "kind": "overdue",
+      "title": "Red Apple Markets: sale ended Nov 17, no new flyer read",
+      "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
+      "since": "2026-11-18T18:00:14.658Z",
+      "issue": 60,
+      "notified_at": "2026-11-18T18:00:21.690Z"
     }
   },
   "resolved": []
