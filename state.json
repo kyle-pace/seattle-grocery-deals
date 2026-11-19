@@ -11,21 +11,35 @@
       "updated_at": "2026-11-14T02:17:10.879Z"
     },
     "uwajimaya": {
-      "fingerprint": "ca0e01cd1333b30a",
+      "fingerprint": "c03b073936da5425",
       "matches": [
-        "wp-content/uploads/2026/11/WeeklyAd-11.11.26.pdf"
+        "wp-content/uploads/2026/11/WeeklyAd-11.18.26.pdf"
       ],
-      "seen_at": "2026-11-11T07:04:39.686Z",
-      "updated_at": "2026-11-11T15:16:09.090Z"
+      "seen_at": "2026-11-19T00:15:30.673Z",
+      "updated_at": "2026-11-11T15:16:09.090Z",
+      "pending": {
+        "since": "2026-11-19T00:15:30.673Z",
+        "live_before": "2026-11-11|https://www.uwajimaya.com/wp-content/uploads/2026/11/WeeklyAd-11.11.26.pdf https://www.uwajimaya.com/wp-content/uploads/2026/11/November-11.jpg https://www.uwajimaya.com/wp-content/uploads/2026/11/November-112.jpg https://www.uwajimaya.com/wp-content/uploads/2026/11/November-113.jpg https://www.uwajimaya.com/weekly-specials/",
+        "fires": 1,
+        "fired_at": "2026-11-19T00:15:30.673Z",
+        "session": "https://claude.ai/code/cse_015KDcQEHVrSN28vc4Lx46z2"
+      }
     },
     "central-coop": {
-      "fingerprint": "836429687b108a27",
+      "fingerprint": "bf697fa1e2a2b96e",
       "matches": [
-        "/s/Coop_Deals_2026_Nov_Flyer_West_A.pdf",
-        "SALES FOR 11.4.26 - 11.10.26"
+        "/s/Coop_Deals_2026_Nov_Flyer_West_B.pdf",
+        "SALES FOR 11.18.26 - 11.24.26"
       ],
-      "seen_at": "2026-11-05T07:19:16.950Z",
-      "updated_at": "2026-11-05T15:46:08.383Z"
+      "seen_at": "2026-11-19T00:15:30.673Z",
+      "updated_at": "2026-11-05T15:46:08.383Z",
+      "pending": {
+        "since": "2026-11-19T00:15:30.673Z",
+        "live_before": "2026-11-04|https://www.centralcoop.coop/s/Coop_Deals_2026_Nov_Flyer_West_A.pdf https://www.centralcoop.coop/freshdeals",
+        "fires": 1,
+        "fired_at": "2026-11-19T00:15:30.673Z",
+        "session": "https://claude.ai/code/cse_015KDcQEHVrSN28vc4Lx46z2"
+      }
     },
     "smith-brothers": {
       "fingerprint": "8567793e5d5062f3",
@@ -48,7 +62,10 @@
         "Weekly-Savings-111826-PG-8"
       ],
       "seen_at": "2026-11-18T09:03:37.080Z",
-      "updated_at": "2026-11-18T18:00:14.658Z"
+      "updated_at": "2026-11-18T18:00:14.658Z",
+      "error": "the pattern matched nothing (page layout may have changed)",
+      "error_at": "2026-11-19T00:15:30.673Z",
+      "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
       "fingerprint": "70c6fc305572432e",
@@ -111,32 +128,14 @@
       "notified_at": "2026-11-15T07:46:59.749Z",
       "issue": 52
     },
-    "overdue:uwajimaya:2026-11-17": {
-      "store": "uwajimaya",
-      "kind": "overdue",
-      "title": "Uwajimaya: sale ended Nov 17, no new flyer read",
-      "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. The page shows: wp-content/uploads/2026/11/WeeklyAd-11.11.26.pdf.",
-      "since": "2026-11-18T18:00:14.658Z",
-      "issue": 58,
-      "notified_at": "2026-11-18T18:00:20.672Z"
-    },
-    "overdue:central-coop:2026-11-17": {
-      "store": "central-coop",
-      "kind": "overdue",
-      "title": "Central Co-op: sale ended Nov 17, no new flyer read",
-      "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. The page shows: /s/Coop_Deals_2026_Nov_Flyer_West_A.pdf | SALES FOR 11.4.26 - 11.10.26.",
-      "since": "2026-11-18T18:00:14.658Z",
-      "issue": 59,
-      "notified_at": "2026-11-18T18:00:21.125Z"
-    },
     "overdue:red-apple:2026-11-17": {
       "store": "red-apple",
       "kind": "overdue",
       "title": "Red Apple Markets: sale ended Nov 17, no new flyer read",
       "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
       "since": "2026-11-18T18:00:14.658Z",
-      "issue": 60,
-      "notified_at": "2026-11-18T18:00:21.690Z"
+      "notified_at": "2026-11-18T18:00:21.690Z",
+      "issue": 60
     }
   },
   "resolved": []
