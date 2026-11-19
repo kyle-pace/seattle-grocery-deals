@@ -16,14 +16,7 @@
         "wp-content/uploads/2026/11/WeeklyAd-11.18.26.pdf"
       ],
       "seen_at": "2026-11-19T00:15:30.673Z",
-      "updated_at": "2026-11-11T15:16:09.090Z",
-      "pending": {
-        "since": "2026-11-19T00:15:30.673Z",
-        "live_before": "2026-11-11|https://www.uwajimaya.com/wp-content/uploads/2026/11/WeeklyAd-11.11.26.pdf https://www.uwajimaya.com/wp-content/uploads/2026/11/November-11.jpg https://www.uwajimaya.com/wp-content/uploads/2026/11/November-112.jpg https://www.uwajimaya.com/wp-content/uploads/2026/11/November-113.jpg https://www.uwajimaya.com/weekly-specials/",
-        "fires": 1,
-        "fired_at": "2026-11-19T00:15:30.673Z",
-        "session": "https://claude.ai/code/cse_015KDcQEHVrSN28vc4Lx46z2"
-      }
+      "updated_at": "2026-11-19T07:51:50.264Z"
     },
     "central-coop": {
       "fingerprint": "bf697fa1e2a2b96e",
@@ -32,14 +25,7 @@
         "SALES FOR 11.18.26 - 11.24.26"
       ],
       "seen_at": "2026-11-19T00:15:30.673Z",
-      "updated_at": "2026-11-05T15:46:08.383Z",
-      "pending": {
-        "since": "2026-11-19T00:15:30.673Z",
-        "live_before": "2026-11-04|https://www.centralcoop.coop/s/Coop_Deals_2026_Nov_Flyer_West_A.pdf https://www.centralcoop.coop/freshdeals",
-        "fires": 1,
-        "fired_at": "2026-11-19T00:15:30.673Z",
-        "session": "https://claude.ai/code/cse_015KDcQEHVrSN28vc4Lx46z2"
-      }
+      "updated_at": "2026-11-19T07:51:50.264Z"
     },
     "smith-brothers": {
       "fingerprint": "8567793e5d5062f3",
@@ -64,7 +50,7 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-19T00:15:30.673Z",
+      "error_at": "2026-11-19T07:51:50.264Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
@@ -136,6 +122,15 @@
       "since": "2026-11-18T18:00:14.658Z",
       "notified_at": "2026-11-18T18:00:21.690Z",
       "issue": 60
+    },
+    "watch:met-market": {
+      "store": "met-market",
+      "kind": "watch",
+      "title": "Metropolitan Market: the flyer watcher can't read its page",
+      "body": "Since 2026-11-19 00:15 UTC: the pattern matched nothing (page layout may have changed). Fix its \"watch\" entry in config/stores.json.",
+      "since": "2026-11-19T07:51:50.264Z",
+      "issue": 61,
+      "notified_at": "2026-11-19T07:51:59.012Z"
     }
   },
   "resolved": []
