@@ -50,17 +50,24 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-19T17:18:52.425Z",
+      "error_at": "2026-11-19T23:51:38.212Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
-      "fingerprint": "70c6fc305572432e",
+      "fingerprint": "e03fce7007041183",
       "matches": [
-        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521337521-BDOA41XAM7LIOJA3NCS9/111326+WA+HMart+Weekly.jpg",
-        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521340305-Z9FJLWSCG0IJHTQZ9L08/111326+WA+HMart+Weekly_eng.jpg"
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795126683745-ZGICRKOMKAPNHOFEE46U/112026+WA+HMart+Weekly.jpg",
+        "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795126686487-QUQ279VM03NW6PB0Z3PV/112026+WA+HMart+Weekly_eng.jpg"
       ],
-      "seen_at": "2026-11-13T00:10:54.355Z",
-      "updated_at": "2026-11-13T07:11:19.716Z"
+      "seen_at": "2026-11-19T23:51:38.212Z",
+      "updated_at": "2026-11-13T07:11:19.716Z",
+      "pending": {
+        "since": "2026-11-19T23:51:38.212Z",
+        "live_before": "2026-11-13|https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521340305-Z9FJLWSCG0IJHTQZ9L08/111326+WA+HMart+Weekly_eng.jpg https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521337521-BDOA41XAM7LIOJA3NCS9/111326+WA+HMart+Weekly.jpg https://www.hmartus.com/weekly-sale-wa",
+        "fires": 1,
+        "fired_at": "2026-11-19T23:51:38.212Z",
+        "session": "https://claude.ai/code/cse_015KDcQFJrznajkp82nSCPMs"
+      }
     },
     "99-ranch": {
       "fingerprint": "3eedb60621ac321c",
@@ -131,6 +138,15 @@
       "since": "2026-11-19T07:51:50.264Z",
       "notified_at": "2026-11-19T07:51:59.012Z",
       "issue": 61
+    },
+    "overdue:seafood-city:2026-11-18": {
+      "store": "seafood-city",
+      "kind": "overdue",
+      "title": "Seafood City: sale ended Nov 18, no new flyer read",
+      "body": "The sale on the site ended Nov 18 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
+      "since": "2026-11-19T23:51:38.212Z",
+      "issue": 62,
+      "notified_at": "2026-11-19T23:51:45.089Z"
     }
   },
   "resolved": []
