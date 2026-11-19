@@ -164,16 +164,16 @@
     {
       "store": "hmart",
       "status": "full",
-      "valid_from": "2026-11-13",
-      "valid_through": "2026-11-19",
+      "valid_from": "2026-11-20",
+      "valid_through": "2026-11-26",
       "links": [
         {
           "label": "WA weekly flyer, English",
-          "url": "https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521340305-Z9FJLWSCG0IJHTQZ9L08/111326+WA+HMart+Weekly_eng.jpg"
+          "url": "https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795126686487-QUQ279VM03NW6PB0Z3PV/112026+WA+HMart+Weekly_eng.jpg"
         },
         {
           "label": "WA weekly flyer, Korean",
-          "url": "https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1794521337521-BDOA41XAM7LIOJA3NCS9/111326+WA+HMart+Weekly.jpg"
+          "url": "https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795126683745-ZGICRKOMKAPNHOFEE46U/112026+WA+HMart+Weekly.jpg"
         },
         {
           "label": "Flyer page",
@@ -332,1201 +332,6 @@
     }
   ],
   "items": [
-    {
-      "store": "hmart",
-      "item": "Taekyung Korean Hot Pepper Flakes, 2 types",
-      "item_key": null,
-      "category": "pantry",
-      "price": 24.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 5,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Kimchi essentials sale"
-    },
-    {
-      "store": "hmart",
-      "item": "Lemonland Washington Salted Cabbage",
-      "item_key": null,
-      "category": "produce",
-      "price": 11.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 2.4,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Kimchi essentials sale, salted for kimchi"
-    },
-    {
-      "store": "hmart",
-      "item": "Bongseonhwa Korean Brining Salt",
-      "item_key": null,
-      "category": "pantry",
-      "price": 12.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 5,
-        "unit": "kg"
-      },
-      "unit_price": {
-        "value": 1.18,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Kimchi essentials sale"
-    },
-    {
-      "store": "hmart",
-      "item": "Hasunjung Sand Lance / Anchovy Sauce, 2 types",
-      "item_key": null,
-      "category": "pantry",
-      "price": 4.48,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 800,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 2.54,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Kimchi essentials sale"
-    },
-    {
-      "store": "hmart",
-      "item": "Local Napa Cabbage",
-      "item_key": null,
-      "category": "produce",
-      "price": 14.98,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 14.98,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-15",
-      "notes": "Fri to Sun only, sold by the box, limited quantity while supplies last"
-    },
-    {
-      "store": "hmart",
-      "item": "Natural Pork Butt Sliced",
-      "item_key": null,
-      "category": "meat",
-      "price": 3.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 3.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Hot deal, Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Tommy Mango",
-      "item_key": null,
-      "category": "produce",
-      "price": 16.98,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 16.98,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only, sold by the box"
-    },
-    {
-      "store": "hmart",
-      "item": "Zespri Gold Kiwi",
-      "item_key": null,
-      "category": "produce",
-      "price": 29.98,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 29.98,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only, sold by the box"
-    },
-    {
-      "store": "hmart",
-      "item": "Pomegranate",
-      "item_key": null,
-      "category": "produce",
-      "price": 3.98,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 3.98,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Yellow Papaya",
-      "item_key": "papaya",
-      "category": "produce",
-      "price": 1.28,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.28,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "EZ Open Coconut",
-      "item_key": "coconut",
-      "category": "produce",
-      "price": 2.48,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 2.48,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Cuties Mandarin",
-      "item_key": "mandarins",
-      "category": "produce",
-      "price": 3.78,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 2,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 1.89,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Broccoli",
-      "item_key": "broccoli",
-      "category": "produce",
-      "price": 1.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Enoki Mushroom",
-      "item_key": "mushrooms-enoki",
-      "category": "produce",
-      "price": 1.28,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 150,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 3.87,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Ginger",
-      "item_key": null,
-      "category": "produce",
-      "price": 1.28,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 1.28,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Italian Squash",
-      "item_key": null,
-      "category": "produce",
-      "price": 0.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 0.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "PMW Tofu, Firm / Soft",
-      "item_key": "tofu",
-      "category": "other",
-      "price": 1.78,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 1.78,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "USDA Prime Beef Boneless Short Rib",
-      "item_key": "beef-short-ribs",
-      "category": "meat",
-      "price": 25.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 25.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Beef for Stew",
-      "item_key": "beef-stew",
-      "category": "meat",
-      "price": 4.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 4.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Beef Back Rib",
-      "item_key": "beef-ribs",
-      "category": "meat",
-      "price": 4.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 4.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Natural Pork Spare Rib Roll",
-      "item_key": "pork-spareribs",
-      "category": "meat",
-      "price": 4.48,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 4.48,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Natural Pork Belly BBQ",
-      "item_key": "pork-belly-sliced",
-      "category": "meat",
-      "price": 6.48,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 6.48,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Natural Pork Jowl Skinless Chunk",
-      "item_key": null,
-      "category": "meat",
-      "price": 6.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 6.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Natural Pork Belly Cube for Stew",
-      "item_key": "pork-stew",
-      "category": "meat",
-      "price": 2.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 2.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-16",
-      "notes": "Fri to Mon only"
-    },
-    {
-      "store": "hmart",
-      "item": "Jagalchi Cookman Pollock Fillet",
-      "item_key": null,
-      "category": "seafood",
-      "price": 5.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 400,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 6.78,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Seatrust Half Dried Pollock Cut",
-      "item_key": null,
-      "category": "seafood",
-      "price": 5.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 2.2,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 2.72,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Head On Shrimp 30/40",
-      "item_key": "shrimp",
-      "category": "seafood",
-      "price": 4.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 4.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Suhyup Hairtail Fish",
-      "item_key": null,
-      "category": "seafood",
-      "price": 7.48,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 9.52,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 12.57,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Lemonland Kimchi Sauce",
-      "item_key": null,
-      "category": "pantry",
-      "price": 7.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 2,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 3.99,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Deli"
-    },
-    {
-      "store": "hmart",
-      "item": "Lemonland Spicy Radish Salad",
-      "item_key": null,
-      "category": "pantry",
-      "price": 2.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 250,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 5.41,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Deli",
-      "vegetarian": false
-    },
-    {
-      "store": "hmart",
-      "item": "Lemonland Seasoned Dried Radish",
-      "item_key": null,
-      "category": "pantry",
-      "price": 2.78,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 150,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 8.41,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Deli",
-      "vegetarian": false
-    },
-    {
-      "store": "hmart",
-      "item": "Lemonland Almond Rice Cake",
-      "item_key": null,
-      "category": "bakery",
-      "price": 3.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 220,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 8.21,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Deli"
-    },
-    {
-      "store": "hmart",
-      "item": "Hadonggun Premium White Rice",
-      "item_key": null,
-      "category": "pantry",
-      "price": 25.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 22,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 1.18,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Choripdong Gaba Rice",
-      "item_key": null,
-      "category": "pantry",
-      "price": 23.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 11,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 2.18,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Goldenara Thai Jasmine Rice",
-      "item_key": "rice-jasmine",
-      "category": "pantry",
-      "price": 37.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 40,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 0.95,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Hansang Korean Soup, 2 types",
-      "item_key": null,
-      "category": "pantry",
-      "price": 5.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 550,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 4.93,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Chungjungone Pork Loin Cutlet",
-      "item_key": null,
-      "category": "frozen",
-      "price": 7.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 12,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 10.64,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Choripdong Boneless Pork Hocks",
-      "item_key": null,
-      "category": "meat",
-      "price": 13.98,
-      "quantity": 1,
-      "unit": "lb",
-      "unit_price": {
-        "value": 13.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Pulmuone Dumplings, 3 types",
-      "item_key": null,
-      "category": "frozen",
-      "price": 7.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 22.2,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.75,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "TMI Gyoza Dumplings, 2 types",
-      "item_key": null,
-      "category": "frozen",
-      "price": 5.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 16,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 5.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "O!Mandu Popcorn Dumpling",
-      "item_key": null,
-      "category": "frozen",
-      "price": 4.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 465,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 4.86,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Goraesa Fishcake Skewers",
-      "item_key": null,
-      "category": "seafood",
-      "price": 9.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 920,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 4.92,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Kwangcheon Roasted Seaweed, 2 types, 8 packs of 4 g",
-      "item_key": null,
-      "category": "pantry",
-      "price": 2.48,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 32,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 35.15,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Choripdong Dried Pollock Sliced",
-      "item_key": null,
-      "category": "seafood",
-      "price": 11.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 227,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 23.94,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Choripdong Seafood Mix",
-      "item_key": null,
-      "category": "seafood",
-      "price": 5.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 5.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Frozen, super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Suhyup Frozen Oyster",
-      "item_key": "oysters",
-      "category": "seafood",
-      "price": 4.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 226,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 10,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Yoodong Canned Whelk",
-      "item_key": null,
-      "category": "seafood",
-      "price": 7.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 14.1,
-        "unit": "oz"
-      },
-      "unit_price": {
-        "value": 9.06,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Greenhat Salted Fresh Water Krill",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 4,
-        "unit": "lb"
-      },
-      "unit_price": {
-        "value": 2.25,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving",
-      "vegetarian": false
-    },
-    {
-      "store": "hmart",
-      "item": "Guduck Plum Extract",
-      "item_key": null,
-      "category": "pantry",
-      "price": 8.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 700,
-        "unit": "ml"
-      },
-      "unit_price": {
-        "value": 12.83,
-        "per": "l"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Jeonwon New Sugar",
-      "item_key": null,
-      "category": "pantry",
-      "price": 0.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 100,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 4.45,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Little Sheep Soup Base, 3 types",
-      "item_key": null,
-      "category": "pantry",
-      "price": 3.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 240,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 7.52,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "LF Food Sanuki Udon Noodle, 5 packs of 230 g",
-      "item_key": "udon",
-      "category": "frozen",
-      "price": 2.48,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 1150,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 0.98,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Super saving"
-    },
-    {
-      "store": "hmart",
-      "item": "Lotte Steamed Sweet Bean Bun, 3 types, 6 pack",
-      "item_key": null,
-      "category": "frozen",
-      "price": 4.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 558,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 4.05,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": ""
-    },
-    {
-      "store": "hmart",
-      "item": "Erom Soymilk, 2 types, 16 packs of 190 ml",
-      "item_key": null,
-      "category": "dairy-eggs",
-      "price": 8.98,
-      "quantity": 1,
-      "unit": "each",
-      "unit_price": {
-        "value": 8.98,
-        "per": "each"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Sold by the box"
-    },
-    {
-      "store": "hmart",
-      "item": "Eunha Flounder Sashimi",
-      "item_key": null,
-      "category": "seafood",
-      "price": 18.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 120,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 71.74,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Sashimi special, chilled, flown in fresh from Korea"
-    },
-    {
-      "store": "hmart",
-      "item": "Eunha Seabream Sashimi",
-      "item_key": null,
-      "category": "seafood",
-      "price": 19.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 120,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 75.52,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Sashimi special, chilled, flown in fresh from Korea"
-    },
-    {
-      "store": "hmart",
-      "item": "Eunha Rockfish Sashimi",
-      "item_key": null,
-      "category": "seafood",
-      "price": 20.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 120,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 79.3,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Sashimi special, chilled, flown in fresh from Korea"
-    },
-    {
-      "store": "hmart",
-      "item": "Eunha Sashimi Combo (flounder, rockfish, seabream)",
-      "item_key": null,
-      "category": "seafood",
-      "price": 59.98,
-      "quantity": 1,
-      "unit": "pack",
-      "pack": {
-        "size": 400,
-        "unit": "g"
-      },
-      "unit_price": {
-        "value": 68.02,
-        "per": "lb"
-      },
-      "regular_price": null,
-      "percent_off": null,
-      "member_price": false,
-      "valid_through": "2026-11-19",
-      "notes": "Sashimi special, chilled, flown in fresh from Korea"
-    },
     {
       "store": "asian-family-market",
       "item": "Taiwan Melon",
@@ -14954,6 +13759,1149 @@
       "member_price": false,
       "valid_through": "2026-12-01",
       "notes": "NCG Co+op Deals flyer page 16, selected varieties; not all items carried by Central Co-op"
+    },
+    {
+      "store": "hmart",
+      "item": "Lamb Shoulder Shabu",
+      "item_key": null,
+      "category": "meat",
+      "price": 12.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Hot deal, Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Vela Halfshell Mussel",
+      "item_key": null,
+      "category": "seafood",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Hot deal, frozen"
+    },
+    {
+      "store": "hmart",
+      "item": "Lemonland Sokchan Kimchi",
+      "item_key": null,
+      "category": "other",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.5,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 1.27,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Hot deal"
+    },
+    {
+      "store": "hmart",
+      "item": "Korean Singo Pear",
+      "item_key": null,
+      "category": "produce",
+      "price": 29.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 3.33,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only, sold by the box"
+    },
+    {
+      "store": "hmart",
+      "item": "Hachiya Persimmon",
+      "item_key": null,
+      "category": "produce",
+      "price": 26.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 26.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only, sold by the box"
+    },
+    {
+      "store": "hmart",
+      "item": "Zespri Gold Kiwi",
+      "item_key": null,
+      "category": "produce",
+      "price": 29.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 29.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only, sold by the box"
+    },
+    {
+      "store": "hmart",
+      "item": "Pomegranate",
+      "item_key": null,
+      "category": "produce",
+      "price": 21.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 3.66,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only, sold by the box"
+    },
+    {
+      "store": "hmart",
+      "item": "Cuties Mandarin",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 3.78,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Satsuma Mandarin",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 11.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 3,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Sweet Potato",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Green / Red Leaf Lettuce",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.68,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.68,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Seafood Mushroom",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Gobo",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.28,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.28,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Italian Squash",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Beef Ox Tail",
+      "item_key": "oxtail",
+      "category": "meat",
+      "price": 10.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 10.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Angus Choice Short Plate Shabu",
+      "item_key": null,
+      "category": "meat",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Beef Ribeye for Stir Fry",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Natural Pork Belly Sliced",
+      "item_key": "pork-belly-sliced",
+      "category": "meat",
+      "price": 6.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Natural Pork for Stew",
+      "item_key": "pork-stew",
+      "category": "meat",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Natural Fresh Pork CT Butt Sliced",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Natural Pork Belly Skin On Chunk",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Fri to Mon only"
+    },
+    {
+      "store": "hmart",
+      "item": "Supreme Unagi",
+      "item_key": null,
+      "category": "seafood",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.97,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Camaron Beach Head On Shrimp 9/12",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 11.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Vici Smoked Salmon Trio Selections",
+      "item_key": null,
+      "category": "seafood",
+      "price": 14.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 29.96,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Best Seafood White Croaker Fillet",
+      "item_key": null,
+      "category": "seafood",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 4.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Lemonland Stir Fried Fishcake",
+      "item_key": null,
+      "category": "seafood",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 250,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 7.22,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Deli"
+    },
+    {
+      "store": "hmart",
+      "item": "Lemonland Seasoned Soybean",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 150,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 9.01,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Deli"
+    },
+    {
+      "store": "hmart",
+      "item": "Lemonland Pickled Raw Perilla Leaves",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.78,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 125,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 13.72,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Deli"
+    },
+    {
+      "store": "hmart",
+      "item": "Lemonland Corn Rice Cake",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.78,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 170,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 10.09,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Deli"
+    },
+    {
+      "store": "hmart",
+      "item": "Choripdong Medium Grain Rice",
+      "item_key": "rice-medium-grain",
+      "category": "pantry",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.67,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Choripdong Medium Grain Sweet Rice",
+      "item_key": null,
+      "category": "pantry",
+      "price": 12.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.87,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Goldenara Thai Hom Mali Jasmine Rice",
+      "item_key": "rice-jasmine",
+      "category": "pantry",
+      "price": 37.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 40,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 0.95,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Jongga Mat Kimchi",
+      "item_key": null,
+      "category": "other",
+      "price": 16.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.5,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 3.08,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Jongga Poggi Kimchi",
+      "item_key": null,
+      "category": "other",
+      "price": 19.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.5,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 3.63,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Emart PK Beef Short Rib Soup, 2 types",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 550,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 7.41,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Bibigo Beef Bone Flavored Soup, 6 packs of 500 g",
+      "item_key": null,
+      "category": "pantry",
+      "price": 10.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3000,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 1.66,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving, sold by the box"
+    },
+    {
+      "store": "hmart",
+      "item": "Otoki Dumplings, 2 types",
+      "item_key": null,
+      "category": "frozen",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1.54,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.18,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Chungjungone Korean Galbi",
+      "item_key": null,
+      "category": "frozen",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.12,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Goraesa Skewered Fish Cake",
+      "item_key": null,
+      "category": "seafood",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 446,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 7.1,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Sajo Canned Tuna, 2 types, 4 cans of 150 g",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 600,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 6.03,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Daerimsun Imitation Crab Stick",
+      "item_key": null,
+      "category": "seafood",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 2.72,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Sahmyook Roasted Seaweed, 16 packs of 4 g",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 64,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 49.47,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Suhyup Sliced Hairtail",
+      "item_key": null,
+      "category": "seafood",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 220,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 18.51,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Choripdong Frozen Common Octopus",
+      "item_key": null,
+      "category": "seafood",
+      "price": 19.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 6.66,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Hansang Soy Sauce, 2 types",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 900,
+        "unit": "ml"
+      },
+      "unit_price": {
+        "value": 3.31,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Lotte Mirim",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1.8,
+        "unit": "l"
+      },
+      "unit_price": {
+        "value": 3.32,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Kadoya Sesame Oil",
+      "item_key": null,
+      "category": "pantry",
+      "price": 18.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 56,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 11.46,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Huy Fong Sriracha Chili Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 28,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Daerimsun Pickled Radish, 2 types",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 350,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 2.57,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Gompyo Korean Pancake / Frying Mix",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 1.12,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving"
+    },
+    {
+      "store": "hmart",
+      "item": "Nongshim Miga Glass Noodle",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 2.26,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": ""
+    },
+    {
+      "store": "hmart",
+      "item": "Hansang Rice Cake, 2 types",
+      "item_key": null,
+      "category": "other",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 1.12,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Super saving, includes sliced"
+    },
+    {
+      "store": "hmart",
+      "item": "Hansang Korean Rice Cake, 6 types",
+      "item_key": null,
+      "category": "other",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 7.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "700 g to 960 g depending on type"
+    },
+    {
+      "store": "hmart",
+      "item": "Samlip Hopang, 3 types, 3 pack",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 255,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 4.41,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Some types contain meat",
+      "vegetarian": false
+    },
+    {
+      "store": "hmart",
+      "item": "88Panda Egg Tart / Fruit Buns",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "300 g or 360 g"
     }
   ]
 }
