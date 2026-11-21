@@ -26,11 +26,32 @@ function recordThisVisit() {
   } catch (e) { return false; }
 }
 
-// Headless and automated browsers: Playwright, Puppeteer and Selenium set navigator.webdriver;
-// headless Chrome and crawlers name themselves in the user agent.
+// Crawlers, automated and emulated browsers. A copy of kp-design's lib/automation.ts
+// (kyle-pace/kp-design, 0.11.2): keep the two the same. Test runners set navigator.webdriver,
+// headless Chrome and crawlers name themselves, agent browsers run desktop Linux or fake an
+// Android phone on a desktop, and crawlers wear years-old browser names. Real people on
+// desktop Linux aren't counted; ChromeOS and Android phones are.
+function looksAutomated(ua, platform = '', webdriver = false) {
+  if (webdriver || !ua) return true;
+  if (/HeadlessChrome|Lighthouse|bot\/|bot;|crawl|spider|slurp|facebookexternalhit|Sogou/i.test(ua)) return true;
+  if (/Edge\/\d|Iceweasel|Opera Mini|NetFront|MSIE |Trident\//.test(ua)) return true;
+  const android = /Android/.test(ua);
+  if (/\bLinux\b/.test(ua) && !android && !/CrOS/.test(ua)) return true;
+  if (android && /x86|i686|Win|Mac/i.test(platform)) return true;
+  const chrome = ua.match(/(?:Chrome|CriOS)\/(\d+)/);
+  if (chrome && Number(chrome[1]) < 120) return true;
+  const firefox = ua.match(/Firefox\/(\d+)/);
+  if (firefox && !/FxiOS/.test(ua) && Number(firefox[1]) < 115) return true;
+  if (/Windows/.test(ua) && /Safari\//.test(ua) && !/Chrome|CriOS|Firefox|Edg/.test(ua)) return true;
+  if (/iPhone|iPad|iPod/.test(ua)) {
+    const ios = ua.match(/Version\/(\d+)/);
+    if (ios && Number(ios[1]) < 15) return true;
+  }
+  return false;
+}
+
 function automated() {
-  if (navigator.webdriver === true) return true;
-  return /HeadlessChrome|Lighthouse|bot\/|crawl|spider|slurp|facebookexternalhit/i.test(navigator.userAgent || '');
+  return looksAutomated(navigator.userAgent || '', navigator.platform || '', navigator.webdriver === true);
 }
 
 // Reads ?internal=on / ?internal=off, remembers it in this browser, and drops it from the address.
