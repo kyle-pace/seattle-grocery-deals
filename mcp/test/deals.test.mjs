@@ -1,7 +1,7 @@
 // Checks for the tool logic, on a small made-up feed in the shape of /api/week.json.
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { findStore, listStores, planTrip, searchDeals, storeList, thisWeek, words } from "../src/deals.js";
+import { dealOut, findStore, listStores, planTrip, searchDeals, storeList, thisWeek, usAverageText, words } from "../src/deals.js";
 
 const item = (id, rank, name, store, category, extra = {}) => ({
   id, rank, name, store, category, key: null, text: "$1.99/lb", tier: "sale", veg: true, ends: "2026-11-12", why: "", ...extra,
@@ -195,4 +195,16 @@ test("plan_trip prefers the item itself over a product that mentions it", () => 
   ] };
   const r = planTrip(feed, { items: "bok choy" }, TODAY);
   assert.equal(r.stores[0].on_sale[0].name, "Baby Bok Choy");
+});
+
+test("the US average says over when the price is above it", () => {
+  // Organic russets at Met Market, week of 2026-11-20: $1.40/lb against a 99¢/lb average.
+  // The feed sends under: -42, which used to read "-42% under the US average".
+  const russets = item("met-market-7", 7, "Russet Potatoes, organic", "hmart", "produce", {
+    text: "$6.99 for 5 lb", unit_price: "$1.40/lb", us: { avg: "99¢/lb", under: -42, period: null },
+  });
+  assert.equal(dealOut(feed, russets).us_average, "42% over the US average of 99¢/lb");
+  assert.equal(usAverageText({ avg: "$1.12/lb", under: 40 }), "40% under the US average of $1.12/lb");
+  assert.equal(usAverageText({ avg: "$3.68/lb", under: 0 }), "About the US average of $3.68/lb");
+  assert.equal(dealOut(feed, feed.items[0]).us_average, undefined);
 });
