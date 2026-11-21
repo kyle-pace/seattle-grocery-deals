@@ -50,7 +50,7 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-21T12:30:21.838Z",
+      "error_at": "2026-11-21T19:44:29.019Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
@@ -77,7 +77,10 @@
         "img.awsprod.99ranch.com/ef2493772f2f4d0183eb49ef642cb650.jpeg"
       ],
       "seen_at": "2026-11-20T16:04:07.208Z",
-      "updated_at": "2026-11-20T22:39:55.083Z"
+      "updated_at": "2026-11-20T22:39:55.083Z",
+      "error": "HTTP 404",
+      "error_at": "2026-11-21T19:44:29.019Z",
+      "error_since": "2026-11-21T19:44:29.019Z"
     },
     "viet-wah": {
       "fingerprint": "40cd6323523140b4",
