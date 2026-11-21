@@ -8,14 +8,7 @@
         "wp-content/uploads/2025/04/914939715_1846169676516803_4622468215697965630_n.jpg"
       ],
       "seen_at": "2026-11-20T22:39:55.083Z",
-      "updated_at": "2026-11-14T02:17:10.879Z",
-      "pending": {
-        "since": "2026-11-20T22:39:55.083Z",
-        "live_before": "2026-11-13|https://www.lamsseafood.com/wp-content/uploads/2019/06/895793207_1828572185734601_4082958586970654446_n.jpg https://www.lamsseafood.com/wp-content/uploads/2019/06/904220307_1828572252401261_7944845589310910027_n.jpg https://www.lamsseafood.com/wp-content/uploads/2025/04/904097666_1828572195734600_3877936444997397916_n.jpg https://lamsseafood.com/specials",
-        "fires": 1,
-        "fired_at": "2026-11-20T22:39:55.083Z",
-        "session": "https://claude.ai/code/cse_015KDcQFbZ5ma56VECevL4tY"
-      }
+      "updated_at": "2026-11-21T03:54:40.359Z"
     },
     "uwajimaya": {
       "fingerprint": "c03b073936da5425",
@@ -57,7 +50,7 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-20T22:39:55.083Z",
+      "error_at": "2026-11-21T03:54:40.359Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
@@ -93,14 +86,7 @@
         "single-post/weekly-ad-nov-20-26-2026"
       ],
       "seen_at": "2026-11-20T22:39:55.083Z",
-      "updated_at": "2026-11-13T21:56:28.127Z",
-      "pending": {
-        "since": "2026-11-20T22:39:55.083Z",
-        "live_before": "2026-11-13|https://static.wixstatic.com/media/d268df_0f61dd01112c4547813bd8df554f9d3f~mv2.jpg https://www.vietwah.com/single-post/weekly-ad-nov-13-19-2026",
-        "fires": 1,
-        "fired_at": "2026-11-20T22:39:55.083Z",
-        "session": "https://claude.ai/code/cse_015KDcQFbZ5ma56VECevL4tY"
-      }
+      "updated_at": "2026-11-21T03:54:40.359Z"
     },
     "asian-family-market": {
       "fingerprint": "1ad575f7e4d1208b",
@@ -146,8 +132,8 @@
       "title": "T&T Supermarket: sale ended Nov 19, no new flyer read",
       "body": "The sale on the site ended Nov 19 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
       "since": "2026-11-20T22:39:55.083Z",
-      "issue": 63,
-      "notified_at": "2026-11-20T22:40:03.519Z"
+      "notified_at": "2026-11-20T22:40:03.519Z",
+      "issue": 63
     }
   },
   "resolved": []
