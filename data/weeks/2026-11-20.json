@@ -127,40 +127,31 @@
     },
     {
       "store": "red-apple",
-      "status": "stale",
-      "valid_from": "2026-11-11",
-      "valid_through": "2026-11-17",
+      "status": "full",
+      "valid_from": "2026-11-18",
+      "valid_through": "2026-11-26",
       "links": [
         {
           "label": "Page 1",
-          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16067697/Hilltop_Red_Apple_Market1793713067103_001.jpeg"
+          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16068120/Hilltop_Red_Apple_Market_final_PP_001.jpeg"
         },
         {
           "label": "Page 2",
-          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16067697/Hilltop_Red_Apple_Market1793713067103_002.jpeg"
+          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16068120/Hilltop_Red_Apple_Market_final_PP_002.jpeg"
         },
         {
           "label": "Page 3",
-          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16067697/Hilltop_Red_Apple_Market1793713067103_003.jpeg"
+          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16068120/Hilltop_Red_Apple_Market_final_PP_003.jpeg"
         },
         {
           "label": "Page 4",
-          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16067697/Hilltop_Red_Apple_Market1793713067103_004.jpeg"
-        },
-        {
-          "label": "Page 5 Baking sale",
-          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16067697/Hilltop_Red_Apple_Market1793713067103_005.jpeg"
-        },
-        {
-          "label": "Page 6 Holiday essentials",
-          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16067697/Hilltop_Red_Apple_Market1793713067103_006.jpeg"
+          "url": "https://d16fzx5hhs0dp6.cloudfront.net/prod/2026-11/client-4821/catalogue-16068120/Hilltop_Red_Apple_Market_final_PP_004.jpeg"
         },
         {
           "label": "Catalogue home",
           "url": "https://app.redpepper.digital/a10/publications/home/4821"
         }
-      ],
-      "note": "The flyer that ended 2026-11-17 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "hmart",
@@ -184,36 +175,35 @@
     },
     {
       "store": "tnt",
-      "status": "stale",
-      "valid_from": "2026-11-13",
-      "valid_through": "2026-11-19",
+      "status": "full",
+      "valid_from": "2026-11-20",
+      "valid_through": "2026-11-26",
       "links": [
         {
           "label": "Page 1",
-          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-wsp_p1_111326_2.jpg"
+          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-wsp_p1_112026_2.jpg"
         },
         {
           "label": "Page 2",
-          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-wsp_p2_111326_2.jpg"
+          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-wsp_p2_112026_2.jpg"
         },
         {
           "label": "Page 3",
-          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-wsp_p3_111326_2.jpg"
+          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-wsp_p3_112026_2.jpg"
         },
         {
           "label": "Rewards member page",
-          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/r/e/reward-washington-_member_poster_111326_2.jpg"
+          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/r/e/reward-washington-_member_poster_112026_2.jpg"
         },
         {
           "label": "Filipino and Vietnamese page",
-          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-fnv-weekly-flyer_111326_2.jpg"
+          "url": "https://www.tntsupermarket.us/media/rewards_store_flyer/images/u/s/us-washington-fnv-weekly-flyer_112026_2.jpg"
         },
         {
           "label": "Flyer page",
           "url": "https://www.tntsupermarket.us/eng/store-flyer"
         }
-      ],
-      "note": "The flyer that ended 2026-11-19 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "99-ranch",
@@ -285,20 +275,19 @@
     },
     {
       "store": "seafood-city",
-      "status": "stale",
-      "valid_from": "2026-11-12",
-      "valid_through": "2026-11-18",
+      "status": "full",
+      "valid_from": "2026-11-19",
+      "valid_through": "2026-11-25",
       "links": [
         {
           "label": "Seattle weekly ad poster",
-          "url": "https://cdn.localexpress.io/img/JyeicWbpavIiO2Ln1Wl2clRw9lbnLldWY0M01ydmc4pltWTqavMGc2Zh1WBnauU=0nIn.jpg"
+          "url": "https://cdn.localexpress.io/img/JyeicWbpavIiO2Ln1Wl2clRw9lbnLldWYXSw91gzQ2kaBTZ0avATU2Zh1WBnauU=0nIn.jpg"
         },
         {
           "label": "Seattle weekly ad page",
           "url": "https://seafoodcity.com/seattle"
         }
-      ],
-      "note": "The flyer that ended 2026-11-18 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "asian-family-market",
@@ -10657,6 +10646,4021 @@
       "member_price": false,
       "valid_through": "2026-11-26",
       "notes": ""
+    },
+    {
+      "store": "tnt",
+      "item": "Tree Ripened Mango (Peru)",
+      "item_key": null,
+      "category": "produce",
+      "price": 5.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop. By air"
+    },
+    {
+      "store": "tnt",
+      "item": "Pea Tip",
+      "item_key": null,
+      "category": "produce",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop"
+    },
+    {
+      "store": "tnt",
+      "item": "Black Tiger Shrimp (IQF, headless, 31/40)",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 9.96,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 9.96,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop"
+    },
+    {
+      "store": "tnt",
+      "item": "Swai Fillet (Frozen)",
+      "item_key": "swai",
+      "category": "seafood",
+      "price": 6.96,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 715,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 4.42,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop"
+    },
+    {
+      "store": "tnt",
+      "item": "Beef Finger Meat (Frozen)",
+      "item_key": null,
+      "category": "meat",
+      "price": 8.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop"
+    },
+    {
+      "store": "tnt",
+      "item": "Pork Bellies Value Pack, fresh, boneless",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 3.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop. No extra service"
+    },
+    {
+      "store": "tnt",
+      "item": "Sunshine 100 Wuchang Rice",
+      "item_key": null,
+      "category": "pantry",
+      "price": 18.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.5,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 3.43,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop"
+    },
+    {
+      "store": "tnt",
+      "item": "Tc Assorted Pastry 3 Pack Combo",
+      "item_key": null,
+      "category": "bakery",
+      "price": 16.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3.2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.31,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop",
+      "vegetarian": false
+    },
+    {
+      "store": "tnt",
+      "item": "Synear Dumpling, selected",
+      "item_key": null,
+      "category": "frozen",
+      "price": 8.99,
+      "quantity": 3,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, price drop. $3.99 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "King Oyster Mushroom (USA)",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.48,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot"
+    },
+    {
+      "store": "tnt",
+      "item": "Fortune Bag with Shrimp (Frozen)",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5.29,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 12.04,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T RWA Beef Chuck Sliced Rolls (Frozen)",
+      "item_key": null,
+      "category": "meat",
+      "price": 12.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 19.63,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot"
+    },
+    {
+      "store": "tnt",
+      "item": "Xiaolongkan Beef Soup Base, spicy or red",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.29,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 166,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 5.86,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. $2.59 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "HRJ Mushroom or Spicy Hot Pot Soup Base",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 130,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 10.43,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. The 360 g size is $4.99"
+    },
+    {
+      "store": "tnt",
+      "item": "Lee Kum Kee Hotpot Soup Base, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.98,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 200,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 6.78,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. $3.49 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Happy Lamb Hot Pot Soup Base, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 220,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 6.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. $3.29 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Kikkoman Somen Tsuyu Soup Base",
+      "item_key": "noodle-soup-base",
+      "category": "pantry",
+      "price": 8.5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.8,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. $4.99 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Daisho Ippudo Plant Based Soup",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 750,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 2.42,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. $4.99 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Natures Soy Fried Bean Curd Roll",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5.29,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 21.16,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot"
+    },
+    {
+      "store": "tnt",
+      "item": "Foona's Kitchen Hand Made Pork Wonton, selected",
+      "item_key": null,
+      "category": "frozen",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 300,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 8.3,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1, hotpot. Some flavors $6.49"
+    },
+    {
+      "store": "tnt",
+      "item": "Yellow Papaya (Hawaii)",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2. By air"
+    },
+    {
+      "store": "tnt",
+      "item": "Shine Muscat Grapes (Korea)",
+      "item_key": null,
+      "category": "produce",
+      "price": 9.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 600,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 7.47,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Ruby Red Pomelo or Honey Pomelo",
+      "item_key": "pomelo",
+      "category": "produce",
+      "price": 8,
+      "quantity": 2,
+      "unit": "each",
+      "unit_price": {
+        "value": 4,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2. $4.48 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Asian Golden Pear",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 1.28,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.28,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Mandarin, new crop",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 3.28,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.64,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2. Per bag"
+    },
+    {
+      "store": "tnt",
+      "item": "Honey Mandarin (USA)",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Shanghai Bok Choy Sprout",
+      "item_key": "bok-choy",
+      "category": "produce",
+      "price": 2.28,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.28,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Gai Lan",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 1.68,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Chun Ho",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.68,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Green Onion",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.28,
+      "quantity": 3,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.43,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2. $0.79 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "White Radish",
+      "item_key": "daikon",
+      "category": "produce",
+      "price": 0.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Small Taro",
+      "item_key": "taro",
+      "category": "produce",
+      "price": 1.28,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.28,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Sea Snail, live",
+      "item_key": null,
+      "category": "seafood",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Page 2. 4 days only, Nov 20 to 23"
+    },
+    {
+      "store": "tnt",
+      "item": "Conch, live",
+      "item_key": null,
+      "category": "seafood",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Page 2. 4 days only. No extra service"
+    },
+    {
+      "store": "tnt",
+      "item": "Ling Cod, live, whole",
+      "item_key": null,
+      "category": "seafood",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Page 2. 4 days only"
+    },
+    {
+      "store": "tnt",
+      "item": "Lobster, live, A grade large (2 to 3 lb each)",
+      "item_key": null,
+      "category": "seafood",
+      "price": 14.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Page 2. 4 days only. No extra service"
+    },
+    {
+      "store": "tnt",
+      "item": "Brown Crab, live",
+      "item_key": null,
+      "category": "seafood",
+      "price": 14.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Page 2. 4 days only. No extra service. By air"
+    },
+    {
+      "store": "tnt",
+      "item": "Tautog, live",
+      "item_key": null,
+      "category": "seafood",
+      "price": 14.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-23",
+      "notes": "Page 2. 4 days only"
+    },
+    {
+      "store": "tnt",
+      "item": "Duck (Frozen, No. 2)",
+      "item_key": null,
+      "category": "meat",
+      "price": 3.68,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "RWA Pork Shoulder Butt, fresh, boneless",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Cherry Blossom Lean Ground Pork, fresh",
+      "item_key": "pork-ground",
+      "category": "meat",
+      "price": 5.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1.1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.35,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Cherry Blossom Pork Front Foot Cut (Frozen)",
+      "item_key": "pork-feet",
+      "category": "meat",
+      "price": 8.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 4.44,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2 and Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Premium Pork Belly, fresh",
+      "item_key": "pork-belly",
+      "category": "meat",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2 and Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Angus Beef Short Rib, fresh",
+      "item_key": "beef-short-ribs",
+      "category": "meat",
+      "price": 11.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 11.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "tnt",
+      "item": "Long Hot Pepper",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.68,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $3.28 a lb with a T&T Rewards card"
+    },
+    {
+      "store": "tnt",
+      "item": "Squid Carving (Frozen)",
+      "item_key": "squid",
+      "category": "seafood",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.57,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $4.98 with a T&T Rewards card"
+    },
+    {
+      "store": "tnt",
+      "item": "Surasang Chicken Breast Katsu Fritter (Frozen)",
+      "item_key": null,
+      "category": "frozen",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.31,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $5.98 with a T&T Rewards card"
+    },
+    {
+      "store": "tnt",
+      "item": "Arawana Brand Pure Peanut Oil",
+      "item_key": "cooking-oil",
+      "category": "pantry",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1.8,
+        "unit": "l"
+      },
+      "unit_price": {
+        "value": 6.11,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $9.99 with a T&T Rewards card"
+    },
+    {
+      "store": "tnt",
+      "item": "Surasang Citron Tea or Passion Fruit Honey Puree",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.97,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 3.62,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $6.97 with a T&T Rewards card"
+    },
+    {
+      "store": "tnt",
+      "item": "Yu Shang Shandong Dezhou or Bazhen Seasoned Whole Chicken",
+      "item_key": null,
+      "category": "meat",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1.25,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 10.39,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $11.99 with a T&T Rewards card"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery Snow Volcano Cake, strawberry and taro mochi or choco cherry",
+      "item_key": null,
+      "category": "bakery",
+      "price": 8.5,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3.53,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 38.53,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": true,
+      "valid_through": "2026-11-26",
+      "notes": "Member page. $8 with a T&T Rewards card. Per box"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Coconut Milk",
+      "item_key": "coconut-milk",
+      "category": "pantry",
+      "price": 2.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3 bonus offer: add 50 cents for a 13.5 oz T&T Coconut Cream"
+    },
+    {
+      "store": "tnt",
+      "item": "Greenland Halibut Steak (Frozen)",
+      "item_key": null,
+      "category": "seafood",
+      "price": 12.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 300,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 19.63,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3 bonus offer: comes with a free 400 g Bijiashan Mochi Filled Fish Pastry"
+    },
+    {
+      "store": "tnt",
+      "item": "3Fish Fish Dumplings",
+      "item_key": null,
+      "category": "frozen",
+      "price": 7.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 200,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 16.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3 bonus offer: add $1 for a 40 g Dynasty Wonton Soup Base"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Peeled Chestnuts",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Grand Earth Red Bean",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.28,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 3.14,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Grand Earth Peanuts, jumbo",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.38,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 2.13,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Biggreen Organic Raw Black or White Sesame Seed",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8.5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 200,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 9.64,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. $4.69 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Tang Chen Dried Seaweed",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.28,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 80,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 29.94,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Golden King Canned Grass Jelly",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 3,
+      "unit": "pack",
+      "pack": {
+        "size": 19.05,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. $2.49 each if bought singly"
+    },
+    {
+      "store": "tnt",
+      "item": "Gourmet Farm Boiled Salted Duck Egg",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.82,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Prime Food Pork Bun",
+      "item_key": null,
+      "category": "frozen",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.59,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Golden Happiness Chinese Long Doughnut",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9.52,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.87,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "tnt",
+      "item": "Little Alley Rougamo Bun, original or Tong Guan",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 400,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 4.18,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. The 600 g size is $4.99",
+      "vegetarian": false
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery Red Bean Toast",
+      "item_key": null,
+      "category": "bakery",
+      "price": 5,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.27,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per pack"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery Bun with Crispy Crust, chocolate or ube",
+      "item_key": null,
+      "category": "bakery",
+      "price": 9,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 41.14,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per box"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery Swiss Roll, original or chocolate",
+      "item_key": null,
+      "category": "bakery",
+      "price": 7,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 17,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.59,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per box"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery Cream Puff",
+      "item_key": null,
+      "category": "bakery",
+      "price": 9.5,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14.2,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 10.7,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per box"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery One-Bite Pastry, pineapple",
+      "item_key": null,
+      "category": "bakery",
+      "price": 6,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per box"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Bakery Hojicha Tea Crepe Cake",
+      "item_key": null,
+      "category": "bakery",
+      "price": 23,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 17.64,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 20.86,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per box"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Kitchen Cajun Style Turkey Drumstick",
+      "item_key": null,
+      "category": "meat",
+      "price": 7.5,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3, kitchen"
+    },
+    {
+      "store": "tnt",
+      "item": "T&T Kitchen Smoked Turkey Thigh, sliced",
+      "item_key": null,
+      "category": "meat",
+      "price": 14.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3, kitchen"
+    },
+    {
+      "store": "tnt",
+      "item": "Thai Banana",
+      "item_key": "bananas",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Kabocha",
+      "item_key": "squash-winter",
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Sarangani Bay Deboned Milkfish Bangus (Frozen)",
+      "item_key": null,
+      "category": "seafood",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Gold Band Fusilier, Dalagang Bukid (Frozen)",
+      "item_key": null,
+      "category": "seafood",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 4.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Durian Ri-6 (Frozen, Vietnam)",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Filipino and Vietnamese page"
+    },
+    {
+      "store": "tnt",
+      "item": "Giai Phat Head Cheese (Gio Thu)",
+      "item_key": null,
+      "category": "meat",
+      "price": 3.69,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.54,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Filipino and Vietnamese page"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pork Loin Chop, skin-on",
+      "item_key": "pork-chops",
+      "category": "meat",
+      "price": 2.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 38,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Celery",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.99,
+        "per": "each"
+      },
+      "regular_price": 2.99,
+      "percent_off": 67,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop. Per bunch"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Layang Scad",
+      "item_key": null,
+      "category": "seafood",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Mix Tamarind",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3,
+      "quantity": 4,
+      "unit": "pack",
+      "pack": {
+        "size": 1.4,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.57,
+        "per": "lb"
+      },
+      "regular_price": 3.56,
+      "percent_off": 16,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $0.89 each; when you buy 4",
+      "vegetarian": false
+    },
+    {
+      "store": "seafood-city",
+      "item": "Golden Saba Frozen Whole Banana",
+      "item_key": null,
+      "category": "frozen",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 3,
+        "per": "lb"
+      },
+      "regular_price": 8.58,
+      "percent_off": 30,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $4.29 each; when you buy 2"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Tomi Sardines in Tomato Sauce, original or chili",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 5,
+      "unit": "pack",
+      "pack": {
+        "size": 155,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 2.93,
+        "per": "lb"
+      },
+      "regular_price": 6.45,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $1.29 each; when you buy 5"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Chaudoc Coconut Milk",
+      "item_key": "coconut-milk",
+      "category": "pantry",
+      "price": 4,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 13.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.37,
+        "per": "lb"
+      },
+      "regular_price": 5.18,
+      "percent_off": 23,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $2.59 each; when you buy 2"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Beef Chuck Short Rib, cubed",
+      "item_key": "beef-short-ribs",
+      "category": "meat",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Yellow Stripe Trevally",
+      "item_key": null,
+      "category": "seafood",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": 4.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "SFC Garlic Butter Clams",
+      "item_key": null,
+      "category": "seafood",
+      "price": 6.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.99,
+        "per": "lb"
+      },
+      "regular_price": 8.99,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop. Priced per lb, 16 oz pack"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Longan",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": 5.99,
+      "percent_off": 50,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Spaghetti Sauce, Filipino style or cheesy queso",
+      "item_key": null,
+      "category": "pantry",
+      "price": 9,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 1,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 2.04,
+        "per": "lb"
+      },
+      "regular_price": 11.98,
+      "percent_off": 25,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $5.99 each"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Yam Leaves",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": 6.99,
+      "percent_off": 43,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Preserved Value 4 Pack (4 x 12 oz)",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 7.99,
+        "per": "each"
+      },
+      "regular_price": 12.99,
+      "percent_off": 38,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Sweet preserves bundle, per pack"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Tomato Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 0.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 250,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 1.8,
+        "per": "lb"
+      },
+      "regular_price": 1.29,
+      "percent_off": 23,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Knorr Soup Mix Tamarind",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 5,
+      "unit": "pack",
+      "pack": {
+        "size": 40,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 11.34,
+        "per": "lb"
+      },
+      "regular_price": 6.45,
+      "percent_off": 22,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $1.29 each; when you buy 5",
+      "vegetarian": false
+    },
+    {
+      "store": "seafood-city",
+      "item": "Maeploy Coconut Cream",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.59,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 19,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.02,
+        "per": "lb"
+      },
+      "regular_price": 3.99,
+      "percent_off": 10,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Century Baby Milkfish, marinated",
+      "item_key": null,
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": 9.99,
+      "percent_off": 20,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Preserved Coco Gel Coconut",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13.23,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.37,
+        "per": "lb"
+      },
+      "regular_price": 2.99,
+      "percent_off": 7,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Corned Beef Trapezoid, regular or less sodium",
+      "item_key": null,
+      "category": "pantry",
+      "price": 11,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.33,
+        "per": "lb"
+      },
+      "regular_price": 11.98,
+      "percent_off": 8,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $5.99 each"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Corned Beef Chunky",
+      "item_key": null,
+      "category": "pantry",
+      "price": 8,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.33,
+        "per": "lb"
+      },
+      "regular_price": 11.98,
+      "percent_off": 33,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Was $5.99 each"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Argentina Luncheon Meat",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.65,
+        "per": "lb"
+      },
+      "regular_price": 5.99,
+      "percent_off": 17,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "seafood-city",
+      "item": "Pamana Preserved Macapuno Strings",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14.1,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.66,
+        "per": "lb"
+      },
+      "regular_price": 5.99,
+      "percent_off": 17,
+      "member_price": false,
+      "valid_through": "2026-11-25",
+      "notes": "Seattle store. Price drop"
+    },
+    {
+      "store": "red-apple",
+      "item": "Premium Beef Boneless Beef Top Round Roast",
+      "item_key": "beef-round",
+      "category": "meat",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Hilltop Red Apple, pages 1 and 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Cook's Old-Fashioned Bone-In Ham, assorted, 5 to 7 lb",
+      "item_key": null,
+      "category": "meat",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Boneless Pork Loin Roast, all natural, center cut",
+      "item_key": "pork-loin",
+      "category": "meat",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Pumpkin Pie, 8 inch",
+      "item_key": null,
+      "category": "bakery",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 7.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Take and Bake French Rolls (6 count)",
+      "item_key": null,
+      "category": "bakery",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.48,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Brioche Rolls (8 count)",
+      "item_key": null,
+      "category": "bakery",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Brioche Slider Rolls (12 count)",
+      "item_key": null,
+      "category": "bakery",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 7.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "La Brea French Baguette Bread",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.3,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Darigold Natural Butter, salted or unsalted, quarter cubes",
+      "item_key": "butter",
+      "category": "dairy-eggs",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Pages 1 and 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Daisy Sour Cream",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Kraft Shredded Cheese, selected",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Nestle Coffee-mate Creamer, selected",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 9,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.25,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Halos Mandarins (3 lb bag)",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Fancy Yams",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 1.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Fresh Celery",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.28,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.28,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1. Per bunch"
+    },
+    {
+      "store": "red-apple",
+      "item": "Jumbo Yellow Onion, local",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 0.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Franz Dinner Rolls (12 count) or Seattle International Sliced Bread (20 oz), selected",
+      "item_key": null,
+      "category": "bakery",
+      "price": 7,
+      "quantity": 2,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.5,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1. Mix and match"
+    },
+    {
+      "store": "red-apple",
+      "item": "Franz Pan Bread, honey oat and nut or multigrain",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.32,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Seattle International Rolls or Hoagies, selected (6 count)",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 1"
+    },
+    {
+      "store": "red-apple",
+      "item": "Mt. Olive Pickles, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.65,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Hidden Valley Ranch Dressing, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Festival Mushrooms, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.92,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Dole Pineapple, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Mission Soft Taco Flour Tortilla (10 count)",
+      "item_key": null,
+      "category": "bakery",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.48,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Mrs. Cubbison's or Olive Garden Croutons, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.4,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Duke's Mayonnaise, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 30,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Libby's Country Sausage Gravy",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.11,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Hinode Jasmine Long Grain Rice",
+      "item_key": "rice-long-grain",
+      "category": "pantry",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 1.8,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Oscar Mayer Bacon Bits or Pieces, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 15.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "KC Masterpiece BBQ Sauce or Marinade, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Libby's Vienna Sausage, original or chicken",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 4.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.22,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Prego Pasta Sauce, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Quaker Life Multigrain Cereal, original or cinnamon",
+      "item_key": null,
+      "category": "pantry",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 13,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.31,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Snoqualmie Falls Lodge Pancake and Waffle Mix",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Mrs. Butterworth's Syrup, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Post Cereal, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 9,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 14.75,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Campbell's Home Style Soup, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 18.3,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.19,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Cap'n Crunch Cereal, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12.6,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.05,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Betty Crocker Cake Decors, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 2.3,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 17.39,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Coppini Extra Virgin Olive Oil",
+      "item_key": null,
+      "category": "pantry",
+      "price": 14.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 33.8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.09,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Imperial Nuts Peanuts, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Imperial Nuts Nuts, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.57,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "General Mills Chex Cereal, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.55,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Lea and Perrins Worcestershire Sauce, original",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.97,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2",
+      "vegetarian": false
+    },
+    {
+      "store": "red-apple",
+      "item": "Blue Diamond Almonds, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Pillsbury Grands! Biscuits, Sweet Rolls or Crescents, selected",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 7,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 16.3,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.44,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "ZOI Greek Yogurt, selected",
+      "item_key": "yogurt",
+      "category": "dairy-eggs",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Darigold Cottage Cheese, whole or low fat",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.65,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Coffee-mate Cold Foam Creamer, French vanilla or brown butter chocolate chip cookie",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Mr. Dell's Hash Browns, selected",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Morning Star Farms Products, selected",
+      "item_key": null,
+      "category": "frozen",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.64,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Birds Eye Steamfresh Vegetables, selected",
+      "item_key": null,
+      "category": "frozen",
+      "price": 4,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 10.8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.96,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 2"
+    },
+    {
+      "store": "red-apple",
+      "item": "Idaho Russet Potatoes (5 lb bag)",
+      "item_key": "potatoes-russet",
+      "category": "produce",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Fresh Express Salad Blends, selected",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.06,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Envy Apples, local",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Organic Granny Smith Apples (2 lb bag), local",
+      "item_key": "apples",
+      "category": "produce",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Organic Carrots, local",
+      "item_key": "carrots",
+      "category": "produce",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3. Per bunch"
+    },
+    {
+      "store": "red-apple",
+      "item": "organicgirl Family Size Salad Mix, selected",
+      "item_key": null,
+      "category": "produce",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.57,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "White Mushrooms, whole or sliced",
+      "item_key": "mushrooms",
+      "category": "produce",
+      "price": 2.78,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.56,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Green Beans",
+      "item_key": null,
+      "category": "produce",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "NatureSweet Tomatoes, Glorys or D'vines",
+      "item_key": "tomatoes",
+      "category": "produce",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.85,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Marie's Dressing, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.97,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Ingrilli Organic Lemon or Lime Juice",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Cara Mia Artichokes or Tomatoes, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14.8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.92,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Dietz and Watson Off the Bone Ham",
+      "item_key": null,
+      "category": "meat",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3, service deli"
+    },
+    {
+      "store": "red-apple",
+      "item": "Dietz and Watson Smoked Gouda Cheese",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3, service deli"
+    },
+    {
+      "store": "red-apple",
+      "item": "Sliced Salami or Pepperoni, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 7.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 47.87,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3, service deli"
+    },
+    {
+      "store": "red-apple",
+      "item": "Alouette Spreadable Cheese, selected",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 7.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 6.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 18.41,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3, service deli"
+    },
+    {
+      "store": "red-apple",
+      "item": "Guittard Baking Chips, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 6.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 11.52,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Knorr Sauce or Gravy Mix, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3.1,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.64,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Pacific Foods Organic Broth, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.74,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 3"
+    },
+    {
+      "store": "red-apple",
+      "item": "Premium Beef Boneless New York Strip Roast",
+      "item_key": "beef-steak",
+      "category": "meat",
+      "price": 18.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 18.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Bone-In Rack of Pork, all natural, center cut",
+      "item_key": null,
+      "category": "meat",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Foster Farms Bone-In Chicken Thighs, value pack",
+      "item_key": "chicken-thighs",
+      "category": "meat",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4. No antibiotics ever"
+    },
+    {
+      "store": "red-apple",
+      "item": "Foster Farms Chicken Drumsticks, tray pack",
+      "item_key": "chicken-drumsticks",
+      "category": "meat",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Columbia River Steelhead Fillet, fresh",
+      "item_key": null,
+      "category": "seafood",
+      "price": 15.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 15.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Rock Fish Fillet, fresh",
+      "item_key": null,
+      "category": "seafood",
+      "price": 7.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Manila Steamer Clams, fresh",
+      "item_key": "clams",
+      "category": "seafood",
+      "price": 7.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "EZ Peel Raw White Shrimp, colossal (8 to 12 count)",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 14.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 14.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Argentine Royal Red Raw Shrimp, jumbo (16 to 20 count)",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 13.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 13.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Johnsonville Breakfast Sausage Links or Patties, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.31,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Johnsonville Fully Cooked Breakfast Links, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.64,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Johnsonville Ground Italian or Chorizo Pork Sausage, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.28,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.28,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "John Morrell Sliced Bacon, applewood or hardwood smoked",
+      "item_key": "bacon",
+      "category": "meat",
+      "price": 4.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.97,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Carando Italian Meatballs, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.78,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.78,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Smithfield Prime Fresh Lunch Meat, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.28,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 8,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.56,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Oscar Mayer Classic Meat Wieners, uncured",
+      "item_key": null,
+      "category": "meat",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Oscar Mayer Cheese or Turkey Franks, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Claussen Pickles or Sauerkraut, selected",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "John Morrell Bun-Length or Original Meat Franks",
+      "item_key": null,
+      "category": "meat",
+      "price": 1.78,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.37,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Oscar Mayer Classic, Jumbo or Bun-Length Beef Franks",
+      "item_key": null,
+      "category": "meat",
+      "price": 6.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 15,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.45,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Oscar Mayer Angus Beef Bun-Length Franks",
+      "item_key": null,
+      "category": "meat",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.12,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Simply Potatoes, selected",
+      "item_key": null,
+      "category": "produce",
+      "price": 6,
+      "quantity": 2,
+      "unit": "pack",
+      "pack": {
+        "size": 20,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.4,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
+    },
+    {
+      "store": "red-apple",
+      "item": "Oscar Mayer Deli Fresh Shaved Lunchmeat, selected",
+      "item_key": null,
+      "category": "meat",
+      "price": 5.48,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 9,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.74,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-11-26",
+      "notes": "Page 4"
     }
   ]
 }
