@@ -112,6 +112,15 @@ const asksFrom = (text) =>
     .map((q) => ({ text: String(q).trim(), words: words(q) }))
     .filter((q) => q.words.length);
 
+// The feed's `under` is signed: 28 means 28% under the US average, -42 means 42% over it
+// (organic russets at $1.40/lb against a 99¢/lb average). The site and app only show it
+// when it's positive; here every deal with an average gets it, so say which way it goes.
+export function usAverageText(us) {
+  if (us.under > 0) return `${us.under}% under the US average of ${us.avg}`;
+  if (us.under < 0) return `${-us.under}% over the US average of ${us.avg}`;
+  return `About the US average of ${us.avg}`;
+}
+
 // One deal the way an assistant should repeat it: printed prices as text, never recomputed.
 export function dealOut(feed, item) {
   const store = feed.stores.find((s) => s.id === item.store);
@@ -128,7 +137,7 @@ export function dealOut(feed, item) {
   if (item.off) out.percent_off = item.off;
   if (item.unit_price && item.unit_price !== item.text) out.unit_price = item.unit_price;
   if (item.why) out.why = item.why;
-  if (item.us) out.us_average = `${item.us.under}% under the US average of ${item.us.avg}`;
+  if (item.us) out.us_average = usAverageText(item.us);
   if (item.lowest) out.lowest_listed = true;
   out.vegetarian = Boolean(item.veg);
   if (item.ends) out.ends = item.ends;
