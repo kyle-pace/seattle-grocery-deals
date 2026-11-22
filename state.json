@@ -50,7 +50,7 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-21T19:44:29.019Z",
+      "error_at": "2026-11-22T00:17:03.473Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
@@ -79,7 +79,7 @@
       "seen_at": "2026-11-20T16:04:07.208Z",
       "updated_at": "2026-11-20T22:39:55.083Z",
       "error": "HTTP 404",
-      "error_at": "2026-11-21T19:44:29.019Z",
+      "error_at": "2026-11-22T00:17:03.473Z",
       "error_since": "2026-11-21T19:44:29.019Z"
     },
     "viet-wah": {
@@ -102,15 +102,6 @@
   },
   "reports": {},
   "alerts": {
-    "overdue:red-apple:2026-11-17": {
-      "store": "red-apple",
-      "kind": "overdue",
-      "title": "Red Apple Markets: sale ended Nov 17, no new flyer read",
-      "body": "The sale on the site ended Nov 17 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
-      "since": "2026-11-18T18:00:14.658Z",
-      "notified_at": "2026-11-18T18:00:21.690Z",
-      "issue": 60
-    },
     "watch:met-market": {
       "store": "met-market",
       "kind": "watch",
@@ -120,23 +111,14 @@
       "notified_at": "2026-11-19T07:51:59.012Z",
       "issue": 61
     },
-    "overdue:seafood-city:2026-11-18": {
-      "store": "seafood-city",
-      "kind": "overdue",
-      "title": "Seafood City: sale ended Nov 18, no new flyer read",
-      "body": "The sale on the site ended Nov 18 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
-      "since": "2026-11-19T23:51:38.212Z",
-      "notified_at": "2026-11-19T23:51:45.089Z",
-      "issue": 62
-    },
-    "overdue:tnt:2026-11-19": {
-      "store": "tnt",
-      "kind": "overdue",
-      "title": "T&T Supermarket: sale ended Nov 19, no new flyer read",
-      "body": "The sale on the site ended Nov 19 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
-      "since": "2026-11-20T22:39:55.083Z",
-      "notified_at": "2026-11-20T22:40:03.519Z",
-      "issue": 63
+    "watch:99-ranch": {
+      "store": "99-ranch",
+      "kind": "watch",
+      "title": "99 Ranch Market: the flyer watcher can't read its page",
+      "body": "Since 2026-11-21 19:44 UTC: HTTP 404. Fix its \"watch\" entry in config/stores.json.",
+      "since": "2026-11-22T00:17:03.473Z",
+      "issue": 65,
+      "notified_at": "2026-11-22T00:17:10.237Z"
     }
   },
   "resolved": []
