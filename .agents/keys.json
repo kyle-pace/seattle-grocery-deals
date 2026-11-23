@@ -1,0 +1,11 @@
+{
+  "about": "Keys this repo needs from the key store (~/Developer/.secrets/keys.env). ~/Developer/ops/scripts/sync-keys.mjs writes them into these gitignored files. The website's key is public and lives in config/site.json.",
+  "files": [
+    {
+      "path": "apple/GroceryDeals/Secrets.xcconfig",
+      "format": "xcconfig",
+      "set": { "AMPLITUDE_API_KEY": "AMPLITUDE_GROCERY_DEALS_API_KEY" },
+      "xcode_cloud": true
+    }
+  ]
+}

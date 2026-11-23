@@ -15,3 +15,6 @@ apple/GroceryDeals/build-sim/
 
 # npm run check:pages output (screenshots)
 .check/
+
+# The app's Amplitude key (apple/GroceryDeals/Analytics.xcconfig includes it)
+apple/GroceryDeals/Secrets.xcconfig

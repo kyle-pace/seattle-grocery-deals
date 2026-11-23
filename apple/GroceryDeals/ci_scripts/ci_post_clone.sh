@@ -17,6 +17,17 @@ echo "Cloning KitchenUI next to the repo..."
 git -c http.extraHeader="$KITCHEN_AUTH" clone --depth 1 https://github.com/kyle-pace/kitchen-ui.git "$PARENT/KitchenUI"
 echo "KitchenUI at $(git -C "$PARENT/KitchenUI" rev-parse --short HEAD)"
 
+# The Amplitude key is kept out of git (Secrets.xcconfig on the Mac). In Xcode Cloud it's a secret
+# environment variable on each workflow, AMPLITUDE_API_KEY. A build without it would ship with
+# analytics quietly off, so stop here instead and say what's missing.
+if [ -n "$AMPLITUDE_API_KEY" ]; then
+  echo "AMPLITUDE_API_KEY = $AMPLITUDE_API_KEY" > "$CI_PRIMARY_REPOSITORY_PATH/apple/GroceryDeals/Secrets.xcconfig"
+  echo "Wrote Secrets.xcconfig from AMPLITUDE_API_KEY."
+else
+  echo "error: AMPLITUDE_API_KEY isn't set on this workflow. Add it under the workflow's Environment (secret), then build again."
+  exit 1
+fi
+
 # The week bundled with the app only shows when the very first launch can't reach the site.
 # Ship the current one, not whatever was last committed. If the site can't be reached or the
 # answer doesn't look like a week, the committed copy stays.

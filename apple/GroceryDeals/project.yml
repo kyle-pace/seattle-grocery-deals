@@ -60,6 +60,11 @@ targetTemplates:
       - Shared
       # Siri AI app skills (Skills.skillsbundle). Compiled by Xcode 27.3 and later.
       - Skills.skillsbundle
+    # AMPLITUDE_API_KEY comes from here, and from the gitignored Secrets.xcconfig it includes
+    # (filled in by ~/Developer/ops/scripts/sync-keys.mjs on the Mac, by ci_post_clone.sh in Xcode Cloud).
+    configFiles:
+      Debug: Analytics.xcconfig
+      Release: Analytics.xcconfig
     dependencies:
       - package: KitchenUI
       - package: AmplitudeSwift
@@ -135,6 +140,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        AmplitudeAPIKey: $(AMPLITUDE_API_KEY)
         DealsCloudContainer: iCloud.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
         # Links from the widgets and from a deal's Reminders item (DealsLink). Each app has its
         # own scheme, so a link opens the app it came from when both are installed.
@@ -178,6 +184,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         ITSAppUsesNonExemptEncryption: false
         DealsAppGroup: group.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
+        AmplitudeAPIKey: $(AMPLITUDE_API_KEY)
         DealsCloudContainer: iCloud.deals.seattlegrocery$(BUNDLE_ID_SUFFIX)
         # Links from the widgets and from a deal's Reminders item (DealsLink). Each app has its
         # own scheme, so a link opens the app it came from when both are installed.

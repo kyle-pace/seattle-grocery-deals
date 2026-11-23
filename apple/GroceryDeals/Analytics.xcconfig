@@ -1,0 +1,8 @@
+// Amplitude, for Sources/Analytics.swift. Empty means analytics stays off.
+// The key ships inside the app either way (Amplitude client keys aren't secret), but it's kept out
+// of git like every other app's: Secrets.xcconfig next to this file (gitignored) sets AMPLITUDE_API_KEY. On the Mac
+// ~/Developer/ops/scripts/sync-keys.mjs writes it from the key store (see .agents/keys.json);
+// in Xcode Cloud ci_scripts/ci_post_clone.sh writes it from the workflow's AMPLITUDE_API_KEY.
+AMPLITUDE_API_KEY =
+
+#include? "Secrets.xcconfig"

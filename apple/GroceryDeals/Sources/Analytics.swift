@@ -10,7 +10,13 @@ import Foundation
 /// events an earlier build saved but hadn't sent yet). Settings can change the answer.
 @MainActor
 enum Analytics {
-    private static let apiKey = "209f961ae2c60b11c922363aa094ed0a" // public by design
+    /// From the AMPLITUDE_API_KEY build setting (Analytics.xcconfig and the gitignored
+    /// Secrets.xcconfig), through Info.plist. Empty means analytics stays off.
+    private static var apiKey: String {
+        let key = (Bundle.main.object(forInfoDictionaryKey: "AmplitudeAPIKey") as? String)?
+            .trimmingCharacters(in: .whitespaces) ?? ""
+        return key.hasPrefix("$(") ? "" : key
+    }
     /// "share" or "none"; missing until the person answers.
     private static let choiceKey = "sgd.analyticsChoice"
     /// Builds before onboarding (0.1.0) had only an off switch, on by default.
@@ -43,7 +49,7 @@ enum Analytics {
 
     /// Creates Amplitude only if the person said yes. Safe to call more than once.
     static func start() {
-        guard amplitude == nil, isOn else { return }
+        guard amplitude == nil, isOn, !apiKey.isEmpty else { return }
         amplitude = Amplitude(configuration: Configuration(
             apiKey: apiKey,
             optOut: false,

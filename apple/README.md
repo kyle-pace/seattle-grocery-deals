@@ -47,7 +47,7 @@ apple/testflight.sh --external --dry-run  # show the tag and the notes for teste
 ```
 
 - Notes for testers ("What to Test") come from `GroceryDeals/TestFlight/WhatToTest.en-US.txt`, next to `ci_scripts`. Update it before each external build.
-- The two workflows are on two Xcode Cloud products (Deals Dev and Deals). They differ in the scheme ("Deals Dev" or `GroceryDeals`), the start condition (tags beginning with `dev-` or with `beta-`), the archive's distribution (**TestFlight (Internal Testing Only)** or **TestFlight and App Store**), and the post-action (**TestFlight Internal Testing** or **TestFlight External Testing** with the External Testers group). Both need the `KITCHEN_GITHUB_TOKEN` secret (see `ci_post_clone.sh`).
+- The two workflows are on two Xcode Cloud products (Deals Dev and Deals). They differ in the scheme ("Deals Dev" or `GroceryDeals`), the start condition (tags beginning with `dev-` or with `beta-`), the archive's distribution (**TestFlight (Internal Testing Only)** or **TestFlight and App Store**), and the post-action (**TestFlight Internal Testing** or **TestFlight External Testing** with the External Testers group). Both need two secrets (see `ci_post_clone.sh`): `KITCHEN_GITHUB_TOKEN`, and `AMPLITUDE_API_KEY` (the Grocery Deals Amplitude key, from the key store). A build without the Amplitude key stops in `ci_post_clone.sh` instead of shipping with analytics off.
 - External testing also needs App Store Connect's Test Information (beta description, feedback email, privacy policy link) and a contact for Apple's reviewer.
 - Each external build is a second Xcode Cloud run, on the same 25 free hours a month.
 
@@ -93,3 +93,7 @@ App Store Connect: app "Seattle Grocery Deals", SKU `seattle-grocery-deals`. Fir
 3. **Done:** Siri and Shortcuts (`Sources/Intents.swift`: "Add to my grocery list in Deals", "What's on sale in Deals") and the Best This Week widget (`Widget/`).
 3b. **Built, not yet on a device (2026-11-13):** Siri questions and Siri AI tools, widgets that follow Your stores, the Grocery List widget, the Add to List control, `grocerydeals://` links.
 4. With the paid Apple account: **TestFlight done** (2026-10-26). **Firebase push wired up** (2026-10-26): dev project `seattle-grocery-deals-dev`, APNs key `62XWUGPJN9`, sent from the deploy workflow. Then Universal Links. The bundle IDs are final (2026-10-26): each app's ID is its domain written backwards, nothing added.
+
+## The Amplitude key
+
+The app's key isn't in the code. `Analytics.swift` reads it from Info.plist, which gets it from the `AMPLITUDE_API_KEY` build setting in `Analytics.xcconfig`, which includes the gitignored `Secrets.xcconfig` next to it. On the Mac, `node ~/Developer/ops/scripts/sync-keys.mjs` writes that file from the key store (`.agents/keys.json` says which key); in Xcode Cloud, `ci_post_clone.sh` writes it from the workflow's secret. With no key, analytics stays off. The website's key is public and stays in `config/site.json`.
