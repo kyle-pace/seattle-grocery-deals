@@ -4,8 +4,13 @@
     {
       "path": "apple/GroceryDeals/Secrets.xcconfig",
       "format": "xcconfig",
-      "set": { "AMPLITUDE_API_KEY": "AMPLITUDE_GROCERY_DEALS_API_KEY" },
+      "set": {
+        "AMPLITUDE_API_KEY": "AMPLITUDE_GROCERY_DEALS_API_KEY"
+      },
       "xcode_cloud": true
     }
-  ]
+  ],
+  "xcode_cloud": {
+    "KITCHEN_GITHUB_TOKEN": "KITCHEN_GITHUB_TOKEN"
+  }
 }
