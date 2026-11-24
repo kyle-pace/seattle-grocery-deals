@@ -35,7 +35,7 @@ What it can't see: pages rendered on the server at request time, anything behind
 
 If the project already uses `check` for something else, name it `check:pages` and set `check-script: check:pages` in the project's `principles.yml`.
 
-CI picks it up on its own: the shared Principles workflow runs it whenever a project has that script, and keeps the screenshots for a week as a download on the run's page.
+CI picks it up on its own: the shared Principles workflow runs it whenever a project has that script. When a check fails, it keeps the screenshots for a day as a download on the run's page (only on failure, since each set is about 120 MB and counts against the 0.5 GB Actions storage on private repos).
 
 ## When it fails
 

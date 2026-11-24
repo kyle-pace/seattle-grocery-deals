@@ -17,7 +17,7 @@ Pinning means a site only gets a kp-design change when its pin moves, so one sit
 
 1. **Make the change in kp-design**, not in a site. Bump its version in `package.json` (patch for a fix, minor for something new) and push. Note the new commit's full SHA.
 2. **Try it in one site first.** In that site: `npm install github:kyle-pace/kp-design#<SHA>`, then `npm run build` and `npm run check`. Look at the screenshots for whatever the change touches.
-3. **Roll it out to the rest.** Find them by searching Kyle's repos for `kp-design` in `package.json`. As of November 2026: kylepace.net, kylepace.dev, skill-tree, cuisine-explorer (World cuisine), wa-transit-map and recipe-search. Check for newer ones. In each: install the same SHA, build, run the check, push.
+3. **Roll it out to the rest.** Find them by searching Kyle's repos for `kp-design` in `package.json`. As of November 2026: kylepace.net, kylepace.dev, skill-tree, world-cuisines (World cuisine), wa-transit-map and findish. Check for newer ones. In each: install the same SHA, build, run the check, push.
 4. **Report** which sites are on the new pin and any that aren't, with the reason.
 
 ## Notes

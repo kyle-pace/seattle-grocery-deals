@@ -54,6 +54,7 @@ Layouts are designed for phones, tablets and big screens from the first commit, 
 - In Apple apps, keep personal data on the device or in the user's own iCloud unless a feature truly needs a server.
 - Any project that collects data has a short, plain-language privacy page.
 - Secrets never go in Git. (Browser API keys that are public by design, like Amplitude's, are fine in code.)
+- Every key comes from Kyle's one key store through `.agents/keys.json` and `~/Developer/ops/scripts/sync-keys.mjs`; never type a key into a project or ask for one in chat. Follow the `project-keys` skill when a project needs a key.
 
 ### Default stack
 
