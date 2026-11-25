@@ -16,23 +16,23 @@
         "wp-content/uploads/2026/11/WeeklyAd-11.25.26.pdf"
       ],
       "seen_at": "2026-11-25T12:39:07.659Z",
-      "updated_at": "2026-11-19T07:51:50.264Z",
-      "pending": {
-        "since": "2026-11-25T12:39:07.659Z",
-        "live_before": "2026-11-18|https://www.uwajimaya.com/wp-content/uploads/2026/11/WeeklyAd-11.18.26.pdf https://www.uwajimaya.com/wp-content/uploads/2026/11/November-18.jpg https://www.uwajimaya.com/wp-content/uploads/2026/11/November-182.jpg https://www.uwajimaya.com/wp-content/uploads/2026/11/November-183.jpg https://www.uwajimaya.com/weekly-specials/",
-        "fires": 1,
-        "fired_at": "2026-11-25T12:39:07.659Z",
-        "session": "https://claude.ai/code/cse_015KDcQFEBD2bhoLiJ8TQ1ak"
-      }
+      "updated_at": "2026-11-25T22:26:36.738Z"
     },
     "central-coop": {
-      "fingerprint": "bf697fa1e2a2b96e",
+      "fingerprint": "22536c02448ce738",
       "matches": [
         "/s/Coop_Deals_2026_Nov_Flyer_West_B.pdf",
-        "SALES FOR 11.18.26 - 11.24.26"
+        "SALES FOR 11.25.26 - 12.01.26"
       ],
-      "seen_at": "2026-11-19T00:15:30.673Z",
-      "updated_at": "2026-11-19T07:51:50.264Z"
+      "seen_at": "2026-11-25T22:26:36.738Z",
+      "updated_at": "2026-11-19T07:51:50.264Z",
+      "pending": {
+        "since": "2026-11-25T22:26:36.738Z",
+        "live_before": "2026-11-18|https://www.centralcoop.coop/s/Coop_Deals_2026_Nov_Flyer_West_B.pdf https://www.centralcoop.coop/freshdeals",
+        "fires": 1,
+        "fired_at": "2026-11-25T22:26:36.738Z",
+        "session": "https://claude.ai/code/cse_015KDcQBbPJaNc7FJe3W1mS7"
+      }
     },
     "smith-brothers": {
       "fingerprint": "8567793e5d5062f3",
@@ -57,7 +57,7 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-25T12:39:07.659Z",
+      "error_at": "2026-11-25T22:26:36.738Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
@@ -84,7 +84,10 @@
         "img.awsprod.99ranch.com/ef2493772f2f4d0183eb49ef642cb650.jpeg"
       ],
       "seen_at": "2026-11-20T16:04:07.208Z",
-      "updated_at": "2026-11-20T22:39:55.083Z"
+      "updated_at": "2026-11-20T22:39:55.083Z",
+      "error": "HTTP 404",
+      "error_at": "2026-11-25T22:26:36.738Z",
+      "error_since": "2026-11-25T22:26:36.738Z"
     },
     "viet-wah": {
       "fingerprint": "40cd6323523140b4",
@@ -114,6 +117,15 @@
       "since": "2026-11-19T07:51:50.264Z",
       "notified_at": "2026-11-19T07:51:59.012Z",
       "issue": 61
+    },
+    "overdue:met-market:2026-11-24": {
+      "store": "met-market",
+      "kind": "overdue",
+      "title": "Metropolitan Market: sale ended Nov 24, no new flyer read",
+      "body": "The sale on the site ended Nov 24 and no newer flyer has been read in. The watcher can't read the page: the pattern matched nothing (page layout may have changed).",
+      "since": "2026-11-25T22:26:36.738Z",
+      "issue": 66,
+      "notified_at": "2026-11-25T22:26:44.504Z"
     }
   },
   "resolved": []
