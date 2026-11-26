@@ -29,9 +29,9 @@
       "pending": {
         "since": "2026-11-25T22:26:36.738Z",
         "live_before": "2026-11-18|https://www.centralcoop.coop/s/Coop_Deals_2026_Nov_Flyer_West_B.pdf https://www.centralcoop.coop/freshdeals",
-        "fires": 2,
-        "fired_at": "2026-11-26T04:20:35.480Z",
-        "session": "https://claude.ai/code/cse_015KDcQESDEfcDRKWgobcuBR"
+        "fires": 3,
+        "fired_at": "2026-11-26T14:21:11.627Z",
+        "session": "https://claude.ai/code/cse_015KDcQEZGtYmDh3ARcdn3v5"
       }
     },
     "smith-brothers": {
@@ -57,7 +57,7 @@
       "seen_at": "2026-11-18T09:03:37.080Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
       "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-26T04:20:35.480Z",
+      "error_at": "2026-11-26T14:21:11.627Z",
       "error_since": "2026-11-19T00:15:30.673Z"
     },
     "hmart": {
@@ -67,14 +67,7 @@
         "images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795649623960-3VDZ64CFEKBTQ4W1ME79/112726+WA+HMart+Weekly_eng.jpg"
       ],
       "seen_at": "2026-11-26T04:20:35.480Z",
-      "updated_at": "2026-11-20T07:00:25.336Z",
-      "pending": {
-        "since": "2026-11-26T04:20:35.480Z",
-        "live_before": "2026-11-20|https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795126686487-QUQ279VM03NW6PB0Z3PV/112026+WA+HMart+Weekly_eng.jpg https://images.squarespace-cdn.com/content/v1/5bf5bb0b36099b293afa2918/1795126683745-ZGICRKOMKAPNHOFEE46U/112026+WA+HMart+Weekly.jpg https://www.hmartus.com/weekly-sale-wa",
-        "fires": 1,
-        "fired_at": "2026-11-26T04:20:35.480Z",
-        "session": "https://claude.ai/code/cse_015KDcQESDEfcDRKWgobcuBR"
-      }
+      "updated_at": "2026-11-26T14:21:11.627Z"
     },
     "99-ranch": {
       "fingerprint": "a45dd8ee85e720c9",
