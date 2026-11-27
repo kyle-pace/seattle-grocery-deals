@@ -1,14 +1,19 @@
 {
   "stores": {
     "lams": {
-      "fingerprint": "9d937973a18a17bf",
+      "fingerprint": "05e0447d12c06aff",
       "matches": [
-        "wp-content/uploads/2019/06/913501016_3064256607277150_3308544069084120114_n.jpg",
-        "wp-content/uploads/2019/06/919215128_1125631973587166_5271371917169316001_n.jpg",
-        "wp-content/uploads/2025/04/914939715_1846169676516803_4622468215697965630_n.jpg"
+        "wp-content/uploads/2019/06/931686754_1917579076225463_3025959043956054741_n.jpg"
       ],
-      "seen_at": "2026-11-20T22:39:55.083Z",
-      "updated_at": "2026-11-21T03:54:40.359Z"
+      "seen_at": "2026-11-27T23:41:43.270Z",
+      "updated_at": "2026-11-21T03:54:40.359Z",
+      "pending": {
+        "since": "2026-11-27T23:41:43.270Z",
+        "live_before": "2026-11-20|https://www.lamsseafood.com/wp-content/uploads/2019/06/913501016_3064256607277150_3308544069084120114_n.jpg https://www.lamsseafood.com/wp-content/uploads/2019/06/919215128_1125631973587166_5271371917169316001_n.jpg https://www.lamsseafood.com/wp-content/uploads/2025/04/914939715_1846169676516803_4622468215697965630_n.jpg https://lamsseafood.com/specials",
+        "fires": 1,
+        "fired_at": "2026-11-27T23:41:43.270Z",
+        "session": "https://claude.ai/code/cse_015KDcQBvjtfA32TonZjCmbY"
+      }
     },
     "uwajimaya": {
       "fingerprint": "141584326e221a87",
@@ -55,14 +60,7 @@
         "Weekly-Savings-112726-PG-8"
       ],
       "seen_at": "2026-11-27T15:31:44.157Z",
-      "updated_at": "2026-11-18T18:00:14.658Z",
-      "pending": {
-        "since": "2026-11-27T15:31:44.157Z",
-        "live_before": "2026-11-18|https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-5.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-6.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-7.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-8.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
-        "fires": 1,
-        "fired_at": "2026-11-27T15:31:44.157Z",
-        "session": "https://claude.ai/code/cse_015KDcQF9xTrh5oXTZbL8Q1y"
-      }
+      "updated_at": "2026-11-27T23:41:43.270Z"
     },
     "hmart": {
       "fingerprint": "c854617309b2871e",
@@ -96,24 +94,41 @@
         "fires": 1,
         "fired_at": "2026-11-27T15:31:44.157Z",
         "session": "https://claude.ai/code/cse_015KDcQF9xTrh5oXTZbL8Q1y"
-      }
+      },
+      "error": "HTTP 404",
+      "error_at": "2026-11-27T23:41:43.270Z",
+      "error_since": "2026-11-27T23:41:43.270Z"
     },
     "viet-wah": {
-      "fingerprint": "40cd6323523140b4",
+      "fingerprint": "09778688eac5590c",
       "matches": [
-        "single-post/weekly-ad-nov-13-19-2026",
-        "single-post/weekly-ad-nov-20-26-2026"
+        "single-post/weekly-ad-nov-20-26-2026",
+        "single-post/weekly-ad-nov-27-dec-3-2026"
       ],
-      "seen_at": "2026-11-20T22:39:55.083Z",
-      "updated_at": "2026-11-21T03:54:40.359Z"
+      "seen_at": "2026-11-27T23:41:43.270Z",
+      "updated_at": "2026-11-21T03:54:40.359Z",
+      "pending": {
+        "since": "2026-11-27T23:41:43.270Z",
+        "live_before": "2026-11-20|https://static.wixstatic.com/media/d268df_8bb204ff42a248e497ca1ae65354543d~mv2.jpg https://www.vietwah.com/single-post/weekly-ad-nov-20-26-2026",
+        "fires": 1,
+        "fired_at": "2026-11-27T23:41:43.270Z",
+        "session": "https://claude.ai/code/cse_015KDcQBvjtfA32TonZjCmbY"
+      }
     },
     "asian-family-market": {
-      "fingerprint": "1ad575f7e4d1208b",
+      "fingerprint": "219719e1536bcb56",
       "matches": [
-        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-11-02\",\"end_date\":\"2026-11-30\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/857ba9aaf_wa_1.png\",\"display_order\":0},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/80cae4f0b_WA_2.png\",\"display_order\":1},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/21c19f5a8_3.png\",\"display_order\":2}]"
+        "\"published_data\":{\"store\":\"Seattle\",\"start_date\":\"2026-11-23\",\"end_date\":\"2026-12-10\",\"posters\":[{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/f066134412c73ac5c4de11838f0e730f_WA__1127_123.png\",\"display_order\":0},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/e905e95da507c9693feed42c69e11e9c_WA__1127_129.png\",\"display_order\":1},{\"image_url\":\"https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/6b4d80aef4d1b88df11b2935139a2ed9_Bellevue1127_20.png\",\"display_order\":2}]"
       ],
-      "seen_at": "2026-11-20T07:00:25.336Z",
-      "updated_at": "2026-11-20T16:04:07.208Z"
+      "seen_at": "2026-11-27T23:41:43.270Z",
+      "updated_at": "2026-11-20T16:04:07.208Z",
+      "pending": {
+        "since": "2026-11-27T23:41:43.270Z",
+        "live_before": "2026-11-20|https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/857ba9aaf_wa_1.png https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/80cae4f0b_WA_2.png https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/21c19f5a8_3.png",
+        "fires": 1,
+        "fired_at": "2026-11-27T23:41:43.270Z",
+        "session": "https://claude.ai/code/cse_015KDcQBvjtfA32TonZjCmbY"
+      }
     }
   },
   "reports": {},
@@ -135,6 +150,24 @@
       "since": "2026-11-26T23:15:49.692Z",
       "notified_at": "2026-11-26T23:15:55.698Z",
       "issue": 68
+    },
+    "overdue:red-apple:2026-11-26": {
+      "store": "red-apple",
+      "kind": "overdue",
+      "title": "Red Apple Markets: sale ended Nov 26, no new flyer read",
+      "body": "The sale on the site ended Nov 26 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
+      "since": "2026-11-27T23:41:43.270Z",
+      "issue": 69,
+      "notified_at": "2026-11-27T23:41:51.560Z"
+    },
+    "overdue:tnt:2026-11-26": {
+      "store": "tnt",
+      "kind": "overdue",
+      "title": "T&T Supermarket: sale ended Nov 26, no new flyer read",
+      "body": "The sale on the site ended Nov 26 and no newer flyer has been read in. This store is read from a desktop browser, so its new flyer may be up and waiting.",
+      "since": "2026-11-27T23:41:43.270Z",
+      "issue": 70,
+      "notified_at": "2026-11-27T23:41:52.226Z"
     }
   },
   "resolved": []
