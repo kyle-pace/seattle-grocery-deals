@@ -3,28 +3,27 @@
   "flyers": [
     {
       "store": "lams",
-      "status": "stale",
-      "valid_from": "2026-11-20",
-      "valid_through": "2026-11-26",
+      "status": "full",
+      "valid_from": "2026-11-27",
+      "valid_through": "2026-12-03",
       "links": [
         {
           "label": "Seattle Store Sale",
-          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/913501016_3064256607277150_3308544069084120114_n.jpg"
+          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/931686754_1917579076225463_3025959043956054741_n.jpg"
         },
         {
           "label": "Weekly Sale both stores",
-          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/919215128_1125631973587166_5271371917169316001_n.jpg"
+          "url": "https://www.lamsseafood.com/wp-content/uploads/2019/06/1846699550588531.jpg"
         },
         {
           "label": "Tukwila Filipino Sale",
-          "url": "https://www.lamsseafood.com/wp-content/uploads/2025/04/914939715_1846169676516803_4622468215697965630_n.jpg"
+          "url": "https://www.lamsseafood.com/wp-content/uploads/2025/04/1846699483921871.jpg"
         },
         {
           "label": "Flyer page",
           "url": "https://lamsseafood.com/specials"
         }
-      ],
-      "note": "The flyer that ended 2026-11-26 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "uwajimaya",
@@ -266,20 +265,19 @@
     },
     {
       "store": "viet-wah",
-      "status": "stale",
-      "valid_from": "2026-11-20",
-      "valid_through": "2026-11-26",
+      "status": "full",
+      "valid_from": "2026-11-27",
+      "valid_through": "2026-12-03",
       "links": [
         {
           "label": "Ad image",
-          "url": "https://static.wixstatic.com/media/d268df_8bb204ff42a248e497ca1ae65354543d~mv2.jpg"
+          "url": "https://static.wixstatic.com/media/d268df_f87660a6c07d45cc8715c68d9e2b10bb~mv2.jpg"
         },
         {
-          "label": "Weekly ad post, Nov 20 to 26",
-          "url": "https://www.vietwah.com/single-post/weekly-ad-nov-20-26-2026"
+          "label": "Weekly ad post, Nov 27 to Dec 3",
+          "url": "https://www.vietwah.com/single-post/weekly-ad-nov-27-dec-3-2026"
         }
-      ],
-      "note": "The flyer that ended 2026-11-26 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "seafood-city",
@@ -300,24 +298,23 @@
     },
     {
       "store": "asian-family-market",
-      "status": "stale",
-      "valid_from": "2026-11-20",
-      "valid_through": "2026-11-26",
+      "status": "full",
+      "valid_from": "2026-11-27",
+      "valid_through": "2026-12-03",
       "links": [
         {
           "label": "Page 1",
-          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/857ba9aaf_wa_1.png"
+          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/f066134412c73ac5c4de11838f0e730f_WA__1127_123.png"
         },
         {
           "label": "Page 2",
-          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/80cae4f0b_WA_2.png"
+          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/e905e95da507c9693feed42c69e11e9c_WA__1127_129.png"
         },
         {
           "label": "Page 3",
-          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/21c19f5a8_3.png"
+          "url": "https://base44.app/api/apps/699266c8c2f2e91c54efa8af/files/mp/public/699266c8c2f2e91c54efa8af/6b4d80aef4d1b88df11b2935139a2ed9_Bellevue1127_20.png"
         }
-      ],
-      "note": "The flyer that ended 2026-11-26 is the latest one read; waiting for the next one."
+      ]
     },
     {
       "store": "pcc",
@@ -8629,6 +8626,1856 @@
       "member_price": false,
       "valid_through": "2026-12-03",
       "notes": "Hot pot kits page. Mix and match; vegetables, mushrooms and tofu, no size or dates printed"
+    },
+    {
+      "store": "lams",
+      "item": "CRD Udon Noodles, 5 pack",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 0.9,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "FW Soya Ring Roll",
+      "item_key": null,
+      "category": "other",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5.93,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 12.11,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "NP Rice Vermicelli",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LS Hot Pot Soup Base",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "DoDo Cuttlefish/Lobster/Shrimp Ball/Tofu Fish Cake",
+      "item_key": null,
+      "category": "frozen",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 4.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Pork Sparerib",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Seattle store only. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Duck, head on, feet on",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Seattle store only. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Oyster Live, small/large, 2 dozen bag",
+      "item_key": "oysters",
+      "category": "seafood",
+      "price": 18.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "dozen"
+      },
+      "unit_price": {
+        "value": 9.49,
+        "per": "dozen"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Oysters Jar Fresh",
+      "item_key": "oysters",
+      "category": "seafood",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 9.58,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Manila Clam Live",
+      "item_key": "clams",
+      "category": "seafood",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Lobster Missing Claw, live",
+      "item_key": null,
+      "category": "seafood",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 12.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Catfish Sliced Fresh",
+      "item_key": "catfish",
+      "category": "seafood",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "10-20 HO White Shrimp, fresh",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "10-20 HO White Shrimp, 4 lb box",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 27.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 4,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 7,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Longan, Vietnam",
+      "item_key": null,
+      "category": "produce",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Bitter Melon",
+      "item_key": "bitter-melon",
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Chinese Broccoli",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Whole Durian, frozen",
+      "item_key": null,
+      "category": "frozen",
+      "price": 2.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Vina Condensed Cream, large",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.89,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 45.3,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.73,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "NP Fried Red Onion",
+      "item_key": null,
+      "category": "pantry",
+      "price": 5.79,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 18,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.15,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LAL Green Bean Thread",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.29,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LAL Shrimp Dumplings",
+      "item_key": null,
+      "category": "frozen",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11.64,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 12.36,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "LAL Fz Fish Ball",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "PH Beef Meat/Tendon Ball",
+      "item_key": null,
+      "category": "frozen",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 8.71,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "DoDo Fz Fish Ball",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Lettuce, Green Leaf",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 1.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Yam, Japanese #1",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Balut, Duck",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 21.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 10,
+        "unit": "ct"
+      },
+      "unit_price": {
+        "value": 2.2,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Cabbage, Green",
+      "item_key": "cabbage-green",
+      "category": "produce",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Banana, Baby",
+      "item_key": "bananas",
+      "category": "produce",
+      "price": 1.79,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.79,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Greenshell Mussels Box FZ",
+      "item_key": null,
+      "category": "seafood",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 5.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "26-30 PD White Shrimp, 2 lb bag",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 12.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 2,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 6.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic Salmon Fillet, fresh",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 8.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 8.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Atlantic Salmon Steak, fresh",
+      "item_key": "salmon-atlantic",
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Beef Tendon",
+      "item_key": null,
+      "category": "meat",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 4.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Pork Arm Picnic, boneless",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 2.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Pork Shoulder, boneless",
+      "item_key": "pork-shoulder",
+      "category": "meat",
+      "price": 3.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 3.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Chicken Leg Quarter",
+      "item_key": "chicken-leg-quarters",
+      "category": "meat",
+      "price": 1.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Whole Chicken, Canada",
+      "item_key": null,
+      "category": "meat",
+      "price": 16.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 16.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "lams",
+      "item": "Goat Meat with skin on",
+      "item_key": "goat",
+      "category": "meat",
+      "price": 7.29,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.29,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "On the flyer covering both the Seattle and Tukwila stores, so it may only be at Tukwila. While supplies last"
+    },
+    {
+      "store": "viet-wah",
+      "item": "Hung Phat Ginger / Turmeric / Bitter Melon Tea",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per box."
+    },
+    {
+      "store": "viet-wah",
+      "item": "DoDo Fish Ball",
+      "item_key": null,
+      "category": "frozen",
+      "price": 3.59,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.59,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per bag."
+    },
+    {
+      "store": "viet-wah",
+      "item": "Cooked Octomary",
+      "item_key": null,
+      "category": "seafood",
+      "price": 5.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 16,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Fresh Whole Red Snapper",
+      "item_key": null,
+      "category": "seafood",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "White Shrimp HL 26-30",
+      "item_key": "shrimp",
+      "category": "seafood",
+      "price": 9.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 24,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 6.66,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Headless, per bag."
+    },
+    {
+      "store": "viet-wah",
+      "item": "Nautilus Green Mussel H/S Small",
+      "item_key": null,
+      "category": "seafood",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 32,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 5.5,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Half shell, per box."
+    },
+    {
+      "store": "viet-wah",
+      "item": "Yellow Onion",
+      "item_key": "onions-yellow",
+      "category": "produce",
+      "price": 0.49,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 0.49,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Baby Bok Choy",
+      "item_key": "bok-choy",
+      "category": "produce",
+      "price": 1.39,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.39,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Big Taro",
+      "item_key": "taro",
+      "category": "produce",
+      "price": 1.59,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.59,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Big Gai Choy",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Mini Watermelon",
+      "item_key": null,
+      "category": "produce",
+      "price": 5.99,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 5.99,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Chef's Choice Rice Stick 3mm",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 12,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "VietWah Rice Vermicelli",
+      "item_key": null,
+      "category": "pantry",
+      "price": 1.49,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 14,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 1.7,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Chef's Choice Evaporated Coconut Milk",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.19,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.19,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Chef's Choice Coconut Whipping Cream",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.59,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13.5,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 6.49,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Vasifood Sriracha Sauce, large",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.69,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.69,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Huong Xua Noodle, size S",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.19,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 480,
+        "unit": "g"
+      },
+      "unit_price": {
+        "value": 3.01,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Megachef Premium Fish Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.39,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 23.6,
+        "unit": "fl-oz"
+      },
+      "unit_price": {
+        "value": 6.29,
+        "per": "l"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "LKK Hoisin Sauce",
+      "item_key": null,
+      "category": "pantry",
+      "price": 4.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 36,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.22,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Giai Phat Fz Beef Ball / Tendon",
+      "item_key": null,
+      "category": "frozen",
+      "price": 5.19,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 11,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.55,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "MaMa Fz Beef Pho Broth",
+      "item_key": null,
+      "category": "frozen",
+      "price": 10.99,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 25,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 7.03,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Stewing Chicken",
+      "item_key": "chicken-stewing",
+      "category": "meat",
+      "price": 1.69,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.69,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Chicken Wings",
+      "item_key": "chicken-wings",
+      "category": "meat",
+      "price": 1.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Pork Spareribs",
+      "item_key": "pork-spareribs",
+      "category": "meat",
+      "price": 2.89,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.89,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "viet-wah",
+      "item": "Beef Short Ribs",
+      "item_key": "beef-short-ribs",
+      "category": "meat",
+      "price": 7.99,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Persimmons Fuyu, large",
+      "item_key": "persimmons",
+      "category": "produce",
+      "price": 1.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Lettuce Stem, A Choy Sum",
+      "item_key": "greens-asian",
+      "category": "produce",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Mushroom, Seafood",
+      "item_key": null,
+      "category": "produce",
+      "price": 0.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 0.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Yam, Chestnut",
+      "item_key": "sweet-potatoes",
+      "category": "produce",
+      "price": 1.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Cauliflower, Taishan",
+      "item_key": null,
+      "category": "produce",
+      "price": 1.88,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.88,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Grape, Shine Muscat",
+      "item_key": null,
+      "category": "produce",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 9.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Pear, Qiu Yue",
+      "item_key": "pears",
+      "category": "produce",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Satsuma Mandarins with leaves, 3 lb",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 8.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 2.99,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Family Tree, per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Mandarin Baby Citrus, 3 lb bag",
+      "item_key": "mandarins",
+      "category": "produce",
+      "price": 8.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 3,
+        "unit": "lb"
+      },
+      "unit_price": {
+        "value": 2.96,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Mango, tree ripened",
+      "item_key": null,
+      "category": "produce",
+      "price": 7.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 7.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Frozen Seabass Butterfly",
+      "item_key": null,
+      "category": "seafood",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 9.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Frozen Garlic Scallop with Vermicelli, red oil flavor",
+      "item_key": null,
+      "category": "seafood",
+      "price": 5.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 5.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Garlic Razor Clam with Vermicelli",
+      "item_key": null,
+      "category": "seafood",
+      "price": 8.88,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 8.88,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Frozen, per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Frozen Silver Carp Fish Belly with chopped chili",
+      "item_key": null,
+      "category": "seafood",
+      "price": 8.88,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 8.88,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Long Kong Chicken, rooster/hen",
+      "item_key": null,
+      "category": "meat",
+      "price": 16.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 16.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "King's, per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Wagyu Eye Round, sliced for hot pot",
+      "item_key": null,
+      "category": "meat",
+      "price": 11.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 11.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Australian wagyu."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Beef Brisket, sliced",
+      "item_key": "beef-brisket",
+      "category": "meat",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 9.98,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Drumsticks",
+      "item_key": "chicken-drumsticks",
+      "category": "meat",
+      "price": 1.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 1.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Pork Feet, front",
+      "item_key": "pork-feet",
+      "category": "meat",
+      "price": 2.68,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.68,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Pork Liver",
+      "item_key": null,
+      "category": "meat",
+      "price": 2.48,
+      "quantity": 1,
+      "unit": "lb",
+      "unit_price": {
+        "value": 2.48,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Little Sheep Hot Pot Soup Base, multiple flavors",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Formosa Pork Sung/Fu",
+      "item_key": null,
+      "category": "pantry",
+      "price": 15.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 18,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 14.12,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "EW Guan Miao Noodle, thick/medium/thin",
+      "item_key": null,
+      "category": "pantry",
+      "price": 12.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 79.83,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.6,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": ""
+    },
+    {
+      "store": "asian-family-market",
+      "item": "GP Chinkiang Vinegar",
+      "item_key": null,
+      "category": "pantry",
+      "price": 3.88,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 18,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 3.45,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per bottle."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "GH Chinese Long Doughnut, 3 pc",
+      "item_key": null,
+      "category": "bakery",
+      "price": 3.68,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 3.68,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per pack."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Sunrise Soymilk, sweetened/unsweetened",
+      "item_key": null,
+      "category": "dairy-eggs",
+      "price": 4.68,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 4.68,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Per carton."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Aroy-D Coconut Milk",
+      "item_key": "coconut-milk",
+      "category": "pantry",
+      "price": 1.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 13.5,
+        "unit": "oz"
+      },
+      "unit_price": {
+        "value": 2.35,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Seattle store only."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "HH Braised Abalone, three cans gift set",
+      "item_key": null,
+      "category": "pantry",
+      "price": 9.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 9.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Seattle store only."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "DXC Bamboo Wonton Noodle",
+      "item_key": null,
+      "category": "pantry",
+      "price": 2.98,
+      "quantity": 1,
+      "unit": "each",
+      "unit_price": {
+        "value": 2.98,
+        "per": "each"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Printed in English as \"Crisp Cake\"; the Chinese name and picture are bamboo wonton noodles. Seattle store only."
+    },
+    {
+      "store": "asian-family-market",
+      "item": "Little Farmer Organic Wuchang Rice",
+      "item_key": null,
+      "category": "pantry",
+      "price": 26.98,
+      "quantity": 1,
+      "unit": "pack",
+      "pack": {
+        "size": 5,
+        "unit": "kg"
+      },
+      "unit_price": {
+        "value": 2.45,
+        "per": "lb"
+      },
+      "regular_price": null,
+      "percent_off": null,
+      "member_price": false,
+      "valid_through": "2026-12-03",
+      "notes": "Seattle store only."
     }
   ]
 }
