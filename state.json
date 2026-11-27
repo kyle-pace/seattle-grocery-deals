@@ -43,22 +43,26 @@
       "updated_at": "2026-11-14T20:39:48.779Z"
     },
     "met-market": {
-      "fingerprint": "0e788f87dfabc034",
+      "fingerprint": "6b866893fa76db0a",
       "matches": [
-        "Weekly-Savings-111826-PG-1",
-        "Weekly-Savings-111826-PG-2",
-        "Weekly-Savings-111826-PG-3",
-        "Weekly-Savings-111826-PG-4",
-        "Weekly-Savings-111826-PG-5",
-        "Weekly-Savings-111826-PG-6",
-        "Weekly-Savings-111826-PG-7",
-        "Weekly-Savings-111826-PG-8"
+        "Weekly-Savings-112726-PG-1",
+        "Weekly-Savings-112726-PG-2",
+        "Weekly-Savings-112726-PG-3",
+        "Weekly-Savings-112726-PG-4",
+        "Weekly-Savings-112726-PG-5",
+        "Weekly-Savings-112726-PG-6",
+        "Weekly-Savings-112726-PG-7",
+        "Weekly-Savings-112726-PG-8"
       ],
-      "seen_at": "2026-11-18T09:03:37.080Z",
+      "seen_at": "2026-11-27T15:31:44.157Z",
       "updated_at": "2026-11-18T18:00:14.658Z",
-      "error": "the pattern matched nothing (page layout may have changed)",
-      "error_at": "2026-11-27T05:18:54.962Z",
-      "error_since": "2026-11-19T00:15:30.673Z"
+      "pending": {
+        "since": "2026-11-27T15:31:44.157Z",
+        "live_before": "2026-11-18|https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-1.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-2.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-3.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-4.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-5.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-6.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-7.webp https://res.cloudinary.com/gfh-prd/image/upload/v10006/Metropolitan-Market-Weekly-Savings-111826-PG-8.webp https://save.metropolitan-market.com/weekly-grocery-ads-coupons/",
+        "fires": 1,
+        "fired_at": "2026-11-27T15:31:44.157Z",
+        "session": "https://claude.ai/code/cse_015KDcQF9xTrh5oXTZbL8Q1y"
+      }
     },
     "hmart": {
       "fingerprint": "c854617309b2871e",
@@ -70,21 +74,29 @@
       "updated_at": "2026-11-26T14:21:11.627Z"
     },
     "99-ranch": {
-      "fingerprint": "a45dd8ee85e720c9",
+      "fingerprint": "13d611a492d2ee5c",
       "matches": [
-        "img.awsprod.99ranch.com/0946a81ebe0f48fcb193846a67c20f89.jpeg",
-        "img.awsprod.99ranch.com/1051cab6802443eb9d51ff1f4559ffce.jpeg",
-        "img.awsprod.99ranch.com/10559da26bc1411cbd765acb67f8ed10.jpeg",
-        "img.awsprod.99ranch.com/2b2ed3520ef1477ab121b0f57abef451.jpeg",
-        "img.awsprod.99ranch.com/58b06f9afbab44faac124d112ce7eb76.jpeg",
-        "img.awsprod.99ranch.com/6722564ef8a24ab1a1ee1af73d45c9e0.jpeg",
-        "img.awsprod.99ranch.com/6c074d4fa4d6447da19f1d6ffbc30adc.jpeg",
-        "img.awsprod.99ranch.com/a7d428cd03cc41d1bda39d967da23f5f.jpeg",
-        "img.awsprod.99ranch.com/c008c813efa04bbc854e8c7a29f61a92.jpeg",
-        "img.awsprod.99ranch.com/ef2493772f2f4d0183eb49ef642cb650.jpeg"
+        "img.awsprod.99ranch.com/4981f18f152846e2a4b3773bb9d34963.jpeg",
+        "img.awsprod.99ranch.com/6daa7905dc6247e49cd885895f91376a.jpeg",
+        "img.awsprod.99ranch.com/81abcca17f0d4e5e9c060d5fdfad3956.jpeg",
+        "img.awsprod.99ranch.com/878c18acfd654b96a899ee75983dcb18.jpeg",
+        "img.awsprod.99ranch.com/993c284ee5ef4a2eace96771ce44e41f.jpeg",
+        "img.awsprod.99ranch.com/9a05ab6138c345fe8c9240e5a0bf9101.jpeg",
+        "img.awsprod.99ranch.com/a667de0dcd8640afaf488a0ccceceafd.jpeg",
+        "img.awsprod.99ranch.com/ab8f74b12bf6454a97e14aa17b788552.jpeg",
+        "img.awsprod.99ranch.com/b24955edd3a848389d74408fa64a4de8.jpeg",
+        "img.awsprod.99ranch.com/cf343dea8fa84a2e8cb48831c215d786.jpeg",
+        "img.awsprod.99ranch.com/e126c0e927ea4dc2b5305efe277c56ca.jpeg"
       ],
-      "seen_at": "2026-11-20T16:04:07.208Z",
-      "updated_at": "2026-11-20T22:39:55.083Z"
+      "seen_at": "2026-11-27T15:31:44.157Z",
+      "updated_at": "2026-11-20T22:39:55.083Z",
+      "pending": {
+        "since": "2026-11-27T15:31:44.157Z",
+        "live_before": "2026-11-20|https://img.awsprod.99ranch.com/1051cab6802443eb9d51ff1f4559ffce.jpeg https://img.awsprod.99ranch.com/58b06f9afbab44faac124d112ce7eb76.jpeg https://img.awsprod.99ranch.com/0946a81ebe0f48fcb193846a67c20f89.jpeg https://img.awsprod.99ranch.com/6c074d4fa4d6447da19f1d6ffbc30adc.jpeg https://img.awsprod.99ranch.com/10559da26bc1411cbd765acb67f8ed10.jpeg https://img.awsprod.99ranch.com/6722564ef8a24ab1a1ee1af73d45c9e0.jpeg https://img.awsprod.99ranch.com/2b2ed3520ef1477ab121b0f57abef451.jpeg https://img.awsprod.99ranch.com/c008c813efa04bbc854e8c7a29f61a92.jpeg https://img.awsprod.99ranch.com/a7d428cd03cc41d1bda39d967da23f5f.jpeg https://img.awsprod.99ranch.com/ef2493772f2f4d0183eb49ef642cb650.jpeg https://www.99ranch.com/stores/promotions/1791",
+        "fires": 1,
+        "fired_at": "2026-11-27T15:31:44.157Z",
+        "session": "https://claude.ai/code/cse_015KDcQF9xTrh5oXTZbL8Q1y"
+      }
     },
     "viet-wah": {
       "fingerprint": "40cd6323523140b4",
@@ -106,24 +118,6 @@
   },
   "reports": {},
   "alerts": {
-    "watch:met-market": {
-      "store": "met-market",
-      "kind": "watch",
-      "title": "Metropolitan Market: the flyer watcher can't read its page",
-      "body": "Since 2026-11-19 00:15 UTC: the pattern matched nothing (page layout may have changed). Fix its \"watch\" entry in config/stores.json.",
-      "since": "2026-11-19T07:51:50.264Z",
-      "notified_at": "2026-11-19T07:51:59.012Z",
-      "issue": 61
-    },
-    "overdue:met-market:2026-11-24": {
-      "store": "met-market",
-      "kind": "overdue",
-      "title": "Metropolitan Market: sale ended Nov 24, no new flyer read",
-      "body": "The sale on the site ended Nov 24 and no newer flyer has been read in. The watcher can't read the page: the pattern matched nothing (page layout may have changed).",
-      "since": "2026-11-25T22:26:36.738Z",
-      "notified_at": "2026-11-25T22:26:44.504Z",
-      "issue": 66
-    },
     "stuck:central-coop:22536c02448ce738": {
       "store": "central-coop",
       "kind": "stuck",
